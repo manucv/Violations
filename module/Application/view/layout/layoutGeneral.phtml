@@ -1,0 +1,106 @@
+<?php
+echo $this->doctype ();
+use Application\Funciones\Funciones;
+?>
+<html>
+<head>
+<meta charset="utf-8">
+        <link rel="icon" type="image/gif" href="<?php echo $this->basepath();?>/img/icoLogo.gif" />
+        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        //->prependStylesheet($this->basePath() . '/js/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.min.css')
+                        ->prependStylesheet($this->basePath() . '/js/datatables/media/css/demo_table.css')        
+                        //->prependStylesheet($this->basePath() . '/css/docs.min.css')
+        				//->prependStylesheet($this->basePath() . '/css/ui-lightness/jquery-ui-1.10.4.custom.css')
+                        ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+        	//->prependFile($this->basePath() . '/js/jquery-ui/js/jquery-ui-1.10.4.custom.min.js')
+        	->prependFile($this->basePath() . '/js/datatables/media/js/jquery.dataTables.min.js')
+            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            //->prependFile($this->basePath() . '/js/jquery-ui-min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js')
+            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+
+</head>
+<body>
+	<div>Top</div>
+	<div>
+		<ul style="padding-left: 0px;">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+							data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">SES</a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse"
+						id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown">Par&aacute;metros <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'pais', 'action' => 'listado'))?>">Paises</a></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'estado', 'action' => 'listado'))?>">Estados</a></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'ciudad', 'action' => 'listado'))?>">Ciudades</a></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'sitio', 'action' => 'listado'))?>">Sitios</a></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipocomponente', 'action' => 'listado'))?>">Tipo Componente</a></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'listado'))?>">Tipo Infraccion</a></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipovehiculo', 'action' => 'listado'))?>">Tipo Veh&iacute;culo</a></li>
+									<li class="divider"></li>
+									<li><a href="#">Par&aacute;metros Generales</a></li>
+								</ul></li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown">Administraci&oacute;n<b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'index'))?>">Usuarios</a></li>
+									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'roles', 'action' => 'listado'))?>">Roles</a></li>
+									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'aplicaciones', 'action' => 'listado'))?>">Aplicaciones</a></li>
+								</ul></li>
+								<li><a href="<?php echo $this->url('vehiculo', array('controller' => 'vehiculo', 'action' => 'listado'))?>">Veh&iacute;culo</a></li>
+								<li><a href="<?php echo $this->url('vehiculo', array('controller' => 'vehiculo', 'action' => 'index'))?>">Van C&aacute;mara</a></li>
+								<li><a href="<?php echo $this->url('monitoreo', array('controller' => 'control', 'action' => 'control'))?>">Monitoreo</a></li>
+								<li><a href="#">Infracciones</a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown">Perfil <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Datos Generales</a></li>
+									<li><a href="#">Cambiar Contrase&ntilde;a</a></li>
+									<li class="divider"></li>
+									<li><a href="<?php echo $this->url('application', array('controller' => 'login', 'action' => 'logout'))?>">Cerrar Sesi&oacute;n</a></li>
+								</ul></li>
+						</ul>
+					</div>
+					<!-- /.navbar-collapse -->
+				</div>
+				<!-- /.container-fluid -->
+			</nav>
+		</ul>
+	</div>
+		<div class="col-xs-12 col-sm-12 col-md-12">
+    		<?php echo $this->content; ?>
+    	</div>
+        <?php echo $this->inlineScript()?>
+    </body>
+</html>

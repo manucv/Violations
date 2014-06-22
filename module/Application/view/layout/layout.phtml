@@ -1,0 +1,71 @@
+<?php use Zend\Db\Sql\Predicate\IsNull;
+echo $this->doctype(); ?>
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/gif" href="<?php echo $this->basepath();?>/img/icoLogo.gif" />
+        <?php echo $this->headTitle($this->translate('Sistema de Citas'))->setSeparator(' - ')->setAutoEscape(false)?>
+
+        <?php
+								
+echo $this->headMeta ()->appendName ( 'viewport', 'width=device-width, initial-scale=1.0' )->appendHttpEquiv ( 'X-UA-Compatible', 'IE=edge' )?>
+
+        <!-- Le styles -->
+        <?php
+								
+echo $this->headLink ( array (
+					'rel' => 'shortcut icon',
+					'type' => 'image/vnd.microsoft.icon',
+					'href' => $this->basePath () . '/img/favicon.ico' 
+					) )
+					->prependStylesheet ( $this->basePath () . '/css/style.css' )
+					->prependStylesheet ( $this->basePath () . '/css/bootstrap-theme.min.css' )
+					->prependStylesheet ( $this->basePath () . '/css/bootstrap.min.css' )
+					->prependStylesheet ( $this->basePath () . '/css/login.css')
+					?>
+
+        <!-- Scripts -->
+        <?php
+								
+echo $this->headScript ()
+            		->prependFile($this->basePath() . '/js/jquery-validation/dist/jquery.validate.js')
+					->prependFile ( $this->basePath () . '/js/bootstrap.min.js' )
+					->prependFile ( $this->basePath () . '/js/jquery.min.js' )
+					->prependFile ( $this->basePath () . '/js/respond.min.js', 'text/javascript', array (
+															'conditional' => 'lt IE 9' 
+													) )
+					->prependFile ( $this->basePath () . '/js/html5shiv.js', 'text/javascript', array (
+															'conditional' => 'lt IE 9' 
+													) );
+								?>
+    <style type="text/css">
+		body {
+			overflow-x: hidden;
+		}
+	</style>
+
+
+
+   </head>
+    
+<body>
+	<div class="container-content-layout hidden-xs">&nbsp;</div>
+	<div class="container-content-layout-xs visible-xs">&nbsp;</div>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <?php echo $this->content; //ejemplo ?>
+            
+            <?php if(isset($this->mensaje) && !is_null($this->mensaje)):?>
+            <div class="container">
+			<div class="row">
+				<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-5 col-md-offset-4 col-lg-5 col-lg-offset-3 form-login-error">
+					<?php echo $this->mensaje; ?>
+				</div>
+			</div>
+			<?php endif; ?>
+            
+			</div>
+	</div>
+    
+    </body>
+</html>

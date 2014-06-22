@@ -1,0 +1,117 @@
+<?php
+
+$form = $this->form;
+$detalles = $this->detalles;
+$form->prepare ();
+$form->setAttribute ( 'action', $this->url ( 'usuarios', array (
+		'controller' => 'roles',
+		'action' => 'validar' 
+) ) );
+
+$form->setAttribute ( 'method', 'post' );
+
+$formLabel = $this->plugin ( 'formLabel' );
+
+$rol_descripcion = $form->get('rol_descripcion');
+$rol_id = $form->get('rol_id');
+$aplicacion = $form->get('aplicacion');
+
+echo $this->form ()->openTag ( $form );
+
+//CAMPOS OCULTOS
+echo $this->formhidden ( $rol_id );
+echo $this->formelementerrors ( $rol_id );
+?>
+
+<ul class="error_container bs-callout bs-callout-danger">
+
+</ul>
+
+<div class="panel panel-default">
+	<div class="panel-heading panel-heading-txt">&nbsp;</div>
+	
+	<table width="100%" cellpadding="5">
+			<tr>
+				<td>
+					<br />
+					<div width="50" valign="middle" class="icon-content"><img src="<?php echo $this->basepath() . '/img/png/usuarios_grande.png'?>" border="0" /></div>
+					<div class="txt-icon-content">Ingresar un nuevo rol<br />Registre toda la informaci&oacute;n solicitada para ingresar un nuevo rol.</div>
+					<div><br /></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<h3 align="left">Informaci&oacute;n General</h3><hr/>
+				<?php echo $formLabel->openTag() . $rol_descripcion->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $rol_descripcion ) );
+					  echo html_entity_decode( $this->formelementerrors ( $rol_descripcion ) ); 
+				?>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h3 align="left">Permisos</h3><hr/>
+				</td>
+			</tr>
+			<tr>
+		        <td class="validaciones_errores">
+		            <?php 
+		            	$aplicacion = $form->get('aplicacion');
+		                echo html_entity_decode($this->formmulticheckbox($aplicacion));
+		                echo html_entity_decode($this->formelementerrors($aplicacion));
+		            ?>
+		        </td>
+		    </tr>
+		</table>
+	
+</div>
+
+<div align="center">
+	<?php echo $this->formRow($form->get('ingresar')); ?>&nbsp;
+	<a href="<?php echo $this->url('usuarios', array('controller' => 'roles', 'action' => 'listado'))?>" class ="btn btn-primary">Cancelar</a>
+</div>
+
+<?php echo $this->form()->closeTag(); ?>
+
+<script type="text/javascript">
+							/*
+	$(document).ready(function(){
+		//Inicio Bloque Validador JS
+		$.validator.addMethod("roles", function(value, elem, param) {
+		    if($(".roles:checkbox:checked").length > 0){
+		    	return true;
+		   	}else {
+		    	return false;
+		   	}
+		},"Debes seleccionar al menos una opción");
+
+
+		$("#roles").validate({
+			errorLabelContainer: $("ul.error_container"),
+			wrapper: 'li',
+			rules: {
+				rol_descripcion: {
+					required:true,
+					remote: {
+        				url: "<?php //echo $this->url('usuarios',array('controller'=>'usuarios','action'=>'consultaNombreRolXmlHttp'))?>",
+        				type: "post",
+        				data: {
+          					rol_id: function() {
+            					return $( "#rol_id" ).val();
+          					}
+        				}
+      				}
+				},
+				"APLICACION[1][APL_ID]" :{
+					roles:true
+				}
+	 		},
+	 		messages:{
+				rol_descripcion: {
+					required:'Nombre es un campo requerido',
+					remote: 'El nombre seleccionado ya se encuentra en el sistema'},
+				}
+		});
+	});
+	*/
+</script>

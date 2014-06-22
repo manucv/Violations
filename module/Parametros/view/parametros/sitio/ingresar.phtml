@@ -1,0 +1,151 @@
+<?php $this->headTitle('Ingresar Sitio - Actualizar Sitio');
+
+//FORMULARIO
+$form = $this->formulario;
+$form->prepare ();
+$form->setAttribute ( 'action', $this->url ( 'parametros', array (
+		'controller' => 'sitio',
+		'action' => 'validar' 
+) ) )->setAttribute ( 'method', 'post' );
+$formLabel = $this->plugin ( 'formLabel' );
+
+$sit_id = $form->get ( 'sit_id' );
+$ciu_id = $form->get ( 'ciu_id' );
+$sit_descripcion = $form->get ( 'sit_descripcion' );
+$sit_direccion = $form->get ( 'sit_direccion' );
+$sit_sector = $form->get ( 'sit_sector' );
+$sit_reference_number = $form->get ( 'sit_reference_number' );
+$sit_estado = $form->get ( 'sit_estado' );
+
+//EMPIEZA A ESCRIBIRSE EL FORMULARIO
+echo $this->form ()->openTag ( $form );
+
+//CAMPOS OCULTOS
+echo $this->formhidden ( $sit_id );
+echo $this->formelementerrors ( $sit_id );
+
+?>
+<div class="panel panel-default">
+	<div class="panel-heading panel-heading-txt">&nbsp;</div>
+		<table width="100%" cellpadding="5">
+			<tr>
+				<td colspan="3">
+					<br />
+					<div width="50" valign="middle" class="icon-content"><img src="<?php echo $this->basepath() . '/img/png/pais_grande.png'?>" border="0" /></div>
+					<div class="txt-icon-content">Ingresar un nuevo sitio<br />Registre toda la informaci&oacute;n solicitada para ingresar un nuevo sitio.</div>
+					<div><br /><hr /></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<?php echo $formLabel->openTag() . $ciu_id->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formselect ( $ciu_id ) );
+					  echo html_entity_decode( $this->formelementerrors ( $ciu_id ) ); 
+				?>
+				</td>
+				<td colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>
+				<?php echo $formLabel->openTag() . $sit_descripcion->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $sit_descripcion ) );
+					  echo html_entity_decode( $this->formelementerrors ( $sit_descripcion ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $sit_direccion->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $sit_direccion ) );
+					  echo html_entity_decode( $this->formelementerrors ( $sit_direccion ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $sit_sector->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $sit_sector ) );
+					  echo html_entity_decode( $this->formelementerrors ( $sit_sector ) ); 
+				?>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<?php echo $formLabel->openTag() . $sit_reference_number->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $sit_reference_number ) );
+					  echo html_entity_decode( $this->formelementerrors ( $sit_reference_number ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $sit_estado->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formselect ( $sit_estado ) );
+					  echo html_entity_decode( $this->formelementerrors ( $sit_estado ) ); 
+				?>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+		</table>
+		<br />
+		<div><button type="button" id="addElement" class ="btn btn-primary">Agregar Componente</button></div>
+		<div id=InputsWrapper></div>
+		<div><br /><hr /></div>	
+		<div align="center"> 
+				<?php echo $this->formsubmit( $form->get ( 'ingresar' ) ) ?>
+				<a href="<?php echo $this->url('parametros', array('controller' => 'sitio', 'action' => 'listado'))?>" class ="btn btn-primary">Cancelar</a>
+			</div>	
+		<div>&nbsp;</div>	
+</div>
+<?php echo $this->form()->closeTag(); ?>
+<script type="text/javascript">
+$(document).ready(function() {
+
+		//var MaxInputs       = 8; //maximum input boxes allowed
+		var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID
+
+		var x = InputsWrapper.length; //initlal text box count
+		var FieldCount=0; //to keep track of text box added
+
+		$($("#addElement")).click(function (e)  //on add input button click
+		{
+/*
+			$.ajax({
+                url: "<?php //echo $this->url('contactos', array('controller' => 'index', 'action' => 'codigoCiudadTipo')) ?>",
+                type: "POST",
+                dataType: "json",
+                data: "det_con_codigo_pais=" + $(element).val(),
+                beforeSend: function() {
+                	$(".det_con_codigo_ciudad[data-group-id="+data_group_id+"]").html("");
+                	$(".det_con_codigo_ciudad[data-group-id="+data_group_id+"]").append('<option>Procesando, espere por favor...</option>');
+                }
+            }).done(function(ciudades) {
+                $(".det_con_codigo_ciudad[data-group-id="+data_group_id+"]").html("");
+                $(".det_con_codigo_ciudad[data-group-id="+data_group_id+"]").append('<option>-- Seleccione --</option>');
+                var selected = '';
+                for (ciudad in ciudades) {
+					if($('#DETALLE_CONTACTO_oculto_'+data_group_id).val() == ciudad){
+						selected = 'selected="selected"';
+					}
+	                
+                    $(".det_con_codigo_ciudad[data-group-id="+data_group_id+"]").append('<option value="' + ciudad + '" '+selected+'>' + ciudades[ciudad] + '</option>');
+                }
+                $(".det_con_codigo_ciudad[data-group-id="+data_group_id+"]").prop("disabled", false);
+                
+            });
+
+*/
+
+			
+		            FieldCount++; //text box added increment
+		            //add input box
+		            $(InputsWrapper).append('<div><input type="text" name="mytext[]" id="field_'+ FieldCount +'" value="Text '+ FieldCount +'"/><a href="#" class="removeclass">&times;</a></div>');
+		            x++; //text box increment
+		return false;
+		});
+
+		$("body").on("click",".removeclass", function(e){ //user click on remove text
+		        if( x > 0 ) {
+		        	$(this).parent('div').remove(); //remove text box
+		            x--; //decrement textbox
+		        }
+		return false;
+		}) 
+
+    }
+);
+</script>

@@ -1,0 +1,38 @@
+body{
+	background: url(../img/ingreso-Azul.png) no-repeat center 0px; 
+}
+.container-main{
+	background: url(../img/ingreso-Azul-box.png) no-repeat;
+	width: 669px !important;
+	height:432px;
+	overflow:hidden;
+	margin:0px auto;
+	position: relative;
+}
+.usuario{position:relative; top:200px; left:30px; width:330px;}
+.password{position:relative; top:210px; left:30px; width:330px;}
+.boton{position:absolute; top:298px; left:470px;}
+.boton .btn-primary{background:none !important; background-color:#4CA7DB !important; border:none; box-shadow:none;}
+
+.container-main .form-item label{
+	color:#fff;
+	font-weight: normal;
+}
+.container{
+	position: relative;
+	top:-50px;
+	color:#fff;
+}
+.error_container {
+	position:absolute;
+	top:359px;
+	left:17px;
+
+}
+.error_container li{
+		color:#fff !important;
+		padding-top: 7px !important;
+}
+.error_container li label.error{
+		color:#fff !important;	
+}
