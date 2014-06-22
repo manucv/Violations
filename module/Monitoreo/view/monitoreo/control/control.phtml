@@ -1,0 +1,135 @@
+<?php foreach ($this->sitios as $componente): ?>
+
+<div class="panel panel-default" style="width: 300px; font-size: 12px; float: left; margin-right: 20px;">
+  <div class="panel-heading"><?php echo $componente->getSit_descripcion() . ' - ' . $componente->getSit_reference_number() ?></div>
+  <div class="panel-body">
+  
+  <?php if($componente->getSit_id() == $this->sitio):?>
+  	<div>
+  		<?php 
+  		/*
+  			if ( $this->totalPing == 4 ): ?>
+  				<div class="circulo-verde">&nbsp;</div>
+  				<div class="circulo-verde">&nbsp;</div>
+  				<div class="circulo-verde">&nbsp;</div>
+  				<div style="clear: both;"></div>
+  			<?php 
+  			$estado = 'Activo';
+  			endif;
+  			
+  			if ( $this->totalPing == 0 ):?>
+  				<div class="circulo-rojo">&nbsp;</div>
+  				<div class="circulo-rojo">&nbsp;</div>
+  				<div class="circulo-rojo">&nbsp;</div>
+  				<div style="clear: both;"></div>
+  			<?php 
+  			$estado = 'Inactivo';
+  			endif;
+  			
+  			if ( $this->totalPing > 0 &&  $this->totalPing < 4): ?>
+  				<div class="circulo-amarillo">&nbsp;</div>
+  				<div class="circulo-amarillo">&nbsp;</div>
+  				<div class="circulo-amarillo">&nbsp;</div>
+  				<div style="clear: both;"></div>
+  			<?php 
+  			$estado = 'Verificar';
+  			endif;
+  			*/
+  		?>
+  	</div>
+  	<?php endif;?>
+    <div><b>Direcci&oacute;n:</b> <?php echo $componente->getSit_direccion() ?></div>
+    <div><b>Sector:</b> <?php echo $componente->getSit_sector() ?></div>
+    <div><b>Estado:</b> <?php echo $estado; //echo $sitio->getSit_estado() ?></div>
+    <div><b>Componentes:</b></div>
+   <?php 
+   		if(count($this->componentes)>0):
+   		foreach ($this->componentes as $componente => $value):
+		   if($componente->getSit_id() == $componente):
+			   if(count($value) > 0):
+			  		echo '<ul>';
+			   			foreach ($value as $comp):?>
+			   		   	<li><?php echo $comp['com_descripcion']?>
+				   		<div style="padding-left: 10px;">
+				   		IP Local:
+				   			<?php 
+				   				if(!empty($comp['com_ip_local']) && !is_null($comp['com_ip_local'])): 
+				   					echo $comp['com_ip_local']; 
+				   					echo '<br />';
+				   					if ( $comp['output_local']['total'] == 4 ):
+				   						$class = 'class="cuadrado-verde"';
+				   					endif;
+				   					
+				   					if ( $comp['output_local']['total'] == 0 ):
+				   						$class = 'class="cuadrado-rojo"';
+				   					endif;
+				   					
+				   					if ( $comp['output_local']['total'] > 0 &&  $comp['output_local']['total'] < 4):
+				   						$class = 'class="cuadrado-amarillo"';
+				   					endif;
+				   				?>
+					   				<div <?php echo $class ?> >&nbsp;</div>
+					  				<div <?php echo $class ?> >&nbsp;</div>
+					  				<div <?php echo $class ?> >&nbsp;</div>
+					  				<div <?php echo $class ?> >&nbsp;</div>
+					  				<div <?php echo $class ?> >&nbsp;</div>
+					  				<div style='clear: both;'></div>
+				   				<?php 
+				   				else: 
+				   					echo 'No tiene ip local'; 
+				   				endif; 
+				   			?>
+				   		</div>
+				   		<div style="padding-left: 10px;">
+				   		IP P&uacute;blica:
+				   			<?php 
+				   				if(!empty($comp['com_ip_publica']) && !is_null($comp['com_ip_publica'])): 
+				   					echo $comp['com_ip_publica']; 
+				   					echo '<br />';
+				   					if ( $comp['output_publica']['total'] == 4 ):
+				   						$class = 'class="cuadrado-verde"';
+				   					endif;
+				   					
+				   					if ( $comp['output_publica']['total'] == 0 ):
+				   						$class = 'class="cuadrado-rojo"';
+				   					endif;
+				   					
+				   					if ( $comp['output_publica']['total'] > 0 &&  $comp['output_local']['total'] < 4):
+				   						$class = 'class="cuadrado-amarillo"';
+				   					endif;
+				   				?>
+					   				<div <?php echo $class ?> >&nbsp;</div>
+					  				<div <?php echo $class ?> >&nbsp;</div>
+					  				<div <?php echo $class ?> >&nbsp;</div>
+					  				<div <?php echo $class ?> >&nbsp;</div>
+					  				<div <?php echo $class ?> >&nbsp;</div>
+					  				<div style='clear: both;'></div>
+				   				<?php 
+				   				else: 
+				   					echo 'No tiene ip p&uacute;blica'; 
+				   				endif; 
+				   			?>
+				   		</div>
+			   		   	</li>
+			   		   	<?php endforeach;
+			   		echo '</ul>';
+			   else:
+			   		echo '<ul><li class="no-componente">No tiene componentes.</li></ul>';
+			   endif;
+		   endif;
+   		endforeach; 
+   		endif;
+  	?>
+    <hr />
+    <?php if(!empty($this->respuesta) && !is_null($this->respuesta) && $componente->getSit_id() == $this->sitio ):?>
+    <div>Respuesta:</div>
+    <div>
+    <?php echo $this->respuesta ?>
+    </div>
+    <?php endif;?>
+  </div>
+  <div class="panel-footer">
+  	<a class="btn btn-info" href="<?php echo $this->url('monitoreo', array('controller' => 'control', 'action' => 'ping', 'id' => $componente->getSit_id() ))  ?>">PING</a>
+  </div>
+</div>
+<?php endforeach;?>

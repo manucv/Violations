@@ -1,0 +1,64 @@
+<?php if(!$this->loggedIn): ?>
+<?php 
+
+$form = $this->form;
+$form->prepare ()->setAttribute ( 'action', $this->url ( 'application', array (
+		'controller' => 'login',
+		'action' => 'autenticar'
+) ) )->setAttribute ( 'method', 'post' );
+$formLabel = $this->plugin ( 'formLabel' );
+
+echo $this->form()->openTag($form);
+
+?>
+<div class="container-main">
+	<ul class="error_container bs-callout bs-callout-danger">
+	</ul>
+
+			<div class="usuario form-item">
+			<?php //campo usuario
+			$email = $form->get('usu_usuario');
+			echo $formLabel->openTag().$email->getOption('label');
+			echo $formLabel->closeTag();
+			echo $this->forminput($email);
+			echo $this->formelementerrors($email);
+			
+			?>
+			</div>
+
+			<div class="password form-item">
+			<?php //campo password
+			$password = $form->get('usu_clave');
+			echo $formLabel->openTag().$password->getOption('label');
+			echo $formLabel->closeTag();
+			echo $this->forminput($password);
+			echo $this->formelementerrors($password);
+			?>
+			</div>
+
+			<div class="boton">
+					<?php echo $this->formelement($form->get('ingresar')) ?>
+			</div>
+
+</div>
+
+
+<?php echo $this->form()->closeTag() ?>
+
+<?php endif; ?>
+<script>
+$(document).ready(function(){
+	$("#login").validate({
+		errorLabelContainer: $("ul.error_container"),
+		wrapper: 'li',
+		rules: {
+			usu_usuario: {required:true},
+			usu_clave: {required:true}
+ 		},
+ 		messages:{
+			usu_usuario: {required:'Nombre es un campo requerido'},
+			usu_clave: {required:'Categoría es un campo requerido'},
+ 	 	}
+	});
+});
+</script>

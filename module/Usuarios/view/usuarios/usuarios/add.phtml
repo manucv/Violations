@@ -1,0 +1,105 @@
+<?php
+//FORMULARIO
+$form = $this->formulario;
+$form->prepare ();
+$form->setAttribute ( 'action', $this->url ( 'usuarios', array (
+		'controller' => 'usuarios',
+		'action' => 'validar' 
+) ) )->setAttribute ( 'method', 'post' );
+$formLabel = $this->plugin ( 'formLabel' );
+
+$usu_id = $form->get ( 'usu_id' );
+$ciu_id= $form->get ( 'ciu_id' );
+$usu_usuario = $form->get ( 'usu_usuario' );
+$usu_email = $form->get ( 'usu_email' );
+$usu_nombre = $form->get ( 'usu_nombre' );
+$usu_apellido = $form->get ( 'usu_apellido' );
+$usu_clave = $form->get ( 'usu_clave' );
+$usu_clave_check = $form->get ( 'usu_clave_check' );
+$usu_estado = $form->get ( 'usu_estado' );
+
+//EMPIEZA A ESCRIBIRSE EL FORMULARIO
+echo $this->form ()->openTag ( $form );
+
+//CAMPOS OCULTOS
+echo $this->formhidden ( $usu_id );
+echo $this->formelementerrors ( $usu_id );
+
+?>
+<div class="panel panel-default">
+	<div class="panel-heading panel-heading-txt">&nbsp;</div>
+		<table width="100%" cellpadding="5">
+			<tr>
+				<td colspan="3">
+					<br />
+					<div width="50" valign="middle" class="icon-content"><img src="<?php echo $this->basepath() . '/img/png/usuarios_grande.png'?>" border="0" /></div>
+					<div class="txt-icon-content">Ingresar un nuevo usuario<br />Registre toda la informaci&oacute;n solicitada para ingresar un nuevo usuario.</div>
+					<div><br /><hr /></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<?php echo $formLabel->openTag() . $ciu_id->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formselect ( $ciu_id ) );
+					  echo html_entity_decode( $this->formelementerrors ( $ciu_id ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $usu_nombre->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $usu_nombre ) );
+					  echo html_entity_decode( $this->formelementerrors ( $usu_nombre ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $usu_apellido->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $usu_apellido ) );
+					  echo html_entity_decode( $this->formelementerrors ( $usu_apellido ) ); 
+				?>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<?php echo $formLabel->openTag() . $usu_email->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $usu_email ) );
+					  echo html_entity_decode( $this->formelementerrors ( $usu_email ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $usu_estado->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formselect ( $usu_estado ) );
+					  echo html_entity_decode( $this->formelementerrors ( $usu_estado ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $usu_usuario->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $usu_usuario ) );
+					  echo html_entity_decode( $this->formelementerrors ( $usu_usuario ) ); 
+				?>
+				</td>
+			</tr>
+			<?php if($this->edit !== true) :?>
+			<tr>
+				<td>
+				<?php echo $formLabel->openTag() . $usu_clave->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formpassword ( $usu_clave ) );
+					  echo html_entity_decode( $this->formelementerrors ( $usu_clave ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $usu_clave_check->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formpassword ( $usu_clave_check ) );
+					  echo html_entity_decode( $this->formelementerrors ( $usu_clave_check ) ); 
+				?>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+			<?php endif;?>
+		</table>
+		<div><br /><hr /></div>	
+		<div align="center">
+				<?php echo $this->formsubmit( $form->get ( 'ingresar' ) ) ?>
+				<a href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'index'))?>" class ="btn btn-primary">Cancelar</a>
+			</div>	
+		<div>&nbsp;</div>	
+</div>
+<?php echo $this->form()->closeTag(); ?>
