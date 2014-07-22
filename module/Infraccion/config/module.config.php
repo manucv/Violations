@@ -2,21 +2,21 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'ZendSkeletonModule\Controller\Skeleton' => 'ZendSkeletonModule\Controller\SkeletonController',
+            'Infraccion\Controller\Infraccion' => 'Infraccion\Controller\InfraccionController',
         ),
     ),
     'router' => array(
         'routes' => array(
-            'module-name-here' => array(
-                'type'    => 'Literal',
+            'infraccion' => array(
+                'type'    => 'Segment',
                 'options' => array(
                     // Change this to something specific to your module
-                    'route'    => '/module-specific-root',
+                    'route'    => '/infraccion[/:controller][/:action][/:id]',
                     'defaults' => array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
-                        '__NAMESPACE__' => 'ZendSkeletonModule\Controller',
-                        'controller'    => 'Skeleton',
+                        '__NAMESPACE__' => 'Infraccion\Controller',
+                        'controller'    => 'Infraccion',
                         'action'        => 'index',
                     ),
                 ),
@@ -29,10 +29,11 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[:controller[/:action]]',
+                            'route'    => '/[:controller[/:action[/:id]]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            	'id'     => '[0-9]*',
                             ),
                             'defaults' => array(
                             ),
@@ -44,7 +45,7 @@ return array(
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            'ZendSkeletonModule' => __DIR__ . '/../view',
+            'Infraccion' => __DIR__ . '/../view',
         ),
     ),
 );

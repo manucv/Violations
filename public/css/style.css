@@ -39,6 +39,19 @@ div.container a.brand {
 
 /*********************** ESTILOS DEL SISTEMA ********************/
 
+/********** MENU SUPERIOR ***************/
+
+.menu-top{
+	background-color: #578FC0;
+	height: 20px;
+	margin-bottom: 5px;
+}
+.borde-derecho-menu{
+	border-right: 1px solid #DFE0DB;
+}
+
+
+
 /*MODULO DE MONITOREO*/
 
 /* LISTADO PAIS */

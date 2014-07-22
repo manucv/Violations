@@ -30,7 +30,8 @@ return array (
 				'Usuarios' => 'layout/layoutGeneral.phtml',
 				'Monitoreo' => 'layout/layoutGeneral.phtml',
 				'Parametros' => 'layout/layoutGeneral.phtml',
-				'Vehiculo' => 'layout/layoutGeneral.phtml'
+				'Vehiculo' => 'layout/layoutGeneral.phtml',
+				'Infraccion' => 'layout/layoutInfraccion.phtml'
 		),
 		
 		'translator' => array (
