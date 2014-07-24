@@ -10,6 +10,7 @@ return array(
         	'Parametros\Controller\TipoComponente' => 'Parametros\Controller\TipoComponenteController',
         	'Parametros\Controller\TipoInfraccion' => 'Parametros\Controller\TipoInfraccionController',
         	'Parametros\Controller\TipoVehiculo' => 'Parametros\Controller\TipoVehiculoController',
+        	'Parametros\Controller\Parqueadero' => 'Parametros\Controller\ParqueaderoController',
         ),
     ),
     'router' => array(

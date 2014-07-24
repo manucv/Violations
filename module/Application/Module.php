@@ -47,6 +47,10 @@ use Application\Model\Entity\Vehiculo;
 use Application\Model\Dao\VehiculoDao;
 use Application\Model\Entity\Dispositivo;
 use Application\Model\Dao\DispositivoDao;
+use Application\Model\Entity\Parqueadero;
+use Application\Model\Dao\ParqueaderoDao;
+use Application\Model\Entity\Sector;
+use Application\Model\Dao\SectorDao;
 
 class Module {
 	public function onBootstrap(MvcEvent $e) {
@@ -260,6 +264,24 @@ class Module {
 		                	$tableGateway = new TableGateway('dispositivo', $dbAdapter, null, $resultSetPrototype);
 		                	return new DispositivoDao($tableGateway);
 		                },
+		                
+		                'Application\Model\Dao\ParqueaderoDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Parqueadero());
+		                	$tableGateway = new TableGateway('parqueadero', $dbAdapter, null, $resultSetPrototype);
+		                	return new ParqueaderoDao($tableGateway);
+		                },
+		                
+		                'Application\Model\Dao\SectorDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Sector());
+		                	$tableGateway = new TableGateway('sector', $dbAdapter, null, $resultSetPrototype);
+		                	return new SectorDao($tableGateway);
+		                },
+		                
+		                
 						
 				),
 		);

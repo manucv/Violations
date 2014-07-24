@@ -31,7 +31,8 @@ return array (
 				'Monitoreo' => 'layout/layoutGeneral.phtml',
 				'Parametros' => 'layout/layoutGeneral.phtml',
 				'Vehiculo' => 'layout/layoutGeneral.phtml',
-				'Infraccion' => 'layout/layoutInfraccion.phtml'
+				'Infraccion' => 'layout/layoutInfraccion.phtml',
+				'Parqueadero' => 'layout/layoutGeneral.phtml'
 		),
 		
 		'translator' => array (
