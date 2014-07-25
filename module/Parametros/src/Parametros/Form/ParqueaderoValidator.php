@@ -42,9 +42,20 @@ class ParqueaderoValidator extends InputFilter {
 				'allowWhiteSpace' => true
 		) ) )->attach(new NotEmpty())
 		     ->attach(new InArray(array(
-				'haystack' => array('D'),
+				'haystack' => array('D','O'),
 		)));
 		
 		$this->add ( $par_estado );
+		
+		
+		$sec_id = new Input ( 'sec_id' );
+		$sec_id->setRequired ( true );
+		$sec_id->getValidatorChain ()->attach ( new StringLength ( array (
+				'max' => 11,
+				'min' => 1,
+		) ) )->attach(new NotEmpty())
+		->attach ( new Digits () );
+		
+		$this->add ( $sec_id );
 	}
 }

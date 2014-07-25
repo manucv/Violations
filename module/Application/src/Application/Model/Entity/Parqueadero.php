@@ -76,7 +76,7 @@ class Parqueadero {
 	}
 
 	/**
-	 * @param field_type $sec_nombre
+	 * @param Ambigous <NULL, unknown> $sec_nombre
 	 */
 	public function setSec_nombre($sec_nombre) {
 		$this->sec_nombre = $sec_nombre;
@@ -88,6 +88,7 @@ class Parqueadero {
 		$this->par_estado = (isset($data['par_estado'])) ? $data['par_estado'] : null;
 		$this->par_codigo = (isset($data['par_codigo'])) ? $data['par_codigo'] : null;
 		$this->sec_id = (isset($data['sec_id'])) ? $data['sec_id'] : null;
+		$this->sec_nombre = (isset($data['sec_nombre'])) ? $data['sec_nombre'] : null;
 	}
 	
 	public function getArrayCopy(){

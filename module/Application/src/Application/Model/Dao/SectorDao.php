@@ -14,7 +14,11 @@ class SectorDao implements InterfaceCrud {
 	}
 	
 	public function traerTodos() {
-		return $this->tableGateway->select ();
+		$select = $this->tableGateway->getSql ()->select ();
+		$select->join ( 'ciudad', 'ciudad.ciu_id  = sector.ciu_id' );
+		 
+		$resultSet = $this->tableGateway->selectWith ( $select );
+		return $resultSet;
 	}
 	
 	public function traer($sec_id) {
@@ -40,7 +44,9 @@ class SectorDao implements InterfaceCrud {
 		$data = array (
 				'sec_nombre' => $sector->getSec_nombre (),
 				'sec_latitud' => $sector->getSec_latitud (),
-				'sec_longitud' => $sector->getSec_longitud ()
+				'sec_longitud' => $sector->getSec_longitud (),
+				'ciu_id' => $sector->getCiu_id(),
+				'sec_ubicacion' => $sector->getSec_ubicacion(),
 		);
 		
 		$data ['sec_id'] = $id;
@@ -66,5 +72,30 @@ class SectorDao implements InterfaceCrud {
 		} else {
 			throw new \Exception ( 'No se encontro el id para eliminar' );
 		}
+	}
+	
+	public function traerTodosArreglo(){
+	
+		$sql = new Sql($this->tableGateway->getAdapter());
+		$select = $sql->select();
+		$select->from($this->tableGateway->table);
+	
+		$statement = $sql->prepareStatementForSqlObject($select);
+		$results = $statement->execute();
+	
+		$sectores = new \ArrayObject();
+		$result = array();
+	
+		foreach ($results as $row){
+			$sector = new Sector();
+			$sector->exchangeArray($row);
+			$sectores->append($sector);
+		}
+	
+		foreach ($sectores as $sec){
+			$result[$sec->getSec_id()] = $sec->getSec_nombre();
+		}
+	
+		return $result;
 	}
 }

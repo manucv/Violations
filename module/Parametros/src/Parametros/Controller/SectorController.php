@@ -11,18 +11,18 @@ namespace Parametros\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Parametros\Form\Parqueadero;
-use Parametros\Form\ParqueaderoValidator;
-use Application\Model\Entity\Parqueadero as ParqueaderoEntity;
+use Parametros\Form\Sector;
+use Parametros\Form\SectorValidator;
+use Application\Model\Entity\Sector as SectorEntity;
 
-class ParqueaderoController extends AbstractActionController
+class SectorController extends AbstractActionController
 {
-	protected $parqueaderoDao;
 	protected $sectorDao;
+	protected $ciudadDao;
 	
     public function listadoAction()
     {
-        return array('parqueadero' => $this->getParqueaderoDao()->traerTodos());
+        return array('sector' => $this->getSectorDao()->traerTodos());
     }
     
     public function ingresarAction(){
@@ -42,17 +42,17 @@ class ParqueaderoController extends AbstractActionController
     	$form = $this->getForm ();
     
     	//FORMULARIO DE ACTUALIZACION DE INFORMACION
-    	$parqueadero = $this->getParqueaderoDao()->traer ( $id );
-    	$form->bind ( $parqueadero );
+    	$sector = $this->getSectorDao()->traer ( $id );
+    	$form->bind ( $sector );
     		
     	$form->get ( 'ingresar' )->setAttribute ( 'value', 'Actualizar' );
-    	$form->get ( 'par_id' )->setAttribute ( 'value', $parqueadero->getPar_id() );
+    	$form->get ( 'par_id' )->setAttribute ( 'value', $sector->getSec_id() );
     		
     	$view = new ViewModel ( array (
     			'formulario' => $form ,
     	) );
     
-    	$view->setTemplate('parametros/parqueadero/ingresar');
+    	$view->setTemplate('parametros/sector/ingresar');
     	return $view;
     }
     
@@ -61,20 +61,18 @@ class ParqueaderoController extends AbstractActionController
     	$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
     	
     	//SE ELIMINA LA INFORMACION EN LA BDD
-    	if($this->getParqueaderoDao() ->eliminar ( $id )){
+    	if($this->getSectorDao() ->eliminar ( $id )){
             //SI SE EJECUTO EXITOSAMENTE SE REGRESA AL LISTADO DE CONTACTOS
             return $this->redirect ()->toRoute ( 'parametros', array (
-                    'controller' => 'parqueadero',
+                    'controller' => 'sector',
                     'action' => 'listado'
             ) );            
         }else{
             $view = new ViewModel ();
         
-            $view->setTemplate('parametros/parqueadero/errorBorrado');
+            $view->setTemplate('parametros/sector/errorBorrado');
             return $view;  
         }
-    	
-
     }
     
     public function validarAction(){
@@ -82,7 +80,7 @@ class ParqueaderoController extends AbstractActionController
     	//VERIFICA QUE SE HAYA REALIZADO UN POST DE INFORMACION
     	if (! $this->request->isPost ()) {
     		return $this->redirect ()->toRoute ( 'parametros', array (
-    				'controller' => 'parqueadero',
+    				'controller' => 'sector',
     				'action' => 'listado'
     		) );
     	}
@@ -94,7 +92,7 @@ class ParqueaderoController extends AbstractActionController
     	$form = $this->getForm();
     	
     	//SE VALIDA EL FORMULARIO
-    	$form->setInputFilter ( new ParqueaderoValidator() );
+    	$form->setInputFilter ( new SectorValidator() );
     	
     	//SE LLENAN LOS DATOS DEL FORMULARIO
     	$form->setData ( $data );
@@ -106,40 +104,32 @@ class ParqueaderoController extends AbstractActionController
     				'formulario' => $form ,
     		) );
     			
-    		$modelView->setTemplate ( 'parametros/parqueadero/ingresar' );
+    		$modelView->setTemplate ( 'parametros/sector/ingresar' );
     		return $modelView;
     	}
     	
     	//->AQUI EL FORMULARIO ES CORRECTO, SE VALIDO CORRECTAMENTE
     	
     	//SE GENERA EL OBJETO DE CONTACTO
-    	$pais = new ParqueaderoEntity();
+    	$pais = new SectorEntity();
     	//SE CARGA LA ENTIDAD CON LA INFORMACION DEL POST
     	$pais->exchangeArray ( $data );
     	
     	//SE GRABA LA INFORMACION EN LA BDD
-    	$this->getParqueaderoDao() ->guardar ( $pais );
+    	$this->getSectorDao() ->guardar ( $pais );
     	
     	//SI SE EJECUTO EXITOSAMENTE SE REGRESA AL LISTADO DE CONTACTOS
     	return $this->redirect ()->toRoute ( 'parametros', array (
-    			'controller' => 'parqueadero',
+    			'controller' => 'sector',
     			'action' => 'listado'
     	) );
     }
     
 	public function getForm() {
-		$form = new Parqueadero ();
-		$form->get ( 'sec_id' )->setValueOptions ( $this->getSectorDao ()->traerTodosArreglo () );
+		$form = new Sector ();
+		$form->get ( 'ciu_id' )->setValueOptions ( $this->getCiudadDao ()->traerTodosArreglo() );
 		return $form;
 	}
-    
-    public function getParqueaderoDao() {
-    	if (! $this->parqueaderoDao) {
-    		$sm = $this->getServiceLocator ();
-    		$this->parqueaderoDao = $sm->get ( 'Application\Model\Dao\ParqueaderoDao' );
-    	}
-    	return $this->parqueaderoDao;
-    }
     
     public function getSectorDao() {
     	if (! $this->sectorDao) {
@@ -147,6 +137,14 @@ class ParqueaderoController extends AbstractActionController
     		$this->sectorDao = $sm->get ( 'Application\Model\Dao\SectorDao' );
     	}
     	return $this->sectorDao;
+    }
+    
+    public function getCiudadDao() {
+    	if (! $this->ciudadDao) {
+    		$sm = $this->getServiceLocator ();
+    		$this->ciudadDao = $sm->get ( 'Application\Model\Dao\CiudadDao' );
+    	}
+    	return $this->ciudadDao;
     }
 
 }

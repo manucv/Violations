@@ -14,7 +14,6 @@ class ParqueaderoDao implements InterfaceCrud {
 	}
 	
 	public function traerTodos() {
-		return $this->tableGateway->select ();
 		
 		$select = $this->tableGateway->getSql ()->select ();
 		$select->join ( 'sector', 'parqueadero.sec_id  = sector.sec_id' );

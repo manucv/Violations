@@ -1,0 +1,62 @@
+<?php
+$form = $this->formulario;
+$form->prepare ();
+$form->setAttribute ( 'action', $this->url ( 'parametros', array (
+		'controller' => 'parqueadero',
+		'action' => 'validar' 
+) ) )->setAttribute ( 'method', 'post' );
+$formLabel = $this->plugin ( 'formLabel' );
+
+$par_id= $form->get ( 'par_id' );
+$par_estado = $form->get ( 'par_estado' );
+$par_codigo = $form->get ( 'par_codigo' );
+$sec_id = $form->get ( 'sec_id' );
+
+//$date = new Fecha();
+echo $this->form ()->openTag ( $form );
+
+//CAMPOS OCULTOS
+echo $this->formhidden ( $par_id );
+echo $this->formelementerrors ( $par_id );
+
+?>
+<div class="panel panel-default">
+	<div class="panel-heading panel-heading-txt">&nbsp;</div>
+		<table width="100%" cellpadding="5">
+			<tr>
+				<td colspan="3">
+					<br />
+					<div width="50" valign="middle" class="icon-content"><img src="<?php echo $this->basepath() . '/img/png/ciudad_grande.png'?>" border="0" /></div>
+					<div class="txt-icon-content">Ingresar un nuevo parqueadero<br />Registre toda la informaci&oacute;n solicitada para ingresar un nuevo parqueadero.</div>
+					<div><br /><hr /></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<?php echo $formLabel->openTag() . $sec_id->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formselect ( $sec_id ) );
+					  echo html_entity_decode( $this->formelementerrors ( $sec_id ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $par_codigo->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $par_codigo ) );
+					  echo html_entity_decode( $this->formelementerrors ( $par_codigo ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $par_estado->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formselect ( $par_estado ) );
+					  echo html_entity_decode( $this->formelementerrors ( $par_estado ) ); 
+				?>
+				</td>
+			</tr>
+		</table>
+		<div><br /><hr /></div>	
+		<div align="center">
+				<?php echo $this->formsubmit( $form->get ( 'ingresar' ) ) ?>
+				<a href="<?php echo $this->url('parametros', array('controller' => 'parqueadero', 'action' => 'listado'))?>" class ="btn btn-primary">Cancelar</a>
+			</div>	
+		<div>&nbsp;</div>	
+</div>
+<?php echo $this->form()->closeTag(); ?>
