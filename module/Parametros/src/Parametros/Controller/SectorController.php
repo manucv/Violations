@@ -46,7 +46,7 @@ class SectorController extends AbstractActionController
     	$form->bind ( $sector );
     		
     	$form->get ( 'ingresar' )->setAttribute ( 'value', 'Actualizar' );
-    	$form->get ( 'par_id' )->setAttribute ( 'value', $sector->getSec_id() );
+    	$form->get ( 'sec_id' )->setAttribute ( 'value', $sector->getSec_id() );
     		
     	$view = new ViewModel ( array (
     			'formulario' => $form ,

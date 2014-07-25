@@ -1,0 +1,78 @@
+<?php
+$form = $this->formulario;
+$form->prepare ();
+$form->setAttribute ( 'action', $this->url ( 'parametros', array (
+		'controller' => 'sector',
+		'action' => 'validar' 
+) ) )->setAttribute ( 'method', 'post' );
+$formLabel = $this->plugin ( 'formLabel' );
+
+$sec_id = $form->get ( 'sec_id' );
+$sec_nombre = $form->get ( 'sec_nombre' );
+$sec_latitud = $form->get ( 'sec_latitud' );
+$sec_longitud = $form->get ( 'sec_longitud' );
+$ciu_id = $form->get ( 'ciu_id' );
+$sec_ubicacion = $form->get ( 'sec_ubicacion' );
+
+//$date = new Fecha();
+echo $this->form ()->openTag ( $form );
+
+//CAMPOS OCULTOS
+echo $this->formhidden ( $sec_id );
+echo $this->formelementerrors ( $sec_id );
+
+?>
+<div class="panel panel-default">
+	<div class="panel-heading panel-heading-txt">&nbsp;</div>
+		<table width="100%" cellpadding="5">
+			<tr>
+				<td colspan="3">
+					<br />
+					<div width="50" valign="middle" class="icon-content"><img src="<?php echo $this->basepath() . '/img/png/ciudad_grande.png'?>" border="0" /></div>
+					<div class="txt-icon-content">Ingresar un nuevo sector<br />Registre toda la informaci&oacute;n solicitada para ingresar un nuevo sector.</div>
+					<div><br /><hr /></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<?php echo $formLabel->openTag() . $ciu_id->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formselect ( $ciu_id ) );
+					  echo html_entity_decode( $this->formelementerrors ( $ciu_id ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $sec_nombre->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $sec_nombre ) );
+					  echo html_entity_decode( $this->formelementerrors ( $sec_nombre ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $sec_latitud->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $sec_latitud ) );
+					  echo html_entity_decode( $this->formelementerrors ( $sec_latitud ) ); 
+				?>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<?php echo $formLabel->openTag() . $sec_longitud->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $sec_longitud ) );
+					  echo html_entity_decode( $this->formelementerrors ( $sec_longitud ) ); 
+				?>
+				</td>
+				<td colspan="2">
+				<?php echo $formLabel->openTag() . $sec_ubicacion->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $sec_ubicacion ) );
+					  echo html_entity_decode( $this->formelementerrors ( $sec_ubicacion ) ); 
+				?>
+				</td>
+			</tr>
+		</table>
+		<div><br /><hr /></div>	
+		<div align="center">
+				<?php echo $this->formsubmit( $form->get ( 'ingresar' ) ) ?>
+				<a href="<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'listado'))?>" class ="btn btn-primary">Cancelar</a>
+			</div>	
+		<div>&nbsp;</div>	
+</div>
+<?php echo $this->form()->closeTag(); ?>
