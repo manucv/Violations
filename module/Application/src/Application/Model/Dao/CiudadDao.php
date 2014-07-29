@@ -98,4 +98,30 @@ class CiudadDao implements InterfaceCrud {
     	return $result;
     }
     
+    public function getCiudadesPorEstado($ciudad){
+    
+    	$sql = new Sql($this->tableGateway->getAdapter());
+    	$select = $sql->select();
+    	$select->from($this->tableGateway->table);
+    	$select->where(array('est_id' => $ciudad));
+    
+    	$statement = $sql->prepareStatementForSqlObject($select);
+    	$results = $statement->execute();
+    
+    	$ciudades = new \ArrayObject();
+    	$result = array();
+    
+    	foreach ($results as $row){
+    		$ciudad = new Ciudad();
+    		$ciudad->exchangeArray($row);
+    		$ciudades->append($ciudad);
+    	}
+    
+    	foreach ($ciudades as $ciu){
+    		$result[$ciu->getCiu_id()] = $ciu->getCiu_nombre_es();
+    	}
+    
+    	return $result;
+    }
+    
 }

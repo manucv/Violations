@@ -7,7 +7,7 @@ use Zend\Validator\StringLength;
 use Zend\I18n\Validator\Alnum;
 use Zend\Validator\Digits;
 use Zend\Validator\NotEmpty;
-use Zend\I18n\Validator\Float;
+use Zend\Validator\Regex;
 
 class SectorValidator extends InputFilter {
 	function __construct() {
@@ -35,16 +35,29 @@ class SectorValidator extends InputFilter {
 		
 		$sec_latitud = new Input ( 'sec_latitud' );
 		$sec_latitud->setRequired ( true );
-		$sec_latitud->getValidatorChain ()->attach ( new Float() )->attach(new NotEmpty());
+		$sec_latitud->getValidatorChain ()->attach ( new StringLength ( array (
+				'max' => 35,
+		) ) )
+		->attach(new NotEmpty())
+		->attach(new Regex(array(
+			'pattern' => '/^(\-?\d+(?:\.\d+)?)$/',
+		)));
 		
 		$this->add ( $sec_latitud );
 		
 		
 		$sec_longitud = new Input ( 'sec_longitud' );
 		$sec_longitud->setRequired ( true );
-		$sec_longitud->getValidatorChain ()->attach ( new Float() )->attach(new NotEmpty());
+		$sec_longitud->getValidatorChain ()->attach ( new StringLength ( array (
+				'max' => 35,
+		) ) )->attach(new NotEmpty())
+		->attach(new Regex(array(
+			'pattern' => '/^(\-?\d+(?:\.\d+)?)$/',
+		)));
 		
 		$this->add ( $sec_longitud );
+		
+		
 		
 		$ciu_id = new Input ( 'ciu_id' );
 		$ciu_id->setRequired ( true );
@@ -55,6 +68,28 @@ class SectorValidator extends InputFilter {
 		->attach ( new Digits () );
 		
 		$this->add ( $ciu_id );
+		
+		$pai_id = new Input ( 'pai_id' );
+		$pai_id->setRequired ( true );
+		$pai_id->getValidatorChain ()->attach ( new StringLength ( array (
+				'max' => 11,
+				'min' => 1,
+		) ) )->attach(new NotEmpty())
+		->attach ( new Digits () );
+		
+		$this->add ( $pai_id );
+		
+		$est_id = new Input ( 'est_id' );
+		$est_id->setRequired ( true );
+		$est_id->getValidatorChain ()->attach ( new StringLength ( array (
+				'max' => 11,
+				'min' => 1,
+		) ) )->attach(new NotEmpty())
+		->attach ( new Digits () );
+		
+		$this->add ( $est_id );
+		
+		
 		
 		$sec_ubicacion = new Input ( 'sec_ubicacion' );
 		$sec_ubicacion->setRequired ( true );

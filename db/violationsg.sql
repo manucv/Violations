@@ -17,9 +17,9 @@ CREATE TABLE IF NOT EXISTS `aplicacion` (
   `apl_descripcion` varchar(70) NOT NULL,
   `apl_nombre` varchar(150) NOT NULL,
   PRIMARY KEY (`apl_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
--- Dumping data for table violationsg.aplicacion: ~17 rows (approximately)
+-- Dumping data for table violationsg.aplicacion: ~19 rows (approximately)
 DELETE FROM `aplicacion`;
 /*!40000 ALTER TABLE `aplicacion` DISABLE KEYS */;
 INSERT INTO `aplicacion` (`apl_id`, `apl_descripcion`, `apl_nombre`) VALUES
@@ -39,8 +39,24 @@ INSERT INTO `aplicacion` (`apl_id`, `apl_descripcion`, `apl_nombre`) VALUES
 	(14, 'parametros:tipoinfraccion', 'Tipo Infraccion'),
 	(15, 'parametros:tipovehiculo', 'Tipo Vehículo'),
 	(16, 'vehiculo:vehiculo', 'Modulo Vehiculo'),
-	(17, 'infraccion:infraccion', 'Infracciones');
+	(17, 'infraccion:infraccion', 'Infracciones'),
+	(18, 'parametros:parqueadero', 'Parqueaderos Parametros'),
+	(19, 'parametros:sector', 'Sectores');
 /*!40000 ALTER TABLE `aplicacion` ENABLE KEYS */;
+
+
+-- Dumping structure for table violationsg.automovil
+DROP TABLE IF EXISTS `automovil`;
+CREATE TABLE IF NOT EXISTS `automovil` (
+  `aut_id` int(11) NOT NULL,
+  `aut_placa` varchar(10) NOT NULL,
+  PRIMARY KEY (`aut_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table violationsg.automovil: ~0 rows (approximately)
+DELETE FROM `automovil`;
+/*!40000 ALTER TABLE `automovil` DISABLE KEYS */;
+/*!40000 ALTER TABLE `automovil` ENABLE KEYS */;
 
 
 -- Dumping structure for table violationsg.ciudad
@@ -134,8 +150,79 @@ CREATE TABLE IF NOT EXISTS `estado` (
 DELETE FROM `estado`;
 /*!40000 ALTER TABLE `estado` DISABLE KEYS */;
 INSERT INTO `estado` (`est_id`, `pai_id`, `est_nombre_es`, `est_nombre_en`) VALUES
-	(1, 1, 'Pichincha', 'Pichincha');
+	(1, 63, 'PICHINCHA', 'PICHINCHA');
 /*!40000 ALTER TABLE `estado` ENABLE KEYS */;
+
+
+-- Dumping structure for table violationsg.infraccion
+DROP TABLE IF EXISTS `infraccion`;
+CREATE TABLE IF NOT EXISTS `infraccion` (
+  `inf_id` int(11) NOT NULL,
+  `inf_fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `inf_detalles` text NOT NULL,
+  `usu_id` int(11) NOT NULL,
+  `tip_inf_id` int(4) NOT NULL,
+  `sec_id` int(11) NOT NULL,
+  PRIMARY KEY (`inf_id`),
+  KEY `fk_infraccion_usuario1_idx` (`usu_id`),
+  KEY `fk_infraccion_tipo_infraccion1_idx` (`tip_inf_id`),
+  KEY `fk_infraccion_sector1_idx` (`sec_id`),
+  CONSTRAINT `fk_infraccion_sector1` FOREIGN KEY (`sec_id`) REFERENCES `sector` (`sec_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_infraccion_tipo_infraccion1` FOREIGN KEY (`tip_inf_id`) REFERENCES `tipo_infraccion` (`tip_inf_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_infraccion_usuario1` FOREIGN KEY (`usu_id`) REFERENCES `usuario` (`usu_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table violationsg.infraccion: ~0 rows (approximately)
+DELETE FROM `infraccion`;
+/*!40000 ALTER TABLE `infraccion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `infraccion` ENABLE KEYS */;
+
+
+-- Dumping structure for table violationsg.log_parqueadero
+DROP TABLE IF EXISTS `log_parqueadero`;
+CREATE TABLE IF NOT EXISTS `log_parqueadero` (
+  `log_par_id` int(11) NOT NULL,
+  `log_par_fecha_ingreso` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `log_par_fecha_salida` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `log_par_horas_parqueo` int(11) NOT NULL,
+  `log_par_estado` char(1) NOT NULL,
+  `par_id` int(11) NOT NULL,
+  `aut_id` int(11) NOT NULL,
+  PRIMARY KEY (`log_par_id`),
+  KEY `fk_log_parqueadero_parqueadero1_idx` (`par_id`),
+  KEY `fk_log_parqueadero_automovil1_idx` (`aut_id`),
+  CONSTRAINT `fk_log_parqueadero_automovil1` FOREIGN KEY (`aut_id`) REFERENCES `automovil` (`aut_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_log_parqueadero_parqueadero1` FOREIGN KEY (`par_id`) REFERENCES `parqueadero` (`par_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table violationsg.log_parqueadero: ~0 rows (approximately)
+DELETE FROM `log_parqueadero`;
+/*!40000 ALTER TABLE `log_parqueadero` DISABLE KEYS */;
+/*!40000 ALTER TABLE `log_parqueadero` ENABLE KEYS */;
+
+
+-- Dumping structure for table violationsg.multa_parqueadero
+DROP TABLE IF EXISTS `multa_parqueadero`;
+CREATE TABLE IF NOT EXISTS `multa_parqueadero` (
+  `mul_par_id` int(11) NOT NULL,
+  `par_id` int(11) NOT NULL,
+  `aut_id` int(11) NOT NULL,
+  `inf_id` int(11) NOT NULL,
+  `mul_par_estado` char(1) NOT NULL,
+  `mul_par_valor` float NOT NULL,
+  PRIMARY KEY (`mul_par_id`),
+  KEY `fk_multa_parqueadero_parqueadero1_idx` (`par_id`),
+  KEY `fk_multa_parqueadero_automovil1_idx` (`aut_id`),
+  KEY `fk_multa_parqueadero_infraccion1_idx` (`inf_id`),
+  CONSTRAINT `fk_multa_parqueadero_automovil1` FOREIGN KEY (`aut_id`) REFERENCES `automovil` (`aut_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_multa_parqueadero_infraccion1` FOREIGN KEY (`inf_id`) REFERENCES `infraccion` (`inf_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_multa_parqueadero_parqueadero1` FOREIGN KEY (`par_id`) REFERENCES `parqueadero` (`par_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table violationsg.multa_parqueadero: ~0 rows (approximately)
+DELETE FROM `multa_parqueadero`;
+/*!40000 ALTER TABLE `multa_parqueadero` DISABLE KEYS */;
+/*!40000 ALTER TABLE `multa_parqueadero` ENABLE KEYS */;
 
 
 -- Dumping structure for table violationsg.pais
@@ -146,14 +233,36 @@ CREATE TABLE IF NOT EXISTS `pais` (
   `pai_nombre_en` varchar(120) NOT NULL,
   `pai_codigo_telefono` varchar(5) NOT NULL,
   PRIMARY KEY (`pai_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table violationsg.pais: ~1 rows (approximately)
 DELETE FROM `pais`;
 /*!40000 ALTER TABLE `pais` DISABLE KEYS */;
 INSERT INTO `pais` (`pai_id`, `pai_nombre_es`, `pai_nombre_en`, `pai_codigo_telefono`) VALUES
-	(1, 'Ecuador', 'Ecuador', '593');
+	(63, 'ECUADOR', 'ECUADOR', '593');
 /*!40000 ALTER TABLE `pais` ENABLE KEYS */;
+
+
+-- Dumping structure for table violationsg.parqueadero
+DROP TABLE IF EXISTS `parqueadero`;
+CREATE TABLE IF NOT EXISTS `parqueadero` (
+  `par_id` int(11) NOT NULL AUTO_INCREMENT,
+  `par_estado` char(1) NOT NULL,
+  `par_codigo` varchar(10) NOT NULL,
+  `sec_id` int(11) NOT NULL,
+  PRIMARY KEY (`par_id`),
+  KEY `fk_parqueadero_sector1_idx` (`sec_id`),
+  CONSTRAINT `fk_parqueadero_sector1` FOREIGN KEY (`sec_id`) REFERENCES `sector` (`sec_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table violationsg.parqueadero: ~3 rows (approximately)
+DELETE FROM `parqueadero`;
+/*!40000 ALTER TABLE `parqueadero` DISABLE KEYS */;
+INSERT INTO `parqueadero` (`par_id`, `par_estado`, `par_codigo`, `sec_id`) VALUES
+	(1, 'D', '7554', 1),
+	(2, 'D', '7441', 1),
+	(3, 'D', '1234', 1);
+/*!40000 ALTER TABLE `parqueadero` ENABLE KEYS */;
 
 
 -- Dumping structure for table violationsg.rol
@@ -186,7 +295,7 @@ CREATE TABLE IF NOT EXISTS `rol_aplicacion` (
   CONSTRAINT `fk_rol_apl_rol_id` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`rol_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table violationsg.rol_aplicacion: ~17 rows (approximately)
+-- Dumping data for table violationsg.rol_aplicacion: ~19 rows (approximately)
 DELETE FROM `rol_aplicacion`;
 /*!40000 ALTER TABLE `rol_aplicacion` DISABLE KEYS */;
 INSERT INTO `rol_aplicacion` (`rol_id`, `apl_id`) VALUES
@@ -206,7 +315,9 @@ INSERT INTO `rol_aplicacion` (`rol_id`, `apl_id`) VALUES
 	(1, 14),
 	(1, 15),
 	(1, 16),
-	(1, 17);
+	(1, 17),
+	(1, 18),
+	(1, 19);
 /*!40000 ALTER TABLE `rol_aplicacion` ENABLE KEYS */;
 
 
@@ -227,6 +338,30 @@ DELETE FROM `rol_usuario`;
 INSERT INTO `rol_usuario` (`rol_id`, `usu_id`) VALUES
 	(1, 1);
 /*!40000 ALTER TABLE `rol_usuario` ENABLE KEYS */;
+
+
+-- Dumping structure for table violationsg.sector
+DROP TABLE IF EXISTS `sector`;
+CREATE TABLE IF NOT EXISTS `sector` (
+  `sec_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sec_nombre` varchar(45) NOT NULL,
+  `sec_latitud` float(10,6) NOT NULL,
+  `sec_longitud` float(10,6) NOT NULL,
+  `ciu_id` int(11) NOT NULL,
+  `sec_ubicacion` varchar(150) NOT NULL,
+  PRIMARY KEY (`sec_id`),
+  KEY `fk_sector_ciudad_idx` (`ciu_id`),
+  CONSTRAINT `fk_sector_ciudad` FOREIGN KEY (`ciu_id`) REFERENCES `ciudad` (`ciu_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table violationsg.sector: ~2 rows (approximately)
+DELETE FROM `sector`;
+/*!40000 ALTER TABLE `sector` DISABLE KEYS */;
+INSERT INTO `sector` (`sec_id`, `sec_nombre`, `sec_latitud`, `sec_longitud`, `ciu_id`, `sec_ubicacion`) VALUES
+	(1, 'SECTOR 1', -0.000100, -1.000000, 1, 'UBICACION 1'),
+	(4, 'El Labrador', -0.172627, -1.000000, 1, 'El Tiempo'),
+	(5, 'el Labrador', -0.172981, -78.483574, 1, 'El Tiempo');
+/*!40000 ALTER TABLE `sector` ENABLE KEYS */;
 
 
 -- Dumping structure for table violationsg.sitio

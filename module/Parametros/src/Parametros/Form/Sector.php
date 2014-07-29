@@ -90,6 +90,17 @@ class Sector extends Form {
 		$this->add($pai_id);
 		
 		
+		$this->add ( array (
+				'name' => 'pai_id_hidden',
+				'attributes' => array (
+						'type' => 'hidden',
+						'maxlength' => '11',
+						'id' => 'pai_id_hidden',
+						'class' => 'form-control'
+				)
+		) );
+		
+		
 		/* ********************************************
 		 * CAMPO ESTADO
 		* ********************************************/
@@ -104,6 +115,17 @@ class Sector extends Form {
 		$this->add($est_id);
 		
 		
+		$this->add ( array (
+				'name' => 'est_id_hidden',
+				'attributes' => array (
+						'type' => 'hidden',
+						'maxlength' => '11',
+						'id' => 'est_id_hidden',
+						'class' => 'form-control'
+				)
+		) );
+		
+		
 		/* ********************************************
 		 * CAMPO CIUDAD
 		 * ********************************************/
@@ -116,6 +138,17 @@ class Sector extends Form {
 				'disable_inarray_validator' => true, // <-- disable
 		));
 		$this->add($ciu_id);
+		
+		
+		$this->add ( array (
+				'name' => 'ciu_id_hidden',
+				'attributes' => array (
+						'type' => 'hidden',
+						'maxlength' => '11',
+						'id' => 'ciu_id_hidden',
+						'class' => 'form-control'
+				)
+		) );
 		
 		
 		/* ********************************************
