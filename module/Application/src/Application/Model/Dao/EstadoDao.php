@@ -98,4 +98,30 @@ class EstadoDao implements InterfaceCrud {
     	return $result;
     }
     
+    public function getEstadosPorPais($pais){
+    
+    	$sql = new Sql($this->tableGateway->getAdapter());
+    	$select = $sql->select();
+    	$select->from($this->tableGateway->table);
+    	$select->where(array('pai_id' => $pais));
+    
+    	$statement = $sql->prepareStatementForSqlObject($select);
+    	$results = $statement->execute();
+    
+    	$estados = new \ArrayObject();
+    	$result = array();
+    
+    	foreach ($results as $row){
+    		$estado = new Estado();
+    		$estado->exchangeArray($row);
+    		$estados->append($estado);
+    	}
+    
+    	foreach ($estados as $est){
+    		$result[$est->getEst_id()] = $est->getEst_nombre_es();
+    	}
+    
+    	return $result;
+    }
+    
 }

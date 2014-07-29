@@ -23,11 +23,13 @@ class SectorDao implements InterfaceCrud {
 	
 	public function traer($sec_id) {
 		
-		$sec_id = ( int ) $sec_id;
-		
-		$resultSet = $this->tableGateway->select ( array (
-				'sec_id' => $sec_id 
-		) );
+		$select = $this->tableGateway->getSql ()->select ();
+		$select->join ( 'ciudad', 'ciudad.ciu_id  = sector.ciu_id' );
+		$select->join ( 'estado', 'estado.est_id  = ciudad.est_id' );
+		$select->join ( 'pais', 'pais.pai_id  = estado.pai_id' );
+		$select->where(array('sec_id' => $sec_id));
+			
+		$resultSet = $this->tableGateway->selectWith ( $select );
 		$row = $resultSet->current ();
 		
 		if (! $row) {
@@ -35,6 +37,7 @@ class SectorDao implements InterfaceCrud {
 		}
 		
 		return $row;
+		
 	}
 	
 	public function guardar(Sector $sector) {

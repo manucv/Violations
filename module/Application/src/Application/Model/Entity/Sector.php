@@ -11,6 +11,8 @@ class Sector {
 	private $sec_ubicacion;
 	
 	private $ciu_nombre_es;
+	private $pai_id;
+	private $est_id;
 	
 	function __construct() {}
 
@@ -64,6 +66,20 @@ class Sector {
 	}
 
 	/**
+	 * @return the $pai_id
+	 */
+	public function getPai_id() {
+		return $this->pai_id;
+	}
+
+	/**
+	 * @return the $est_id
+	 */
+	public function getEst_id() {
+		return $this->est_id;
+	}
+
+	/**
 	 * @param Ambigous <NULL, unknown> $sec_id
 	 */
 	public function setSec_id($sec_id) {
@@ -112,6 +128,20 @@ class Sector {
 		$this->ciu_nombre_es = $ciu_nombre_es;
 	}
 
+	/**
+	 * @param Ambigous <NULL, unknown> $pai_id
+	 */
+	public function setPai_id($pai_id) {
+		$this->pai_id = $pai_id;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $est_id
+	 */
+	public function setEst_id($est_id) {
+		$this->est_id = $est_id;
+	}
+
 	public function exchangeArray($data)
 	{
 		$this->sec_id = (isset($data['sec_id'])) ? $data['sec_id'] : null;
@@ -121,6 +151,8 @@ class Sector {
 		$this->ciu_id = (isset($data['ciu_id'])) ? $data['ciu_id'] : null;
 		$this->sec_ubicacion = (isset($data['sec_ubicacion'])) ? $data['sec_ubicacion'] : null;
 		$this->ciu_nombre_es = (isset($data['ciu_nombre_es'])) ? $data['ciu_nombre_es'] : null;
+		$this->pai_id = (isset($data['pai_id'])) ? $data['pai_id'] : null;
+		$this->est_id = (isset($data['est_id'])) ? $data['est_id'] : null;
 	}
 	
 	public function getArrayCopy(){

@@ -19,6 +19,8 @@ class SectorController extends AbstractActionController
 {
 	protected $sectorDao;
 	protected $ciudadDao;
+	protected $paisDao;
+	protected $estadoDao;
 	
     public function listadoAction()
     {
@@ -47,6 +49,11 @@ class SectorController extends AbstractActionController
     		
     	$form->get ( 'ingresar' )->setAttribute ( 'value', 'Actualizar' );
     	$form->get ( 'sec_id' )->setAttribute ( 'value', $sector->getSec_id() );
+    	
+    	$form->get('pai_id')->setValue($sector->getPai_id());
+    	$form->get('pai_id_hidden')->setValue($sector->getPai_id());
+     	$form->get('est_id_hidden')->setValue($sector->getEst_id());
+     	$form->get('ciu_id_hidden')->setValue($sector->getCiu_id());
     		
     	$view = new ViewModel ( array (
     			'formulario' => $form ,
@@ -97,6 +104,10 @@ class SectorController extends AbstractActionController
     	//SE LLENAN LOS DATOS DEL FORMULARIO
     	$form->setData ( $data );
     	
+    	$form->get('pai_id_hidden')->setValue($data['pai_id']);
+    	$form->get('est_id_hidden')->setValue($data['est_id']);
+    	$form->get('ciu_id_hidden')->setValue($data['ciu_id']);
+    	
     	//SE VALIDA EL FORMULARIO ES CORRECTO
     	if (! $form->isValid ()) {
     		// SI EL FORMULARIO NO ES CORRECTO
@@ -111,12 +122,12 @@ class SectorController extends AbstractActionController
     	//->AQUI EL FORMULARIO ES CORRECTO, SE VALIDO CORRECTAMENTE
     	
     	//SE GENERA EL OBJETO DE CONTACTO
-    	$pais = new SectorEntity();
+    	$sector = new SectorEntity();
     	//SE CARGA LA ENTIDAD CON LA INFORMACION DEL POST
-    	$pais->exchangeArray ( $data );
+    	$sector->exchangeArray ( $data );
     	
     	//SE GRABA LA INFORMACION EN LA BDD
-    	$this->getSectorDao() ->guardar ( $pais );
+    	$this->getSectorDao() ->guardar ( $sector );
     	
     	//SI SE EJECUTO EXITOSAMENTE SE REGRESA AL LISTADO DE CONTACTOS
     	return $this->redirect ()->toRoute ( 'parametros', array (
@@ -127,7 +138,8 @@ class SectorController extends AbstractActionController
     
 	public function getForm() {
 		$form = new Sector ();
-		$form->get ( 'ciu_id' )->setValueOptions ( $this->getCiudadDao ()->traerTodosArreglo() );
+		//$form->get ( 'ciu_id' )->setValueOptions ( $this->getCiudadDao ()->traerTodosArreglo() );
+		$form->get ( 'pai_id' )->setValueOptions ( $this->getPaisDao()->traerTodosArreglo() );
 		return $form;
 	}
     
@@ -146,5 +158,53 @@ class SectorController extends AbstractActionController
     	}
     	return $this->ciudadDao;
     }
+    
+    public function getPaisDao() {
+    	if (! $this->paisDao) {
+    		$sm = $this->getServiceLocator ();
+    		$this->paisDao = $sm->get ( 'Application\Model\Dao\PaisDao' );
+    	}
+    	return $this->paisDao;
+    }
+    
+    public function getEstadoDao() {
+    	if (! $this->estadoDao) {
+    		$sm = $this->getServiceLocator ();
+    		$this->estadoDao = $sm->get ( 'Application\Model\Dao\EstadoDao' );
+    	}
+    	return $this->estadoDao;
+    }
+    
+	public function sucursalesAjaxAction(){
+		if($this->getRequest()->isXmlHttpRequest()){
+			$pais = $this->request->getPost('pais');
+			$data = $this->getEstadoDao()->getEstadosPorPais($pais);
+			
+			$jsonData = json_encode($data);
+			$response = $this->getResponse();
+			$response->setStatusCode(200);
+			$response->setContent($jsonData);
+			
+			return $response;
+		}else{
+			return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+		}
+	}
+	
+	public function ciudadesAjaxAction(){
+		if($this->getRequest()->isXmlHttpRequest()){
+			$estado = $this->request->getPost('estado');
+			$data = $this->getCiudadDao()->getCiudadesPorEstado($estado);
+				
+			$jsonData = json_encode($data);
+			$response = $this->getResponse();
+			$response->setStatusCode(200);
+			$response->setContent($jsonData);
+				
+			return $response;
+		}else{
+			return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+		}
+	}
 
 }
