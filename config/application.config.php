@@ -8,7 +8,7 @@ return array(
     	'Parametros',
     	'Vehiculo',
     	'Infraccion',
-    	//'Parqueadero',
+    	'Parqueaderos',
     ),
 
     // These are various options for the listeners attached to the ModuleManager
