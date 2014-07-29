@@ -1,3 +1,54 @@
+<style>
+  #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+      
+	.controls {
+        margin-top: 16px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      #pac-input {
+        background-color: #fff;
+        padding: 0 11px 0 13px;
+        width: 400px;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        text-overflow: ellipsis;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+        margin-left: -1px;
+        padding-left: 14px;  /* Regular padding-left + 1. */
+        width: 401px;
+      }
+
+      .pac-container {
+        font-family: Roboto;
+      }
+
+      #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+      }
+
+      #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+    </style>
 <?php
 $form = $this->formulario;
 $form->prepare ();
@@ -12,6 +63,8 @@ $sec_nombre = $form->get ( 'sec_nombre' );
 $sec_latitud = $form->get ( 'sec_latitud' );
 $sec_longitud = $form->get ( 'sec_longitud' );
 $ciu_id = $form->get ( 'ciu_id' );
+$pai_id = $form->get ( 'pai_id' );
+$est_id = $form->get ( 'est_id' );
 $sec_ubicacion = $form->get ( 'sec_ubicacion' );
 
 //$date = new Fecha();
@@ -35,29 +88,30 @@ echo $this->formelementerrors ( $sec_id );
 			</tr>
 			<tr>
 				<td>
+				<?php echo $formLabel->openTag() . $pai_id->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formselect ( $pai_id ) );
+					  echo html_entity_decode( $this->formelementerrors ( $pai_id ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $est_id->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formselect ( $est_id ) );
+					  echo html_entity_decode( $this->formelementerrors ( $est_id ) ); 
+				?>
+				</td>
+				<td>
 				<?php echo $formLabel->openTag() . $ciu_id->getLabel() . $formLabel->closeTag();
 				      echo html_entity_decode( $this->formselect ( $ciu_id ) );
 					  echo html_entity_decode( $this->formelementerrors ( $ciu_id ) ); 
 				?>
 				</td>
+			</tr>
+			<tr>
+				
 				<td>
 				<?php echo $formLabel->openTag() . $sec_nombre->getLabel() . $formLabel->closeTag();
 				      echo html_entity_decode( $this->formtext ( $sec_nombre ) );
 					  echo html_entity_decode( $this->formelementerrors ( $sec_nombre ) ); 
-				?>
-				</td>
-				<td>
-				<?php echo $formLabel->openTag() . $sec_latitud->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formtext ( $sec_latitud ) );
-					  echo html_entity_decode( $this->formelementerrors ( $sec_latitud ) ); 
-				?>
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<?php echo $formLabel->openTag() . $sec_longitud->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formtext ( $sec_longitud ) );
-					  echo html_entity_decode( $this->formelementerrors ( $sec_longitud ) ); 
 				?>
 				</td>
 				<td colspan="2">
@@ -65,6 +119,28 @@ echo $this->formelementerrors ( $sec_id );
 				      echo html_entity_decode( $this->formtext ( $sec_ubicacion ) );
 					  echo html_entity_decode( $this->formelementerrors ( $sec_ubicacion ) ); 
 				?>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<?php echo $formLabel->openTag() . $sec_latitud->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $sec_latitud ) );
+					  echo html_entity_decode( $this->formelementerrors ( $sec_latitud ) ); 
+				?>
+				</td>
+				<td>
+				<?php echo $formLabel->openTag() . $sec_longitud->getLabel() . $formLabel->closeTag();
+				      echo html_entity_decode( $this->formtext ( $sec_longitud ) );
+					  echo html_entity_decode( $this->formelementerrors ( $sec_longitud ) ); 
+				?>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="4" width="100%" height="500px;">
+				<!-- style=" position: absolute; z-index: 10000; padding-left: 130px;"  -->
+				<div ><input id="pac-input" class="controls" type="text" placeholder="Search Box"></div>
+				<div id="map-canvas"></div>
 				</td>
 			</tr>
 		</table>
@@ -76,3 +152,228 @@ echo $this->formelementerrors ( $sec_id );
 		<div>&nbsp;</div>	
 </div>
 <?php echo $this->form()->closeTag(); ?>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+<script>
+	var map;
+	var markers = [];
+	
+	function initialize() {
+		
+	  var lugar = new google.maps.LatLng(-0.1865943, -78.4305382);
+	
+	  var mapOptions = {
+			    zoom: 4,
+			    center: lugar
+			  };
+	
+	  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	
+	
+	google.maps.event.addListener(map, 'click', function(e) {
+			var total = totalMarkers();
+			if(total == 0){
+				addMarker(e.latLng, map);
+				$('#sec_latitud').val(e.latLng.lat());
+				$('#sec_longitud').val(e.latLng.lng());
+			}
+	  });
+
+	// Create the search box and link it to the UI element.
+	  var input = /** @type {HTMLInputElement} */(
+	      document.getElementById('pac-input'));
+	  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+	  
+	}
+	
+	function addMarker(location, map) {
+		  var marker = new google.maps.Marker({
+		    position: location,
+		    draggable: true,
+		    map: map
+		  });
+		 markers.push(marker);
+	
+		 google.maps.event.addListener(marker, 'click', function(e) {
+	
+			 var infowindow = new google.maps.InfoWindow({
+			      content: '<div>'+$('#sec_nombre').val()+'</div>'+'<div>'+$('#sec_ubicacion').val()+'</div>'
+			  });
+			 
+			 infowindow.open(map,marker);
+				//alert( 'Lat: ' + e.latLng.lat() + ' and Longitude is: ' + e.latLng.lng() );
+				//var latitud = e.latLng.lat();
+				//var longitud = e.latLng.lng();
+				
+			    //map.setZoom(8);
+			    //map.setCenter(marker.getPosition());
+			 });
+	
+		 google.maps.event.addListener(marker, 'dragend', function (event) {
+			    $('#sec_latitud').val(this.getPosition().lat());
+				$('#sec_longitud').val(this.getPosition().lng());
+			});
+		 
+		}
+	
+	function totalMarkers(){
+		  return markers.length;
+	}
+	
+	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<script>
+
+//FUNCION PARA CARGAR EL COMBO BOX DE ESTADOS EN BASE A UN PAIS SELECCIONADO
+$("#pai_id").change(function() {
+	if($('#pai_id').val() != '' && $('#pai_id').val() != null){
+        $.ajax({
+            url: "<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'sucursalesAjax')) ?>",
+            type: "POST",
+            dataType: "json",
+            data: "pais=" + $('#pai_id').val(),
+            beforeSend: function() {
+            	$("#est_id").html("");
+            	$("#est_id").append('<option>Procesando, espere por favor...</option>');
+            }
+        }).done(function(estados) {
+            $("#est_id").html("");
+            $("#est_id").append('<option value = "null">-- Seleccione un estado --</option>');
+            for (estado in estados) {
+                $("#est_id").append('<option value="' + estado + '">' + estados[estado] + '</option>');
+            }
+            $("#est_id").prop("disabled", false);
+        });
+
+        /*FUNCION PARA TRAER EL CODIGO DE PAIS A UN PAIS SELECCIONADO
+        $.ajax({
+            url: "<?php //echo $this->url('contactos', array('controller' => 'index', 'action' => 'codigoPais')) ?>",
+            type: "POST",
+            dataType: "json",
+            data: "pais=" + $('#PAI_ID').val(),
+            beforeSend: function() {
+            	$("#CON_CODIGO_PAIS").val("Procesando, espere por favor...");
+            	
+            }
+        }).done(function(codigo) {
+        		$("#CON_CODIGO_PAIS").val(''+codigo['pai_codigo_telefono']);
+        });
+         */
+
+        
+	}else{
+		$("#est_id").prop("disabled", true);
+	}
+});
+
+//FUNCION PARA CARGAR LOS ESTADOS CUANDO EL FORMULARIO SEA DE ACTUALIZACION
+$("#pai_id").ready(function() {
+	if($('#pai_id').val() != '' && $('#pai_id').val() != null){
+        $.ajax({
+            url: "<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'sucursalesAjax')) ?>",
+            type: "POST",
+            dataType: "json",
+            data: "pais=" + $('#pai_id').val(),
+            beforeSend: function() {
+            	$("#est_id").html("");
+            	$("#est_id").append('<option>Procesando, espere por favor...</option>');
+            }
+        }).done(function(estados) {
+            $("#est_id").html("");
+            $("#est_id").append('<option value = "null">-- Seleccione un estado --</option>');
+            for (estado in estados) {
+            	var selected = '';
+				if($("#estado_oculto").val() == estado){
+					selected = 'selected="selected"';
+				}else{
+					selected = '';
+				}
+                
+                $("#est_id").append('<option value="' + estado + '" ' + selected + '>' + estados[estado] + '</option>');
+            }
+            $("#est_id").prop("disabled", false);
+        });
+	}else{
+		$("#est_id").prop("disabled", true);
+	}
+});
+
+/*
+//FUNCION PARA CARGAR EL COMBO BOX DE CIUDADES EN BASE A UN ESTADO
+$("#EST_ID").change(function() {
+	if($('#EST_ID').val() != '' && $('#EST_ID').val() != null){
+        $.ajax({
+            url: "<?php //echo $this->url('contactos', array('controller' => 'index', 'action' => 'ciudades')) ?>",
+            type: "POST",
+            dataType: "json",
+            data: "estado=" + $(this).val(),
+            beforeSend: function() {
+            	$("#CIU_ID").html("");
+            	$("#CIU_ID").append('<option>Procesando, espere por favor...</option>');
+            }
+        }).done(function(ciudades) {
+            $("#CIU_ID").html("");
+            $("#CIU_ID").append('<option value = "">-- Seleccione una ciudad --</option>');
+            for (ciudad in ciudades) {
+                $("#CIU_ID").append('<option value="' + ciudad + '">' + ciudades[ciudad] + '</option>');
+            }
+            $("#CIU_ID").prop("disabled", false);
+        });
+	}else{
+		$("#CIU_ID").prop("disabled", true);
+	}
+});
+
+$("#EST_ID").ready(function() {
+	if($('#EST_ID').val() != '' && $('#EST_ID').val() != null){
+        $.ajax({
+            url: "<?php //echo $this->url('contactos', array('controller' => 'index', 'action' => 'ciudades')) ?>",
+            type: "POST",
+            dataType: "json",
+            data: "estado=" + $('#estado_oculto').val(),
+            beforeSend: function() {
+            	$("#CIU_ID").html("");
+            	$("#CIU_ID").append('<option>Procesando, espere por favor...</option>');
+            }
+        }).done(function(ciudades) {
+            $("#CIU_ID").html("");
+            $("#CIU_ID").append('<option value = "">-- Seleccione una ciudad --</option>');
+            for (ciudad in ciudades) {
+            	var selected = '';
+            	if($("#ciudad_oculto").val() == ciudad){
+					selected = 'selected="selected"';
+				}else{
+					selected = '';
+				}
+				
+                $("#CIU_ID").append('<option value="' + ciudad + '" '+selected+'>' + ciudades[ciudad] + '</option>');
+            }
+            $("#CIU_ID").prop("disabled", false);
+        });
+	}else{
+		$("#CIU_ID").prop("disabled", true);
+	}
+});
+
+//FUNCION PARA TRAER EL CODIGO DE CIUDAD (TELEFONO)
+$("#CIU_ID").change(function() {
+	if($('#CIU_ID').val() != '' && $('#CIU_ID').val() != null){
+		
+        $.ajax({
+            url: "<?php //echo $this->url('contactos', array('controller' => 'index', 'action' => 'codigoCiudad')) ?>",
+            type: "POST",
+            dataType: "json",
+            data: "ciudad=" + $(this).val(),
+            beforeSend: function() {
+            	$("#CON_CODIGO_CIUDAD").val("Procesando, espere por favor...");
+            }
+        }).done(function(codigo) {
+        		$("#CON_CODIGO_CIUDAD").val(''+codigo['ciu_codigo_telefono']);
+        });
+	};
+
+});
+*/
+</script>
+

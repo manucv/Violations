@@ -19,6 +19,8 @@ class SectorController extends AbstractActionController
 {
 	protected $sectorDao;
 	protected $ciudadDao;
+	protected $paisDao;
+	protected $estadoDao;
 	
     public function listadoAction()
     {
@@ -127,7 +129,8 @@ class SectorController extends AbstractActionController
     
 	public function getForm() {
 		$form = new Sector ();
-		$form->get ( 'ciu_id' )->setValueOptions ( $this->getCiudadDao ()->traerTodosArreglo() );
+		//$form->get ( 'ciu_id' )->setValueOptions ( $this->getCiudadDao ()->traerTodosArreglo() );
+		$form->get ( 'pai_id' )->setValueOptions ( $this->getPaisDao()->traerTodosArreglo() );
 		return $form;
 	}
     
@@ -146,5 +149,37 @@ class SectorController extends AbstractActionController
     	}
     	return $this->ciudadDao;
     }
+    
+    public function getPaisDao() {
+    	if (! $this->paisDao) {
+    		$sm = $this->getServiceLocator ();
+    		$this->paisDao = $sm->get ( 'Application\Model\Dao\PaisDao' );
+    	}
+    	return $this->paisDao;
+    }
+    
+    public function getEstadoDao() {
+    	if (! $this->estadoDao) {
+    		$sm = $this->getServiceLocator ();
+    		$this->estadoDao = $sm->get ( 'Application\Model\Dao\EstadoDao' );
+    	}
+    	return $this->estadoDao;
+    }
+    
+	public function sucursalesAjaxAction(){
+		if($this->getRequest()->isXmlHttpRequest()){
+			$pais = $this->request->getPost('pais');
+			$data = $this->getEstadoDao()->getEstadosPorPais($pais);
+			
+			$jsonData = json_encode($data);
+			$response = $this->getResponse();
+			$response->setStatusCode(200);
+			$response->setContent($jsonData);
+			
+			return $response;
+		}else{
+			return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+		}
+	}
 
 }
