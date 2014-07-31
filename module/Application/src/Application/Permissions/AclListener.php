@@ -9,7 +9,10 @@ use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 
 use Zend\Db\Sql\Sql;
-use Zend\Db\Sql\Expression;
+//use Zend\Db\Sql\Expression;
+
+use Zend\Db\Adapter\Adapter;
+use Zend\Console\Console;
 
 class AclListener implements ListenerAggregateInterface{
     
@@ -35,71 +38,73 @@ class AclListener implements ListenerAggregateInterface{
 
     public function onDispatch(MvcEvent $e){
     	
-    	//session_unset();
-        $app = $e->getParam('application');
-        $sm = $app->getServiceManager();
-        $config = $sm->get('config');
-
-        $db_auth = new \Zend\Db\Adapter\Adapter ( $config ['db'] );
-
-         $sql = new Sql($db_auth);
-         $selectRoles = $sql->select();
-         $selectRoles->from('rol');
-         $selectRoles->join(array('ra' => 'rol_aplicacion'),'rol.rol_id = ra.rol_id');
-         $selectRoles->join(array('a' => 'aplicacion'),'ra.apl_id = a.apl_id');
-        $statement = $sql->prepareStatementForSqlObject($selectRoles);
-        $results = $statement->execute();
-        
-        $acl = new Acl();
- 
-        $permissionsArray=array();
-
-        foreach($results as $rol){
-            $permissionsArray[$rol['rol_id']][$rol['apl_id']]=$rol['apl_descripcion'];
-        }
-
-         $selectResource = $sql->select();
-         $selectResource->from('aplicacion');
-         $statement = $sql->prepareStatementForSqlObject($selectResource);
-         $results = $statement->execute();
-         
-        foreach($results as $resource){
-            $acl->addResource(new Resource($resource['apl_descripcion']));
-        }
-        
-        foreach($permissionsArray as $rol_id=>$permission){
-            $acl->addRole(new Role($rol_id));
-            foreach($permission as $apl_id=>$resource){
-                $acl->allow($rol_id, $resource);
-                $this->permisosArray[$rol_id][]=$resource;
-            }            
-        }
-        
-        if (isset($_SESSION['Zend_Auth']) && is_object($_SESSION['Zend_Auth'])){
-          $_SESSION['Zend_Auth']['storage']->menu=$this->permisosArray;  
-        } 
-        
-        $application = $e->getApplication();
-        $services = $application->getServiceManager();
-        $services->setService('AclService', $acl);
-        
-        $matches = $e->getRouteMatch();
-        
-        $controllerClass = $matches->getParam('controller');
-        $controllerArray = explode("\\", $controllerClass);
-        
-        $module = strtolower($controllerArray[0]);
-        $controller = strtolower($controllerArray[2]);
-        $action = $matches->getParam('action');
-        
-        $resourceName = $module . ':' . $controller;
-        
-        if(!$acl->isAllowed($this->getRole($services), $resourceName, $action)){
-        	
-            $matches->setParam('controller', 'Application\Controller\Error');
-			$matches->setParam('action','denied');
-        }
-        
+    		//session_unset();
+    		$app = $e->getParam('application');
+    		$sm = $app->getServiceManager();
+    		$config = $sm->get('config');
+    		
+    		$db_auth = new Adapter( $config ['db'] );
+    		
+    		$sql = new Sql($db_auth);
+    		$selectRoles = $sql->select();
+    		 
+    		$selectRoles->from('rol');
+    		$selectRoles->join(array('ra' => 'rol_aplicacion'),'rol.rol_id = ra.rol_id');
+    		$selectRoles->join(array('a' => 'aplicacion'),'ra.apl_id = a.apl_id');
+    		 
+    		$statement = $sql->prepareStatementForSqlObject($selectRoles);
+    		
+    		$results = $statement->execute();
+    		
+    		$acl = new Acl();
+    		
+    		$permissionsArray=array();
+    		
+    		foreach($results as $rol){
+    			$permissionsArray[$rol['rol_id']][$rol['apl_id']]=$rol['apl_descripcion'];
+    		}
+    		
+    		$selectResource = $sql->select();
+    		$selectResource->from('aplicacion');
+    		$statement = $sql->prepareStatementForSqlObject($selectResource);
+    		$results = $statement->execute();
+    		 
+    		foreach($results as $resource){
+    			$acl->addResource(new Resource($resource['apl_descripcion']));
+    		}
+    		
+    		foreach($permissionsArray as $rol_id=>$permission){
+    			$acl->addRole(new Role($rol_id));
+    			foreach($permission as $apl_id=>$resource){
+    				$acl->allow($rol_id, $resource);
+    				$this->permisosArray[$rol_id][]=$resource;
+    			}
+    		}
+    		
+    		if (isset($_SESSION['Zend_Auth']) && is_object($_SESSION['Zend_Auth'])){
+    			$_SESSION['Zend_Auth']['storage']->menu=$this->permisosArray;
+    		}
+    		
+    		$application = $e->getApplication();
+    		$services = $application->getServiceManager();
+    		$services->setService('AclService', $acl);
+    		
+    		$matches = $e->getRouteMatch();
+    		
+    		$controllerClass = $matches->getParam('controller');
+    		$controllerArray = explode("\\", $controllerClass);
+    		
+    		$module = strtolower($controllerArray[0]);
+    		$controller = strtolower($controllerArray[2]);
+    		$action = $matches->getParam('action');
+    		
+    		$resourceName = $module . ':' . $controller;
+    		
+    		if(!$acl->isAllowed($this->getRole($services), $resourceName, $action)){
+    			 
+    			$matches->setParam('controller', 'Application\Controller\Error');
+    			$matches->setParam('action','denied');
+    		}
         
    }
     

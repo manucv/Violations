@@ -22,8 +22,8 @@ class LoginController extends AbstractActionController {
 		
 		if ($loggedIn) {
 			
-			return $this->redirect ()->toRoute ( 'empresas', array (
-					'controller' => 'empresas',
+			return $this->redirect ()->toRoute ( 'parametros', array (
+					'controller' => 'index',
 					'action' => 'index'
 			) );
 		}
@@ -122,7 +122,7 @@ class LoginController extends AbstractActionController {
 	}	
 
 	public function secret($password){
-		/*Aqui va la llamada a la librería de validación de contraseñas de Azul*/
+		/*Aqui va la llamada a la librerï¿½a de validaciï¿½n de contraseï¿½as de Azul*/
 		return md5($password);
 // 		$eclave='';
 // 			for ($i = 0; $i < strlen($password); $i++) {

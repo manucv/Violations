@@ -14,6 +14,10 @@ use Zend\Mvc\MvcEvent;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Validator\AbstractValidator;
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
+use Zend\Console\Adapter\AdapterInterface as Console;
 use Application\Model\Entity\Usuario;
 use Application\Model\Dao\UsuarioDao;
 use Application\Model\Entity\RolUsuario;
@@ -52,7 +56,7 @@ use Application\Model\Dao\ParqueaderoDao;
 use Application\Model\Entity\Sector;
 use Application\Model\Dao\SectorDao;
 
-class Module {
+class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface{
 	public function onBootstrap(MvcEvent $e) {
 		
 		//AYUDA A QUE SE VALIDEN LOS ERRORES DEL FORMULARIO
@@ -115,8 +119,12 @@ class Module {
 
         		case 'Application\Controller\Index':
         				return;
-
-        			break;	
+        				break;
+        				
+        		case 'Console\Controller\Index':
+        				return;
+	        			break;	
+	        	
         	}
         }
         
@@ -297,6 +305,19 @@ class Module {
 							return $controller;
 						},
 				)
+		);
+	}
+	
+	public function getConsoleUsage(Console $console)
+	{
+		return array(
+				// Describe available commands
+				'user resetpassword [--verbose|-v] EMAIL PASSWORD'    => 'Reset password for a user',
+	
+				// Describe expected parameters
+				array( 'EMAIL',            'Email of the user for a password reset' ),
+				array( '--verbose|-v',     '(optional) turn on verbose mode'        ),
+				array( 'PASSWORD',     'Valid Password to execute the cron job'     ),
 		);
 	}
 }

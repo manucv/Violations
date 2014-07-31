@@ -5,6 +5,7 @@ class Componente {
 	
 	private $com_id;
 	private $sit_id;
+	private $tip_com_id;
 	private $com_descripcion;
 	private $com_ip_local;
 	private $com_ip_publica;
@@ -15,9 +16,15 @@ class Componente {
 	private $com_gateway;
 	private $com_dns1;
 	private $com_dns2;
+	private $com_estado;
+	private $com_ultima_respuesta;
+	private $com_ultimo_valor;
+	
+	private $sit_descripcion;
+	private $tip_com_descripcion;
 	
 	function __construct() {}
-	
+
 	/**
 	 * @return the $com_id
 	 */
@@ -30,6 +37,13 @@ class Componente {
 	 */
 	public function getSit_id() {
 		return $this->sit_id;
+	}
+
+	/**
+	 * @return the $tip_com_id
+	 */
+	public function getTip_com_id() {
+		return $this->tip_com_id;
 	}
 
 	/**
@@ -103,6 +117,41 @@ class Componente {
 	}
 
 	/**
+	 * @return the $com_estado
+	 */
+	public function getCom_estado() {
+		return $this->com_estado;
+	}
+
+	/**
+	 * @return the $com_ultima_respuesta
+	 */
+	public function getCom_ultima_respuesta() {
+		return $this->com_ultima_respuesta;
+	}
+
+	/**
+	 * @return the $com_ultimo_valor
+	 */
+	public function getCom_ultimo_valor() {
+		return $this->com_ultimo_valor;
+	}
+
+	/**
+	 * @return the $sit_descripcion
+	 */
+	public function getSit_descripcion() {
+		return $this->sit_descripcion;
+	}
+
+	/**
+	 * @return the $tip_com_descripcion
+	 */
+	public function getTip_com_descripcion() {
+		return $this->tip_com_descripcion;
+	}
+
+	/**
 	 * @param Ambigous <NULL, unknown> $com_id
 	 */
 	public function setCom_id($com_id) {
@@ -114,6 +163,13 @@ class Componente {
 	 */
 	public function setSit_id($sit_id) {
 		$this->sit_id = $sit_id;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $tip_com_id
+	 */
+	public function setTip_com_id($tip_com_id) {
+		$this->tip_com_id = $tip_com_id;
 	}
 
 	/**
@@ -186,10 +242,46 @@ class Componente {
 		$this->com_dns2 = $com_dns2;
 	}
 
+	/**
+	 * @param Ambigous <NULL, unknown> $com_estado
+	 */
+	public function setCom_estado($com_estado) {
+		$this->com_estado = $com_estado;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $com_ultima_respuesta
+	 */
+	public function setCom_ultima_respuesta($com_ultima_respuesta) {
+		$this->com_ultima_respuesta = $com_ultima_respuesta;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $com_ultimo_valor
+	 */
+	public function setCom_ultimo_valor($com_ultimo_valor) {
+		$this->com_ultimo_valor = $com_ultimo_valor;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $sit_descripcion
+	 */
+	public function setSit_descripcion($sit_descripcion) {
+		$this->sit_descripcion = $sit_descripcion;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $tip_com_descripcion
+	 */
+	public function setTip_com_descripcion($tip_com_descripcion) {
+		$this->tip_com_descripcion = $tip_com_descripcion;
+	}
+
 	public function exchangeArray($data)
 	{
 		$this->com_id = (isset($data['com_id'])) ? $data['com_id'] : null;
 		$this->sit_id = (isset($data['sit_id'])) ? $data['sit_id'] : null;
+		$this->tip_com_id = (isset($data['tip_com_id'])) ? $data['tip_com_id'] : null;
 		$this->com_descripcion = (isset($data['com_descripcion'])) ? $data['com_descripcion'] : null;
 		$this->com_ip_local = (isset($data['com_ip_local'])) ? $data['com_ip_local'] : null;
 		$this->com_ip_publica = (isset($data['com_ip_publica'])) ? $data['com_ip_publica'] : null;
@@ -200,6 +292,12 @@ class Componente {
 		$this->com_gateway = (isset($data['com_gateway'])) ? $data['com_gateway'] : null;
 		$this->com_dns1 = (isset($data['com_dns1'])) ? $data['com_dns1'] : null;
 		$this->com_dns2 = (isset($data['com_dns2'])) ? $data['com_dns2'] : null;
+		$this->com_estado = (isset($data['com_estado'])) ? $data['com_estado'] : null;
+		$this->com_ultima_respuesta = (isset($data['com_ultima_respuesta'])) ? $data['com_ultima_respuesta'] : null;
+		$this->com_ultimo_valor = (isset($data['com_ultimo_valor'])) ? $data['com_ultimo_valor'] : null;
+		
+		$this->sit_descripcion = (isset($data['sit_descripcion'])) ? $data['sit_descripcion'] : null;
+		$this->tip_com_descripcion = (isset($data['tip_com_descripcion'])) ? $data['tip_com_descripcion'] : null;
 	}
 	
 	public function getArrayCopy(){
