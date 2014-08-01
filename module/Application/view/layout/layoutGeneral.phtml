@@ -15,7 +15,7 @@ use Application\Funciones\Funciones;
 
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        //->prependStylesheet($this->basePath() . '/js/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/font-awesome-4.1.0/css/font-awesome.min.css')
                         ->prependStylesheet($this->basePath() . '/js/datatables/media/css/demo_table.css')        
                         //->prependStylesheet($this->basePath() . '/css/docs.min.css')
         				//->prependStylesheet($this->basePath() . '/css/ui-lightness/jquery-ui-1.10.4.custom.css')
@@ -59,50 +59,55 @@ use Application\Funciones\Funciones;
 						id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
 							<li class="dropdown borde-derecho-menu"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown">Par&aacute;metros <b class="caret"></b></a>
+								data-toggle="dropdown"><i class="fa fa-gears fa-fw"></i> Par&aacute;metros <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'pais', 'action' => 'listado'))?>">Paises</a></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'estado', 'action' => 'listado'))?>">Estados</a></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'ciudad', 'action' => 'listado'))?>">Ciudades</a></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'listado'))?>">Sector</a></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'sitio', 'action' => 'listado'))?>">Sitios</a></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipocomponente', 'action' => 'listado'))?>">Tipo Componente</a></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'listado'))?>">Tipo Infraccion</a></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipovehiculo', 'action' => 'listado'))?>">Tipo Veh&iacute;culo</a></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'parqueadero', 'action' => 'listado'))?>">Parqueadero</a></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'pais', 'action' => 'listado'))?>"><i class="fa fa-globe fa-fw"></i> Pa&iacute;ses</a></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'estado', 'action' => 'listado'))?>"><i class="fa fa-building fa-fw"></i> Estados</a></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'ciudad', 'action' => 'listado'))?>"><i class="fa fa-building-o fa-fw"></i> Ciudades</a></li>
 									<li class="divider"></li>
-									<li><a href="#">Par&aacute;metros Generales</a></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'listado'))?>"><i class="fa fa-map-marker fa-fw"></i> Sector</a></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'parqueadero', 'action' => 'listado'))?>"><i class="fa fa-location-arrow fa-fw"></i> Parqueadero</a></li>
+									<li class="divider"></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'sitio', 'action' => 'listado'))?>"><i class="fa fa-compass fa-fw"></i> Sitios</a></li>
+									<li class="divider"></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipocomponente', 'action' => 'listado'))?>"><i class="fa fa-laptop fa-fw"></i> Tipo Componente</a></li>
+									<li class="divider"></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'listado'))?>"><i class="fa fa-ticket fa-fw"></i> Tipo Infraccion</a></li>
+									<li class="divider"></li>
+									<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipovehiculo', 'action' => 'listado'))?>"><i class="fa fa-car fa-fw"></i> Tipo Veh&iacute;culo</a></li>
+									<li class="divider"></li>
+									<li><a href="#"><i class="fa fa-cog fa-fw"></i> Par&aacute;metros Generales</a></li>
 								</ul></li>
 							<li class="dropdown borde-derecho-menu"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown">Administraci&oacute;n<b class="caret"></b></a>
+								data-toggle="dropdown"><i class="fa fa-users fa-fw"></i> Administraci&oacute;n<b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'index'))?>">Usuarios</a></li>
-									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'roles', 'action' => 'listado'))?>">Roles</a></li>
-									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'aplicaciones', 'action' => 'listado'))?>">Aplicaciones</a></li>
+									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'index'))?>"><i class="fa fa-user fa-fw"></i> Usuarios</a></li>
+									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'roles', 'action' => 'listado'))?>"><i class="fa fa-child fa-fw"></i> Roles</a></li>
+									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'aplicaciones', 'action' => 'listado'))?>"><i class="fa fa-list fa-fw"></i> Aplicaciones</a></li>
 								</ul></li>
 								
-							<li class="borde-derecho-menu"><a href="<?php echo $this->url('vehiculo', array('controller' => 'vehiculo', 'action' => 'listado'))?>">Veh&iacute;culo</a></li>
+							<li class="borde-derecho-menu"><a href="<?php echo $this->url('vehiculo', array('controller' => 'vehiculo', 'action' => 'listado'))?>"><i class="fa fa-car fa-fw"></i> Veh&iacute;culo</a></li>
 								
 							<li class="dropdown borde-derecho-menu"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown">Monitoreo<b class="caret"></b></a>
+								data-toggle="dropdown"><i class="fa fa-video-camera fa-fw"></i> Monitoreo<b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="<?php echo $this->url('monitoreo', array('controller' => 'control', 'action' => 'general'))?>">General</a></li>		
-									<li><a href="<?php echo $this->url('monitoreo', array('controller' => 'control', 'action' => 'buscar'))?>">Por Busqueda</a></li>
+									<li><a href="<?php echo $this->url('monitoreo', array('controller' => 'control', 'action' => 'general'))?>"><i class="fa fa-ellipsis-h fa-fw"></i> General</a></li>		
+									<li><a href="<?php echo $this->url('monitoreo', array('controller' => 'control', 'action' => 'buscar'))?>"><i class="fa fa-search fa-fw"></i> Por B&uacute;squeda</a></li>
 									
 								</ul></li>
 								
-								<li class="borde-derecho-menu"><a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'index'))?>">Infracciones</a></li>
+								<li class="borde-derecho-menu"><a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'index'))?>"><i class="fa fa-list-ol fa-fw"></i> Infracciones</a></li>
 
-								<li class="borde-derecho-menu"><a href="<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'index'))?>">Parqueaderos</a></li>								
+								<li class="borde-derecho-menu"><a href="<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'index'))?>"><i class="fa fa-road fa-fw"></i> Parqueaderos</a></li>								
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown">Perfil <b class="caret"></b></a>
+								data-toggle="dropdown"><i class="fa fa-user fa-fw"></i> Perfil <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="#">Datos Generales</a></li>
-									<li><a href="#">Cambiar Contrase&ntilde;a</a></li>
+									<li><a href="#"><i class="fa fa-info-circle fa-fw"></i> Datos Generales</a></li>
+									<li><a href="#"><i class="fa fa-key fa-fw"></i> Cambiar Contrase&ntilde;a</a></li>
 									<li class="divider"></li>
-									<li><a href="<?php echo $this->url('application', array('controller' => 'login', 'action' => 'logout'))?>">Cerrar Sesi&oacute;n</a></li>
+									<li><a href="<?php echo $this->url('application', array('controller' => 'login', 'action' => 'logout'))?>"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesi&oacute;n</a></li>
 								</ul></li>
 						</ul>
 					</div>
