@@ -40,27 +40,26 @@ div.container a.brand {
 /*********************** ESTILOS DEL SISTEMA ********************/
 
 /********** MENU SUPERIOR ***************/
-
-.menu-top{
+.menu-top {
 	background-color: #578FC0;
 	height: 20px;
 	margin-bottom: 5px;
 }
-.borde-derecho-menu{
+
+.borde-derecho-menu {
 	border-right: 1px solid #DFE0DB;
 }
-
-
 
 /*MODULO DE MONITOREO*/
 
 /* LISTADO PAIS */
-
-.icon-content{
-	float: left; padding-left: 10px; padding-right: 10px;
+.icon-content {
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
-.txt-icon-content{
+.txt-icon-content {
 	padding-top: 10px;
 }
 
@@ -68,81 +67,86 @@ div.container a.brand {
 
 /* CONTROL */
 .circulo-rojo {
-	width: 30px;
-	height: 30px;
-	-webkit-border-radius: 20px;
-	-moz-border-radius: 20px;
-	border-radius: 20px;
+	width: 17px;
+	height: 17px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 	background-color: red;
 	float: left;
-	margin-right: 20px;
+	margin-right: 10px;
 }
 
 .circulo-verde {
-	width: 30px;
-	height: 30px;
-	-webkit-border-radius: 20px;
-	-moz-border-radius: 20px;
-	border-radius: 20px;
-	background-color: green;
+	width: 17px;
+	height: 17px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	background-color: #92be4d;
 	float: left;
-	margin-right: 20px;
+	margin-right: 10px;
 }
 
-.circulo-amarillo {
-	width: 30px;
-	height: 30px;
-	-webkit-border-radius: 20px;
-	-moz-border-radius: 20px;
-	border-radius: 20px;
-	background-color: yellow;
-	float: left;
-	margin-right: 20px;
-}
-
-.no-componente{
-	color: red;
-}
-
-.cuadrado-rojo {
+.circulo-rojo-p {
 	width: 15px;
 	height: 15px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 	background-color: red;
 	float: left;
 	margin-right: 10px;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
 }
 
-.cuadrado-verde {
+.circulo-verde-p {
 	width: 15px;
 	height: 15px;
-	background-color: green;
-	float: left;
-	margin-right: 10px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
-}
-
-.cuadrado-amarillo {
-	width: 15px;
-	height: 15px;
-	background-color: yellow;
+	background-color: #92be4d;
 	float: left;
-	margin-right: 10px;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
+	margin-right: 5px;
 }
 
-.checkbox-style{
+.no-componente {
+	color: red;
+}
+
+.texto-componente {
+	font-family: sans-serif;
+	font-size: 13px;
+}
+
+.ip-local {
+	padding-left: 20px;
+}
+
+.ulitma-respuesta{
+	padding-left: 20px;
+	padding-top: 6px;
+	color: #999999;
+	font-size: 11px;
+}
+
+hr {
+	padding: 0 0;
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+.checkbox-style {
 	width: 100%;
 	font-weight: normal;
 	padding-left: 10px;
 }
 
-.checkbox-style input{
+.checkbox-style input {
 	margin-right: 10px;
+}
+
+.titulo-ventana{
+	font-size: 40px;
+	color: #868686;
 }

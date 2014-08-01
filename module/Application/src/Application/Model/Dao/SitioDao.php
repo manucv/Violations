@@ -20,11 +20,26 @@ class SitioDao implements InterfaceCrud {
          return $resultSet;
     }
     
+    public function traerTodosPorCiudad($ciu_id){
+    	$select = $this->tableGateway->getSql ()->select ();
+    	$select->join ( 'ciudad', 'ciudad.ciu_id  = sitio.ciu_id' );
+    	$select->where(array('sitio.ciu_id' => $ciu_id));
+    
+    	$resultSet = $this->tableGateway->selectWith ( $select );
+    	return $resultSet;
+    }
+    
     public function traer($sit_id){
-    	 
     	$sit_id = (int) $sit_id;
-    	 
-    	$resultSet = $this->tableGateway->select(array('sit_id' => $sit_id));
+    	
+    	$select = $this->tableGateway->getSql ()->select ();
+    	$select->join ( 'ciudad', 'ciudad.ciu_id  = sitio.ciu_id' );
+    	$select->join ( 'estado', 'estado.est_id  = ciudad.est_id' );
+    	$select->join ( 'pais', 'pais.pai_id  = estado.pai_id' );
+    	
+    	$select->where(array('sit_id' => $sit_id));
+    	
+    	$resultSet = $this->tableGateway->selectWith ( $select );
     	$row =  $resultSet->current();
     	
     	if(!$row){
@@ -55,6 +70,10 @@ class SitioDao implements InterfaceCrud {
     			'sit_sector' => $sitio->getSit_sector(),
     			'sit_reference_number' => $sitio->getSit_reference_number(),
     			'sit_estado' => $sitio->getSit_estado(),
+    			'sit_latitud' => $sitio->getSit_latitud(),
+    			'sit_longitud' => $sitio->getSit_longitud(),
+    			'sit_ultima_respuesta' => $sitio->getSit_ultima_respuesta(),
+    			'sit_ultimo_valor' => $sitio->getSit_ultimo_valor(),
     	);
     
     	$data ['sit_id'] = $id;

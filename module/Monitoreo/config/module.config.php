@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Monitoreo\Controller\Control' => 'Monitoreo\Controller\ControlController',
+        	'Monitoreo\Controller\Detalle' => 'Monitoreo\Controller\DetalleController',
         ),
     ),
     'router' => array(
@@ -17,7 +18,7 @@ return array(
                         // the controllers for your module are found
                         '__NAMESPACE__' => 'Monitoreo\Controller',
                         'controller'    => 'Control',
-                        'action'        => 'control',
+                        'action'        => 'buscar',
                     ),
                 ),
                 'may_terminate' => true,
@@ -38,7 +39,7 @@ return array(
                             'defaults' => array (
 								'__NAMESPACE__' => 'Monitoreo\Controller',
 								'controller' => 'Control',
-								'action' => 'control' 
+								'action' => 'buscar' 
 							) 
                         ),
                     ),
