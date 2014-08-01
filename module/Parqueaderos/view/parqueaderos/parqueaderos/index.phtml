@@ -50,6 +50,7 @@
 	var map;
 	var markers = [];
 	var geocoder;
+	/* A esta cosa hay que pasarle al layout */
 	
 	function initialize() {
 
@@ -70,8 +71,10 @@
 			(function(marker, data) {
 				// Attaching a click event to the current marker
 				google.maps.event.addListener(marker, "click", function(e) {
-					infoWindow.setContent(data.description);
-					infoWindow.open(map, marker);
+					//infoWindow.setContent(data.description);
+					//infoWindow.open(map, marker);
+					//alert('di click en '+data.description);
+					window.location.href="<?php echo $this->basepath(); ?>/parqueaderos/sector/index/"+data.id;
 				});
 			})(marker, data);
 		}

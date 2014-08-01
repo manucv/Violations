@@ -22,6 +22,16 @@ class ParqueaderoDao implements InterfaceCrud {
 		return $resultSet;
 		
 	}
+
+	public function traerTodosPorSector($sec_id) {
+		
+		$select = $this->tableGateway->getSql ()->select ();
+		$select-> where ( array('sec_id'=>$sec_id) );
+		 
+		$resultSet = $this->tableGateway->selectWith ( $select );
+		return $resultSet;
+		
+	}	
 	
 	public function traer($par_id) {
 		

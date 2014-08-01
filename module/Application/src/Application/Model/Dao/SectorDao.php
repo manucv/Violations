@@ -123,6 +123,7 @@ class SectorDao implements InterfaceCrud {
 		$count=0;
 		$jsonArray=array();
 		foreach ($sectores as $sec){
+			$jsonArray[$count]['id']=$sec->getSec_id();
 			$jsonArray[$count]['title']=$sec->getSec_nombre();
 			$jsonArray[$count]['lat']=$sec->getSec_latitud();
 			$jsonArray[$count]['lng']=$sec->getSec_longitud();

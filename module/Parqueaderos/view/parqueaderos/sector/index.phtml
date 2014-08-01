@@ -1,0 +1,20 @@
+<strong>Module:</strong>        Parqueaderos Module &raquo;
+<strong>Controller:</strong>    Sector &raquo;
+<strong>Action:</strong>        index
+
+<h1><?php echo $sector->getSec_nombre(); ?></h1>
+<div class='row'>
+<?php foreach($parqueaderos as $parqueadero): ?>
+	<div class="parqueadero">
+		<div class="parqueadero-inner desocupado">
+			<span> <?php echo $parqueadero->getPar_codigo(); ?> </span>
+		</div>
+	</div>
+<?php endforeach; ?>
+</div>
+
+<style>
+	.parqueadero{border:3px solid #578fc0;}
+	.parqueadero .desocupado{  }
+	.parqueadero .parqueadero-inner span{background-color:#fff;}
+</style>
