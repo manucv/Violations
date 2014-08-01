@@ -100,4 +100,21 @@ class ComponenteDao {
     		$this->tableGateway->insert ( $data );
     	}
     }
+    
+    public function traerRegistrosHastaCiudad(){
+    
+    	$sql = new Sql($this->tableGateway->getAdapter());
+    	$select = $sql->select();
+    	$select->from($this->tableGateway->table);
+    	$select->join('sitio', 'sitio.sit_id = componente.sit_id');
+    	$select->join('ciudad', 'ciudad.ciu_id = sitio.ciu_id');
+    	$select->join('estado', 'estado.est_id = ciudad.est_id');
+    	$select->join('pais', 'pais.pai_id = estado.pai_id');
+    	$select->order('pais.pai_id');
+    
+    	$statement = $sql->prepareStatementForSqlObject($select);
+    	$results = $statement->execute();
+    
+    	return $results;
+    }
 }

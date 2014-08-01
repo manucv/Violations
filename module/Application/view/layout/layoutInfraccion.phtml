@@ -78,8 +78,16 @@ use Application\Funciones\Funciones;
 									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'roles', 'action' => 'listado'))?>">Roles</a></li>
 									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'aplicaciones', 'action' => 'listado'))?>">Aplicaciones</a></li>
 								</ul></li>
-								<li class="borde-derecho-menu"><a href="<?php echo $this->url('vehiculo', array('controller' => 'vehiculo', 'action' => 'listado'))?>">Veh&iacute;culo</a></li>
-								<li class="borde-derecho-menu"><a href="<?php echo $this->url('monitoreo', array('controller' => 'control', 'action' => 'control'))?>">Monitoreo</a></li>
+								
+							<li class="borde-derecho-menu"><a href="<?php echo $this->url('vehiculo', array('controller' => 'vehiculo', 'action' => 'listado'))?>">Veh&iacute;culo</a></li>
+								
+							<li class="dropdown borde-derecho-menu"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown">Monitoreo<b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="<?php echo $this->url('monitoreo', array('controller' => 'control', 'action' => 'general'))?>">General</a></li>
+									<li><a href="<?php echo $this->url('monitoreo', array('controller' => 'control', 'action' => 'buscar'))?>">Por Busqueda</a></li>
+								</ul></li>
+								
 								<li class="borde-derecho-menu"><a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'index'))?>">Infracciones</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">

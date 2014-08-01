@@ -1,0 +1,57 @@
+<div class="titulo-ventana">Monitoreo - Verificaci&oacute;n General</div>
+<hr style="margin-bottom: 20px; margin-top: 0px;" />
+
+<?php foreach ($this->data as $pais => $dataPais):?>
+
+	<div style="padding: 20px 10px 0px 10px;"><?php echo $dataPais['nombre'] ?></div>
+
+	<?php foreach ( $dataPais['estado'] as $estado => $dataEstado ): ?>
+	<div>
+		<table style="margin-top: 20px; border: 1px solid #eeeeee;">
+			<tr>
+				<td style="padding: 15px; padding-left: 10px; color: #969696; border-right: 1px solid #eeeeee; border-bottom: 1px solid #eeeeee;"><?php echo $dataEstado['nombre'] ?></td>
+			</tr>
+		
+		<?php foreach ( $dataEstado['ciudades'] as $ciudad => $dataCiudad ): ?>
+		
+				<tr>
+					<td style="padding: 10px; color: #969696; border-right: 1px solid #eeeeee;"><?php echo $dataCiudad['nombre'] ?>: </td>
+						<?php foreach ( $dataCiudad['sitios'] as $sitios => $dataSitios ): ?>
+					<td style="padding: 10px 20px 10px 20px; color: #969696; border-right: 1px solid #eeeeee; border-top: 1px solid #eeeeee;">
+					<div style="padding-bottom: 5px;"><a href="<?php echo $this->url('monitoreo', array('controller' => 'detalle', 'action' => 'detalle', 'id' => $sitios)) ?>"><?php echo $dataSitios['nombre'] . ' - ' . $dataSitios['referencia'] ?></a></div>
+					
+						<?php if ( $dataSitios['estado'] == 'I' ): ?>
+			   				<div class="circulo-rojo-p">&nbsp;</div>
+			  				<div class="circulo-rojo-p">&nbsp;</div>
+			  				<div class="circulo-rojo-p">&nbsp;</div>
+			  				<div class="circulo-rojo-p">&nbsp;</div>
+			  				<div class="circulo-rojo-p">&nbsp;</div>
+			  				<div class="circulo-rojo-p">&nbsp;</div>
+			  				<div style="clear: both;"></div>
+		   				<?php elseif( $dataSitios['estado'] == 'A' ): ?>
+			   				<div class="circulo-verde-p">&nbsp;</div>
+			  				<div class="circulo-verde-p">&nbsp;</div>
+			  				<div class="circulo-verde-p">&nbsp;</div>
+			  				<div class="circulo-verde-p">&nbsp;</div>
+			  				<div class="circulo-verde-p">&nbsp;</div>
+			  				<div class="circulo-verde-p">&nbsp;</div>
+			  				<div style="clear: both;"></div>
+			  			<?php elseif( $dataSitios['estado'] == 'R' ): ?>
+			  				<div class="circulo-amarillo-p">&nbsp;</div>
+			  				<div class="circulo-amarillo-p">&nbsp;</div>
+			  				<div class="circulo-amarillo-p">&nbsp;</div>
+			  				<div class="circulo-amarillo-p">&nbsp;</div>
+			  				<div class="circulo-amarillo-p">&nbsp;</div>
+			  				<div class="circulo-amarillo-p">&nbsp;</div>
+			  				<div style="clear: both;"></div>
+		   				<?php endif;?>
+					</td>
+						<?php endforeach;?>
+				</tr>
+			
+		<?php endforeach;?>
+		</table>
+	</div>
+	<?php endforeach;?>
+
+<?php endforeach;?>

@@ -17,9 +17,9 @@ CREATE TABLE IF NOT EXISTS `aplicacion` (
   `apl_descripcion` varchar(70) NOT NULL,
   `apl_nombre` varchar(150) NOT NULL,
   PRIMARY KEY (`apl_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
--- Dumping data for table violationsg.aplicacion: ~19 rows (approximately)
+-- Dumping data for table violationsg.aplicacion: ~21 rows (approximately)
 DELETE FROM `aplicacion`;
 /*!40000 ALTER TABLE `aplicacion` DISABLE KEYS */;
 INSERT INTO `aplicacion` (`apl_id`, `apl_descripcion`, `apl_nombre`) VALUES
@@ -41,7 +41,9 @@ INSERT INTO `aplicacion` (`apl_id`, `apl_descripcion`, `apl_nombre`) VALUES
 	(16, 'vehiculo:vehiculo', 'Modulo Vehiculo'),
 	(17, 'infraccion:infraccion', 'Infracciones'),
 	(18, 'parametros:parqueadero', 'Parqueaderos Parametros'),
-	(19, 'parametros:sector', 'Sectores');
+	(19, 'parametros:sector', 'Sectores'),
+	(20, 'console:resetpassword', 'Console'),
+	(21, 'monitoreo:detalle', 'Detalle Sitio');
 /*!40000 ALTER TABLE `aplicacion` ENABLE KEYS */;
 
 
@@ -70,13 +72,15 @@ CREATE TABLE IF NOT EXISTS `ciudad` (
   PRIMARY KEY (`ciu_id`),
   KEY `fk_ciu_est_id` (`est_id`),
   CONSTRAINT `fk_ciu_est_id` FOREIGN KEY (`est_id`) REFERENCES `estado` (`est_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table violationsg.ciudad: ~1 rows (approximately)
+-- Dumping data for table violationsg.ciudad: ~3 rows (approximately)
 DELETE FROM `ciudad`;
 /*!40000 ALTER TABLE `ciudad` DISABLE KEYS */;
 INSERT INTO `ciudad` (`ciu_id`, `est_id`, `ciu_nombre_es`, `ciu_nombre_en`, `ciu_codigo_telefono`) VALUES
-	(1, 1, 'Quito', 'Quito', '02');
+	(1, 1, 'Quito', 'Quito', '02'),
+	(2, 2, 'Santiago', 'Santiago', '02'),
+	(3, 4, 'Guayaquil', 'Guayaquil', '07');
 /*!40000 ALTER TABLE `ciudad` ENABLE KEYS */;
 
 
@@ -96,6 +100,9 @@ CREATE TABLE IF NOT EXISTS `componente` (
   `com_gateway` varchar(15) DEFAULT NULL,
   `com_dns1` varchar(15) DEFAULT NULL,
   `com_dns2` varchar(15) DEFAULT NULL,
+  `com_estado` char(1) NOT NULL,
+  `com_ultima_respuesta` datetime DEFAULT NULL,
+  `com_ultimo_valor` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`com_id`),
   KEY `fk_com_sit_id` (`sit_id`),
   KEY `fk_com_tip_com_id` (`tip_com_id`),
@@ -106,9 +113,9 @@ CREATE TABLE IF NOT EXISTS `componente` (
 -- Dumping data for table violationsg.componente: ~2 rows (approximately)
 DELETE FROM `componente`;
 /*!40000 ALTER TABLE `componente` DISABLE KEYS */;
-INSERT INTO `componente` (`com_id`, `sit_id`, `tip_com_id`, `com_descripcion`, `com_ip_local`, `com_ip_publica`, `com_usuario`, `com_clave`, `com_puerto`, `com_mascara`, `com_gateway`, `com_dns1`, `com_dns2`) VALUES
-	(1, 1, 1, 'Router TP Link - Blanco', '192.168.1.1', '181.211.12.234', 'admin', 'SES2014', NULL, NULL, NULL, NULL, NULL),
-	(2, 1, 1, 'Outstation', '192.168.0.10', '181.211.11.233', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `componente` (`com_id`, `sit_id`, `tip_com_id`, `com_descripcion`, `com_ip_local`, `com_ip_publica`, `com_usuario`, `com_clave`, `com_puerto`, `com_mascara`, `com_gateway`, `com_dns1`, `com_dns2`, `com_estado`, `com_ultima_respuesta`, `com_ultimo_valor`) VALUES
+	(1, 1, 1, 'Router TP Link - Blanco', 'www.google.com', '181.211.12.234', 'admin', 'SES2014', NULL, NULL, NULL, NULL, NULL, 'I', '2014-08-01 15:30:13', 'false'),
+	(2, 1, 1, 'Outstation', 'www.apple.com', '181.211.11.233', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'A', '2014-08-01 15:30:20', '1423');
 /*!40000 ALTER TABLE `componente` ENABLE KEYS */;
 
 
@@ -144,13 +151,16 @@ CREATE TABLE IF NOT EXISTS `estado` (
   PRIMARY KEY (`est_id`),
   KEY `fk_est_pai_id` (`pai_id`),
   CONSTRAINT `fk_est_pai_id` FOREIGN KEY (`pai_id`) REFERENCES `pais` (`pai_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table violationsg.estado: ~1 rows (approximately)
+-- Dumping data for table violationsg.estado: ~4 rows (approximately)
 DELETE FROM `estado`;
 /*!40000 ALTER TABLE `estado` DISABLE KEYS */;
 INSERT INTO `estado` (`est_id`, `pai_id`, `est_nombre_es`, `est_nombre_en`) VALUES
-	(1, 63, 'PICHINCHA', 'PICHINCHA');
+	(1, 63, 'PICHINCHA', 'PICHINCHA'),
+	(2, 64, 'Region Metropolitana', 'Region Metropolitana'),
+	(3, 66, 'Buenos aires', 'Buenos aires'),
+	(4, 63, 'GUAYAS', 'GUAYAS');
 /*!40000 ALTER TABLE `estado` ENABLE KEYS */;
 
 
@@ -233,13 +243,16 @@ CREATE TABLE IF NOT EXISTS `pais` (
   `pai_nombre_en` varchar(120) NOT NULL,
   `pai_codigo_telefono` varchar(5) NOT NULL,
   PRIMARY KEY (`pai_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 
--- Dumping data for table violationsg.pais: ~1 rows (approximately)
+-- Dumping data for table violationsg.pais: ~4 rows (approximately)
 DELETE FROM `pais`;
 /*!40000 ALTER TABLE `pais` DISABLE KEYS */;
 INSERT INTO `pais` (`pai_id`, `pai_nombre_es`, `pai_nombre_en`, `pai_codigo_telefono`) VALUES
-	(63, 'ECUADOR', 'ECUADOR', '593');
+	(63, 'ECUADOR', 'ECUADOR', '593'),
+	(64, 'Chile', 'Chile', '56'),
+	(65, 'CHINA', 'CHINA', 'CHINA'),
+	(66, 'Argentina ', 'Argentina ', 'Argen');
 /*!40000 ALTER TABLE `pais` ENABLE KEYS */;
 
 
@@ -295,7 +308,7 @@ CREATE TABLE IF NOT EXISTS `rol_aplicacion` (
   CONSTRAINT `fk_rol_apl_rol_id` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`rol_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table violationsg.rol_aplicacion: ~19 rows (approximately)
+-- Dumping data for table violationsg.rol_aplicacion: ~20 rows (approximately)
 DELETE FROM `rol_aplicacion`;
 /*!40000 ALTER TABLE `rol_aplicacion` DISABLE KEYS */;
 INSERT INTO `rol_aplicacion` (`rol_id`, `apl_id`) VALUES
@@ -317,7 +330,8 @@ INSERT INTO `rol_aplicacion` (`rol_id`, `apl_id`) VALUES
 	(1, 16),
 	(1, 17),
 	(1, 18),
-	(1, 19);
+	(1, 19),
+	(1, 21);
 /*!40000 ALTER TABLE `rol_aplicacion` ENABLE KEYS */;
 
 
@@ -352,15 +366,16 @@ CREATE TABLE IF NOT EXISTS `sector` (
   PRIMARY KEY (`sec_id`),
   KEY `fk_sector_ciudad_idx` (`ciu_id`),
   CONSTRAINT `fk_sector_ciudad` FOREIGN KEY (`ciu_id`) REFERENCES `ciudad` (`ciu_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Dumping data for table violationsg.sector: ~2 rows (approximately)
+-- Dumping data for table violationsg.sector: ~4 rows (approximately)
 DELETE FROM `sector`;
 /*!40000 ALTER TABLE `sector` DISABLE KEYS */;
 INSERT INTO `sector` (`sec_id`, `sec_nombre`, `sec_latitud`, `sec_longitud`, `ciu_id`, `sec_ubicacion`) VALUES
 	(1, 'SECTOR 1', -0.000100, -1.000000, 1, 'UBICACION 1'),
 	(4, 'El Labrador', -0.172627, -1.000000, 1, 'El Tiempo'),
-	(5, 'el Labrador', -0.172981, -78.483574, 1, 'El Tiempo');
+	(5, 'el Labrador', -0.172981, -78.483574, 1, 'El Tiempo'),
+	(6, 'Villa Olimpica', -33.461449, -70.620033, 2, 'Avenida Grecia y Obispo Orrego');
 /*!40000 ALTER TABLE `sector` ENABLE KEYS */;
 
 
@@ -374,17 +389,22 @@ CREATE TABLE IF NOT EXISTS `sitio` (
   `sit_sector` varchar(50) NOT NULL,
   `sit_reference_number` varchar(10) NOT NULL,
   `sit_estado` char(1) NOT NULL,
+  `sit_latitud` float(10,6) NOT NULL,
+  `sit_longitud` float(10,6) NOT NULL,
+  `sit_ultima_respuesta` datetime DEFAULT NULL,
+  `sit_ultimo_valor` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`sit_id`),
   KEY `fk_sit_ciu_id` (`ciu_id`),
   CONSTRAINT `fk_sit_ciu_id` FOREIGN KEY (`ciu_id`) REFERENCES `ciudad` (`ciu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table violationsg.sitio: ~2 rows (approximately)
 DELETE FROM `sitio`;
 /*!40000 ALTER TABLE `sitio` DISABLE KEYS */;
-INSERT INTO `sitio` (`sit_id`, `ciu_id`, `sit_descripcion`, `sit_direccion`, `sit_sector`, `sit_reference_number`, `sit_estado`) VALUES
-	(1, 1, 'Site 1', 'El Inca y Amazonas', 'El Labrador', '804000001', 'A'),
-	(2, 1, 'Site 2', 'El Inca y Amazonas', 'El Labrador', '805000002', 'A');
+INSERT INTO `sitio` (`sit_id`, `ciu_id`, `sit_descripcion`, `sit_direccion`, `sit_sector`, `sit_reference_number`, `sit_estado`, `sit_latitud`, `sit_longitud`, `sit_ultima_respuesta`, `sit_ultimo_valor`) VALUES
+	(1, 1, 'Site 1', 'El Inca y Amazonas', 'El Labrador', '804000001', 'A', -0.172981, -78.483574, '0000-00-00 00:00:00', '0.000000'),
+	(3, 1, 'Site 2', 'El Inca y Amazonas', 'El Labrador', '805000002', 'A', -0.172981, -78.483574, '0000-00-00 00:00:00', '0.000000'),
+	(4, 1, 'Site 3', 'Estocolmo y Amazonas', 'El Labrador', '804000003', 'I', -0.172981, -78.483574, NULL, NULL);
 /*!40000 ALTER TABLE `sitio` ENABLE KEYS */;
 
 

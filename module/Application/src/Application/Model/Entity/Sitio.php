@@ -10,12 +10,19 @@ class Sitio {
 	private $sit_sector;
 	private $sit_reference_number;
 	private $sit_estado;
-	
+	private $sit_latitud;
+	private $sit_longitud;
+	private $sit_ultima_respuesta;
+	private $sit_ultimo_valor;
 	private $ciu_nombre_es;
 	private $ciu_nombre_en;
+	private $est_id;
+	private $est_nombre_es;
+	private $pai_id;
+	private $pai_nombre_es;
 	
 	function __construct() {}
-	
+
 	/**
 	 * @return the $sit_id
 	 */
@@ -66,6 +73,34 @@ class Sitio {
 	}
 
 	/**
+	 * @return the $sit_latitud
+	 */
+	public function getSit_latitud() {
+		return $this->sit_latitud;
+	}
+
+	/**
+	 * @return the $sit_longitud
+	 */
+	public function getSit_longitud() {
+		return $this->sit_longitud;
+	}
+
+	/**
+	 * @return the $sit_ultima_respuesta
+	 */
+	public function getSit_ultima_respuesta() {
+		return $this->sit_ultima_respuesta;
+	}
+
+	/**
+	 * @return the $sit_ultimo_valor
+	 */
+	public function getSit_ultimo_valor() {
+		return $this->sit_ultimo_valor;
+	}
+
+	/**
 	 * @return the $ciu_nombre_es
 	 */
 	public function getCiu_nombre_es() {
@@ -77,6 +112,34 @@ class Sitio {
 	 */
 	public function getCiu_nombre_en() {
 		return $this->ciu_nombre_en;
+	}
+
+	/**
+	 * @return the $est_id
+	 */
+	public function getEst_id() {
+		return $this->est_id;
+	}
+
+	/**
+	 * @return the $est_nombre_es
+	 */
+	public function getEst_nombre_es() {
+		return $this->est_nombre_es;
+	}
+
+	/**
+	 * @return the $pai_id
+	 */
+	public function getPai_id() {
+		return $this->pai_id;
+	}
+
+	/**
+	 * @return the $pai_nombre_es
+	 */
+	public function getPai_nombre_es() {
+		return $this->pai_nombre_es;
 	}
 
 	/**
@@ -129,6 +192,34 @@ class Sitio {
 	}
 
 	/**
+	 * @param Ambigous <NULL, unknown> $sit_latitud
+	 */
+	public function setSit_latitud($sit_latitud) {
+		$this->sit_latitud = $sit_latitud;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $sit_longitud
+	 */
+	public function setSit_longitud($sit_longitud) {
+		$this->sit_longitud = $sit_longitud;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $sit_ultima_respuesta
+	 */
+	public function setSit_ultima_respuesta($sit_ultima_respuesta) {
+		$this->sit_ultima_respuesta = $sit_ultima_respuesta;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $sit_ultimo_valor
+	 */
+	public function setSit_ultimo_valor($sit_ultimo_valor) {
+		$this->sit_ultimo_valor = $sit_ultimo_valor;
+	}
+
+	/**
 	 * @param Ambigous <NULL, unknown> $ciu_nombre_es
 	 */
 	public function setCiu_nombre_es($ciu_nombre_es) {
@@ -142,6 +233,34 @@ class Sitio {
 		$this->ciu_nombre_en = $ciu_nombre_en;
 	}
 
+	/**
+	 * @param Ambigous <NULL, unknown> $est_id
+	 */
+	public function setEst_id($est_id) {
+		$this->est_id = $est_id;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $est_nombre_es
+	 */
+	public function setEst_nombre_es($est_nombre_es) {
+		$this->est_nombre_es = $est_nombre_es;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $pai_id
+	 */
+	public function setPai_id($pai_id) {
+		$this->pai_id = $pai_id;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $pai_nombre_es
+	 */
+	public function setPai_nombre_es($pai_nombre_es) {
+		$this->pai_nombre_es = $pai_nombre_es;
+	}
+
 	public function exchangeArray($data)
 	{
 		$this->sit_id = (isset($data['sit_id'])) ? $data['sit_id'] : null;
@@ -151,7 +270,14 @@ class Sitio {
 		$this->sit_sector = (isset($data['sit_sector'])) ? $data['sit_sector'] : null;
 		$this->sit_reference_number = (isset($data['sit_reference_number'])) ? $data['sit_reference_number'] : null;
 		$this->sit_estado = (isset($data['sit_estado'])) ? $data['sit_estado'] : null;
-		
+		$this->sit_latitud = (isset($data['sit_latitud'])) ? $data['sit_latitud'] : null;
+		$this->sit_longitud = (isset($data['sit_longitud'])) ? $data['sit_longitud'] : null;
+		$this->sit_ultima_respuesta = (isset($data['sit_ultima_respuesta'])) ? $data['sit_ultima_respuesta'] : null;
+		$this->sit_ultimo_valor = (isset($data['sit_ultimo_valor'])) ? $data['sit_ultimo_valor'] : null;
+		$this->pai_id = (isset($data['pai_id'])) ? $data['pai_id'] : null;
+		$this->est_id = (isset($data['est_id'])) ? $data['est_id'] : null;
+		$this->est_nombre_es = (isset($data['est_nombre_es'])) ? $data['est_nombre_es'] : null;
+		$this->pai_nombre_es = (isset($data['pai_nombre_es'])) ? $data['pai_nombre_es'] : null;
 		$this->ciu_nombre_es = (isset($data['ciu_nombre_es'])) ? $data['ciu_nombre_es'] : null;
 		$this->ciu_nombre_en = (isset($data['ciu_nombre_en'])) ? $data['ciu_nombre_en'] : null;
 	}

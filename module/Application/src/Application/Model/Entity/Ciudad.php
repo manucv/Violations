@@ -12,6 +12,10 @@ class Ciudad {
 	private $est_nombre_es;
 	private $est_nombre_en;
 	
+	private $pai_id;
+	private $pai_nombre_es;
+	private $pai_nombre_en;
+	
 	function __construct() {}
 
 	/**
@@ -64,6 +68,27 @@ class Ciudad {
 	}
 
 	/**
+	 * @return the $pai_id
+	 */
+	public function getPai_id() {
+		return $this->pai_id;
+	}
+
+	/**
+	 * @return the $pai_nombre_es
+	 */
+	public function getPai_nombre_es() {
+		return $this->pai_nombre_es;
+	}
+
+	/**
+	 * @return the $pai_nombre_en
+	 */
+	public function getPai_nombre_en() {
+		return $this->pai_nombre_en;
+	}
+
+	/**
 	 * @param Ambigous <NULL, unknown> $ciu_id
 	 */
 	public function setCiu_id($ciu_id) {
@@ -112,6 +137,27 @@ class Ciudad {
 		$this->est_nombre_en = $est_nombre_en;
 	}
 
+	/**
+	 * @param Ambigous <NULL, unknown> $pai_id
+	 */
+	public function setPai_id($pai_id) {
+		$this->pai_id = $pai_id;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $pai_nombre_es
+	 */
+	public function setPai_nombre_es($pai_nombre_es) {
+		$this->pai_nombre_es = $pai_nombre_es;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $pai_nombre_en
+	 */
+	public function setPai_nombre_en($pai_nombre_en) {
+		$this->pai_nombre_en = $pai_nombre_en;
+	}
+
 	public function exchangeArray($data)
 	{
 		$this->ciu_id = (isset($data['ciu_id'])) ? $data['ciu_id'] : null;
@@ -122,6 +168,10 @@ class Ciudad {
 		
 		$this->est_nombre_es = (isset($data['est_nombre_es'])) ? $data['est_nombre_es'] : null;
 		$this->est_nombre_en = (isset($data['est_nombre_en'])) ? $data['est_nombre_en'] : null;
+		
+		$this->pai_id = (isset($data['pai_id'])) ? $data['pai_id'] : null;
+		$this->pai_nombre_es = (isset($data['pai_nombre_es'])) ? $data['pai_nombre_es'] : null;
+		$this->pai_nombre_en = (isset($data['pai_nombre_en'])) ? $data['pai_nombre_en'] : null;
 	}
 	
 	public function getArrayCopy(){

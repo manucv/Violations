@@ -19,6 +19,8 @@ class SitioController extends AbstractActionController
 {
 	protected $sitioDao;
 	protected $ciudadDao;
+	protected $estadoDao;
+	protected $paisDao;
 	
     public function listadoAction(){
         return array('sitios' => $this->getSitioDao()->traerTodos());
@@ -45,6 +47,11 @@ class SitioController extends AbstractActionController
     		
     	$form->get ( 'ingresar' )->setAttribute ( 'value', 'Actualizar' );
     	$form->get ( 'sit_id' )->setAttribute ( 'value', $sitio->getSit_id() );
+    	
+    	$form->get('pai_id')->setValue($sitio->getPai_id());
+    	$form->get('pai_id_hidden')->setValue($sitio->getPai_id());
+    	$form->get('est_id_hidden')->setValue($sitio->getEst_id());
+    	$form->get('ciu_id_hidden')->setValue($sitio->getCiu_id());
     		
     	$view = new ViewModel ( array (
     			'formulario' => $form ,
@@ -72,8 +79,6 @@ class SitioController extends AbstractActionController
             $view->setTemplate('parametros/sitio/errorBorrado');
             return $view;  
         } */
-    	
-
     }
     
     public function validarAction(){
@@ -158,13 +163,13 @@ class SitioController extends AbstractActionController
 //     	$this->view->field = $element->__toString();
     } */
     
-	public function getForm() {
+	private function getForm() {
 		$form = new Sitio();
-		$form->get ( 'ciu_id' )->setValueOptions ( $this->getCiudadDao ()->traerTodosArreglo () );
+		$form->get ( 'pai_id' )->setValueOptions ( $this->getPaisDao ()->traerTodosArreglo() );
 		return $form;
 	}
     
-    public function getSitioDao() {
+    private function getSitioDao() {
     	if (! $this->sitioDao) {
     		$sm = $this->getServiceLocator ();
     		$this->sitioDao = $sm->get ( 'Application\Model\Dao\SitioDao' );
@@ -172,7 +177,23 @@ class SitioController extends AbstractActionController
     	return $this->sitioDao;
     }
     
-    public function getCiudadDao() {
+    private function getPaisDao(){
+    	if (! $this->paisDao) {
+    		$sm = $this->getServiceLocator ();
+    		$this->paisDao = $sm->get ( 'Application\Model\Dao\PaisDao' );
+    	}
+    	return $this->paisDao;
+    }
+    
+    private function getEstadoDao(){
+    	if (! $this->estadoDao) {
+    		$sm = $this->getServiceLocator ();
+    		$this->estadoDao = $sm->get ( 'Application\Model\Dao\EstadoDao' );
+    	}
+    	return $this->estadoDao;
+    }
+    
+    private function getCiudadDao() {
     	if (! $this->ciudadDao) {
     		$sm = $this->getServiceLocator ();
     		$this->ciudadDao = $sm->get ( 'Application\Model\Dao\CiudadDao' );
