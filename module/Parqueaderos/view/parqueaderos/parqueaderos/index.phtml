@@ -18,7 +18,7 @@
 
 	echo $this->form ()->openTag ( $form );
 ?>
-
+<div style="width:30%; float:left;" >
 <?php 
 	echo $formLabel->openTag() . $pai_id->getLabel() . $formLabel->closeTag();
   	echo html_entity_decode( $this->formselect ( $pai_id ) );
@@ -34,9 +34,17 @@
   	echo html_entity_decode( $this->formselect ( $ciu_id ) );
   	echo html_entity_decode( $this->formelementerrors ( $ciu_id ) ); 
 ?>
+</div>
+<div style="width:70%; float:left;" >
+	<div id="map-canvas" style="height:300px; width:90%; margin:0 auto;"></div>
+</div>
+<div style="clear:both">
+	
+</div>
 
-<div id="map-canvas" style="height:500px; width:75%; margin:0 auto;"></div>
+
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+
 
 <script>
 	var map;
@@ -70,8 +78,104 @@
 			
 
 	}
+
+	function codeAddress(zoom) {
+
+		map.setZoom(zoom);
+		
+		  var address = document.getElementById('address').value;
+		  geocoder.geocode( { 'address': address}, function(results, status) {
+		    if (status == google.maps.GeocoderStatus.OK) {
+		    	map.setCenter(results[0].geometry.location);
+		      /* var marker = new google.maps.Marker({
+		          map: map,
+		          position: results[0].geometry.location
+		      }); */
+		    } else {
+		      //alert('Geocode was not successful for the following reason: ' + status);
+		    }
+		  });
+	}	
 	
 	google.maps.event.addDomListener(window, 'load', initialize);
+
+
+	$(document).ready(function(){
+		//FUNCION PARA CARGAR EL COMBO BOX DE ESTADOS EN BASE A UN PAIS SELECCIONADO
+		$("#pai_id").change(function() {
+			if($('#pai_id').val() != '' && $('#pai_id').val() != null){
+		        $.ajax({
+		            url: "<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'sucursalesAjax')) ?>",
+		            type: "POST",
+		            dataType: "json",
+		            data: "pais=" + $('#pai_id').val(),
+		            beforeSend: function() {
+		            	$("#est_id").html("");
+		            	$("#est_id").append('<option>Procesando, espere por favor...</option>');
+		            }
+		        }).done(function(estados) {
+		            $("#est_id").html("");
+		            $("#est_id").append('<option value = "null">-- Seleccione un estado --</option>');
+		            for (estado in estados) {
+		                $("#est_id").append('<option value="' + estado + '">' + estados[estado] + '</option>');
+		            }
+		            $("#est_id").prop("disabled", false);
+
+		            var pais = $('#pai_id option:selected').text();
+
+		            codeAddress(7);
+		            
+		        });
+
+			}else{
+				$("#est_id").prop("disabled", true);
+			}
+		});
+
+		//FUNCION PARA CARGAR EL COMBO BOX DE CIUDADES EN BASE A UN ESTADO
+		$("#est_id").change(function() {
+			if($('#est_id').val() != '' && $('#est_id').val() != null){
+		        $.ajax({
+		        	url: "<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'ciudadesAjax')) ?>",
+		            type: "POST",
+		            dataType: "json",
+		            data: "estado=" + $('#est_id').val(),
+		            beforeSend: function() {
+		            	$("#ciu_id").html("");
+		            	$("#ciu_id").append('<option>Procesando, espere por favor...</option>');
+		            }
+		        }).done(function(ciudades) {
+		            $("#ciu_id").html("");
+		            $("#ciu_id").append('<option value = "null">-- Seleccione una ciudad --</option>');
+		            for (ciudad in ciudades) {
+		                $("#ciu_id").append('<option value="' + ciudad + '">' + ciudades[ciudad] + '</option>');
+		            }
+		            $("#ciu_id").prop("disabled", false);
+
+		            var pais = $('#pai_id option:selected').text();
+		            var estado = $('#est_id option:selected').text();
+
+		            codeAddress(9);
+		        });
+			}else{
+				$("#ciu_id").prop("disabled", true);
+			}
+		});
+
+		//FUNCION PARA CARGAR EL COMBO BOX DE CIUDADES EN BASE A UN ESTADO		
+		$("#ciu_id").change(function() {
+			if($('#ciu_id').val() != '' && $('#ciu_id').val() != null){
+				
+				var pais = $('#pai_id option:selected').text();
+		        var estado = $('#est_id option:selected').text();
+		        var ciudad = $('#ciu_id option:selected').text();
+
+		        codeAddress(13);
+		        
+			};
+
+		});
+	});
 </script>
 
 

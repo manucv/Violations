@@ -77,6 +77,7 @@ return array (
 				'invokables' => array (
 						'Application\Controller\LoginC' => 'Application\Controller\LoginController',
 						'Application\Controller\Error' => 'Application\Controller\ErrorController',
+						'Application\Controller\Index' => 'Application\Controller\IndexController',
 				) 
 		),
 		'view_manager' => array (
@@ -96,9 +97,19 @@ return array (
 				) 
 		),
 		// Placeholder for console routes
-		'console' => array (
-				'router' => array (
-						'routes' => array () 
-				) 
-		) 
+		'console' => array(
+				'router' => array(
+						'routes' => array(
+								'user-reset-password' => array(
+										'options' => array(
+												'route'    => 'user resetpassword [--verbose|-v] <userEmail> <userPassword>',
+												'defaults' => array(
+														'controller' => 'Application\Controller\Index',
+														'action'     => 'resetpassword'
+												)
+										)
+								)
+						)
+				)
+		),
 );
