@@ -76,7 +76,6 @@ class SectorController extends AbstractActionController
             ) );            
         }else{
             $view = new ViewModel ();
-        
             $view->setTemplate('parametros/sector/errorBorrado');
             return $view;  
         }

@@ -2,16 +2,76 @@
 <strong>Controller:</strong>    Skeleton &raquo;
 <strong>Action:</strong>        index
 
-<fieldset class="gllpLatlonPicker" id="custom_id">
-		<input type="text" class="gllpSearchField"> <input type="button"
-			class="gllpSearchButton" value="Buscar">
-		<div class="gllpMap">Google Maps</div>
-		<?php
-		//echo $this->formHidden ( $form->get ( 'par_latitude' ) );
-		//echo $this->formHidden ( $form->get ( 'par_longitude' ) );
-		?> 
- 
-		<input type="hidden" class="gllpZoom" value="1" />
-		
-		<input type="button" class="gllpUpdateButton" style="width:0px; height:0px; border:none; background:none;">
-	</fieldset>
+<?php
+	$form = $this->formulario;
+	$form->prepare ();
+	$form->setAttribute ( 'action', $this->url ( 'parqueaderos', array (
+			'controller' => 'parqueaderos',
+			'action' => 'validar' 
+	) ) )->setAttribute ( 'method', 'post' );
+
+	$formLabel = $this->plugin ( 'formLabel' );
+
+	$ciu_id = $form->get ( 'ciu_id' );
+	$pai_id = $form->get ( 'pai_id' );
+	$est_id = $form->get ( 'est_id' );
+
+	echo $this->form ()->openTag ( $form );
+?>
+
+<?php 
+	echo $formLabel->openTag() . $pai_id->getLabel() . $formLabel->closeTag();
+  	echo html_entity_decode( $this->formselect ( $pai_id ) );
+  	echo html_entity_decode( $this->formelementerrors ( $pai_id ) ); 
+?>
+<?php 
+	echo $formLabel->openTag() . $est_id->getLabel() . $formLabel->closeTag();
+  	echo html_entity_decode( $this->formselect ( $est_id ) );
+  	echo html_entity_decode( $this->formelementerrors ( $est_id ) ); 
+?>
+<?php 
+	echo $formLabel->openTag() . $ciu_id->getLabel() . $formLabel->closeTag();
+  	echo html_entity_decode( $this->formselect ( $ciu_id ) );
+  	echo html_entity_decode( $this->formelementerrors ( $ciu_id ) ); 
+?>
+
+<div id="map-canvas" style="height:500px; width:75%; margin:0 auto;"></div>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+
+<script>
+	var map;
+	var markers = [];
+	var geocoder;
+	
+	function initialize() {
+
+		geocoder = new google.maps.Geocoder();
+	    var lugar = new google.maps.LatLng(-0.1865943, -78.4305382);
+	    var mapOptions = { zoom: 4, center: lugar };
+	    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	
+		var markers=<?php echo $sectores; ?>;
+	     for (i = 0; i < markers.length; i++) {
+			var data = markers[i]
+			var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+			var marker = new google.maps.Marker({
+				position: myLatlng,
+				map: map,
+				title: data.title
+			});
+			(function(marker, data) {
+				// Attaching a click event to the current marker
+				google.maps.event.addListener(marker, "click", function(e) {
+					infoWindow.setContent(data.description);
+					infoWindow.open(map, marker);
+				});
+			})(marker, data);
+		}
+			
+
+	}
+	
+	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+

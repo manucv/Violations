@@ -101,4 +101,35 @@ class SectorDao implements InterfaceCrud {
 	
 		return $result;
 	}
+
+	public function traerTodosJSON(){
+	
+		$sql = new Sql($this->tableGateway->getAdapter());
+		$select = $sql->select();
+		$select->from($this->tableGateway->table);
+	
+		$statement = $sql->prepareStatementForSqlObject($select);
+		$results = $statement->execute();
+	
+		$sectores = new \ArrayObject();
+		$result = array();
+	
+		foreach ($results as $row){
+			$sector = new Sector();
+			$sector->exchangeArray($row);
+			$sectores->append($sector);
+		}
+	
+		$count=0;
+		$jsonArray=array();
+		foreach ($sectores as $sec){
+			$jsonArray[$count]['title']=$sec->getSec_nombre();
+			$jsonArray[$count]['lat']=$sec->getSec_latitud();
+			$jsonArray[$count]['lng']=$sec->getSec_longitud();
+			$jsonArray[$count]['description']=$sec->getSec_nombre();
+			$count++;
+		}
+	
+		return json_encode($jsonArray);
+	}	
 }
