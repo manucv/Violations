@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Parqueaderos\Controller\Parqueaderos' => 'Parqueaderos\Controller\ParqueaderosController',
+            'Parqueaderos\Controller\Sector' => 'Parqueaderos\Controller\SectorController',
         ),
     ),
     'router' => array(

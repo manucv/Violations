@@ -1,0 +1,39 @@
+<strong>Module:</strong>        Parqueaderos Module &raquo;
+<strong>Controller:</strong>    Sector &raquo;
+<strong>Action:</strong>        index
+
+<h1><?php echo $sector->getSec_nombre(); ?></h1>
+
+<div class='row' style="width:100%; margin:0 auto;">
+<?php foreach($parqueaderos as $parqueadero): ?>
+	<div class="parqueadero">
+		<div 	class="parqueadero-inner <?php echo ($parqueadero->getPar_estado()=='D')?'desocupado':'ocupado'; ?> " 
+				data-par_id="<?php echo $parqueadero->getPar_id() ?>">
+			<span> <?php echo $parqueadero->getPar_codigo(); ?> </span>
+		</div>
+	</div>
+<?php endforeach; ?>
+</div>
+
+<script>
+	$(document).ready(function(){
+		function estadoActual(){
+	        $.ajax({
+	            url: "<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'ocupados')) ?>",
+	            type: "POST",
+	            dataType: "json",
+	            data: "sec_id=<?php echo $sector->getSec_id(); ?>"
+
+	        }).done(function(ocupados) {
+	        	$(".parqueadero-inner").removeClass('ocupado');
+	        	$(".parqueadero-inner").addClass('desocupado');
+	        	for(ocupado in ocupados){
+	        		$(".parqueadero-inner[data-par_id="+ocupados[ocupado].par_id+"]").addClass('ocupado');
+	        	}
+	    		setTimeout(estadoActual,10000);        
+	        });
+		}
+		estadoActual();
+		
+	});
+</script>

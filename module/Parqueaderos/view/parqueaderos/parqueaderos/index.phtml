@@ -50,6 +50,7 @@
 	var map;
 	var markers = [];
 	var geocoder;
+	/* A esta cosa hay que pasarle al layout */
 	
 	function initialize() {
 
@@ -70,12 +71,25 @@
 			(function(marker, data) {
 				// Attaching a click event to the current marker
 				google.maps.event.addListener(marker, "click", function(e) {
-					infoWindow.setContent(data.description);
-					infoWindow.open(map, marker);
+					window.location.href="<?php echo $this->basepath(); ?>/parqueaderos/sector/index/"+data.id;
 				});
+
+				var infowindow = new google.maps.InfoWindow({
+					content: 	'<div>'+
+								data.description+'<br>'+
+								'Ocupados: '+data.ocupados+'/'+data.total+'<br>'+
+								'</div>'
+				});
+
+				google.maps.event.addListener(marker, "mouseover", function(e) {
+					infowindow.open(map,marker);
+				});
+				google.maps.event.addListener(marker, "mouseout", function(e) {
+					infowindow.close(map,marker);
+				});
+
 			})(marker, data);
 		}
-			
 
 	}
 
@@ -175,6 +189,7 @@
 			};
 
 		});
+
 	});
 </script>
 
