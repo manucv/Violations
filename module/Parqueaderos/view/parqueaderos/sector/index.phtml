@@ -3,18 +3,13 @@
 <strong>Action:</strong>        index
 
 <h1><?php echo $sector->getSec_nombre(); ?></h1>
-<div class='row'>
+
+<div class='row' style="width:100%; margin:0 auto;">
 <?php foreach($parqueaderos as $parqueadero): ?>
 	<div class="parqueadero">
-		<div class="parqueadero-inner desocupado">
+		<div class="parqueadero-inner <?php echo ($parqueadero->getPar_estado()=='D')?'desocupado':'ocupado'; ?> ">
 			<span> <?php echo $parqueadero->getPar_codigo(); ?> </span>
 		</div>
 	</div>
 <?php endforeach; ?>
 </div>
-
-<style>
-	.parqueadero{border:3px solid #578fc0;}
-	.parqueadero .desocupado{  }
-	.parqueadero .parqueadero-inner span{background-color:#fff;}
-</style>

@@ -5,6 +5,7 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
 use Application\Model\Entity\Sector;
 
+
 class SectorDao implements InterfaceCrud {
 	
 	protected $tableGateway;
@@ -103,34 +104,38 @@ class SectorDao implements InterfaceCrud {
 	}
 
 	public function traerTodosJSON(){
-	
-		$sql = new Sql($this->tableGateway->getAdapter());
-		$select = $sql->select();
-		$select->from($this->tableGateway->table);
-	
-		$statement = $sql->prepareStatementForSqlObject($select);
-		$results = $statement->execute();
-	
+
+		$adapter = $this->tableGateway->getAdapter();
+		$query = "
+			SELECT 	s.sec_id, s.sec_nombre, s.sec_latitud, s.sec_longitud, 
+					COUNT( p.sec_id ) AS total, 
+					SUM( CASE WHEN p.par_estado !=  'D' THEN 1 ELSE 0 END ) AS ocupados
+			FROM sector AS s
+				JOIN parqueadero AS p 
+					ON p.sec_id = s.sec_id
+			GROUP BY sec_id ";
+    	
+    	$statement = $adapter->query($query);
+    	$results = $statement->execute();
+
 		$sectores = new \ArrayObject();
-		$result = array();
-	
-		foreach ($results as $row){
-			$sector = new Sector();
-			$sector->exchangeArray($row);
-			$sectores->append($sector);
-		}
 	
 		$count=0;
 		$jsonArray=array();
-		foreach ($sectores as $sec){
-			$jsonArray[$count]['id']=$sec->getSec_id();
-			$jsonArray[$count]['title']=$sec->getSec_nombre();
-			$jsonArray[$count]['lat']=$sec->getSec_latitud();
-			$jsonArray[$count]['lng']=$sec->getSec_longitud();
-			$jsonArray[$count]['description']=$sec->getSec_nombre();
+
+		foreach ($results as $row){
+
+			$jsonArray[$count]['id']=$row['sec_id'];
+			$jsonArray[$count]['title']=$row['sec_nombre'];
+			$jsonArray[$count]['lat']=$row['sec_latitud'];
+			$jsonArray[$count]['lng']=$row['sec_longitud'];
+			$jsonArray[$count]['description']=$row['sec_nombre'];
+			$jsonArray[$count]['total']=$row['total'];
+			$jsonArray[$count]['ocupados']=$row['ocupados'];
+
 			$count++;
 		}
-	
+
 		return json_encode($jsonArray);
 	}	
 }
