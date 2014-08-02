@@ -39,6 +39,12 @@ div.container a.brand {
 
 /*********************** ESTILOS DEL SISTEMA ********************/
 
+/********** ESTILOS PARA TODAS LAS GRID *****************/
+
+.hr-style{
+	margin-bottom: 20px; margin-top: 0px;
+}
+
 /********** MENU SUPERIOR ***************/
 .menu-top {
 	background-color: #578FC0;
