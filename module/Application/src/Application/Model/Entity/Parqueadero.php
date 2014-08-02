@@ -5,7 +5,6 @@ class Parqueadero {
 	
 	private $par_id;
 	private $par_estado;
-	private $par_codigo;
 	private $sec_id;
 	
 	private $sec_nombre;
@@ -24,13 +23,6 @@ class Parqueadero {
 	 */
 	public function getPar_estado() {
 		return $this->par_estado;
-	}
-
-	/**
-	 * @return the $par_codigo
-	 */
-	public function getPar_codigo() {
-		return $this->par_codigo;
 	}
 
 	/**
@@ -62,13 +54,6 @@ class Parqueadero {
 	}
 
 	/**
-	 * @param Ambigous <NULL, unknown> $par_codigo
-	 */
-	public function setPar_codigo($par_codigo) {
-		$this->par_codigo = $par_codigo;
-	}
-
-	/**
 	 * @param Ambigous <NULL, unknown> $sec_id
 	 */
 	public function setSec_id($sec_id) {
@@ -86,7 +71,6 @@ class Parqueadero {
 	{
 		$this->par_id = (isset($data['par_id'])) ? $data['par_id'] : null;
 		$this->par_estado = (isset($data['par_estado'])) ? $data['par_estado'] : null;
-		$this->par_codigo = (isset($data['par_codigo'])) ? $data['par_codigo'] : null;
 		$this->sec_id = (isset($data['sec_id'])) ? $data['sec_id'] : null;
 		$this->sec_nombre = (isset($data['sec_nombre'])) ? $data['sec_nombre'] : null;
 	}

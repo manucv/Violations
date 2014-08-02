@@ -40,8 +40,6 @@ class ParqueaderoDao implements InterfaceCrud {
 		$resultSet = $this->tableGateway->selectWith ( $select );
 		return json_encode($resultSet->toArray());
 
-
-		
 	}		
 	
 	public function traer($par_id) {
@@ -62,11 +60,11 @@ class ParqueaderoDao implements InterfaceCrud {
 	
 	public function guardar(Parqueadero $parqueadero) {
 		
-		$id = ( int ) $parqueadero->getPar_id();
+		$id = $parqueadero->getPar_id();
 		
 		$data = array (
+				'par_id' => $parqueadero->getPar_id(),
 				'par_estado' => $parqueadero->getPar_estado(),
-				'par_codigo' => $parqueadero->getPar_codigo(),
 				'sec_id' => $parqueadero->getSec_id()
 		);
 		
