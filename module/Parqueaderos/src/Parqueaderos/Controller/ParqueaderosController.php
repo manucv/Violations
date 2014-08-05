@@ -42,6 +42,20 @@ class ParqueaderosController extends AbstractActionController
         }
     }
 
+    public function reportarAction(){
+        if($this->getRequest()->isXmlHttpRequest()){
+            /*$sec_id =  $this->getRequest()->getPost('sec_id');
+            $ocupados = $this->getParqueaderoDao()->traerOcupadosPorSectorJSON($sec_id);
+            
+            $response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($ocupados);
+            return $response;*/
+        }else{
+            return $this->redirect()->toRoute('parqueaderos',array('parqueaderos'=>'index'));
+        }
+    }    
+
     /* GET DAO's */
     public function getPaisDao() {
         if (! $this->paisDao) {

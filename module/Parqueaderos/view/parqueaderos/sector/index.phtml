@@ -9,7 +9,7 @@
 	<div class="parqueadero">
 		<div 	class="parqueadero-inner <?php echo ($parqueadero->getPar_estado()=='D')?'desocupado':'ocupado'; ?> " 
 				data-par_id="<?php echo $parqueadero->getPar_id() ?>">
-			<span> <?php echo $parqueadero->getPar_codigo(); ?> </span>
+			<span> <?php echo $parqueadero->getPar_id(); ?> </span>
 		</div>
 	</div>
 <?php endforeach; ?>
@@ -29,11 +29,30 @@
 	        	$(".parqueadero-inner").addClass('desocupado');
 	        	for(ocupado in ocupados){
 	        		$(".parqueadero-inner[data-par_id="+ocupados[ocupado].par_id+"]").addClass('ocupado');
+	        		$(".parqueadero-inner[data-par_id="+ocupados[ocupado].par_id+"] > span").html(
+	        			ocupados[ocupado].par_id+'<br>'+ocupados[ocupado].aut_placa+'<br>'+ocupados[ocupado].salida
+	        		);
+
 	        	}
 	    		setTimeout(estadoActual,10000);        
 	        });
 		}
 		estadoActual();
+
+		$(".parqueadero-inner").on('click',function(e){
+			e.preventDefault();
+			var parqueadero= $(this);
+			if(confirm('Desea reportar este parqueadero?')){
+				$.ajax({
+		            url: "<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'reportar')) ?>",
+		            type: "POST",
+		            dataType: "json",
+		            data: "par_id="+function(){return parqueadero.attr('data-par_id');}
+		        }).done(function(respuesta) {
+		        	alert('Este parqueadero fue reportado');
+				}); 
+		    }
+		});
 		
 	});
 </script>

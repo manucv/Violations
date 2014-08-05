@@ -33,12 +33,43 @@ class ParqueaderoDao implements InterfaceCrud {
 		
 	}	
 	public function traerOcupadosPorSectorJSON($sec_id) {
-		
-		$select = $this->tableGateway->getSql ()->select ();
+
+		$adapter = $this->tableGateway->getAdapter();
+		$query = "
+		select up.par_id, TIME_FORMAT(max(up.hora_salida),'%H:%i') as salida, up.aut_placa, up.par_estado
+		from 
+			(select lp.par_id, aut_placa ,(log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR) AS hora_salida, p.par_estado
+			FROM log_parqueadero AS lp JOIN parqueadero AS p 
+			ON lp.par_id=p.par_id and p.par_estado='O'
+			WHERE log_par_fecha_ingreso > NOW() - INTERVAL 2 DAY ORDER BY 3 DESC ) AS up
+		GROUP BY up.par_id;
+		 ";
+    	
+    	$statement = $adapter->query($query);
+    	$results = $statement->execute();
+
+		$sectores = new \ArrayObject();
+	
+		$count=0;
+		$jsonArray=array();
+
+		foreach ($results as $row){
+
+			$jsonArray[$count]['par_id']=$row['par_id'];
+			$jsonArray[$count]['aut_placa']=$row['aut_placa'];
+			$jsonArray[$count]['par_estado']=$row['par_estado'];
+			$jsonArray[$count]['salida']=$row['salida'];
+
+			$count++;
+		}
+
+		return json_encode($jsonArray);
+
+		/*$select = $this->tableGateway->getSql ()->select ();
 		$select-> where ( array('sec_id'=>$sec_id, 'par_estado'=>'O') );
 		 
 		$resultSet = $this->tableGateway->selectWith ( $select );
-		return json_encode($resultSet->toArray());
+		return json_encode($resultSet->toArray());*/
 
 	}		
 	
