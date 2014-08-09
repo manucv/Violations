@@ -3,14 +3,46 @@
 
 <div class='row' style="width:100%; margin:0 auto;">
 <?php foreach($parqueaderos as $parqueadero): ?>
-	<div class="parqueadero">
-		<div 	class="parqueadero-inner <?php echo ($parqueadero->getPar_estado()=='D')?'desocupado':'ocupado'; ?> " 
-				data-par_id="<?php echo $parqueadero->getPar_id() ?>">
-			<span> <?php echo $parqueadero->getPar_id(); ?> </span>
+	<div class="parqueadero-outer" >
+		<div class="parqueadero">
+			<div class="parqueadero-inner <?php echo ($parqueadero->getPar_estado()=='D')?'desocupado':'ocupado'; ?> " 
+					data-par_id="<?php echo $parqueadero->getPar_id() ?>" >
+				<span> <?php echo $parqueadero->getPar_id(); ?> </span>
+			</div>
 		</div>
+		<div class="parqueadero-bottom" data-par_id="<?php echo $parqueadero->getPar_id() ?>"></div>
 	</div>
 <?php endforeach; ?>
 </div>
+
+  <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <form action="" 
+          name="reporteFrm"
+          role="form" >        
+          <div class="modal-header">
+            <h3 class="modal-title" id="myModalLabel">Reportar Parqueadero</h3>
+          </div>
+          <div class="modal-body">
+          		<div class="form-group">
+          			<label for="placa">Placa:</label>
+          			<input type="text" class="form-control" id="placa"/>
+            	</div>
+            	<div class="form-group">
+            		<label for="observaciones">Observaciones:</label>
+            		<textarea name="" id="observaciones" cols="30" rows="10" class="form-control"></textarea>
+            	</div>
+            	<input type="hidden" id="parqueadero"/>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Reportar</button>
+          </div>
+        </form> 
+      </div>
+    </div>
+  </div>
 
 <script>
 	$(document).ready(function(){
@@ -24,11 +56,20 @@
 	        }).done(function(ocupados) {
 	        	$(".parqueadero-inner").removeClass('ocupado');
 	        	$(".parqueadero-inner").addClass('desocupado');
+	        	$(".placa").remove();
+	        	$(".parqueadero-bottom").html("");
 	        	for(ocupado in ocupados){
 	        		$(".parqueadero-inner[data-par_id="+ocupados[ocupado].par_id+"]").addClass('ocupado');
 	        		$(".parqueadero-inner[data-par_id="+ocupados[ocupado].par_id+"] > span").html(
-	        			ocupados[ocupado].par_id+'<br>'+ocupados[ocupado].aut_placa+'<br>'+ocupados[ocupado].salida
+	        			ocupados[ocupado].par_id +'<br><b class="placa">'+ ocupados[ocupado].aut_placa+'</b>'
 	        		);
+	        		$(".parqueadero-bottom[data-par_id="+ocupados[ocupado].par_id+"]").html(
+	        			ocupados[ocupado].salida+' - '+ ocupados[ocupado].horas+' horas'
+	        		);
+	        		if(ocupados[ocupado].falta<=10){
+	        			$(".parqueadero-inner[data-par_id="+ocupados[ocupado].par_id+"]").addClass('pronto');
+	        		}	
+	        		
 
 	        	}
 	    		setTimeout(estadoActual,10000);        
@@ -39,7 +80,10 @@
 		$(".parqueadero-inner").on('click',function(e){
 			e.preventDefault();
 			var parqueadero= $(this);
-			if(confirm('Desea reportar este parqueadero?')){
+			$("#parqueadero").val(parqueadero.attr('data-par_id'));
+			$('.bs-example-modal-sm').modal('show');
+
+			/*if(confirm('Desea reportar este parqueadero?')){
 				$.ajax({
 		            url: "<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'reportar')) ?>",
 		            type: "POST",
@@ -48,7 +92,8 @@
 		        }).done(function(respuesta) {
 		        	alert('Este parqueadero fue reportado');
 				}); 
-		    }
+		    }*/
+
 		});
 		
 	});

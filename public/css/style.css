@@ -157,8 +157,14 @@ hr {
 	color: #868686;
 }
 /* Estilos parqueaderos */
+.parqueadero-outer { height:170px; float:left; }
+.parqueadero-outer .parqueadero-bottom {padding:0 5px; font-size: 13px; text-align: center;}
 .parqueadero { border:3px solid #578fc0;width:90px; height:140px; padding:5px; float:left; margin:5px; }
 .parqueadero .parqueadero-inner { height:123px; }
 .parqueadero .desocupado { background-image:url('../img/barras.png'); }
 .parqueadero .ocupado { background-image:url('../img/auto.jpg'); }
-.parqueadero .parqueadero-inner span { background-color:#fff; width:100%; display:inline-block; margin:50px auto; text-align: center; line-height:23px; font-size:20px; }
+.parqueadero .ocupado.pronto { background-image:url('../img/auto_salida.jpg'); }
+.parqueadero .parqueadero-inner span { background-color:#fff; width:100%; display:inline-block; margin:50px auto; text-align: center; line-height:23px; font-size:17px; }
+.parqueadero .placa {text-transform:uppercase;}
+.sector {margin-top:10px;}
+.sector a{color:#fff; text-decoration:none;}

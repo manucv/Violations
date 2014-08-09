@@ -32,6 +32,12 @@ class SectorController extends AbstractActionController
         ) );
     }
 
+    public function reportarAction(){
+
+        
+    }
+
+
     public function getForm() {
         $form = new Sector ();
         return $form;

@@ -24,8 +24,8 @@ class ParqueaderosController extends AbstractActionController
     {
         $form = $this->getFormBusqueda ();
         $form->get('pai_id' )->setValueOptions ( $this->getPaisDao ()->traerTodosArreglo () );
-        $sectores=$this->getSectorDao ()->traerTodosJSON();
-        return array('formulario' => $form, 'sectores'=>$sectores);
+        //$sectores=$this->getSectorDao ()->traerTodosJSON();
+        return array('formulario' => $form);//, 'sectores'=>$sectores);
     }
 
     public function ocupadosAction(){
@@ -42,15 +42,17 @@ class ParqueaderosController extends AbstractActionController
         }
     }
 
-    public function reportarAction(){
+    public function sectoresAction(){
         if($this->getRequest()->isXmlHttpRequest()){
-            /*$sec_id =  $this->getRequest()->getPost('sec_id');
-            $ocupados = $this->getParqueaderoDao()->traerOcupadosPorSectorJSON($sec_id);
-            
+            $pai_id =  $this->getRequest()->getPost('pai_id');
+            $est_id =  $this->getRequest()->getPost('est_id');
+            $ciu_id =  $this->getRequest()->getPost('ciu_id');
+            $sectores=$this->getSectorDao ()->traerTodosJSON($pai_id, $est_id, $ciu_id);
+
             $response=$this->getResponse();
             $response->setStatusCode(200);
-            $response->setContent($ocupados);
-            return $response;*/
+            $response->setContent($sectores);
+            return $response;
         }else{
             return $this->redirect()->toRoute('parqueaderos',array('parqueaderos'=>'index'));
         }
