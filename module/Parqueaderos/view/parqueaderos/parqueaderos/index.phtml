@@ -38,7 +38,7 @@
 <div style="width:70%; float:left;" >
 	<div id="map-canvas" style="height:300px; width:90%; margin:0 auto;"></div>
 </div>
-<div style="clear:both">
+<div style="clear:both" id="sectores" class="row" >
 	
 </div>
 
@@ -58,8 +58,8 @@
 	    var lugar = new google.maps.LatLng(-0.1865943, -78.4305382);
 	    var mapOptions = { zoom: 4, center: lugar };
 	    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	
-		var markers=<?php echo $sectores; ?>;
+		
+		/*var markers=<?php echo $sectores; ?>;
 	     for (i = 0; i < markers.length; i++) {
 			var data = markers[i]
 			var myLatlng = new google.maps.LatLng(data.lat, data.lng);
@@ -89,7 +89,7 @@
 				});
 
 			})(marker, data);
-		}
+		}*/
 
 	}
 
@@ -141,6 +141,65 @@
 		            
 		        });
 
+		        $.ajax({
+		        	url: "<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'sectores')) ?>",
+		            type: "POST",
+		            dataType: "json",
+		            data: "pai_id=" + $('#pai_id').val()
+		        }).done(function(sectores) {
+		        	$('#sectores').html('');
+				    for (var i = 0; i < markers.length; i++) {
+				   	    markers[i].setMap(null);
+				    }
+
+		        	for(sector in sectores){ //foreach sectores
+		        		
+
+						var myLatlng = new google.maps.LatLng(sectores[sector].lat, sectores[sector].lng);
+						var marker = new google.maps.Marker({
+							position: myLatlng,
+							map: map,
+							title: sectores[sector].title
+						});
+						(function(marker, data) {
+							google.maps.event.addListener(marker, "click", function(e) {
+								window.location.href="<?php echo $this->basepath(); ?>/parqueaderos/sector/index/"+data.id;
+							});
+
+							var infowindow = new google.maps.InfoWindow({
+								content: 	'<div>'+
+											data.description+'<br>'+
+											'Ocupados: '+data.ocupados+'/'+data.total+'<br>'+
+											'</div>'
+							});
+
+							google.maps.event.addListener(marker, "mouseover", function(e) {
+								infowindow.open(map,marker);
+							});
+
+							google.maps.event.addListener(marker, "mouseout", function(e) {
+								infowindow.close(map,marker);
+							});
+
+						})(marker, sectores[sector]);
+
+						markers.push(marker);
+
+						$('#sectores').append(
+							'<div class="col-md-3 sector">'+
+							'<div class="panel panel-primary">'+
+								'<div class="panel-heading"><a href="<?php echo $this->basepath(); ?>/parqueaderos/sector/index/'+sectores[sector].id+'">'+sectores[sector].description+'</a></div>'+
+								'<div class="panel-body">'+
+									'Ocupados: '+sectores[sector].ocupados+'/'+sectores[sector].total+
+								'</div>'+
+							'</div>'+
+							'</div>'
+
+						);
+
+		        	} //fin foreach sectores
+		        });
+
 			}else{
 				$("#est_id").prop("disabled", true);
 			}
@@ -171,6 +230,69 @@
 
 		            codeAddress(9);
 		        });
+
+
+		        $.ajax({
+		        	url: "<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'sectores')) ?>",
+		            type: "POST",
+		            dataType: "json",
+		            data: "est_id=" + $('#est_id').val()
+		        }).done(function(sectores) {
+		        	$('#sectores').html('');
+				    for (var i = 0; i < markers.length; i++) {
+				   	    markers[i].setMap(null);
+				    }
+
+		        	for(sector in sectores){ //foreach sectores
+		        		
+
+						var myLatlng = new google.maps.LatLng(sectores[sector].lat, sectores[sector].lng);
+						var marker = new google.maps.Marker({
+							position: myLatlng,
+							map: map,
+							title: sectores[sector].title
+						});
+						(function(marker, data) {
+							google.maps.event.addListener(marker, "click", function(e) {
+								window.location.href="<?php echo $this->basepath(); ?>/parqueaderos/sector/index/"+data.id;
+							});
+
+							var infowindow = new google.maps.InfoWindow({
+								content: 	'<div>'+
+											data.description+'<br>'+
+											'Ocupados: '+data.ocupados+'/'+data.total+'<br>'+
+											'</div>'
+							});
+
+							google.maps.event.addListener(marker, "mouseover", function(e) {
+								infowindow.open(map,marker);
+							});
+
+							google.maps.event.addListener(marker, "mouseout", function(e) {
+								infowindow.close(map,marker);
+							});
+
+						})(marker, sectores[sector]);
+
+						markers.push(marker);
+
+						$('#sectores').append(
+							'<div class="col-md-3 sector">'+
+							'<div class="panel panel-primary">'+
+								'<div class="panel-heading"><a href="<?php echo $this->basepath(); ?>/parqueaderos/sector/index/'+sectores[sector].id+'">'+sectores[sector].description+'</a></div>'+
+								'<div class="panel-body">'+
+									'Ocupados: '+sectores[sector].ocupados+'/'+sectores[sector].total+
+								'</div>'+
+							'</div>'+
+							'</div>'
+
+						);
+
+		        	} //fin foreach sectores
+		        });
+
+
+
 			}else{
 				$("#ciu_id").prop("disabled", true);
 			}
@@ -179,13 +301,68 @@
 		//FUNCION PARA CARGAR EL COMBO BOX DE CIUDADES EN BASE A UN ESTADO		
 		$("#ciu_id").change(function() {
 			if($('#ciu_id').val() != '' && $('#ciu_id').val() != null){
-				
-				var pais = $('#pai_id option:selected').text();
-		        var estado = $('#est_id option:selected').text();
-		        var ciudad = $('#ciu_id option:selected').text();
+		        
+		        $.ajax({
+		        	url: "<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'sectores')) ?>",
+		            type: "POST",
+		            dataType: "json",
+		            data: "ciu_id=" + $('#ciu_id').val()
+		        }).done(function(sectores) {
+		        	$('#sectores').html('');
+				    for (var i = 0; i < markers.length; i++) {
+				   	    markers[i].setMap(null);
+				    }
+
+		        	for(sector in sectores){ //foreach sectores
+		        		
+
+						var myLatlng = new google.maps.LatLng(sectores[sector].lat, sectores[sector].lng);
+						var marker = new google.maps.Marker({
+							position: myLatlng,
+							map: map,
+							title: sectores[sector].title
+						});
+						(function(marker, data) {
+							google.maps.event.addListener(marker, "click", function(e) {
+								window.location.href="<?php echo $this->basepath(); ?>/parqueaderos/sector/index/"+data.id;
+							});
+
+							var infowindow = new google.maps.InfoWindow({
+								content: 	'<div>'+
+											data.description+'<br>'+
+											'Ocupados: '+data.ocupados+'/'+data.total+'<br>'+
+											'</div>'
+							});
+
+							google.maps.event.addListener(marker, "mouseover", function(e) {
+								infowindow.open(map,marker);
+							});
+
+							google.maps.event.addListener(marker, "mouseout", function(e) {
+								infowindow.close(map,marker);
+							});
+
+						})(marker, sectores[sector]);
+
+						markers.push(marker);
+
+						$('#sectores').append(
+							'<div class="col-md-3 sector">'+
+							'<div class="panel panel-primary">'+
+								'<div class="panel-heading"><a href="<?php echo $this->basepath(); ?>/parqueaderos/sector/index/'+sectores[sector].id+'">'+sectores[sector].description+'</a></div>'+
+								'<div class="panel-body">'+
+									'Ocupados: '+sectores[sector].ocupados+'/'+sectores[sector].total+
+								'</div>'+
+							'</div>'+
+							'</div>'
+
+						);
+
+		        	} //fin foreach sectores
+		        });
 
 		        codeAddress(13);
-		        
+
 			};
 
 		});

@@ -103,17 +103,32 @@ class SectorDao implements InterfaceCrud {
 		return $result;
 	}
 
-	public function traerTodosJSON(){
+	public function traerTodosJSON($pai_id=NULL, $est_id=NULL, $ciu_id=NULL){
 
 		$adapter = $this->tableGateway->getAdapter();
 		$query = "
-			SELECT 	s.sec_id, s.sec_nombre, s.sec_latitud, s.sec_longitud, 
+			SELECT 	e.pai_id, c.est_id, s.ciu_id, s.sec_id, s.sec_nombre, s.sec_latitud, s.sec_longitud, 
 					COUNT( p.sec_id ) AS total, 
 					SUM( CASE WHEN p.par_estado !=  'D' THEN 1 ELSE 0 END ) AS ocupados
 			FROM sector AS s
 				JOIN parqueadero AS p 
 					ON p.sec_id = s.sec_id
-			GROUP BY sec_id ";
+				JOIN ciudad as c
+					on s.ciu_id=c.ciu_id
+				JOIN estado as e
+					on c.est_id=e.est_id ";
+
+		$where="";			
+
+		if(!is_null($pai_id))
+			$where = " WHERE e.pai_id=".$pai_id;
+		if(!is_null($est_id))
+			$where = " WHERE c.est_id=".$est_id;
+		if(!is_null($ciu_id))
+			$where = " WHERE s.ciu_id=".$ciu_id;
+		
+		$query.= $where;
+		$query.= " GROUP BY sec_id ";
     	
     	$statement = $adapter->query($query);
     	$results = $statement->execute();
