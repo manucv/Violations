@@ -8,3 +8,11 @@ CREATE TRIGGER `violations_automovil` BEFORE INSERT ON `log_parqueadero`
 VALUES (
 NEW.aut_placa
 )
+
+CREATE TRIGGER `violations_automovil_multa` BEFORE INSERT ON `multa_parqueadero`
+ FOR EACH ROW INSERT IGNORE INTO `automovil` (
+    `aut_placa`
+)
+VALUES (
+NEW.aut_placa
+)
