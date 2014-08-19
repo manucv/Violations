@@ -53,12 +53,13 @@ class InfraccionDao implements InterfaceCrud {
     		if ($this->traer ( $id )) {
     	
     			$this->tableGateway->update ( $data, array ( 'inf_id' => $id ) );
-    	
+    	       return $id;
     		} else {
     			throw new \Exception ( 'No se encontro el id para actualizar' );
     		}
     	}else{
     		$this->tableGateway->insert ( $data );
+            return $this->tableGateway->lastInsertValue;
     	}
     }
     

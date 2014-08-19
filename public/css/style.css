@@ -163,6 +163,7 @@ hr {
 .parqueadero .parqueadero-inner { height:123px; }
 .parqueadero .desocupado { background-image:url('../img/barras.png'); }
 .parqueadero .ocupado { background-image:url('../img/auto.jpg'); }
+.parqueadero .multado { background-image:url('../img/auto_multa.jpg'); }
 .parqueadero .ocupado.pronto { background-image:url('../img/auto_salida.jpg'); }
 .parqueadero .parqueadero-inner span { background-color:#fff; width:100%; display:inline-block; margin:50px auto; text-align: center; line-height:23px; font-size:17px; }
 .parqueadero .placa {text-transform:uppercase;}

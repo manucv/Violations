@@ -11,14 +11,17 @@ namespace Parqueaderos\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Parqueaderos\Form\Sector;
-//use Application\Model\Entity\Pais as PaisEntity;
-//use Application\Model\Entity\Sector as SectorEntity;
+
+use Application\Model\Entity\LogParqueadero as LogParqueaderoEntity;
+use Application\Model\Entity\Automovil as AutomovilEntity;
 
 class ParqueaderosController extends AbstractActionController
 {
     protected $paisDao;
     protected $sectorDao;
     protected $parquederoDao;
+    protected $logParqueaderoDao;
+    protected $automovilDao;
 
     public function indexAction()
     {
@@ -42,6 +45,20 @@ class ParqueaderosController extends AbstractActionController
         }
     }
 
+    public function multadosAction(){
+        if($this->getRequest()->isXmlHttpRequest()){
+            $sec_id =  $this->getRequest()->getPost('sec_id');
+            $ocupados = $this->getParqueaderoDao()->traerMultadosPorSectorJSON($sec_id);
+            
+            $response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($ocupados);
+            return $response;
+        }else{
+            return $this->redirect()->toRoute('parqueaderos',array('parqueaderos'=>'index'));
+        }
+    }    
+
     public function sectoresAction(){
         if($this->getRequest()->isXmlHttpRequest()){
             $pai_id =  $this->getRequest()->getPost('pai_id');
@@ -57,6 +74,59 @@ class ParqueaderosController extends AbstractActionController
             return $this->redirect()->toRoute('parqueaderos',array('parqueaderos'=>'index'));
         }
     }    
+
+    public function agregarAction(){
+        //VERIFICA QUE SE HAYA REALIZADO UN POST DE INFORMACION
+        if (! $this->request->isPost ()) {
+            return $this->redirect ()->toRoute ( 'parqueaderos', array (
+                    'controller' => 'parqueaderos',
+                    'action' => 'index'
+            ) );
+        }
+         
+        //CAPTURA LA INFORMACION ENVIADA EN EL POST
+        $data = $this->request->getPost ();
+
+
+
+        $data->log_par_fecha_ingreso = date('Y-m-d H:i:s');
+        $data->log_par_estado = 'O';
+        $data->log_par_horas_parqueo = rand(1,2);
+
+        $data->aut_placa = 'P';
+        $a_z = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $int = rand(0,25);
+        $data->aut_placa .= $a_z[$int];
+        $int = rand(0,25);
+        $data->aut_placa .= $a_z[$int];
+        $data->aut_placa .= str_pad(rand(0,999), 3, "0", STR_PAD_LEFT);
+
+        $automovil = new AutomovilEntity();
+        $automovil->exchangeArray ( $data );
+        $aut_placa = $this->getAutomovilDao()->guardar ( $automovil );
+
+
+        $vaciosObj = $this->getParqueaderoDao()->traerVaciosPorSector($data->sec_id);
+        $vacios = array(); 
+        foreach($vaciosObj as $vacioObj){
+            $vacios[] = $vacioObj->getPar_id();
+        }
+
+        $total_vacios = sizeof($vacios);
+        $vacio = $vacios[rand(0,$total_vacios-1)];
+        $data->par_id = $vacio;
+
+        $log_parqueadero = new LogParqueaderoEntity();
+        $log_parqueadero->exchangeArray ( $data );
+        $log_par_id = $this->getLogParqueaderoDao()->guardar ( $log_parqueadero );
+
+        return $this->redirect ()->toRoute ( 'parqueaderos', array (
+                'controller' => 'sector',
+                'action' => 'index',
+                'id' => $data->sec_id
+        )); 
+
+    }
 
     /* GET DAO's */
     public function getPaisDao() {
@@ -79,6 +149,20 @@ class ParqueaderosController extends AbstractActionController
             $this->parquederoDao = $sm->get ( 'Application\Model\Dao\ParqueaderoDao' );
         }
         return $this->parquederoDao;
+    }
+    public function getLogParqueaderoDao() {
+        if (! $this->logParqueaderoDao) {
+            $sm = $this->getServiceLocator ();
+            $this->logParqueaderoDao = $sm->get ( 'Application\Model\Dao\LogParqueaderoDao' );
+        }
+        return $this->logParqueaderoDao;
+    }
+    public function getAutomovilDao() {
+        if (! $this->automovilDao) {
+            $sm = $this->getServiceLocator ();
+            $this->automovilDao = $sm->get ( 'Application\Model\Dao\AutomovilDao' );
+        }
+        return $this->automovilDao;
     }
 
     public function getFormBusqueda() {

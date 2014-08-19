@@ -32,6 +32,7 @@ class ParqueaderoDao implements InterfaceCrud {
 		return $resultSet;
 		
 	}	
+
 	public function traerOcupadosPorSectorJSON($sec_id) {
 
 		$adapter = $this->tableGateway->getAdapter();
@@ -79,12 +80,52 @@ class ParqueaderoDao implements InterfaceCrud {
 
 		return json_encode($jsonArray);
 
-		/*$select = $this->tableGateway->getSql ()->select ();
-		$select-> where ( array('sec_id'=>$sec_id, 'par_estado'=>'O') );
-		 
-		$resultSet = $this->tableGateway->selectWith ( $select );
-		return json_encode($resultSet->toArray());*/
+	}		
 
+	
+	public function traerMultadosPorSectorJSON($sec_id) {
+
+		$adapter = $this->tableGateway->getAdapter();
+		$query = "
+			SELECT m.mul_par_id, m.sec_id, m.par_id, m.aut_placa FROM 
+			(SELECT i.inf_id, i.inf_fecha, mp.mul_par_id, i.sec_id, mp.par_id, mp.aut_placa 
+			from multa_parqueadero as mp join infraccion as i 
+			ON mp.inf_id=i.inf_id where mp.mul_par_estado='I' 
+			and i.sec_id= $sec_id 
+			order by i.inf_fecha DESC ) as m
+			group by m.par_id
+		";
+    	
+    	$statement = $adapter->query($query);
+    	$results = $statement->execute();
+
+		$sectores = new \ArrayObject();
+	
+		$count=0;
+		$jsonArray=array();
+
+		foreach ($results as $row){
+
+			$jsonArray[$count]['par_id']=$row['par_id'];
+			$jsonArray[$count]['aut_placa']=$row['aut_placa'];
+			$jsonArray[$count]['mul_par_id']=$row['mul_par_id'];
+
+			$count++;
+		}
+
+		return json_encode($jsonArray);
+
+	}
+
+
+	public function traerVaciosPorSector($sec_id) {
+		
+		$select = $this->tableGateway->getSql ()->select ();
+		$select-> where ( array('sec_id'=>$sec_id, 'par_estado'=>'D') );
+		
+		$resultSet = $this->tableGateway->selectWith ( $select );
+		return $resultSet;
+		
 	}		
 	
 	public function traer($par_id) {

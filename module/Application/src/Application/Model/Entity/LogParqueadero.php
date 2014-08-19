@@ -10,7 +10,7 @@ private $log_par_fecha_salida;
 private $log_par_horas_parqueo;
 private $log_par_estado;
 private $par_id;
-private $aut_idprivate $;
+private $aut_idprivate;
 
 function __construct() {}
 
@@ -53,8 +53,8 @@ public function getPar_id(){
 /**
 * @return the $aut_id
 */
-public function getAut_id(){
-	return $this->aut_id;
+public function getAut_placa(){
+	return $this->aut_placa;
 }
 
 
@@ -97,8 +97,8 @@ public function setPar_id($par_id){
 /**
 * @param Ambigous <NULLm unknown> $aut_id
 */
-public function setAut_id($aut_id){
-	$this->aut_id=$aut_id;
+public function setAut_id($aut_placa){
+	$this->aut_id=$aut_placa;
 }
 
 
@@ -112,7 +112,7 @@ public function setAut_id($aut_id){
 		$this->log_par_horas_parqueo = (isset($data['log_par_horas_parqueo'])) ? $data['log_par_horas_parqueo'] : null;
 		$this->log_par_estado = (isset($data['log_par_estado'])) ? $data['log_par_estado'] : null;
 		$this->par_id = (isset($data['par_id'])) ? $data['par_id'] : null;
-		$this->aut_id = (isset($data['aut_id'])) ? $data['aut_id'] : null;
+		$this->aut_placa = (isset($data['aut_placa'])) ? $data['aut_placa'] : null;
 
 	}
 	

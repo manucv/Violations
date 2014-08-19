@@ -55,6 +55,15 @@ use Application\Model\Entity\Parqueadero;
 use Application\Model\Dao\ParqueaderoDao;
 use Application\Model\Entity\Sector;
 use Application\Model\Dao\SectorDao;
+use Application\Model\Entity\Infraccion;
+use Application\Model\Dao\InfraccionDao;
+use Application\Model\Entity\MultaParqueadero;
+use Application\Model\Dao\MultaParqueaderoDao;
+use Application\Model\Entity\Automovil;
+use Application\Model\Dao\AutomovilDao;
+use Application\Model\Entity\LogParqueadero;
+use Application\Model\Dao\LogParqueaderoDao;
+
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface{
 	public function onBootstrap(MvcEvent $e) {
@@ -289,6 +298,37 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	return new SectorDao($tableGateway);
 		                },
 		                
+		                'Application\Model\Dao\InfraccionDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Infraccion());
+		                	$tableGateway = new TableGateway('infraccion', $dbAdapter, null, $resultSetPrototype);
+		                	return new InfraccionDao($tableGateway);
+		                },		  
+
+  		                'Application\Model\Dao\MultaParqueaderoDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new MultaParqueadero());
+		                	$tableGateway = new TableGateway('multa_parqueadero', $dbAdapter, null, $resultSetPrototype);
+		                	return new MultaParqueaderoDao($tableGateway);
+		                },
+
+  		                'Application\Model\Dao\AutomovilDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Automovil());
+		                	$tableGateway = new TableGateway('automovil', $dbAdapter, null, $resultSetPrototype);
+		                	return new AutomovilDao($tableGateway);
+		                },		                
+		                
+		                'Application\Model\Dao\LogParqueaderoDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new LogParqueadero());
+		                	$tableGateway = new TableGateway('log_parqueadero', $dbAdapter, null, $resultSetPrototype);
+		                	return new LogParqueaderoDao($tableGateway);
+		                },
 		                
 						
 				),

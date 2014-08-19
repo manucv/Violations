@@ -1,5 +1,6 @@
-<div class="titulo-ventana"><i class="fa fa-road fa-fw"></i> Parqueaderos - Sector: <?php echo $sector->getSec_nombre(); ?></div>
-<hr class="hr-style" />
+<div class="titulo-ventana" style="float:left;"><i class="fa fa-road fa-fw"></i> Parqueaderos - Sector: <?php echo $sector->getSec_nombre(); ?></div>
+<button type="button" class="btn btn-warning" id="agregar" style="float:right; clear:right;">Registrar Auto</button>
+<hr class="hr-style"  style="clear:both;" />
 
 <div class='row' style="width:100%; margin:0 auto;">
 <?php foreach($parqueaderos as $parqueadero): ?>
@@ -14,26 +15,34 @@
 	</div>
 <?php endforeach; ?>
 </div>
-
+<!-- Formulario de Registro de Incidente -->
   <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
-        <form action="" 
+        <form action="<?php echo $this->url('parqueaderos', array('controller' => 'sector', 'action' => 'reportar')) ?>" 
           name="reporteFrm"
-          role="form" >        
+          role="form"
+          method="post" >        
           <div class="modal-header">
             <h3 class="modal-title" id="myModalLabel">Reportar Parqueadero</h3>
           </div>
           <div class="modal-body">
           		<div class="form-group">
           			<label for="placa">Placa:</label>
-          			<input type="text" class="form-control" id="placa"/>
+          			<input type="text" class="form-control" id="aut_placa" name="aut_placa"/>
             	</div>
             	<div class="form-group">
             		<label for="observaciones">Observaciones:</label>
-            		<textarea name="" id="observaciones" cols="30" rows="10" class="form-control"></textarea>
+          			<select type="text" class="form-control" id="inf_detalles" name="inf_detalles"/>
+          				<option value="0">--Seleccione Una--</option>
+          				<option>No se encuentra registrado como parqueado</option>
+          				<option>Excedio el número de horas registradas</option>
+          			</select>
+
+            		<!--<textarea id="inf_detalles" cols="30" rows="5" class="form-control"  name="inf_detalles"></textarea>-->
             	</div>
-            	<input type="hidden" id="parqueadero"/>
+            	<input type="hidden" id="par_id" name="par_id"/>
+            	<input type="hidden" id="sec_id" name="sec_id" value="<?php echo $sector->getSec_id(); ?>" />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -43,10 +52,38 @@
       </div>
     </div>
   </div>
+<!-- Fin Formulario de Registro de Incidente -->
+
+<!-- Formulario de Solución de Incidente -->
+  <div class="modal fade bs-solucion-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <form action="<?php echo $this->url('parqueaderos', array('controller' => 'sector', 'action' => 'solucionar')) ?>" 
+          name="solucionFrm"
+          role="form"
+          method="post" >        
+          <div class="modal-header">
+            <h3 class="modal-title" id="myModalLabel">Solucionar Parqueadero</h3>
+          </div>
+          <div class="modal-body">
+          		El incidente con el parqueadero ha sido resuelto?
+            	<input type="hidden" id="mul_par_id" name="mul_par_id"/>
+            	<input type="hidden" id="sec_id" name="sec_id" value="<?php echo $sector->getSec_id(); ?>" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-primary">Si</button>
+          </div>
+        </form> 
+      </div>
+    </div>
+  </div>
+<!-- Fin Formulario de Solución de Incidente -->
 
 <script>
 	$(document).ready(function(){
 		function estadoActual(){
+			/* Ocupados */
 	        $.ajax({
 	            url: "<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'ocupados')) ?>",
 	            type: "POST",
@@ -54,12 +91,14 @@
 	            data: "sec_id=<?php echo $sector->getSec_id(); ?>"
 
 	        }).done(function(ocupados) {
-	        	$(".parqueadero-inner").removeClass('ocupado');
+	        	
 	        	$(".parqueadero-inner").addClass('desocupado');
-	        	$(".placa").remove();
+	        	$(".parqueadero-inner.ocupado > span > .placa").remove();
+	        	$(".parqueadero-inner").removeClass('ocupado');
 	        	$(".parqueadero-bottom").html("");
 	        	for(ocupado in ocupados){
 	        		$(".parqueadero-inner[data-par_id="+ocupados[ocupado].par_id+"]").addClass('ocupado');
+	        		$(".parqueadero-inner[data-par_id="+ocupados[ocupado].par_id+"]").removeClass('desocupado');
 	        		$(".parqueadero-inner[data-par_id="+ocupados[ocupado].par_id+"] > span").html(
 	        			ocupados[ocupado].par_id +'<br><b class="placa">'+ ocupados[ocupado].aut_placa+'</b>'
 	        		);
@@ -72,28 +111,59 @@
 	        		
 
 	        	}
-	    		setTimeout(estadoActual,10000);        
+
+	        	/* Multados */	
+
+		        $.ajax({
+		            url: "<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'multados')) ?>",
+		            type: "POST",
+		            dataType: "json",
+		            data: "sec_id=<?php echo $sector->getSec_id(); ?>"
+
+		        }).done(function(multados) {
+		        	$(".parqueadero-inner.multado > span > .placa").remove();
+		        	$(".parqueadero-inner").removeClass('multado');
+		        	for(multado in multados){
+		        		$(".parqueadero-inner[data-par_id="+multados[multado].par_id+"]").addClass('multado');
+		        		$(".parqueadero-inner[data-par_id="+multados[multado].par_id+"]").removeClass('desocupado');
+		        		$(".parqueadero-inner[data-par_id="+multados[multado].par_id+"]").attr('data-mul_par_id',''+multados[multado].mul_par_id);
+
+		        		$(".parqueadero-inner[data-par_id="+multados[multado].par_id+"] > span").html(
+		        			multados[multado].par_id +'<br><b class="placa">'+ multados[multado].aut_placa+'</b>'
+		        		);
+		        	}
+		    		setTimeout(estadoActual,10000);        
+		        });
 	        });
 		}
 		estadoActual();
 
-		$(".parqueadero-inner").on('click',function(e){
+		$(".parqueadero").on('click','.desocupado',function(e){
 			e.preventDefault();
 			var parqueadero= $(this);
-			$("#parqueadero").val(parqueadero.attr('data-par_id'));
+			$("#par_id").val(parqueadero.attr('data-par_id'));
 			$('.bs-example-modal-sm').modal('show');
+		});
 
-			/*if(confirm('Desea reportar este parqueadero?')){
-				$.ajax({
-		            url: "<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'reportar')) ?>",
-		            type: "POST",
-		            dataType: "json",
-		            data: "par_id="+function(){return parqueadero.attr('data-par_id');}
-		        }).done(function(respuesta) {
-		        	alert('Este parqueadero fue reportado');
-				}); 
-		    }*/
+		$(".parqueadero").on('click','.multado',function(e){
+			e.preventDefault();
+			var parqueadero= $(this);
+			$("#mul_par_id").val(parqueadero.attr('data-mul_par_id'));
+			$('.bs-solucion-modal-sm').modal('show');
+		});
+		/* Botón agregar automovil */
+		$("#agregar").on('click',function(e){
+			e.preventDefault();
 
+	        $.ajax({
+	            url: "<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'agregar')) ?>",
+	            type: "POST",
+	            dataType: "json",
+	            data: "sec_id=<?php echo $sector->getSec_id(); ?>"
+
+	     	}).done(function(multados) {
+      			alert('Un auto fue agregado al sector');
+	        });
 		});
 		
 	});

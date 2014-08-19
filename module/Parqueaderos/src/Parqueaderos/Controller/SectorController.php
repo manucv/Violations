@@ -14,11 +14,17 @@ use Zend\View\Model\ViewModel;
 use Parqueaderos\Form\Sector;
 use Parqueaderos\Form\SectorValidator;
 use Application\Model\Entity\Sector as SectorEntity;
+use Application\Model\Entity\Infraccion as InfraccionEntity;
+use Application\Model\Entity\MultaParqueadero as MultaParqueaderoEntity;
 
 class SectorController extends AbstractActionController
 {
+
     protected $sectorDao;
     protected $parqueaderoDao;
+    protected $multaParqueaderoDao;
+    protected $infraccionDao;
+
     public function indexAction(){
 
         $id = ( int ) $this->params()->fromRoute ( 'id', 0 );
@@ -33,9 +39,63 @@ class SectorController extends AbstractActionController
     }
 
     public function reportarAction(){
+        //VERIFICA QUE SE HAYA REALIZADO UN POST DE INFORMACION
+        if (! $this->request->isPost ()) {
+            return $this->redirect ()->toRoute ( 'parqueaderos', array (
+                    'controller' => 'parqueaderos',
+                    'action' => 'index'
+            ) );
+        }
+         
+        //CAPTURA LA INFORMACION ENVIADA EN EL POST
+        $data = $this->request->getPost ();
+        $data->usu_id = $_SESSION['Zend_Auth']['storage']->usu_id;
+        $data->tip_inf_id = '1'; //ahorita esta quemado, debería tomar este valor de una variable global
 
-        
+        $infraccion = new InfraccionEntity();
+        $infraccion->exchangeArray ( $data );
+        $inf_id=$this->getInfraccionDao()->guardar ( $infraccion );
+
+        $data->inf_id=$inf_id;
+        $data->mul_par_estado='I'; //In-pago
+        $data->mul_par_valor='30.10'; //valor de la multa ahorita esta quemado
+
+        $multa_parqueadero = new MultaParqueaderoEntity();
+        $multa_parqueadero->exchangeArray ( $data );
+        $mul_par_id=$this->getMultaParqueaderoDao()->guardar ( $multa_parqueadero );
+
+        return $this->redirect ()->toRoute ( 'parqueaderos', array (
+                'controller' => 'sector',
+                'action' => 'index',
+                'id' => $data->sec_id
+        )); 
+
     }
+
+    public function solucionarAction(){
+        //VERIFICA QUE SE HAYA REALIZADO UN POST DE INFORMACION
+        if (! $this->request->isPost ()) {
+            return $this->redirect ()->toRoute ( 'parqueaderos', array (
+                    'controller' => 'parqueaderos',
+                    'action' => 'index'
+            ) );
+        }
+         
+        //CAPTURA LA INFORMACION ENVIADA EN EL POST
+        $data = $this->request->getPost ();
+
+        //$multa_parqueadero = new MultaParqueaderoEntity();
+        $multa_parqueadero=$this->getMultaParqueaderoDao()->traer($data->mul_par_id);
+        $multa_parqueadero->setMul_par_estado('S');
+        $mul_par_id=$this->getMultaParqueaderoDao()->guardar ( $multa_parqueadero );
+        
+        return $this->redirect ()->toRoute ( 'parqueaderos', array (
+                'controller' => 'sector',
+                'action' => 'index',
+                'id' => $data->sec_id
+        )); 
+
+    }    
 
 
     public function getForm() {
@@ -59,87 +119,21 @@ class SectorController extends AbstractActionController
         return $this->parqueaderoDao;
     }    
 
+    public function getInfraccionDao() {
+        if (! $this->infraccionDao) {
+            $sm = $this->getServiceLocator ();
+            $this->infraccionDao = $sm->get ( 'Application\Model\Dao\InfraccionDao' );
+        }
+        return $this->infraccionDao;
+    }    
+    public function getMultaParqueaderoDao() {
+        if (! $this->multaParqueaderoDao) {
+            $sm = $this->getServiceLocator ();
+            $this->multaParqueaderoDao = $sm->get ( 'Application\Model\Dao\MultaParqueaderoDao' );
+        }
+        return $this->multaParqueaderoDao;
+    }    
 
-	/*protected $sectorDao;
-	protected $ciudadDao;
-	protected $paisDao;
-	protected $estadoDao;
+
 	
-    public function listadoAction()
-    {
-        return array('sector' => $this->getSectorDao()->traerTodos());
-    }
-    
-    public function indexAction(){
-    	
-    	$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
-    	$form = $this->getForm ();
-    	echo 'test';
-        die();
-    	//FORMULARIO DE INGRESO DE INFORMACION
-    	return new ViewModel ( array (
-    			'formulario' => $form ,
-    	) );
-    }
-    
-
-    
-    public function validarAction(){
-
-    	//VERIFICA QUE SE HAYA REALIZADO UN POST DE INFORMACION
-    	if (! $this->request->isPost ()) {
-    		return $this->redirect ()->toRoute ( 'parametros', array (
-    				'controller' => 'sector',
-    				'action' => 'listado'
-    		) );
-    	}
-    	
-    	//CAPTURA LA INFORMACION ENVIADA EN EL POST
-    	$data = $this->request->getPost ();
-    	
-    	//VERIFICA EL IDIOMA INGRESADO PARA TRAER EL FORMULARIO SEGUN EL IDIOMA
-    	$form = $this->getForm();
-    	
-    	//SE VALIDA EL FORMULARIO
-    	$form->setInputFilter ( new SectorValidator() );
-    	
-    	//SE LLENAN LOS DATOS DEL FORMULARIO
-    	$form->setData ( $data );
-    	
-    	$form->get('pai_id_hidden')->setValue($data['pai_id']);
-    	$form->get('est_id_hidden')->setValue($data['est_id']);
-    	$form->get('ciu_id_hidden')->setValue($data['ciu_id']);
-    	
-    	//SE VALIDA EL FORMULARIO ES CORRECTO
-    	if (! $form->isValid ()) {
-    		// SI EL FORMULARIO NO ES CORRECTO
-    		$modelView = new ViewModel ( array (
-    				'formulario' => $form ,
-    		) );
-    			
-    		$modelView->setTemplate ( 'parametros/sector/ingresar' );
-    		return $modelView;
-    	}
-    	
-    	//->AQUI EL FORMULARIO ES CORRECTO, SE VALIDO CORRECTAMENTE
-    	
-    	//SE GENERA EL OBJETO DE CONTACTO
-    	$sector = new SectorEntity();
-    	//SE CARGA LA ENTIDAD CON LA INFORMACION DEL POST
-    	$sector->exchangeArray ( $data );
-    	
-    	//SE GRABA LA INFORMACION EN LA BDD
-    	$this->getSectorDao() ->guardar ( $sector );
-    	
-    	//SI SE EJECUTO EXITOSAMENTE SE REGRESA AL LISTADO DE CONTACTOS
-    	return $this->redirect ()->toRoute ( 'parametros', array (
-    			'controller' => 'sector',
-    			'action' => 'listado'
-    	) );
-    }
-    
-
-    
-
-    */
 }
