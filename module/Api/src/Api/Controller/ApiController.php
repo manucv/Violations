@@ -16,6 +16,7 @@ class ApiController extends AbstractActionController
     protected $establecimientoDao;
     protected $logParqueaderoDao;
     protected $automovilDao;
+    protected $paisDao;
 
     public function indexAction()
     {
@@ -69,7 +70,7 @@ class ApiController extends AbstractActionController
                 foreach($establecimientos as $establecimiento){
                     $establecimientosArray[]=$establecimiento->getArrayCopy();
                 }
-                $content=json_encode($establecimientosArray);
+                $content=json_encode($establecimientosArray);   
                 
                 $response=$this->getResponse();
                 $response->setStatusCode(200);
@@ -77,6 +78,32 @@ class ApiController extends AbstractActionController
                 return $response;                                
             }
 
+        }else{
+            return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ) );
+        }
+    }    
+
+    public function paisesAction()
+    {
+        if($this->getRequest()->isGET()){
+
+            $paises = $this->getPaisDao()->traerTodos();
+            
+            $paisesArray=array();
+            foreach($paises as $pais){
+                $paisesArray[]=$pais->getArrayCopy();
+            }
+            $content='';
+            /*if(is_object($cliente)){
+                $content=json_encode($cliente->getArrayCopy());
+            }*/
+            $response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+            return $response;
         }else{
             return $this->redirect ()->toRoute ( 'parametros', array (
                     'controller' => 'index',
@@ -204,6 +231,15 @@ class ApiController extends AbstractActionController
         }
         return $this->automovilDao;
     }
+
+    public function getPaisDao() {
+        if (! $this->paisDao) {
+            $sm = $this->getServiceLocator ();
+            $this->paisDao = $sm->get ( 'Application\Model\Dao\PaisDao' );
+        }
+        return $this->paisDao;
+    }
+
 
 }
 

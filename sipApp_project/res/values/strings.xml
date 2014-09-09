@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">sip app</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string-array name="tiempo_parqueadero"> 
+       	<item>1 Hora</item>
+       	<item>2 Horas</item>
+	</string-array>
+
+</resources>

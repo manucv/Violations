@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/TxtSaludo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bienvenido"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/LblCategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tu saldo es: "
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/TxtSaldo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="$0.00"
+        android:textSize="100dp" />
+
+    <Button
+        android:id="@+id/BtnCategorias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Categorías" />
+
+    <Button
+        android:id="@+id/BtnCompras"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ultimas Compras" />
+
+    <Button
+        android:id="@+id/BtnAcerca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Acerca De" />
+
+</LinearLayout>
