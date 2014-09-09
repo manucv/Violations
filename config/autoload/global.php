@@ -33,7 +33,8 @@ return array (
 				'Parametros' => 'layout/layoutGeneral.phtml',
 				'Vehiculo' => 'layout/layoutGeneral.phtml',
 				'Infraccion' => 'layout/layoutInfraccion.phtml',
-				'Parqueaderos' => 'layout/layoutGeneral.phtml'
+				'Parqueaderos' => 'layout/layoutGeneral.phtml',
+				'Api' => 'layout/layoutGeneral.phtml'
 		),
 		
 		'translator' => array (

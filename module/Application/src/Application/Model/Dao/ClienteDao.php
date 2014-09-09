@@ -8,7 +8,7 @@ use Zend\Db\Sql\Sql;
 use Application\Model\Entity\Cliente;
 use Application\Model\Dao\InterfaceCrud;
 
-class CiudadDao implements InterfaceCrud {
+class ClienteDao implements InterfaceCrud {
 	
     protected $tableGateway;
     
@@ -18,7 +18,6 @@ class CiudadDao implements InterfaceCrud {
     
     public function traerTodos(){
     	$select = $this->tableGateway->getSql ()->select ();
-cli_id    	
     	$resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;
     }
@@ -39,13 +38,14 @@ cli_id
     
     public function guardar(Cliente $cliente){
     
-    	$id = (int) $cliente->getCiu_id();
+    	$id = (int) $cliente->getCli_id();
     
     	$data = array(
-    			'est_id' => $ciudad->getEst_id(),
-    			'ciu_nombre_es' => $ciudad->getCiu_nombre_es(),
-    			'ciu_nombre_en' => $ciudad->getCiu_nombre_en(),
-    			'ciu_codigo_telefono' => $ciudad->getCiu_codigo_telefono()
+			'cli_nombre' => $cliente->getCli_nombre(),
+			'cli_email' => $cliente->getCli_email(),
+			'cli_passw' => $cliente->getCli_passw(),
+			'cli_saldo' => $cliente->getCli_saldo(),
+			'cli_estado' => $cliente->getCli_estado()
     	);
     	
     	$data ['cli_id'] = $id;
@@ -53,7 +53,7 @@ cli_id
     	if (!empty ( $id ) && !is_null ( $id )) {
     		if ($this->traer ( $id )) {
     	
-    			$this->tableGateway->update ( $data, array ( 'ciu_id' => $id ) );
+    			$this->tableGateway->update ( $data, array ( 'cli_id' => $id ) );
     	
     		} else {
     			throw new \Exception ( 'No se encontro el id para actualizar' );
@@ -66,63 +66,34 @@ cli_id
 	public function eliminar($id) {
 		if ($this->traer ( $id )) {
 			return $this->tableGateway->delete ( array (
-					'ciu_id' => $id 
+					'cli_id' => $id 
 			) );
 		} else {
 			throw new \Exception ( 'No se encontro el id para eliminar' );
 		}
 	}
-    
-    
-    public function traerTodosArreglo(){
-    	 
-    	$sql = new Sql($this->tableGateway->getAdapter());
-    	$select = $sql->select();
-    	$select->from($this->tableGateway->table);
-    	 
-    	$statement = $sql->prepareStatementForSqlObject($select);
-    	$results = $statement->execute();
-    	 
-    	$ciudades = new \ArrayObject();
-    	$result = array();
-    	 
-    	foreach ($results as $row){
-    		$ciudad = new Ciudad();
-    		$ciudad->exchangeArray($row);
-    		$ciudades->append($ciudad);
-    	}
-    	 
-    	foreach ($ciudades as $ciu){
-    		$result[$ciu->getCiu_id()] = $ciu->getCiu_nombre_es();
-    	}
-    
-    	return $result;
+
+    public function buscarPorEmail($email,$passw){
+
+        $resultSet = $this->tableGateway->select(array('cli_email' => $email, 'cli_passw'=>$passw));
+        $row =  $resultSet->current();
+        
+        
+        return $row;
     }
-    
-    public function getCiudadesPorEstado($ciudad){
-    
-    	$sql = new Sql($this->tableGateway->getAdapter());
-    	$select = $sql->select();
-    	$select->from($this->tableGateway->table);
-    	$select->where(array('est_id' => $ciudad));
-    
-    	$statement = $sql->prepareStatementForSqlObject($select);
-    	$results = $statement->execute();
-    
-    	$ciudades = new \ArrayObject();
-    	$result = array();
-    
-    	foreach ($results as $row){
-    		$ciudad = new Ciudad();
-    		$ciudad->exchangeArray($row);
-    		$ciudades->append($ciudad);
-    	}
-    
-    	foreach ($ciudades as $ciu){
-    		$result[$ciu->getCiu_id()] = $ciu->getCiu_nombre_es();
-    	}
-    
-    	return $result;
-    }
+
+    public function debitar($cli_id, $valor=0) {
+        if($cli_id){
+            $cliente=$this->traer($cli_id);
+            if($cliente){
+                $cliente->setCli_saldo($cliente->getCli_saldo()-$valor);
+                $data = $cliente->getArrayCopy();
+
+                $this->tableGateway->update ( $data, array ( 'cli_id' => $cliente->getCli_id() ) );
+                return $cliente;
+            }
+        }
+
+    }    
     
 }

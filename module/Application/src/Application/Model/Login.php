@@ -49,7 +49,6 @@ class Login {
     }
 
     public function login($username, $password) {
-
         if (!empty($username) && !empty($password)) {
 
             $this->authAdapter->setIdentity($username);

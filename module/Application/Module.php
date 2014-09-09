@@ -63,7 +63,12 @@ use Application\Model\Entity\Automovil;
 use Application\Model\Dao\AutomovilDao;
 use Application\Model\Entity\LogParqueadero;
 use Application\Model\Dao\LogParqueaderoDao;
-
+use Application\Model\Entity\Cliente;
+use Application\Model\Dao\ClienteDao;
+use Application\Model\Entity\Categoria;
+use Application\Model\Dao\CategoriaDao;
+use Application\Model\Entity\Establecimiento;
+use Application\Model\Dao\EstablecimientoDao;
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface{
 	public function onBootstrap(MvcEvent $e) {
@@ -139,12 +144,12 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
         
 		$sm = $application->getServiceManager();
 		$auth = $sm->get('Application\Model\Login');
-		
-		if(!$auth->isLoggedIn()){
-			$matches->setParam('controller', 'Application\Controller\Login');
-			$matches->setParam('action', 'index');
+		if($controller != 'Api\Controller\Api' ){
+			if(!$auth->isLoggedIn()){
+				$matches->setParam('controller', 'Application\Controller\Login');
+				$matches->setParam('action', 'index');
+			}
 		}
-		
 	}
 	
 	public function getServiceConfig() {
@@ -329,8 +334,30 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$tableGateway = new TableGateway('log_parqueadero', $dbAdapter, null, $resultSetPrototype);
 		                	return new LogParqueaderoDao($tableGateway);
 		                },
-		                
-						
+
+		                'Application\Model\Dao\ClienteDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Cliente());
+		                	$tableGateway = new TableGateway('cliente', $dbAdapter, null, $resultSetPrototype);
+		                	return new ClienteDao($tableGateway);
+		                },
+
+		                'Application\Model\Dao\CategoriaDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Categoria());
+		                	$tableGateway = new TableGateway('categoria', $dbAdapter, null, $resultSetPrototype);
+		                	return new CategoriaDao($tableGateway);
+		                },		  
+
+  		                'Application\Model\Dao\EstablecimientoDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Establecimiento());
+		                	$tableGateway = new TableGateway('establecimiento', $dbAdapter, null, $resultSetPrototype);
+		                	return new EstablecimientoDao($tableGateway);
+		                },	
 				),
 		);
 	}
