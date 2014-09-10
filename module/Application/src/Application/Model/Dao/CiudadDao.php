@@ -14,10 +14,12 @@ class CiudadDao implements InterfaceCrud {
     	$this->tableGateway = $tableGateway;
     }
     
-    public function traerTodos(){
+    public function traerTodos($est_id=null){
     	$select = $this->tableGateway->getSql ()->select ();
     	$select->join ( 'estado', 'ciudad.est_id  = estado.est_id' );
-    	
+        if(!is_null($est_id)){
+            $select->where ( array('estado.est_id'=>$est_id) );
+        }   	
     	$resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;
     }

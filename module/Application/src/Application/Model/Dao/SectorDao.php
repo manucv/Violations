@@ -14,10 +14,12 @@ class SectorDao implements InterfaceCrud {
 		$this->tableGateway = $tableGateway;
 	}
 	
-	public function traerTodos() {
+	public function traerTodos($ciu_id=null) {
 		$select = $this->tableGateway->getSql ()->select ();
 		$select->join ( 'ciudad', 'ciudad.ciu_id  = sector.ciu_id' );
-		 
+        if(!is_null($ciu_id)){
+            $select->where ( array('ciudad.ciu_id'=>$ciu_id) );
+        }   			 
 		$resultSet = $this->tableGateway->selectWith ( $select );
 		return $resultSet;
 	}

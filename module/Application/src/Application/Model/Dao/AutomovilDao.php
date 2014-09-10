@@ -24,7 +24,7 @@ class AutomovilDao implements InterfaceCrud {
     	$row =  $resultSet->current();
     	
     	if(!$row){
-    		throw new \Exception('No se encontro el ID de la ciudad');
+    		return false;
     	}
     	
     	return $row;

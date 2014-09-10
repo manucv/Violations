@@ -13,11 +13,13 @@ class EstadoDao implements InterfaceCrud {
     	$this->tableGateway = $tableGateway;
     }
     
-    public function traerTodos(){
+    public function traerTodos($pai_id=null){
     	
     	$select = $this->tableGateway->getSql ()->select ();
     	$select->join ( 'pais', 'pais.pai_id  = estado.pai_id' );
-    	
+    	if(!is_null($pai_id)){
+            $select->where ( array('pais.pai_id'=>$pai_id) );
+        }
     	$resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;
     	

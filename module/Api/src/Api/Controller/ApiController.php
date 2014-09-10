@@ -16,7 +16,13 @@ class ApiController extends AbstractActionController
     protected $establecimientoDao;
     protected $logParqueaderoDao;
     protected $automovilDao;
+
     protected $paisDao;
+    protected $estadoDao;
+    protected $ciudadDao;
+    protected $sectorDao;
+
+    protected $parqueaderoDao;
 
     public function indexAction()
     {
@@ -86,31 +92,7 @@ class ApiController extends AbstractActionController
         }
     }    
 
-    public function paisesAction()
-    {
-        if($this->getRequest()->isGET()){
 
-            $paises = $this->getPaisDao()->traerTodos();
-            
-            $paisesArray=array();
-            foreach($paises as $pais){
-                $paisesArray[]=$pais->getArrayCopy();
-            }
-            $content='';
-            /*if(is_object($cliente)){
-                $content=json_encode($cliente->getArrayCopy());
-            }*/
-            $response=$this->getResponse();
-            $response->setStatusCode(200);
-            $response->setContent($content);
-            return $response;
-        }else{
-            return $this->redirect ()->toRoute ( 'parametros', array (
-                    'controller' => 'index',
-                    'action' => 'index'
-            ) );
-        }
-    }    
 
     public function establecimientosAction()
     {
@@ -158,9 +140,12 @@ class ApiController extends AbstractActionController
                     $data=array();
                     $data['aut_placa'] = $aut_placa;
 
-                    $automovil = new AutomovilEntity();
-                    $automovil->exchangeArray ( $data );
-                    $aut_placa = $this->getAutomovilDao()->guardar ( $automovil );
+
+                    if(!$this->getAutomovilDao()->traer($aut_placa)){
+                        $automovil = new AutomovilEntity();
+                        $automovil->exchangeArray ( $data );
+                        $aut_placa = $this->getAutomovilDao()->guardar ( $automovil );
+                    }
 
                     $data['log_par_fecha_ingreso'] = date('Y-m-d H:i:s');
                     $data['log_par_estado'] = 'O';
@@ -189,6 +174,136 @@ class ApiController extends AbstractActionController
                     'controller' => 'index',
                     'action' => 'index'
             ) );
+        }
+    }    
+
+    public function paisesAction()
+    {
+        if($this->getRequest()->isGET()){
+
+            $paises = $this->getPaisDao()->traerTodos();
+            $content='';
+            $paisesArray=array();
+            foreach($paises as $pais){
+                $paisesArray[]=$pais->getArrayCopy();
+            }
+            
+            $content=json_encode($paisesArray);
+            
+            $response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+            return $response;
+        }else{
+            return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ) );
+        }
+    }    
+
+    public function estadosAction(){
+
+        if($this->getRequest()->isGET()){        
+            $pai_id = $this->request->getQuery('pai_id');
+            if($pai_id){
+                $estados = $this->getEstadoDao()->traerTodos($pai_id);
+
+                $content='';
+                $estadosArray=array();
+                foreach($estados as $estado){
+                    $estadosArray[]=$estado->getArrayCopy();
+                }
+                
+                $content=json_encode($estadosArray);
+
+                $response = $this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                    
+                return $response;    
+            }else{
+                return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+            }
+        }else{
+            return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+        }
+    }
+    
+    public function ciudadesAction(){
+
+        if($this->getRequest()->isGET()){        
+            $est_id = $this->request->getQuery('est_id');
+            if($est_id){
+                $ciudades = $this->getCiudadDao()->traerTodos($est_id);
+
+                $content='';
+                $ciudadesArray=array();
+                foreach($ciudades as $ciudad){
+                    $ciudadesArray[]=$ciudad->getArrayCopy();
+                }
+                
+                $content=json_encode($ciudadesArray);
+
+                $response = $this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                    
+                return $response;    
+            }else{
+                return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+            }
+        }else{
+            return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+        }
+    }
+
+    public function sectoresAction(){
+
+        if($this->getRequest()->isGET()){        
+            $ciu_id = $this->request->getQuery('ciu_id');
+            if($ciu_id){
+                $sectores = $this->getSectorDao()->traerTodos($ciu_id);
+
+                $content='';
+                $sectoresArray=array();
+                foreach($sectores as $sector){
+                    $sectoresArray[]=$sector->getArrayCopy();
+                }
+                
+                $content=json_encode($sectoresArray);
+
+                $response = $this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                    
+                return $response;    
+            }else{
+                return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+            }
+        }else{
+            return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+        }
+    }
+
+    public function parqueaderosAction(){
+
+        if($this->getRequest()->isGET()){        
+            $sec_id = $this->request->getQuery('sec_id');
+            if($sec_id){
+                $content='';
+                $content = $this->getParqueaderoDao()->traerVaciosPorSectorJSON($sec_id);
+
+                $response = $this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                    
+                return $response;    
+            }else{
+                return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+            }
+        }else{
+            return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
         }
     }    
 
@@ -232,6 +347,14 @@ class ApiController extends AbstractActionController
         return $this->automovilDao;
     }
 
+    public function getCiudadDao() {
+        if (! $this->ciudadDao) {
+            $sm = $this->getServiceLocator ();
+            $this->ciudadDao = $sm->get ( 'Application\Model\Dao\CiudadDao' );
+        }
+        return $this->ciudadDao;
+    }
+    
     public function getPaisDao() {
         if (! $this->paisDao) {
             $sm = $this->getServiceLocator ();
@@ -239,6 +362,31 @@ class ApiController extends AbstractActionController
         }
         return $this->paisDao;
     }
+    
+    public function getEstadoDao() {
+        if (! $this->estadoDao) {
+            $sm = $this->getServiceLocator ();
+            $this->estadoDao = $sm->get ( 'Application\Model\Dao\EstadoDao' );
+        }
+        return $this->estadoDao;
+    }
+
+    public function getSectorDao() {
+        if (! $this->sectorDao) {
+            $sm = $this->getServiceLocator ();
+            $this->sectorDao = $sm->get ( 'Application\Model\Dao\SectorDao' );
+        }
+        return $this->sectorDao;
+    }
+
+    public function getParqueaderoDao() {
+        if (! $this->parqueaderoDao) {
+            $sm = $this->getServiceLocator ();
+            $this->parqueaderoDao = $sm->get ( 'Application\Model\Dao\ParqueaderoDao' );
+        }
+        return $this->parqueaderoDao;
+    }
+
 
 
 }
