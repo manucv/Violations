@@ -6,7 +6,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import android.content.Context;
 import android.content.Intent;
 
 import org.apache.http.HttpResponse;
@@ -31,7 +34,7 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
-
+	private ProgressBar progressBar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,15 +44,25 @@ public class MainActivity extends ActionBarActivity {
         final EditText txtPassword = (EditText)findViewById(R.id.TxtPassword);
         final Button btnLogIn = (Button)findViewById(R.id.BtnLogIn);
         
+        
+        progressBar = (ProgressBar)findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.GONE);
         btnLogIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	
+                progressBar.setVisibility(View.VISIBLE);
+
             	TareaWSLogin tarea = new TareaWSLogin();
 				tarea.execute(txtEmail.getText().toString(),txtPassword.getText().toString() );            	
+				/*Context context = getApplicationContext();
+                CharSequence text = "Usuario o Contrasena Incorrectos";
+                int duration = Toast.LENGTH_SHORT;
 
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();*/
             }
        });
+
 		/*if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -88,25 +101,31 @@ public class MainActivity extends ActionBarActivity {
 		        {			
 		        	HttpResponse resp = httpClient.execute(del);
 		        	String respStr = EntityUtils.toString(resp.getEntity());
-		        	JSONObject respJSON = new JSONObject(respStr);
-		        	
-		        	if(respStr.length() > 0){
-		                 //Creamos el Intent
-		                 Intent intent =
-		                         new Intent(MainActivity.this, WelcomeActivity.class);
-
-		                 //Creamos la informaci—n a pasar entre actividades
-		                 Bundle b = new Bundle();
-		                 b.putString("ID", respJSON.getString("cli_id"));
-		                 b.putString("NOMBRE", respJSON.getString("cli_nombre"));
-		                 b.putString("SALDO", respJSON.getString("cli_saldo"));
-		                 
-		                 //A–adimos la informaci—n al intent
-		                 intent.putExtras(b);
-
-		                 //Iniciamos la nueva actividad
-		                 startActivity(intent);		
+		        	if(!respStr.equals("")){
+		        		JSONObject respJSON = new JSONObject(respStr); 
+			        	if(respStr.length() > 0){
+			                 //Creamos el Intent
+			                 Intent intent =
+			                         new Intent(MainActivity.this, WelcomeActivity.class);
+	
+			                 //Creamos la informaci—n a pasar entre actividades
+			                 Bundle b = new Bundle();
+			                 b.putString("ID", respJSON.getString("cli_id"));
+			                 b.putString("NOMBRE", respJSON.getString("cli_nombre"));
+			                 b.putString("SALDO", respJSON.getString("cli_saldo"));
+			                 
+			                 //A–adimos la informaci—n al intent
+			                 intent.putExtras(b);
+	
+			                 //Iniciamos la nueva actividad
+			                 startActivity(intent);		
+			        	}else{
+			        		return false;
+			        	}
+		        	}else{
+		        		return false;
 		        	}
+
 		        	
 		        }
 		        catch(Exception ex)
@@ -128,10 +147,16 @@ public class MainActivity extends ActionBarActivity {
 	    @Override
 		protected void onPostExecute(Boolean result) {
 	    	
-	    	if (result)
-	    	{
-	    		
+	    	if (result){
+	    		Log.v("resultado", result.toString());
 	    		//lblResultado.setText("" + idCli + "-" + nombCli + "-" + telefCli);
+	    	}else{
+				Context context = getApplicationContext();
+                CharSequence text = "Usuario o Contrasena Incorrectos";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
 	    	}
 	    }
 	}

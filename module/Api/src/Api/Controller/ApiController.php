@@ -39,6 +39,8 @@ class ApiController extends AbstractActionController
             $content='';
             if(is_object($cliente)){
                 $content=json_encode($cliente->getArrayCopy());
+            }else{
+                $content=json_encode(array());
             }
             $response=$this->getResponse();
             $response->setStatusCode(200);

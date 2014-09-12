@@ -13,6 +13,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <activity
             android:name="com.example.sipapp_project.MainActivity"
             android:label="@string/app_name" >
@@ -36,7 +37,10 @@
         </activity>      
         <activity android:name="com.example.sipapp_project.ParkingActivity"
                   android:label="Parqueaderos" >
-        </activity>      
+        </activity>   
+        <activity android:name="com.example.sipapp_project.LocationActivity"
+                  android:label="Ubicación" >
+        </activity>
     </application>
 
 </manifest>

@@ -34,7 +34,7 @@ public class WelcomeActivity extends Activity {
             public void onClick(View v) {
             	Log.v("click","click en categorias");
                 Intent intent =
-                        new Intent(WelcomeActivity.this, CategoriesActivity.class);
+                        new Intent(WelcomeActivity.this,LocationActivity.class);
                 
                 Bundle b = new Bundle();
                 b.putString("ID", cli_id);

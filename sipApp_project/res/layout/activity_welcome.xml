@@ -2,9 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:clickable="true"
     android:orientation="vertical"
     android:padding="10dp" >
+
+
 
     <TextView
         android:id="@+id/TxtSaludo"
@@ -22,28 +25,76 @@
 
     <TextView
         android:id="@+id/TxtSaldo"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="right"
+        android:layout_gravity="center_horizontal"
         android:text="$0.00"
+        android:textColor="@android:color/white"
         android:textSize="100dp" />
 
-    <Button
-        android:id="@+id/BtnCategorias"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Categorías" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal" >
 
-    <Button
-        android:id="@+id/BtnCompras"
+        <Button
+            android:id="@+id/BtnCategorias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/icon_park"
+            android:height="99dp"
+            android:width="75dp" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/icon_cargar"
+            android:height="99dp"
+            android:width="75dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/icon_prestar"
+            android:height="99dp"
+            android:width="75dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ultimas Compras" />
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal" >
 
-    <Button
-        android:id="@+id/BtnAcerca"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Acerca De" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/icon_micuenta"
+            android:height="99dp"
+            android:width="75dp"
+            />
 
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/icon_acerca"
+            android:height="99dp"
+            android:width="75dp"
+            />
+
+    </LinearLayout>
 </LinearLayout>

@@ -24,7 +24,7 @@ class AutomovilDao implements InterfaceCrud {
     	$row =  $resultSet->current();
     	
     	if(!$row){
-    		return false;
+    		return false; 
     	}
     	
     	return $row;
