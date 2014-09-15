@@ -35,7 +35,7 @@ class ApiController extends AbstractActionController
             $email =  $this->getRequest()->getQuery('email');
             $passw =  $this->getRequest()->getQuery('passw');
 
-            $cliente = $this->getClienteDao()->buscarPorEmail($email,$passw);
+            $cliente = $this->getClienteDao()->buscarPorEmailOUsuario($email,$passw);
             $content='';
             if(is_object($cliente)){
                 $content=json_encode($cliente->getArrayCopy());
