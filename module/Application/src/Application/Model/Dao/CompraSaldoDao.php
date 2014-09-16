@@ -1,14 +1,14 @@
 <?php
-	//EstablecimientoDao.php
+	//CompraSaldoDao.php
 
 namespace Application\Model\Dao;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
-use Application\Model\Entity\Establecimiento;
+use Application\Model\Entity\CompraSaldo;
 use Application\Model\Dao\InterfaceCrud;
 
-class EstablecimientoDao implements InterfaceCrud {
+class CompraSaldoDao implements InterfaceCrud {
 	
     protected $tableGateway;
     
@@ -22,46 +22,37 @@ class EstablecimientoDao implements InterfaceCrud {
         return $resultSet;
     }
     
-    public function traer($est_id){
+    public function traer($com_sal_id){
     	 
-    	$est_id = (int) $est_id;
+    	$com_sal_id = (int) $com_sal_id;
     	 
-    	$resultSet = $this->tableGateway->select(array('est_id' => $est_id));
+    	$resultSet = $this->tableGateway->select(array('com_sal_id' => $com_sal_id));
     	$row =  $resultSet->current();
     	
     	if(!$row){
-    		throw new \Exception('No se encontro el ID del establecimiento');
+    		throw new \Exception('No se encontro el ID de la ciudad');
     	}
     	
     	return $row;
     }
     
+    public function guardar(CompraSaldo $compraSaldo){
     
-    public function traerPorCategoria($cat_id){
-         
-        $select = $this->tableGateway->getSql()->select ();
-        $select-> where ( array('cat_id'=>$cat_id) );
-        $resultSet = $this->tableGateway->selectWith ( $select );
-        return $resultSet;
-    }
-    
-
-    public function guardar(Establecimiento $establecimiento){
-    
-    	$id = (int) $establecimiento->getEst_id();
+    	$id = (int) $compraSaldo->getCom_sal_id();
     
     	$data = array(
-			'est_nombre' => $establecimiento->getEst_nombre(),
-			'est_descripcion' => $establecimiento->getEst_descripcion(),
-
+			'cli_id' => $compraSaldo->getCli_id(),
+			'pun_rec_id' => $compraSaldo->getPun_rec_id(),
+			'com_sal_valor' => $compraSaldo->getCom_sal_valor(),
+			'com_sal_hora' => $compraSaldo->getCom_sal_hora()
     	);
     	
-    	$data ['est_id'] = $id;
+    	$data ['com_sal_id'] = $id;
     	
     	if (!empty ( $id ) && !is_null ( $id )) {
     		if ($this->traer ( $id )) {
     	
-    			$this->tableGateway->update ( $data, array ( 'est_id' => $id ) );
+    			$this->tableGateway->update ( $data, array ( 'com_sal_id' => $id ) );
     	
     		} else {
     			throw new \Exception ( 'No se encontro el id para actualizar' );
@@ -74,11 +65,10 @@ class EstablecimientoDao implements InterfaceCrud {
 	public function eliminar($id) {
 		if ($this->traer ( $id )) {
 			return $this->tableGateway->delete ( array (
-					'est_id' => $id 
+					'ciu_id' => $id 
 			) );
 		} else {
 			throw new \Exception ( 'No se encontro el id para eliminar' );
 		}
 	}
-    
-}
+}	

@@ -69,6 +69,8 @@ use Application\Model\Entity\Categoria;
 use Application\Model\Dao\CategoriaDao;
 use Application\Model\Entity\Establecimiento;
 use Application\Model\Dao\EstablecimientoDao;
+use Application\Model\Entity\Transaccion;
+use Application\Model\Dao\TransaccionDao;
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface{
 	public function onBootstrap(MvcEvent $e) {
@@ -358,6 +360,13 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$tableGateway = new TableGateway('establecimiento', $dbAdapter, null, $resultSetPrototype);
 		                	return new EstablecimientoDao($tableGateway);
 		                },	
+  		                'Application\Model\Dao\TransaccionDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Transaccion());
+		                	$tableGateway = new TableGateway('transaccion', $dbAdapter, null, $resultSetPrototype);
+		                	return new TransaccionDao($tableGateway);
+		                },			                
 				),
 		);
 	}

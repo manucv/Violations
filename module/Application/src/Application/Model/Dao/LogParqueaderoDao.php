@@ -30,7 +30,8 @@ class LogParqueaderoDao implements InterfaceCrud {
 			'log_par_horas_parqueo' => $logParqueadero->getLog_par_horas_parqueo(),
 			'log_par_estado' => $logParqueadero->getLog_par_estado(),
 			'par_id' => $logParqueadero->getPar_id(),
-			'aut_placa' => $logParqueadero->getAut_placa()
+			'aut_placa' => $logParqueadero->getAut_placa(),
+			'tra_id' => $logParqueadero->getTra_id()
 		);
 		
 		$data ['log_par_id'] = $id;
