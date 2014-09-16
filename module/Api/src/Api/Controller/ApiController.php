@@ -8,6 +8,7 @@ use Zend\Json\Json;
 
 use Application\Model\Entity\LogParqueadero as LogParqueaderoEntity;
 use Application\Model\Entity\Automovil as AutomovilEntity;
+use Application\Model\Entity\Transaccion as TransaccionEntity;
 
 class ApiController extends AbstractActionController
 {
@@ -24,6 +25,8 @@ class ApiController extends AbstractActionController
 
     protected $parqueaderoDao;
 
+    protected $transaccionDao;
+
     public function indexAction()
     {
         return new ViewModel();
@@ -35,7 +38,7 @@ class ApiController extends AbstractActionController
             $email =  $this->getRequest()->getQuery('email');
             $passw =  $this->getRequest()->getQuery('passw');
 
-            $cliente = $this->getClienteDao()->buscarPorEmail($email,$passw);
+            $cliente = $this->getClienteDao()->buscarPorEmailOUsuario($email,$passw);
             $content='';
             if(is_object($cliente)){
                 $content=json_encode($cliente->getArrayCopy());
@@ -121,7 +124,7 @@ class ApiController extends AbstractActionController
             return $this->redirect ()->toRoute ( 'parametros', array (
                     'controller' => 'index',
                     'action' => 'index'
-            ) );
+            ));
         }
     }    
 
@@ -134,14 +137,30 @@ class ApiController extends AbstractActionController
                 $aut_placa =  $this->getRequest()->getQuery('aut_placa');
                 $log_par_horas_parqueo =  $this->getRequest()->getQuery('log_par_horas_parqueo');
 
+                $est_id=1;
 
-                $cliente = $this->getClienteDao()->debitar($cli_id,(1*$log_par_horas_parqueo));
+                $precioHora=1;
+                $horas=$log_par_horas_parqueo;
+                $total=$precioHora*$horas;
+
+                $transaccionData['cli_id']=$cli_id;
+                $transaccionData['est_id']=$est_id;
+                $transaccionData['tra_valor']=$total;
+                $transaccionData['tra_tipo']='DEBITO';
+                $transaccionData['tra_hora'] = date('Y-m-d H:i:s');
+                $transaccionData['tra_saldo'] = 0;
+
+                $transaccion = new TransaccionEntity();
+                $transaccion->exchangeArray ( $transaccionData );
+                $tra_id=$this->getTransaccionDao()->guardar($transaccion);
+
+                $cliente = $this->getClienteDao()->debitar($cli_id,$total);
                 $content='';
+
                 if(is_object($cliente)){
 
                     $data=array();
                     $data['aut_placa'] = $aut_placa;
-
 
                     if(!$this->getAutomovilDao()->traer($aut_placa)){
                         $automovil = new AutomovilEntity();
@@ -153,12 +172,14 @@ class ApiController extends AbstractActionController
                     $data['log_par_estado'] = 'O';
                     $data['log_par_horas_parqueo'] = $log_par_horas_parqueo;
                     $data['par_id'] = $par_id;
+                    $data['tra_id'] = $tra_id;
 
                     $log_parqueadero = new LogParqueaderoEntity();
                     $log_parqueadero->exchangeArray ( $data );
                     $log_par_id = $this->getLogParqueaderoDao()->guardar ( $log_parqueadero );
 
                     $content=json_encode($cliente->getArrayCopy());
+
                 }
 
                 $response=$this->getResponse();
@@ -309,6 +330,28 @@ class ApiController extends AbstractActionController
         }
     }    
 
+    public function historialAction()
+    {
+        if($this->getRequest()->isGET()){
+            if(!is_null($this->params('id'))){
+                $cli_id=$this->params('id');
+
+                $transacciones = $this->getTransaccionDao()->traerPorClienteJSON($cli_id);
+                
+                $response=$this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($transacciones);
+                return $response;
+            }
+
+        }else{
+            return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ) );
+        }
+    }       
+
     public function getClienteDao() {
         if (! $this->clienteDao) {
             $sm = $this->getServiceLocator ();
@@ -389,7 +432,13 @@ class ApiController extends AbstractActionController
         return $this->parqueaderoDao;
     }
 
-
+    public function getTransaccionDao() {
+        if (! $this->transaccionDao) {
+            $sm = $this->getServiceLocator ();
+            $this->transaccionDao = $sm->get ( 'Application\Model\Dao\TransaccionDao' );
+        }
+        return $this->transaccionDao;
+    }
 
 }
 
