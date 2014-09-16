@@ -82,6 +82,28 @@ class ClienteDao implements InterfaceCrud {
         return $row;
     }
 
+    public function buscarPorEmailOUsuario($email,$passw){
+        
+        $sql = new Sql($this->tableGateway->getAdapter());
+        $select = $sql->select();
+        $select->from('cliente');
+        $select->where->like('cli_email', $email);
+        $select->where->or;
+        $select->where->like('cli_user', $email);
+        $select->where(array('cli_passw'=>$passw));
+        
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $results = $statement->execute();
+
+        $cliente=null;
+        foreach ($results as $row) {
+            $cliente = new Cliente();    
+            $cliente->exchangeArray($row);
+        }
+
+        return $cliente;
+    }    
+
     public function debitar($cli_id, $valor=0) {
         if($cli_id){
             $cliente=$this->traer($cli_id);

@@ -46,7 +46,7 @@ class EstablecimientoDao implements InterfaceCrud {
     }
     
 
-    public function guardar(Categoria $establecimiento){
+    public function guardar(Establecimiento $establecimiento){
     
     	$id = (int) $establecimiento->getEst_id();
     

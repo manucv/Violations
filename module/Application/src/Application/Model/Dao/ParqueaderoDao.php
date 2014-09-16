@@ -23,6 +23,28 @@ class ParqueaderoDao implements InterfaceCrud {
 		
 	}
 
+	public function traerJerarquia($par_id) {
+
+		$adapter = $this->tableGateway->getAdapter();
+		$query = "
+			SELECT * 
+			FROM parqueadero AS p
+			JOIN sector AS s ON p.sec_id=s.sec_id
+			JOIN ciudad AS c ON s.ciu_id=c.ciu_id
+			JOIN estado AS e ON c.est_id=e.est_id
+			JOIN pais AS pai ON e.pai_id=pai.pai_id
+			WHERE par_id='$par_id'
+		";
+    	
+    	$statement = $adapter->query($query);
+    	$results = $statement->execute();
+
+    	$lugar = $results->current();
+
+    	return $lugar;
+		
+	}	
+
 	public function traerTodosPorSector($sec_id) {
 		
 		$select = $this->tableGateway->getSql ()->select ();

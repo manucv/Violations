@@ -10,7 +10,8 @@ private $log_par_fecha_salida;
 private $log_par_horas_parqueo;
 private $log_par_estado;
 private $par_id;
-private $aut_idprivate;
+private $aut_id;
+private $tra_id;
 
 function __construct() {}
 
@@ -56,51 +57,70 @@ public function getPar_id(){
 public function getAut_placa(){
 	return $this->aut_placa;
 }
+/**
+* @return the $tra_id
+*/
+public function getTra_id(){
+	return $this->tra_id;
+}
 
 
 /**
-* @param Ambigous <NULLm unknown> $log_par_id
+* @param Ambigous <NULL, unknown> $log_par_id
 */
 public function setLog_par_id($log_par_id){
 	$this->log_par_id=$log_par_id;
 }
 /**
-* @param Ambigous <NULLm unknown> $log_par_fecha_ingreso
+* @param Ambigous <NULL, unknown> $log_par_fecha_ingreso
 */
 public function setLog_par_fecha_ingreso($log_par_fecha_ingreso){
 	$this->log_par_fecha_ingreso=$log_par_fecha_ingreso;
 }
 /**
-* @param Ambigous <NULLm unknown> $log_par_fecha_salida
+* @param Ambigous <NULL, unknown> $log_par_fecha_salida
 */
 public function setLog_par_fecha_salida($log_par_fecha_salida){
 	$this->log_par_fecha_salida=$log_par_fecha_salida;
 }
 /**
-* @param Ambigous <NULLm unknown> $log_par_horas_parqueo
+* @param Ambigous <NULL, unknown> $log_par_horas_parqueo
 */
 public function setLog_par_horas_parqueo($log_par_horas_parqueo){
 	$this->log_par_horas_parqueo=$log_par_horas_parqueo;
 }
 /**
-* @param Ambigous <NULLm unknown> $log_par_estado
+* @param Ambigous <NULL, unknown> $log_par_estado
 */
 public function setLog_par_estado($log_par_estado){
 	$this->log_par_estado=$log_par_estado;
 }
 /**
-* @param Ambigous <NULLm unknown> $par_id
+* @param Ambigous <NULL, unknown> $par_id
 */
 public function setPar_id($par_id){
 	$this->par_id=$par_id;
 }
 /**
-* @param Ambigous <NULLm unknown> $aut_id
+* @param Ambigous <NULL, unknown> $aut_id
 */
 public function setAut_id($aut_placa){
 	$this->aut_id=$aut_placa;
 }
 
+/**
+* @param Ambigous <NULL, unknown> $aut_id
+*/
+public function setAut_placa($aut_placa){
+	$this->aut_id=$aut_placa;
+}
+
+/**
+* @param Ambigous <NULL, unknown> $aut_id
+*/
+public function setTra_id($tra_id){
+	$this->tra_id=$tra_id;
+}
 
 
 	public function exchangeArray($data)
@@ -113,6 +133,7 @@ public function setAut_id($aut_placa){
 		$this->log_par_estado = (isset($data['log_par_estado'])) ? $data['log_par_estado'] : null;
 		$this->par_id = (isset($data['par_id'])) ? $data['par_id'] : null;
 		$this->aut_placa = (isset($data['aut_placa'])) ? $data['aut_placa'] : null;
+		$this->tra_id = (isset($data['tra_id'])) ? $data['tra_id'] : null;
 
 	}
 	
