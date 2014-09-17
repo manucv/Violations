@@ -80,8 +80,7 @@ public class ParkingActivity extends Activity {
 	        
 			String par_id=params[0];
 			String aut_placa=params[1];
-			String log_par_horas_parqueo=params[2];	    	
-			
+			String log_par_horas_parqueo=params[2];
 			
 			String url = "http://www.hawasolutions.com/Violations/public/api/api/comprar/"+cli_id;
 			List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
@@ -125,7 +124,6 @@ public class ParkingActivity extends Activity {
 		        	Log.e("ServicioRest","Error!", ex);
 		        	resul = false;
 		        }
-				
 				
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
@@ -221,8 +219,7 @@ public class ParkingActivity extends Activity {
 							View view, int position, long id) {
 						// TODO Auto-generated method stub
 						Log.v("click parqueadero","clickee "+parqueaderos[position]);
-						
-						
+
 					}
 
 					@Override

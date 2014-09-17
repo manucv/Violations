@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
         final Button btnLogIn = (Button)findViewById(R.id.BtnLogIn);
         
         
-        progressBar = (ProgressBar)findViewById(R.id.progressBar1);
+        progressBar = (ProgressBar)findViewById(R.id.loadingLogin);
         progressBar.setVisibility(View.GONE);
         btnLogIn.setOnClickListener(new OnClickListener() {
             @Override
@@ -54,19 +54,10 @@ public class MainActivity extends ActionBarActivity {
 
             	TareaWSLogin tarea = new TareaWSLogin();
 				tarea.execute(txtEmail.getText().toString(),txtPassword.getText().toString() );            	
-				/*Context context = getApplicationContext();
-                CharSequence text = "Usuario o Contrasena Incorrectos";
-                int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();*/
             }
        });
 
-		/*if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}*/
 	}
 
 
@@ -85,6 +76,7 @@ public class MainActivity extends ActionBarActivity {
 			String email = params[0];
 			String passw = params[1];
 			
+			//String url = "http://www.hawasolutions.com/Violations/public/api/api/login";
 			String url = "http://www.hawasolutions.com/Violations/public/api/api/login";
 			List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
 			paramsArray.add( new BasicNameValuePair( "email", email ) );
@@ -94,13 +86,14 @@ public class MainActivity extends ActionBarActivity {
 				uri = new URI( url + "?" + URLEncodedUtils.format( paramsArray, "utf-8" ));
 				HttpGet del = 
 						new HttpGet(uri);
-						
+				Log.v("query",uri.toString());
 				del.setHeader("content-type", "application/json");
 				
 				try
 		        {			
 		        	HttpResponse resp = httpClient.execute(del);
 		        	String respStr = EntityUtils.toString(resp.getEntity());
+		        	Log.v("result",respStr);
 		        	if(!respStr.equals("")){
 		        		JSONObject respJSON = new JSONObject(respStr); 
 			        	if(respStr.length() > 0){
@@ -157,6 +150,8 @@ public class MainActivity extends ActionBarActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+                
+                progressBar.setVisibility(View.GONE);
 	    	}
 	    }
 	}

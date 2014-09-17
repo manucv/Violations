@@ -114,13 +114,6 @@ public class CategoryActivity extends Activity {
 	                         
 	                         startActivity(intent);	
 	                	 }
-	                	 
-	                     /*Intent intent = new Intent(CategoryActivity.this, CategoryActivity.class);
-	                     String cat_id = Integer.toString(position+1);
-	                     intent.putExtra("CAT_ID", cat_id);
-	                     intent.putExtra("CAT_NOMBRE", parent.getItemAtPosition(position).toString());
-	                     startActivity(intent);
-	                	 Log.v("item","le di click");*/
 	                 }
 	             });
 	    	}

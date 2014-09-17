@@ -41,6 +41,18 @@
         <activity android:name="com.example.sipapp_project.LocationActivity"
                   android:label="Ubicación" >
         </activity>
+		<activity android:name="com.example.sipapp_project.HistoryActivity"
+                  android:label="Mis Transacciones" >
+        </activity>
+        <activity android:name="com.example.sipapp_project.BuyActivity"
+                  android:label="Cargar Saldo" >
+        </activity>
+        <activity android:name="com.example.sipapp_project.RelatedActivity"
+                  android:label="Contactos" >
+        </activity>
+        <activity android:name="com.example.sipapp_project.TransferActivity"
+                  android:label="Transferencias" >
+        </activity>        
     </application>
 
 </manifest>

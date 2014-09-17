@@ -49,7 +49,7 @@
             android:width="75dp" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/BtnComprar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -59,7 +59,7 @@
             android:width="75dp" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/BtnPrestar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -77,14 +77,13 @@
         android:gravity="center_horizontal" >
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/BtnMiCuenta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/icon_micuenta"
             android:height="99dp"
-            android:width="75dp"
-            />
+            android:width="75dp" />
 
         <Button
             android:id="@+id/button4"

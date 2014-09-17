@@ -8,6 +8,23 @@
     <string-array name="tiempo_parqueadero"> 
        	<item>1 Hora</item>
        	<item>2 Horas</item>
+       	<item>3 Horas</item>
+		<item>4 Horas</item>
+       	<item>5 Horas</item>
+       	<item>6 Horas</item>
+       	<item>7 Horas</item>
+       	<item>8 Horas</item>
+       	<item>9 Horas</item>
+       	<item>10 Horas</item>
+       	<item>11 Horas</item>
+       	<item>12 Horas</item>
+	</string-array>
+	
+	<string-array name="valor_recarga"> 
+       	<item>$3.00</item>
+       	<item>$6.00</item>
+       	<item>$10.00</item>
+		<item>$20.00</item>
 	</string-array>
 
 </resources>
