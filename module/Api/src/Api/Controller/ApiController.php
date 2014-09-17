@@ -9,6 +9,8 @@ use Zend\Json\Json;
 use Application\Model\Entity\LogParqueadero as LogParqueaderoEntity;
 use Application\Model\Entity\Automovil as AutomovilEntity;
 use Application\Model\Entity\Transaccion as TransaccionEntity;
+use Application\Model\Entity\RelacionCliente as RelacionClienteEntity;
+use Application\Model\Entity\TransferenciaSaldo as TransferenciaSaldoEntity;
 
 class ApiController extends AbstractActionController
 {
@@ -26,6 +28,8 @@ class ApiController extends AbstractActionController
     protected $parqueaderoDao;
 
     protected $transaccionDao;
+    protected $relacionClienteDao;
+    protected $transferenciaSaldoDao;
 
     public function indexAction()
     {
@@ -350,7 +354,140 @@ class ApiController extends AbstractActionController
                     'action' => 'index'
             ) );
         }
-    }       
+    }    
+
+    public function relacionAction()
+    {
+        if($this->getRequest()->isGET()){
+            if(!is_null($this->params('id'))){
+                $cli_id=$this->params('id');
+                $email = $this->request->getQuery('cli_email');
+
+                $referido = $this->getClienteDao()->buscarPorEmailOUsuario($email);
+                $content='';
+                if(is_object($referido)){
+                
+                    if($cli_id != $referido->getCli_id()){
+                        $relacion=array();
+                        $relacion['cli_id']=$cli_id;
+                        $relacion['cli_id_relacionado']=$referido->getCli_id();
+                        $relacion['rel_cli_tipo']='REFERIDO';
+                        $relacion['rel_cli_hora']=date('Y-m-d H:i:s');
+
+                        $relacionCliente = new RelacionClienteEntity();
+                        $relacionCliente->exchangeArray ( $relacion );
+                        $re_cli_id=$this->getRelacionClienteDao()->guardar($relacionCliente);
+
+                        /* Retorna referidos en caso de que la inserción sea exitosa */
+
+                        $referidos = $this->getRelacionClienteDao()->traerTodosPorCliente($cli_id);
+
+                        $content='';
+                        $referidosArray=array();
+                        foreach($referidos as $referido){
+                            $referidosArray[]=$referido->getArrayCopy();
+                        }
+                        $content=json_encode($referidosArray);
+                        
+                        $response=$this->getResponse();
+                        $response->setStatusCode(200);
+                        $response->setContent($content);
+                        
+                        return $response;   
+                        /* Fin Referidos */
+                    } else {
+                        $content=''; //El usuario ya existe
+                    }
+                }else{
+                    $content=json_encode(array());
+                }
+                $response=$this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                return $response;
+            }
+        }else{
+            return $this->redirect () ->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ));
+        }
+    } 
+
+    public function relacionadosAction(){
+        if($this->getRequest()->isGET()){
+            if(!is_null($this->params('id'))){
+                $cli_id=$this->params('id');
+                $cli_id_to = $this->request->getQuery('cli_email');
+
+                $referidos = $this->getRelacionClienteDao()->traerTodosPorCliente($cli_id);
+
+                $content='';
+                $referidosArray=array();
+                foreach($referidos as $referido){
+                    $referidosArray[]=$referido->getArrayCopy();
+                }
+                $content=json_encode($referidosArray);
+                
+                $response=$this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                
+                return $response;   
+            }
+        }else{
+            return $this->redirect () ->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ));
+        }
+    }
+
+
+    public function transferirAction()
+    {
+        if($this->getRequest()->isGET()){
+            if(!is_null($this->params('id'))){
+                $cli_id_de=$this->params('id');
+                $cli_id_para = $this->getRequest()->getQuery('cli_id_para');
+                $tra_sal_valor = $this->getRequest()->getQuery('tra_sal_valor');
+
+                $transferenciaData['cli_id_de'] = $cli_id_de;
+                $transferenciaData['cli_id_para'] = $cli_id_para;
+                $transferenciaData['tra_sal_valor'] = $tra_sal_valor;
+                $transferenciaData['tra_sal_hora'] = date('Y-m-d H:i:s');
+
+                $transferencia = new TransferenciaSaldoEntity();
+                $transferencia->exchangeArray ( $transferenciaData );
+                $tra_id=$this->getTransferenciaSaldoDao()->guardar($transferencia);
+
+                $cliente = $this->getClienteDao()->debitar($cli_id_de,$cli_id_para);
+                $content='';
+
+                if(is_object($cliente)){
+
+                    $content=json_encode($cliente->getArrayCopy());
+
+                }
+
+                $response=$this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                return $response;
+            }else{
+                return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+                ));
+            }
+        }else{
+            return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ) );
+        }
+    }    
+
 
     public function getClienteDao() {
         if (! $this->clienteDao) {
@@ -440,5 +577,20 @@ class ApiController extends AbstractActionController
         return $this->transaccionDao;
     }
 
+    public function getRelacionClienteDao() {
+        if (! $this->relacionClienteDao) {
+            $sm = $this->getServiceLocator ();
+            $this->relacionClienteDao = $sm->get ( 'Application\Model\Dao\RelacionClienteDao' );
+        }
+        return $this->relacionClienteDao;
+    }    
+    
+    public function getTransferenciaSaldoDao() {
+        if (! $this->transferenciaSaldoDao) {
+            $sm = $this->getServiceLocator ();
+            $this->transferenciaSaldoDao = $sm->get ( 'Application\Model\Dao\TransferenciaSaldoDao' );
+        }
+        return $this->transferenciaSaldoDao;
+    }
 }
 
