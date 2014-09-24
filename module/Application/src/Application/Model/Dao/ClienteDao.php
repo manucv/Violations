@@ -116,6 +116,18 @@ class ClienteDao implements InterfaceCrud {
                 return $cliente;
             }
         }
+    }    
+    public function acreditar($cli_id, $valor=0) {
+        if($cli_id){
+            $cliente=$this->traer($cli_id);
+            if($cliente){
+                $cliente->setCli_saldo($cliente->getCli_saldo()+$valor);
+                $data = $cliente->getArrayCopy();
+
+                $this->tableGateway->update ( $data, array ( 'cli_id' => $cliente->getCli_id() ) );
+                return $cliente;
+            }
+        }
 
     }    
     

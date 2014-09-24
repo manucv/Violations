@@ -21,6 +21,15 @@ class TransaccionDao implements InterfaceCrud {
     	$resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;
     }
+
+    public function traerTodosPorCliente($cli_id){
+        $select = $this->tableGateway->getSql ()->select ();
+        $select->join ( 'cliente', 'transaccion.cli_id  = cliente.cli_id' );
+        $select->where ( array('cliente.cli_id'=>$cli_id) );
+        $select->order(array('tra_id DESC'));
+        $resultSet = $this->tableGateway->selectWith ( $select );
+        return $resultSet;
+    }
     
     public function traer($tra_id){
     	 
@@ -77,6 +86,7 @@ class TransaccionDao implements InterfaceCrud {
             JOIN estado AS e ON c.est_id=e.est_id
             JOIN pais AS pai ON e.pai_id=pai.pai_id
             WHERE t.cli_id=$cli_id
+            ORDER BY t.tra_id DESC
         ";
 
         $statement = $adapter->query($query);
@@ -160,5 +170,7 @@ class TransaccionDao implements InterfaceCrud {
 			throw new \Exception ( 'No se encontro el id para eliminar' );
 		}
 	}
+
+
     
 }

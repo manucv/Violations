@@ -49,6 +49,14 @@ class LogParqueaderoDao implements InterfaceCrud {
 		
 	}
 
+	public function traerPorTransaccion($tra_id) {
+		
+		$select = $this->tableGateway->getSql ()->select ();
+        $select->where ( array('tra_id'=>$tra_id) );
+		$resultSet = $this->tableGateway->selectWith ( $select );
+		return $resultSet->current();
+		
+	}
 
 	public function eliminar($id) {
 		if ($this->traer ( $id )) {

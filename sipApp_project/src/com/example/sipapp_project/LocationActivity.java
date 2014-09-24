@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import android.os.AsyncTask;
@@ -29,6 +30,9 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Spinner;
 
@@ -36,29 +40,41 @@ import android.widget.Spinner;
 
 public class LocationActivity extends Activity {
 	
-	private Spinner pai_id;
+	//private Spinner pai_id;
 	private Spinner est_id;
 	private Spinner ciu_id;
 	private Spinner sec_id;
+
 	
 	private String[] idSectores;
 	
 	private String cli_id;
+	private String saldo;
+	
+	private ProgressBar loadingLocation;
+	private Button btnVerEpacios;
 	
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
         
-        pai_id = (Spinner) findViewById(R.id.pai_id);
+        //pai_id = (Spinner) findViewById(R.id.pai_id);
         est_id = (Spinner) findViewById(R.id.est_id);
         ciu_id = (Spinner) findViewById(R.id.ciu_id);
         sec_id = (Spinner) findViewById(R.id.sec_id);
+        TextView txtSaldo = (TextView)findViewById(R.id.TxtSaldoUbicacion);
         
-        TareaWSListarPaises tarea = new TareaWSListarPaises();
-		tarea.execute();
+        loadingLocation = (ProgressBar)findViewById(R.id.LoadingLocation);
+        
+        
+        //TareaWSListarPaises tarea = new TareaWSListarPaises();
+		//tarea.execute();
+        
+		TareaWSListarEstados tareaEst = new TareaWSListarEstados();
+		tareaEst.execute("63");  
 		
 		
-		Button btnVerEpacios = (Button)findViewById(R.id.BtnVerEpacios);
+		btnVerEpacios = (Button)findViewById(R.id.BtnVerEpacios);
         
         
         //Recuperamos la informaci—n pasada en el intent
@@ -66,17 +82,22 @@ public class LocationActivity extends Activity {
         
         //Construimos el mensaje a mostrar
         cli_id=bundle.getString("ID");		
+        saldo=bundle.getString("SALDO");
+        
+        txtSaldo.setText("$"+Float.parseFloat(saldo));
 		
 		btnVerEpacios.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
             	Log.v("click","click en categorias");
+            	
                 Intent intent =
                         new Intent(LocationActivity.this,ParkingActivity.class);
                 
                 Bundle b = new Bundle();
                 b.putString("ID", cli_id);
                 b.putString("SEC_ID", idSectores[sec_id.getSelectedItemPosition()] );
+                b.putString("SALDO", saldo );
                 
                 intent.putExtras(b);                
                 
@@ -84,12 +105,11 @@ public class LocationActivity extends Activity {
             	        	
             }
        });
-		
-		
-		
+
    }
+		
 	
-	private class TareaWSListarPaises extends AsyncTask<String,Integer,Boolean> {
+	/*private class TareaWSListarPaises extends AsyncTask<String,Integer,Boolean> {
 		private String[] paises;
 		private String[] idPaises;
 		 
@@ -168,7 +188,7 @@ public class LocationActivity extends Activity {
 	        	});
 	    	}
 	    }
-	}
+	}*/
 	
 	private class TareaWSListarEstados extends AsyncTask<String,Integer,Boolean> {
 		private String[] estados;
@@ -247,6 +267,8 @@ public class LocationActivity extends Activity {
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
 						// TODO Auto-generated method stub
+			        	loadingLocation.setVisibility(View.VISIBLE);
+			        	btnVerEpacios.setVisibility(View.GONE);
 						Log.v("click estados","clickee "+idEstados[position]);
 						TareaWSListarCiudades tareaEst = new TareaWSListarCiudades();
 						tareaEst.execute(idEstados[position]);   
@@ -342,6 +364,8 @@ public class LocationActivity extends Activity {
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
 						// TODO Auto-generated method stub
+			        	loadingLocation.setVisibility(View.VISIBLE);
+			        	btnVerEpacios.setVisibility(View.GONE);
 						Log.v("click ciudades","clickee "+idCiudades[position]);
 						TareaWSListarSectores tareaCiu = new TareaWSListarSectores();
 						tareaCiu.execute(idCiudades[position]);   
@@ -432,6 +456,21 @@ public class LocationActivity extends Activity {
 	        		        android.R.layout.simple_spinner_dropdown_item, sectores);
 	        		 
 	        	sec_id.setAdapter(adaptador);
+	        	
+	        	if(sectores.length>0){
+		        	loadingLocation.setVisibility(View.GONE);
+		        	btnVerEpacios.setVisibility(View.VISIBLE);
+	        	}else{
+		        	
+					Context context = getApplicationContext();
+	                CharSequence text = "No Existen Sectores";
+	                int duration = Toast.LENGTH_SHORT;
+
+	                Toast toast = Toast.makeText(context, text, duration);
+	                toast.show();
+	        	}
+	        
+	        	
 	        	sec_id.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 					@Override

@@ -143,7 +143,7 @@ class ApiController extends AbstractActionController
 
                 $est_id=1;
 
-                $precioHora=1;
+                $precioHora=0.8;
                 $horas=$log_par_horas_parqueo;
                 $total=$precioHora*$horas;
 
@@ -182,7 +182,10 @@ class ApiController extends AbstractActionController
                     $log_parqueadero->exchangeArray ( $data );
                     $log_par_id = $this->getLogParqueaderoDao()->guardar ( $log_parqueadero );
 
-                    $content=json_encode($cliente->getArrayCopy());
+                    $responseArray=$cliente->getArrayCopy();
+                    $responseArray['tra_id'] = $tra_id;
+
+                    $content=json_encode($responseArray);
 
                 }
 
@@ -461,7 +464,8 @@ class ApiController extends AbstractActionController
                 $transferencia->exchangeArray ( $transferenciaData );
                 $tra_id=$this->getTransferenciaSaldoDao()->guardar($transferencia);
 
-                $cliente = $this->getClienteDao()->debitar($cli_id_de,$cli_id_para);
+                $cliente = $this->getClienteDao()->acreditar($cli_id_para,$tra_sal_valor);
+                $cliente = $this->getClienteDao()->debitar($cli_id_de,$tra_sal_valor);
                 $content='';
 
                 if(is_object($cliente)){
@@ -488,7 +492,34 @@ class ApiController extends AbstractActionController
         }
     }    
 
+    public function estadoAction()
+    {
+        if($this->getRequest()->isGET()){
+            if(!is_null($this->params('id'))){
+                $content='';
+                $tra_id=$this->params('id');
 
+                $log_parqueadero=$this->getLogParqueaderoDao()->traerPorTransaccion($tra_id);
+                
+                $content=json_encode($log_parqueadero->getArrayCopy());
+
+                $response=$this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                return $response;
+            }else{
+                return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+                ));
+            }
+        }else{
+            return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ) );
+        }
+    }    
     public function getClienteDao() {
         if (! $this->clienteDao) {
             $sm = $this->getServiceLocator ();

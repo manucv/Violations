@@ -35,6 +35,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class TransferActivity extends Activity {
 	private String cli_id;
+	private String saldo;
 	private String cli_id_ref;
 	private String cli_id_ref_nombre;
 	private ProgressBar loadingTransfer;

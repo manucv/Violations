@@ -31,11 +31,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class RelatedActivity extends Activity {
 	private String cli_id;
+	private String saldo;
 	private ListView lstContacts;
 	private ProgressBar loadingContacts;
 	private EditText txtBuscar;
@@ -47,6 +49,10 @@ public class RelatedActivity extends Activity {
         
         Bundle bundle = this.getIntent().getExtras();
         cli_id=bundle.getString("ID");
+        saldo=bundle.getString("SALDO");
+        
+        TextView txtSaldo = (TextView)findViewById(R.id.TxtSaldoContactos);
+        txtSaldo.setText("$"+Float.parseFloat(saldo));
         
         TareaWSListarContactos tarea = new TareaWSListarContactos();
 		tarea.execute(cli_id);    
@@ -125,27 +131,29 @@ public class RelatedActivity extends Activity {
 	    	{
 		    	//Rellenamos la lista con los nombres de los clientes
 	    		//Rellenamos la lista con los resultados
-	        	ArrayAdapter<String> adaptador =
-	        		    new ArrayAdapter<String>(RelatedActivity.this,
-	        		        android.R.layout.simple_list_item_1, contactos);
-	        		 	
-	        	lstContacts.setAdapter(adaptador);
-	        	lstContacts.setOnItemClickListener(new OnItemClickListener() {
-	                 @Override
-					public void onItemClick(AdapterView<?> parent, View view, int position,
-	                         long id) {
-	                	 
-	                	
-	                         Intent intent =
-	                                 new Intent(RelatedActivity.this, TransferActivity.class);
-	                         
-	                         intent.putExtra("ID",cli_id);
-	                         intent.putExtra("CLI_ID_REF",idContactos[position]);
-	                         intent.putExtra("CLI_ID_REF_NOMBRE",contactos[position]);
-	                         startActivity(intent);	
-	                	 
-	                 }
-	             });        	
+	    		if(contactos != null && contactos.length > 0){
+		        	ArrayAdapter<String> adaptador =
+		        		    new ArrayAdapter<String>(RelatedActivity.this,
+		        		        android.R.layout.simple_list_item_1, contactos);
+		        		 	
+		        	lstContacts.setAdapter(adaptador);
+		        	lstContacts.setOnItemClickListener(new OnItemClickListener() {
+		                 @Override
+						public void onItemClick(AdapterView<?> parent, View view, int position,
+		                         long id) {
+		                	 
+		                	
+		                         Intent intent =
+		                                 new Intent(RelatedActivity.this, TransferActivity.class);
+		                         
+		                         intent.putExtra("ID",cli_id);
+		                         intent.putExtra("CLI_ID_REF",idContactos[position]);
+		                         intent.putExtra("CLI_ID_REF_NOMBRE",contactos[position]);
+		                         startActivity(intent);	
+		                	 
+		                 }
+		             });        	
+	    		}
 	        	loadingContacts.setVisibility(View.GONE);
 
 	    	}

@@ -5,44 +5,60 @@
     android:orientation="vertical" 
     android:background="@drawable/background" >
 
-    <ProgressBar
-        android:id="@+id/LoadingContacts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
-
     <TextView
-        android:id="@+id/LblReferencedClient"
+        android:id="@+id/TxtSaldoContactos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Buscar Contacto" />
+        android:layout_gravity="right"
+        android:padding="5dp"
+        android:text="$0.00"
+        android:textColor="@android:color/white"
+        android:textSize="26sp"   
+        android:textStyle="bold"      
+         />
 
-    <EditText
-        android:id="@+id/TxtBuscar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" >
+        android:orientation="vertical" >
 
-        <requestFocus />
-    </EditText>
+        <ProgressBar
+            android:id="@+id/LoadingContacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:id="@+id/BtnAgregar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Agregar Contacto" />
+        <TextView
+            android:id="@+id/LblReferencedClient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buscar Contacto" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mis Contactos" />
+        <EditText
+            android:id="@+id/TxtBuscar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" />
 
-    <ListView
-        android:id="@+id/LstContacts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+        <Button
+            android:id="@+id/BtnAgregar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Agregar Contacto" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mis Contactos" />
+
+        <ListView
+            android:id="@+id/LstContacts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+
+    </LinearLayout>
 
 </LinearLayout>

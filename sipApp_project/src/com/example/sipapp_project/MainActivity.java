@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
         final EditText txtEmail = (EditText)findViewById(R.id.TxtEmail);
         final EditText txtPassword = (EditText)findViewById(R.id.TxtPassword);
         final Button btnLogIn = (Button)findViewById(R.id.BtnLogIn);
-        
+        final Button btnSignIn = (Button)findViewById(R.id.BtnSignIn);
         
         progressBar = (ProgressBar)findViewById(R.id.loadingLogin);
         progressBar.setVisibility(View.GONE);
@@ -57,6 +57,14 @@ public class MainActivity extends ActionBarActivity {
 
             }
        });
+        
+        btnSignIn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+       });        
 
 	}
 
@@ -156,4 +164,9 @@ public class MainActivity extends ActionBarActivity {
 	    }
 	}
 	
+	@Override
+	public void onBackPressed()
+	{
+		
+	}
 }
