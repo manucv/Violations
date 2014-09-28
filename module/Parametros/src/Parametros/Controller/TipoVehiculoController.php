@@ -19,6 +19,13 @@ class TipoVehiculoController extends AbstractActionController
 {
 	protected $tipoVehiculoDao;
 	
+	public function indexAction(){
+		return $this->redirect ()->toRoute ( 'parametros', array (
+				'controller' => 'tipovehiculo',
+				'action' => 'listado'
+		) );
+	}
+	
     public function listadoAction()
     {
         return array('vehiculos' => $this->getTipoVehiculoDao()->traerTodos());

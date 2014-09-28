@@ -71,6 +71,9 @@ use Application\Model\Entity\Establecimiento;
 use Application\Model\Dao\EstablecimientoDao;
 use Application\Model\Entity\Transaccion;
 use Application\Model\Dao\TransaccionDao;
+use Application\Model\Dao\MenuTable;
+use Application\Model\Entity\Menu;
+use Application\Model\Dao\MenuDao;
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface{
 	public function onBootstrap(MvcEvent $e) {
@@ -366,7 +369,27 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$resultSetPrototype->setArrayObjectPrototype(new Transaccion());
 		                	$tableGateway = new TableGateway('transaccion', $dbAdapter, null, $resultSetPrototype);
 		                	return new TransaccionDao($tableGateway);
-		                },			                
+		                },	
+
+		                'Application\Model\Dao\MenuDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Menu());
+		                	$tableGateway = new TableGateway('menu', $dbAdapter, null, $resultSetPrototype);
+		                	return new MenuDao($tableGateway);
+		                },
+
+		                'Navigation' => 'Application\Clases\MyNavigationFactory'
+				),
+				'initializers' => array(
+						function ($instance, $sm) {
+							if ($instance instanceof \Zend\Db\Adapter\AdapterAwareInterface) {
+								$instance->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
+							}
+						}
+				),
+				'invokables' => array(
+						'menu' => 'Application\Model\Dao\MenuTable'
 				),
 		);
 	}

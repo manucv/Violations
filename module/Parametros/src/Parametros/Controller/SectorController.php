@@ -22,6 +22,13 @@ class SectorController extends AbstractActionController
 	protected $paisDao;
 	protected $estadoDao;
 	
+	public function indexAction(){
+		return $this->redirect ()->toRoute ( 'parametros', array (
+				'controller' => 'sector',
+				'action' => 'listado'
+		) );
+	}
+	
     public function listadoAction()
     {
         return array('sector' => $this->getSectorDao()->traerTodos());

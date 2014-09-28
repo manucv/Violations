@@ -2,25 +2,21 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Usuarios\Controller\Usuarios' => 'Usuarios\Controller\UsuariosController',
-        	'Usuarios\Controller\Roles' => 'Usuarios\Controller\RolesController',
-        	'Usuarios\Controller\Aplicaciones' => 'Usuarios\Controller\AplicacionesController',
-        	'Usuarios\Controller\Menu' => 'Usuarios\Controller\MenuController',
-        		
+            'Clientes\Controller\Index' => 'Clientes\Controller\IndexController',
         ),
     ),
     'router' => array(
         'routes' => array(
-            'usuarios' => array(
+            'clientes' => array(
                 'type'    => 'Segment',
                 'options' => array(
                     // Change this to something specific to your module
-                    'route'    => '/usuarios[/:controller][/:action][/:id]',
+                    'route'    => '/clientes[/:controller][/:action][/:id]',
                     'defaults' => array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
-                        '__NAMESPACE__' => 'Usuarios\Controller',
-                        'controller'    => 'Usuarios',
+                        '__NAMESPACE__' => 'Clientes\Controller',
+                        'controller'    => 'Index',
                         'action'        => 'index',
                     ),
                 ),
@@ -40,8 +36,8 @@ return array(
                             	'id'     => '[0-9]*',
                             ),
                             'defaults' => array (
-								'__NAMESPACE__' => 'Usuarios\Controller',
-								'controller' => 'Usuarios',
+								'__NAMESPACE__' => 'Clientes\Controller',
+								'controller' => 'Index',
 								'action' => 'index' 
 							) 
                         ),
@@ -52,7 +48,7 @@ return array(
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            'Usuarios' => __DIR__ . '/../view',
+            'Clientes' => __DIR__ . '/../view',
         ),
     ),
 );

@@ -75,84 +75,12 @@ echo $this->doctype ();
 </head>
 <body>
 	<div class="menu-top">&nbsp;</div>
-	<div>
-		<ul style="padding-left: 0px;">
-			<nav class="navbar /*navbar-default*/" role="navigation"  style="background-color: #F1F0EE;">
-				<div class="container-fluid">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse"
-							data-target="#bs-example-navbar-collapse-1">
-							<span class="sr-only">Toggle navigation</span> <span
-								class="icon-bar"></span> <span class="icon-bar"></span> <span
-								class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand borde-derecho-menu" href="#">TSS</a>
-					</div>
-
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse"
-						id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav">
-							<li class="dropdown borde-derecho-menu"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown"><i class="fa fa-gears fa-fw"></i> Par&aacute;metros <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'pais', 'action' => 'listado'))?>"><i class="fa fa-globe fa-fw"></i> Pa&iacute;ses</a></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'estado', 'action' => 'listado'))?>"><i class="fa fa-building fa-fw"></i> Estados</a></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'ciudad', 'action' => 'listado'))?>"><i class="fa fa-building-o fa-fw"></i> Ciudades</a></li>
-									<li class="divider"></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'listado'))?>"><i class="fa fa-map-marker fa-fw"></i> Sector</a></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'parqueadero', 'action' => 'listado'))?>"><i class="fa fa-location-arrow fa-fw"></i> Parqueadero</a></li>
-									<li class="divider"></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'sitio', 'action' => 'listado'))?>"><i class="fa fa-compass fa-fw"></i> Sitios</a></li>
-									<li class="divider"></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipocomponente', 'action' => 'listado'))?>"><i class="fa fa-laptop fa-fw"></i> Tipo Componente</a></li>
-									<li class="divider"></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'listado'))?>"><i class="fa fa-ticket fa-fw"></i> Tipo Infraccion</a></li>
-									<li class="divider"></li>
-									<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipovehiculo', 'action' => 'listado'))?>"><i class="fa fa-car fa-fw"></i> Tipo Veh&iacute;culo</a></li>
-									<li class="divider"></li>
-									<li><a href="#"><i class="fa fa-cog fa-fw"></i> Par&aacute;metros Generales</a></li>
-								</ul></li>
-							<li class="dropdown borde-derecho-menu"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown"><i class="fa fa-users fa-fw"></i> Administraci&oacute;n<b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'index'))?>"><i class="fa fa-user fa-fw"></i> Usuarios</a></li>
-									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'roles', 'action' => 'listado'))?>"><i class="fa fa-child fa-fw"></i> Roles</a></li>
-									<li><a href="<?php echo $this->url('usuarios', array('controller' => 'aplicaciones', 'action' => 'listado'))?>"><i class="fa fa-list fa-fw"></i> Aplicaciones</a></li>
-								</ul></li>
-								
-							<li class="borde-derecho-menu"><a href="<?php echo $this->url('vehiculo', array('controller' => 'vehiculo', 'action' => 'listado'))?>"><i class="fa fa-car fa-fw"></i> Veh&iacute;culo</a></li>
-								
-							<li class="dropdown borde-derecho-menu"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown"><i class="fa fa-video-camera fa-fw"></i> Monitoreo<b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="<?php echo $this->url('monitoreo', array('controller' => 'control', 'action' => 'general'))?>"><i class="fa fa-ellipsis-h fa-fw"></i> General</a></li>		
-									<li><a href="<?php echo $this->url('monitoreo', array('controller' => 'control', 'action' => 'buscar'))?>"><i class="fa fa-search fa-fw"></i> Por B&uacute;squeda</a></li>
-									
-								</ul></li>
-								
-								<li class="borde-derecho-menu"><a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'index'))?>"><i class="fa fa-list-ol fa-fw"></i> Infracciones</a></li>
-
-								<li class="borde-derecho-menu"><a href="<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'index'))?>"><i class="fa fa-road fa-fw"></i> Parqueaderos</a></li>								
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown"><i class="fa fa-user fa-fw"></i> Perfil <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="#"><i class="fa fa-info-circle fa-fw"></i> Datos Generales</a></li>
-									<li><a href="#"><i class="fa fa-key fa-fw"></i> Cambiar Contrase&ntilde;a</a></li>
-									<li class="divider"></li>
-									<li><a href="<?php echo $this->url('application', array('controller' => 'login', 'action' => 'logout'))?>"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesi&oacute;n</a></li>
-								</ul></li>
-						</ul>
-					</div>
-					<!-- /.navbar-collapse -->
-				</div>
-				<!-- /.container-fluid -->
-			</nav>
-		</ul>
-	</div>
+      <?php
+      
+          echo $this->navigation('Navigation')
+          ->menu()
+          ->setPartial(array('partial/menu.phtml', 'Application'));
+      ?>
 		<div class="col-xs-12 col-sm-12 col-md-12">
     		<?php echo $this->content; ?>
     	</div>

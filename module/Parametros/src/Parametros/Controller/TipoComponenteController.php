@@ -22,6 +22,13 @@ class TipoComponenteController extends AbstractActionController
 {
 	protected $tipoComponenteDao;
 	
+	public function indexAction(){
+		return $this->redirect ()->toRoute ( 'parametros', array (
+				'controller' => 'tipocomponente',
+				'action' => 'listado'
+		) );
+	}
+	
     public function listadoAction()
     {
         return array('componente' => $this->getTipoComponenteDao()->traerTodos());

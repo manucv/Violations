@@ -19,6 +19,13 @@ class PaisController extends AbstractActionController
 {
 	protected $paisDao;
 	
+	public function indexAction(){
+		return $this->redirect ()->toRoute ( 'parametros', array (
+				'controller' => 'pais',
+				'action' => 'listado'
+		) );
+	}
+	
     public function listadoAction()
     {
         return array('pais' => $this->getPaisDao()->traerTodos());

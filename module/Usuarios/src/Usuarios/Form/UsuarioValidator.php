@@ -8,12 +8,10 @@ use Zend\Validator\StringLength;
 use Zend\I18n\Validator\Alnum;
 use Zend\Validator\Digits;
 use Zend\Validator\NotEmpty;
-use Zend\Form\Element\Password;
 use Zend\Validator\Identical;
 use Zend\Validator\EmailAddress;
 use Zend\Validator\InArray;
 use Application\Clases\PasswordValidate;
-//use Application\
 
 class UsuarioValidator extends InputFilter {
 	function __construct() {
