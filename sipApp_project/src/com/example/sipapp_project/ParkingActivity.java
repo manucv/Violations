@@ -2,7 +2,10 @@ package com.example.sipapp_project;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -16,7 +19,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -29,23 +31,42 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ParkingActivity extends Activity {
 	private String cli_id;
-	private String sec_id;
+	private String sec_id;	
+	private String saldo;
+	
 	private Spinner par_id;
+	private Integer total=0;
+	private Integer vacios=0;
+	private Integer ocupados=0;
+	private TextView lblOcupados;
+	private TextView lblLibres;
+	private TextView lblTotal;
+	private Spinner spnLog_par_horas_parqueo;
+	private Double price = 0.8;
+	
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking);
         
+        TextView txtSaldo = (TextView)findViewById(R.id.TxtSaldoParking);
+        lblOcupados = (TextView)findViewById(R.id.LblOcupados);
+        lblLibres = (TextView)findViewById(R.id.LblLibres);
+        lblTotal = (TextView)findViewById(R.id.LblTotal);
         final EditText txtAut_placa = (EditText)findViewById(R.id.TxtAut_placa);
-        final Spinner spnLog_par_horas_parqueo = (Spinner)findViewById(R.id.SpnLog_par_horas_parqueo);
+        spnLog_par_horas_parqueo = (Spinner) findViewById(R.id.SpnLog_par_horas_parqueo);
         par_id = (Spinner) findViewById(R.id.SpnPar_id);
         
         Bundle bundle = this.getIntent().getExtras();
         cli_id=bundle.getString("ID");
         sec_id=bundle.getString("SEC_ID");
+        saldo=bundle.getString("SALDO");
+        
+        txtSaldo.setText("$"+Float.parseFloat(saldo));
         
         TareaWSListarParqueaderos tarea = new TareaWSListarParqueaderos();
 		tarea.execute(sec_id);
@@ -62,7 +83,32 @@ public class ParkingActivity extends Activity {
 								txtAut_placa.getText().toString(), 
 								spnLog_par_horas_parqueo.getSelectedItemPosition()+1+"" );        
             }
-       });
+        });
+        
+        spnLog_par_horas_parqueo.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent,
+					View view, int position, long id) {
+				// TODO Auto-generated method stub
+				DecimalFormat df = new DecimalFormat();
+				df.setMaximumFractionDigits(2);
+				
+				lblTotal.setText("$"+(df.format(Integer.parseInt(parent.getItemAtPosition(position).toString())*price)));
+
+				
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+			}
+
+    	});        
+        
+        
+        
 	} 
 
 	private class TareaWSComprar extends AsyncTask<String,Integer,Boolean> {
@@ -80,8 +126,7 @@ public class ParkingActivity extends Activity {
 	        
 			String par_id=params[0];
 			String aut_placa=params[1];
-			String log_par_horas_parqueo=params[2];	    	
-			
+			String log_par_horas_parqueo=params[2];
 			
 			String url = "http://www.hawasolutions.com/Violations/public/api/api/comprar/"+cli_id;
 			List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
@@ -105,13 +150,17 @@ public class ParkingActivity extends Activity {
 		        	if(respStr.length() > 0){
 		                 //Creamos el Intent
 		                 Intent intent =
-		                         new Intent(ParkingActivity.this, WelcomeActivity.class);
+		                         new Intent(ParkingActivity.this, WaitingActivity.class);
 
 		                 //Creamos la informaci—n a pasar entre actividades
 		                 Bundle b = new Bundle();
 		                 b.putString("NOMBRE", respJSON.getString("cli_nombre"));
 		                 b.putString("SALDO", respJSON.getString("cli_saldo"));
 		                 b.putString("ID", respJSON.getString("cli_id"));
+		                 b.putString("TRA_ID", respJSON.getString("tra_id"));
+		                
+		                 
+		                 
 		                 //A–adimos la informaci—n al intent
 		                 intent.putExtras(b);
 
@@ -125,8 +174,6 @@ public class ParkingActivity extends Activity {
 		        	Log.e("ServicioRest","Error!", ex);
 		        	resul = false;
 		        }
-				
-				
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -174,18 +221,38 @@ public class ParkingActivity extends Activity {
 		        {			
 		        	HttpResponse resp = httpClient.execute(del);
 		        	String respStr = EntityUtils.toString(resp.getEntity());
-		        	Log.v("query",respStr);
+		        	
 		        	JSONArray respJSON = new JSONArray(respStr);
 		        	
-		        	parqueaderos = new String[respJSON.length()];
-		        			
+
 		        	for(int i=0; i<respJSON.length(); i++)
 		        	{
 		        		JSONObject obj = respJSON.getJSONObject(i);
-			        	String par_id = obj.getString("par_id");
+			        	String estado = obj.getString("par_estado");
 			        	
-			        	parqueaderos[i] = par_id;
+			        	if(estado.equals("D")){	
+			        		vacios++; 
+			        		} else { 
+			        			ocupados++; 
+			        			}
+			        	total++;
 		        	}
+		        	Log.v("vacios",""+vacios);
+		        	Log.v("total",""+total);
+		        	
+		        	parqueaderos = new String[vacios];
+		        	int j=0;
+		        	for(int i=0; i<respJSON.length(); i++)
+		        	{		        	
+		        		JSONObject obj = respJSON.getJSONObject(i);
+			        	String par_id = obj.getString("par_id");
+			        	String estado = obj.getString("par_estado");
+			        	if(estado.equals("D")){
+			        		parqueaderos[j] = par_id;
+			        		j++;
+			        	}	
+		        	}	
+
 		        
 		        }
 		        catch(Exception ex)
@@ -212,7 +279,10 @@ public class ParkingActivity extends Activity {
 	        	ArrayAdapter<String> adaptador =
 	        		    new ArrayAdapter<String>(ParkingActivity.this,
 	        		        android.R.layout.simple_spinner_dropdown_item, parqueaderos);
-	        		 
+	        	
+	        	lblOcupados.setText("Parqueaderos Ocupados: "+ocupados);
+	        	lblLibres.setText("Parqueaderos Libres: "+vacios);
+	        	
 	        	par_id.setAdapter(adaptador);
 	        	par_id.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -221,8 +291,7 @@ public class ParkingActivity extends Activity {
 							View view, int position, long id) {
 						// TODO Auto-generated method stub
 						Log.v("click parqueadero","clickee "+parqueaderos[position]);
-						
-						
+
 					}
 
 					@Override

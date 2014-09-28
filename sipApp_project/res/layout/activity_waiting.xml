@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/TxtSaldoWaiting"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="right"
+        android:layout_weight="0.38"
+        android:padding="5dp"
+        android:text="$0.00"
+        android:textColor="@android:color/white"
+        android:textSize="26sp" 
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/LblTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="00:00"
+            android:textColor="@android:color/white"
+            android:textSize="60sp" />
+
+        <TextView
+            android:id="@+id/LblTiempoContratado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Tiempo Contratado: 00"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1.01"
+        android:src="@drawable/expirar"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/BtnComprarMas"
+        android:layout_width="271dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.05"
+        android:background="@drawable/btn_comprar_mas"
+        android:height="@dimen/default_gap"
+        android:paddingTop="20dp"
+        android:textColor="#ffffff" />
+
+</LinearLayout>

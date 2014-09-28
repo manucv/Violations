@@ -65,7 +65,7 @@ class CompraSaldoDao implements InterfaceCrud {
 	public function eliminar($id) {
 		if ($this->traer ( $id )) {
 			return $this->tableGateway->delete ( array (
-					'ciu_id' => $id 
+					'com_sal_id' => $id 
 			) );
 		} else {
 			throw new \Exception ( 'No se encontro el id para eliminar' );

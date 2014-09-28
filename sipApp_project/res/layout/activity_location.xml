@@ -2,12 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/background"
-    android:padding="10dp" >
+    android:orientation="vertical"
+    android:padding="0dp" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/TxtSaldoUbicacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:padding="5dp"
+        android:text="$0.00"
+        android:textColor="@android:color/white"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="25dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/title_location" />
+
+    <!-- 
+    <TextView
+        android:id="@+id/LblReferencedClient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="País:" />
@@ -16,47 +36,94 @@
         android:id="@+id/pai_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+	 -->
 
-    <TextView
-        android:id="@+id/textView2"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estados:"
+                android:textColor="@android:color/white"
+                android:width="100dp" />
+
+            <Spinner
+                android:id="@+id/est_id"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="#ffffff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ciudades:"
+                android:textColor="@android:color/white"
+                android:width="100dp" />
+
+            <Spinner
+                android:id="@+id/ciu_id"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:background="#ffffff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sectores:"
+                android:textColor="@android:color/white"
+                android:width="100dp" />
+
+            <Spinner
+                android:id="@+id/sec_id"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:background="#ffffff" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/LoadingLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Estados:" />
-
-    <Spinner
-        android:id="@+id/est_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ciudades:" />
-
-    <Spinner
-        android:id="@+id/ciu_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sectores:" />
-
-    <Spinner
-        android:id="@+id/sec_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:id="@+id/BtnVerEpacios"
-        android:layout_width="126dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="#000000"
-        android:text="Ver Espacios"
-        android:textColor="#ffffff" />
+        android:background="@drawable/btn_buscar"
+        android:text=""
+        android:textColor="#ffffff"
+        android:visibility="gone"
+        android:width="160dp" />
 
 </LinearLayout>

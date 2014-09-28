@@ -82,7 +82,7 @@ class ClienteDao implements InterfaceCrud {
         return $row;
     }
 
-    public function buscarPorEmailOUsuario($email,$passw){
+    public function buscarPorEmailOUsuario($email,$passw=NULL){
         
         $sql = new Sql($this->tableGateway->getAdapter());
         $select = $sql->select();
@@ -90,8 +90,9 @@ class ClienteDao implements InterfaceCrud {
         $select->where->like('cli_email', $email);
         $select->where->or;
         $select->where->like('cli_user', $email);
-        $select->where(array('cli_passw'=>$passw));
-        
+        if(!is_null($passw)){
+            $select->where(array('cli_passw'=>$passw));
+        }
         $statement = $sql->prepareStatementForSqlObject($select);
         $results = $statement->execute();
 
@@ -109,6 +110,18 @@ class ClienteDao implements InterfaceCrud {
             $cliente=$this->traer($cli_id);
             if($cliente){
                 $cliente->setCli_saldo($cliente->getCli_saldo()-$valor);
+                $data = $cliente->getArrayCopy();
+
+                $this->tableGateway->update ( $data, array ( 'cli_id' => $cliente->getCli_id() ) );
+                return $cliente;
+            }
+        }
+    }    
+    public function acreditar($cli_id, $valor=0) {
+        if($cli_id){
+            $cliente=$this->traer($cli_id);
+            if($cliente){
+                $cliente->setCli_saldo($cliente->getCli_saldo()+$valor);
                 $data = $cliente->getArrayCopy();
 
                 $this->tableGateway->update ( $data, array ( 'cli_id' => $cliente->getCli_id() ) );
