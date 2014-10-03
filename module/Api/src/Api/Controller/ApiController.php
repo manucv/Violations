@@ -520,6 +520,33 @@ class ApiController extends AbstractActionController
             ) );
         }
     }    
+
+    public function transferenciasAction()
+    {
+        if($this->getRequest()->isGET()){
+            if(!is_null($this->params('id'))){
+                $tipo = $this->request->getQuery('tipo');
+
+                $cli_id=$this->params('id');
+
+                $transferencias = $this->getTransferenciaSaldoDao()->traerPorClienteJSON($cli_id,$tipo);
+                
+                $response=$this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($transferencias);
+                return $response;
+            }
+
+        }else{
+            return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ) );
+        }
+    }    
+
+
+
     public function getClienteDao() {
         if (! $this->clienteDao) {
             $sm = $this->getServiceLocator ();
