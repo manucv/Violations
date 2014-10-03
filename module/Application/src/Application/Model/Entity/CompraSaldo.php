@@ -54,35 +54,35 @@ class CompraSaldo {
 	* @param Ambigous <NULL, unknown> $com_sal_id
 	*/
 	public function setCom_sal_id($com_sal_id){
-		$this->com_sal_id = $com_sal_id
+		$this->com_sal_id = $com_sal_id;
 	}
 
 	/**
 	* @param Ambigous <NULL, unknown> $cli_id
 	*/
 	public function setCli_id($cli_id){
-		$this->cli_id = $cli_id
+		$this->cli_id = $cli_id;
 	}
 
 	/**
 	* @param Ambigous <NULL, unknown> $pun_rec_id
 	*/
 	public function setPun_rec_id($pun_rec_id){
-		$this->pun_rec_id = $pun_rec_id
+		$this->pun_rec_id = $pun_rec_id;
 	}
 
 	/**
 	* @param Ambigous <NULL, unknown> $com_sal_valor
 	*/
 	public function setCom_sal_valor($com_sal_valor){
-		$this->com_sal_valor = $com_sal_valor
+		$this->com_sal_valor = $com_sal_valor;
 	}
 
 	/**
 	* @param Ambigous <NULL, unknown> $com_sal_hora
 	*/
 	public function setCom_sal_hora($com_sal_hora){
-		$this->com_sal_hora = $com_sal_hora
+		$this->com_sal_hora = $com_sal_hora;
 	}
 
 	public function exchangeArray($data)
@@ -97,3 +97,4 @@ class CompraSaldo {
 	public function getArrayCopy(){
 		return get_object_vars($this);
 	}
+}
