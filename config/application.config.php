@@ -4,12 +4,11 @@ return array(
     'modules' => array(
     	'Application',
     	'Usuarios',
-    	'Monitoreo',
     	'Parametros',
-    	'Vehiculo',
     	'Infraccion',
     	'Parqueaderos',
-        'Api'
+        'Api',
+    	'Clientes',
     ),
 
     // These are various options for the listeners attached to the ModuleManager

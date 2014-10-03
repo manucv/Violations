@@ -1,0 +1,80 @@
+<div>
+	<ul style="padding-left: 0px;">
+		<nav class="navbar /*navbar-default*/" role="navigation"
+			style="background-color: #F1F0EE;">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand borde-derecho-menu" href="#">SIP</a>
+				</div>
+				<div class="navar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+					<?php foreach ($this->container as $page): ?>
+					<?php /* @var $page Zend\Navigation\Page\Mvc */ ?>
+        			<?php // when using partials we need to manually check for ACL conditions ?>
+        			<?php if( ! $page->isVisible() || !$this->navigation()->accept($page)) continue; ?>
+        			<?php $hasChildren = $page->hasPages() ?>
+        			<?php if( ! $hasChildren): ?>
+						<li class="borde-derecho-menu" style="padding-right: 4px;">
+							<a href="<?php echo $page->getHref() ?>">
+							<?php
+								$explode = explode(':', $page->getLabel());
+								echo $this->translate($explode[0]) . ' ' . $this->translate($explode[1]);
+							?>
+							</a>
+						</li>
+        			<?php else: ?>
+						<li class="dropdown borde-derecho-menu"><a href="#"
+							class="dropdown-toggle" data-toggle="dropdown">
+							<?php
+								$explode = explode(':', $page->getLabel());
+								echo $this->translate($explode[0]) . ' ' . $this->translate($explode[1]);
+							?>
+							<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+							<?php foreach($page->getPages() as $child): //echo $page->count() ?>
+				                <?php // when using partials we need to manually check for ACL conditions ?>
+				                <?php if( ! $child->isVisible() || !$this->navigation()->accept($child)) continue; ?>
+				                <li><a href="<?php echo $child->getHref() ?>">
+				                        <?php
+											$explode = explode(':', $child->getLabel());
+											echo $this->translate($explode[0]) . ' ' . $this->translate($explode[1]);
+										?>
+				                    </a></li>
+				                    <?php if(strtoupper($explode[2]) == 'S'): ?>
+				                    	<li class="divider"></li>
+				                    <?php endif;?>
+								
+				            <?php endforeach ?>
+							</ul>
+						</li>
+					<?php endif ?>
+					<?php endforeach;?>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"><i class="fa fa-user fa-fw"></i> Perfil <b
+								class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#"><i class="fa fa-info-circle fa-fw"></i> Datos
+										Generales</a></li>
+								<li><a href="#"><i class="fa fa-key fa-fw"></i> Cambiar
+										Contrase&ntilde;a</a></li>
+								<li class="divider"></li>
+								<li><a
+									href="<?php echo $this->url('application', array('controller' => 'login', 'action' => 'logout'))?>"><i
+										class="fa fa-sign-out fa-fw"></i> Cerrar Sesi&oacute;n</a></li>
+							</ul></li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container-fluid -->
+		</nav>
+	</ul>
+</div>

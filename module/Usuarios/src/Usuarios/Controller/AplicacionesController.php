@@ -10,11 +10,17 @@
 namespace Usuarios\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
 
 class AplicacionesController extends AbstractActionController
 {
 	protected $aplicacionDao;
+	
+	public function indexAction(){
+		return $this->redirect ()->toRoute ( 'usuarios', array (
+				'controller' => 'aplicaciones',
+				'action' => 'listado' 
+		) );
+	}
 	
     public function listadoAction()
     {

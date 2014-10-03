@@ -34,7 +34,8 @@ return array (
 				'Vehiculo' => 'layout/layoutGeneral.phtml',
 				'Infraccion' => 'layout/layoutInfraccion.phtml',
 				'Parqueaderos' => 'layout/layoutGeneral.phtml',
-				'Api' => 'layout/layoutGeneral.phtml'
+				'Api' => 'layout/layoutGeneral.phtml',
+				'Clientes' => 'layout/layoutGeneral.phtml',
 		),
 		
 		'translator' => array (

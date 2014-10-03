@@ -1,0 +1,42 @@
+<div class="titulo-ventana"><i class="fa fa-users fa-fw"></i> Usuarios - Men&uacute; de Opciones </div>
+<hr class="hr-style" />
+
+ <table class="table table-striped table-hover" style="font-size: 12px;" >
+ <thead>
+ <tr>
+ 	 <th width="7%">
+ 	 	<a href="<?php echo $this->url('usuarios', array('controller' => 'menu', 'action'=>'ingresar'));?>" class="btn btn-primary">
+     	<i class="fa fa-plus-circle"></i> Nuevo</a>
+ 	 </th>
+	 <th>N&uacute;mero</th>
+     <th>Nombre</th>
+     <th>Etiqueta</th>
+     <th>Aplicaci&oacute;n</th>
+     <th>&Iacute;cono</th>
+     <th>Padre</th>
+     <th>&iquest;Aplica Divisor?</th>
+ </tr>
+ </thead>
+ <tbody>
+ <?php 
+ foreach ($this->menu as $menu) : ?>
+ <tr>
+ 	 <td style=" background-color: #fff;">
+ 	 	<a class="btn btn-success" href="<?php echo $this->url('usuarios', array('controller' => 'menu', 'action' => 'editar', 'id' => $menu->getMen_id()))?>"><i class="fa fa-pencil"></i></a>
+ 	 	<a class="btn btn-danger" href="<?php echo $this->url('usuarios', array('controller' => 'menu', 'action' => 'eliminar', 'id' => $menu->getMen_id()))?>" onclick="return eliminarRegistro('<?php echo $menu->getMen_nombre()?>');"><i class="fa fa-trash-o"></i></a>
+ 	 </td>
+ 	 <td><?php echo $this->escapeHtml($menu->getMen_id());?></td>
+     <td><?php echo $this->escapeHtml($menu->getMen_nombre());?></td>
+     <td><?php echo $this->escapeHtml($menu->getMen_etiqueta());?></td>
+     <td><?php echo $this->escapeHtml($menu->getApl_nombre());?></td>
+     <td><?php echo $menu->getMen_icon();?></td>
+     <td><?php echo $this->escapeHtml($menu->getMen_padre());?></td>
+     <td>
+     	<?php 
+     		echo  $this->escapeHtml($menu->getMen_divisor()) == 'S'? 'SI' : 'NO'; 
+     	?>
+     </td>
+ </tr>
+ <?php endforeach; ?>
+ </tbody>
+ </table>

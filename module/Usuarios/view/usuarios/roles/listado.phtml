@@ -13,13 +13,13 @@
  </thead>
  <tbody>
  <?php 
- foreach ($this->roles as $roles) : ?>
+ foreach ($this->roles as $menu) : ?>
  <tr>
  	 <td style=" background-color: #fff;">
- 	 	<a class="btn btn-success" href="<?php echo $this->url('usuarios', array('controller' => 'roles', 'action' => 'editar', 'id' => $roles->getRol_id()))?>"><i class="fa fa-pencil"></i></a>
- 	 	<a class="btn btn-danger" href="<?php echo $this->url('usuarios', array('controller' => 'roles', 'action' => 'eliminar', 'id' => $roles->getRol_id()))?>" onclick="return eliminarRegistro('<?php echo $roles->getRol_descripcion()?>');"><i class="fa fa-trash-o"></i></a>
+ 	 	<a class="btn btn-success" href="<?php echo $this->url('usuarios', array('controller' => 'roles', 'action' => 'editar', 'id' => $menu->getRol_id()))?>"><i class="fa fa-pencil"></i></a>
+ 	 	<a class="btn btn-danger" href="<?php echo $this->url('usuarios', array('controller' => 'roles', 'action' => 'eliminar', 'id' => $menu->getRol_id()))?>" onclick="return eliminarRegistro('<?php echo $menu->getRol_descripcion()?>');"><i class="fa fa-trash-o"></i></a>
  	 </td>
-     <td><?php echo $this->escapeHtml($roles->getRol_descripcion());?></td>
+     <td><?php echo $this->escapeHtml($menu->getRol_descripcion());?></td>
  </tr>
  <?php endforeach; ?>
  </tbody>

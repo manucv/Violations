@@ -71,13 +71,18 @@ use Application\Model\Entity\Establecimiento;
 use Application\Model\Dao\EstablecimientoDao;
 use Application\Model\Entity\Transaccion;
 use Application\Model\Dao\TransaccionDao;
+use Application\Model\Dao\MenuTable;
+use Application\Model\Entity\Menu;
+use Application\Model\Dao\MenuDao;
+
+//NEW
 use Application\Model\Entity\CompraSaldo;
 use Application\Model\Dao\CompraSaldoDao;
 use Application\Model\Entity\TransferenciaSaldo;
 use Application\Model\Dao\TransferenciaSaldoDao;
 use Application\Model\Entity\RelacionCliente;
 use Application\Model\Dao\RelacionClienteDao;
-
+//END NEW
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface{
 	public function onBootstrap(MvcEvent $e) {
@@ -335,7 +340,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$tableGateway = new TableGateway('automovil', $dbAdapter, null, $resultSetPrototype);
 		                	return new AutomovilDao($tableGateway);
 		                },		                
-		               
+		                
 		                'Application\Model\Dao\LogParqueaderoDao' => function($sm){
 		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
 		                	$resultSetPrototype = new ResultSet();
@@ -343,6 +348,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$tableGateway = new TableGateway('log_parqueadero', $dbAdapter, null, $resultSetPrototype);
 		                	return new LogParqueaderoDao($tableGateway);
 		                },
+
 		                'Application\Model\Dao\ClienteDao' => function($sm){
 		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
 		                	$resultSetPrototype = new ResultSet();
@@ -350,6 +356,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$tableGateway = new TableGateway('cliente', $dbAdapter, null, $resultSetPrototype);
 		                	return new ClienteDao($tableGateway);
 		                },
+
 		                'Application\Model\Dao\CategoriaDao' => function($sm){
 		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
 		                	$resultSetPrototype = new ResultSet();
@@ -357,6 +364,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$tableGateway = new TableGateway('categoria', $dbAdapter, null, $resultSetPrototype);
 		                	return new CategoriaDao($tableGateway);
 		                },		  
+
   		                'Application\Model\Dao\EstablecimientoDao' => function($sm){
 		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
 		                	$resultSetPrototype = new ResultSet();
@@ -371,27 +379,48 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$tableGateway = new TableGateway('transaccion', $dbAdapter, null, $resultSetPrototype);
 		                	return new TransaccionDao($tableGateway);
 		                },	
-  		                'Application\Model\Dao\CompraSaldoDao' => function($sm){
+
+		                'Application\Model\Dao\MenuDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Menu());
+		                	$tableGateway = new TableGateway('menu', $dbAdapter, null, $resultSetPrototype);
+		                	return new MenuDao($tableGateway);
+		                },
+		                
+		                'Application\Model\Dao\CompraSaldoDao' => function($sm){
 		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
 		                	$resultSetPrototype = new ResultSet();
 		                	$resultSetPrototype->setArrayObjectPrototype(new CompraSaldo());
 		                	$tableGateway = new TableGateway('compra_saldo', $dbAdapter, null, $resultSetPrototype);
 		                	return new CompraSaldoDao($tableGateway);
 		                },
-						'Application\Model\Dao\TransferenciaSaldoDao' => function($sm){
+		                'Application\Model\Dao\TransferenciaSaldoDao' => function($sm){
 		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
 		                	$resultSetPrototype = new ResultSet();
 		                	$resultSetPrototype->setArrayObjectPrototype(new TransferenciaSaldo());
 		                	$tableGateway = new TableGateway('transferencia_saldo', $dbAdapter, null, $resultSetPrototype);
 		                	return new TransferenciaSaldoDao($tableGateway);
-		                },		    
-						'Application\Model\Dao\RelacionClienteDao' => function($sm){
+		                },
+		                'Application\Model\Dao\RelacionClienteDao' => function($sm){
 		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
 		                	$resultSetPrototype = new ResultSet();
 		                	$resultSetPrototype->setArrayObjectPrototype(new RelacionCliente());
 		                	$tableGateway = new TableGateway('relacion_cliente', $dbAdapter, null, $resultSetPrototype);
 		                	return new RelacionClienteDao($tableGateway);
-		                },		            
+		                },
+
+		                'Navigation' => 'Application\Clases\MyNavigationFactory'
+				),
+				'initializers' => array(
+						function ($instance, $sm) {
+							if ($instance instanceof \Zend\Db\Adapter\AdapterAwareInterface) {
+								$instance->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
+							}
+						}
+				),
+				'invokables' => array(
+						'menu' => 'Application\Model\Dao\MenuTable'
 				),
 		);
 	}

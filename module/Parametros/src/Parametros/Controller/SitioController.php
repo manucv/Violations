@@ -22,6 +22,13 @@ class SitioController extends AbstractActionController
 	protected $estadoDao;
 	protected $paisDao;
 	
+	public function indexAction(){
+		return $this->redirect ()->toRoute ( 'parametros', array (
+				'controller' => 'sitio',
+				'action' => 'listado'
+		) );
+	}
+	
     public function listadoAction(){
         return array('sitios' => $this->getSitioDao()->traerTodos());
     }
