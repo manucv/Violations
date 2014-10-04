@@ -11,6 +11,7 @@ use Application\Model\Entity\Automovil as AutomovilEntity;
 use Application\Model\Entity\Transaccion as TransaccionEntity;
 use Application\Model\Entity\RelacionCliente as RelacionClienteEntity;
 use Application\Model\Entity\TransferenciaSaldo as TransferenciaSaldoEntity;
+use Application\Model\Entity\Cliente as ClienteEntity;
 
 class ApiController extends AbstractActionController
 {
@@ -545,7 +546,33 @@ class ApiController extends AbstractActionController
         }
     }    
 
+    public function clientesAction()
+    {
+        if($this->getRequest()->isPOST()){
 
+            $data = $this->request->getPost ();
+
+            $cliente = new ClienteEntity();
+            $data['cli_saldo']=0;
+            $data['cli_estado']='ACTIVO';
+            $cliente->exchangeArray ( $data );
+            $cli_id=$this->getClienteDao() ->guardar ( $cliente );
+            $clienteObj = $this->getClienteDao()->traer ( $cli_id );
+            $content=json_encode($clienteObj->getArrayCopy());
+
+            $response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+
+            return $response;
+
+        }else{
+            return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ) );
+        }
+    } 
 
     public function getClienteDao() {
         if (! $this->clienteDao) {

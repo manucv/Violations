@@ -158,6 +158,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
         
 		$sm = $application->getServiceManager();
 		$auth = $sm->get('Application\Model\Login');
+
 		if($controller != 'Api\Controller\Api' ){
 			if(!$auth->isLoggedIn()){
 				$matches->setParam('controller', 'Application\Controller\Login');

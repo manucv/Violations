@@ -16,42 +16,50 @@
         />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/TxtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Nombres"
-        android:inputType="textPersonName" 
-		android:layout_margin="15dp"
+        android:hint="Nombres" 
+        android:layout_margin="15dp"
 		android:padding="10dp"
         android:background="#ffffff"
         android:lines="1"
         android:maxLines="1"
-       	android:singleLine="true"        
-        
-        >
+       	android:singleLine="true"/>
+
+    <EditText
+        android:id="@+id/TxtLastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Apellidos" 
+        android:layout_margin="15dp"
+		android:padding="10dp"
+        android:background="#ffffff"
+        android:lines="1"
+        android:maxLines="1"
+       	android:singleLine="true">
 
         <requestFocus />
     </EditText>
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/TxtNewEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="E-mail"
-        android:inputType="textEmailAddress" 
+        android:hint="E-mail" 
 		android:layout_margin="15dp"
 		android:padding="10dp"
         android:background="#ffffff"
         android:lines="1"
         android:maxLines="1"
        	android:singleLine="true"        
-        
         />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/TxtUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -66,7 +74,7 @@
         />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/TxtNewPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -83,7 +91,7 @@
         />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/TxtVerifyPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -98,8 +106,13 @@
         
          />
 
+    <ProgressBar
+        android:id="@+id/loadingRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/BtnAccount"
         android:layout_width="104dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

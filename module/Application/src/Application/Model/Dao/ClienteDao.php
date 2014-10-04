@@ -42,6 +42,7 @@ class ClienteDao implements InterfaceCrud {
     
     	$data = array(
 			'cli_nombre' => $cliente->getCli_nombre(),
+            'cli_apellido' => $cliente->getCli_apellido(),
 			'cli_email' => $cliente->getCli_email(),
 			'cli_passw' => $cliente->getCli_passw(),
 			'cli_saldo' => $cliente->getCli_saldo(),
@@ -60,7 +61,10 @@ class ClienteDao implements InterfaceCrud {
     		}
     	}else{
     		$this->tableGateway->insert ( $data );
+            $id = $this->tableGateway->lastInsertValue;
     	}
+
+        return $id;
     }
     
 	public function eliminar($id) {

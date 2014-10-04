@@ -90,7 +90,7 @@
         android:layout_weight="1" >
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/LblSMS"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Disponible:"

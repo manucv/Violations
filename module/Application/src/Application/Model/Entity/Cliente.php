@@ -7,6 +7,7 @@
 
 		private $cli_id;
 		private $cli_nombre;
+		private $cli_apellido;
 		private $cli_email;
 		private $cli_passw;
 		private $cli_saldo;
@@ -26,6 +27,12 @@
 		public function getCli_nombre(){
 			return $this->cli_nombre;
 		}
+		/**
+		* @return the $cli_apellido
+		*/
+		public function getCli_apellido(){
+			return $this->cli_apellido;
+		}		
 		/**
 		* @return the $cli_email
 		*/
@@ -62,6 +69,12 @@
 		*/
 		public function setCli_nombre($cli_nombre){
 			$this->cli_nombre = $cli_nombre;
+		}	
+		/**
+		* @param Ambigous <NULL, unknown> $cli_apellido
+		*/
+		public function setCli_apellido($cli_apellido){
+			$this->cli_apellido = $cli_apellido;
 		}
 		/**
 		* @param Ambigous <NULL, unknown> $cli_email
@@ -92,10 +105,12 @@
 		{
 			$this->cli_id = (isset($data['cli_id'])) ? $data['cli_id'] : null;
 			$this->cli_nombre = (isset($data['cli_nombre'])) ? $data['cli_nombre'] : null;
+			$this->cli_apellido = (isset($data['cli_apellido'])) ? $data['cli_apellido'] : null;
 			$this->cli_email = (isset($data['cli_email'])) ? $data['cli_email'] : null;
 			$this->cli_passw = (isset($data['cli_passw'])) ? $data['cli_passw'] : null;
 			$this->cli_saldo = (isset($data['cli_saldo'])) ? $data['cli_saldo'] : null;
 			$this->cli_estado = (isset($data['cli_estado'])) ? $data['cli_estado'] : null;
+			$this->cli_user = (isset($data['cli_user'])) ? $data['cli_user'] : null;
 		}
 		
 		public function getArrayCopy(){
