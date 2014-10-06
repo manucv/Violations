@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
         final EditText txtPassword = (EditText)findViewById(R.id.TxtPassword);
         final Button btnLogIn = (Button)findViewById(R.id.BtnLogIn);
         final Button btnSignIn = (Button)findViewById(R.id.BtnSignIn);
-        
+        final TextView lblRecover = (TextView)findViewById(R.id.LblRecover);
         final TextView lblSMS = (TextView)findViewById(R.id.LblSMS);
         
         progressBar = (ProgressBar)findViewById(R.id.loadingLogin);
@@ -95,6 +95,15 @@ public class MainActivity extends ActionBarActivity {
         	   startActivity(sendIntent);
            }
       });    
+       
+       lblRecover.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(MainActivity.this, RecoverActivity.class);
+               startActivity(intent);
+           }
+      });    
+       
 
 	}
 

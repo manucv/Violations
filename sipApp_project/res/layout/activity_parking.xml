@@ -27,7 +27,8 @@
         android:layout_weight="1"
         android:paddingLeft="20dp"
         android:text="Parqueaderos Ocupados"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white" 
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/LblLibres"
@@ -37,7 +38,8 @@
         android:layout_weight="1"
         android:paddingLeft="20dp"
         android:text="Parqueaderos Libres"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"

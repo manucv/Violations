@@ -292,26 +292,32 @@ class ApiController extends AbstractActionController
     public function sectoresAction(){
 
         if($this->getRequest()->isGET()){        
-            $ciu_id = $this->request->getQuery('ciu_id');
-            if($ciu_id){
-                $sectores = $this->getSectorDao()->traerTodos($ciu_id);
+                $ciu_id = $this->request->getQuery('ciu_id');
+                if($ciu_id){
+                    $sectores = $this->getSectorDao()->traerTodos($ciu_id);
 
-                $content='';
-                $sectoresArray=array();
-                foreach($sectores as $sector){
-                    $sectoresArray[]=$sector->getArrayCopy();
-                }
-                
-                $content=json_encode($sectoresArray);
-
-                $response = $this->getResponse();
-                $response->setStatusCode(200);
-                $response->setContent($content);
+                    $content='';
+                    $sectoresArray=array();
+                    foreach($sectores as $sector){
+                        $sectoresArray[]=$sector->getArrayCopy();
+                    }
                     
-                return $response;    
-            }else{
-                return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
-            }
+                    $content=json_encode($sectoresArray);
+
+                    $response = $this->getResponse();
+                    $response->setStatusCode(200);
+                    $response->setContent($content);
+                        
+                    return $response;    
+                }else{
+                    $content = $this->getSectorDao()->traerTodosJSON();
+
+                    $response = $this->getResponse();
+                    $response->setStatusCode(200);
+                    $response->setContent($content);
+                        
+                    return $response;  
+                }
         }else{
             return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
         }
@@ -555,13 +561,18 @@ class ApiController extends AbstractActionController
             $cliente = new ClienteEntity();
             $data['cli_saldo']=0;
             $data['cli_estado']='ACTIVO';
-            $cliente->exchangeArray ( $data );
-            $cli_id=$this->getClienteDao() ->guardar ( $cliente );
-            $clienteObj = $this->getClienteDao()->traer ( $cli_id );
-            $content=json_encode($clienteObj->getArrayCopy());
 
+            $cliente->exchangeArray ( $data );
+            $content='';
             $response=$this->getResponse();
-            $response->setStatusCode(200);
+            if(!$this->getClienteDao()->verificar( $cliente )){
+                $cli_id=$this->getClienteDao() ->guardar ( $cliente );
+                $clienteObj = $this->getClienteDao()->traer ( $cli_id );
+                $content=json_encode($clienteObj->getArrayCopy());
+                $response->setStatusCode(200);
+            }else {
+                $response->setStatusCode(409);
+            }    
             $response->setContent($content);
 
             return $response;
@@ -572,6 +583,40 @@ class ApiController extends AbstractActionController
                     'action' => 'index'
             ) );
         }
+    } 
+
+    public function recover_passwordAction()
+    {
+        echo 'here';
+        /*if($this->getRequest()->isPOST()){
+
+            $data = $this->request->getPost ();
+
+            $cliente = new ClienteEntity();
+            $data['cli_saldo']=0;
+            $data['cli_estado']='ACTIVO';
+
+            $cliente->exchangeArray ( $data );
+            $content='';
+            $response=$this->getResponse();
+            if(!$this->getClienteDao()->verificar( $cliente )){
+                $cli_id=$this->getClienteDao() ->guardar ( $cliente );
+                $clienteObj = $this->getClienteDao()->traer ( $cli_id );
+                $content=json_encode($clienteObj->getArrayCopy());
+                $response->setStatusCode(200);
+            }else {
+                $response->setStatusCode(409);
+            }    
+            $response->setContent($content);
+
+            return $response;
+
+        }else{
+            return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ) );
+        }*/
     } 
 
     public function getClienteDao() {

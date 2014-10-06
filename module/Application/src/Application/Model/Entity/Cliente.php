@@ -57,7 +57,12 @@
 		public function getCli_estado(){
 			return $this->cli_estado;
 		}
-
+		/**
+		* @return the $cli_user
+		*/
+		public function getCli_user(){
+			return $this->cli_user;
+		}
 		/**
 		* @param Ambigous <NULL, unknown> $cli_id
 		*/
@@ -100,6 +105,12 @@
 		public function setCli_estado($cli_estado){
 			$this->cli_estado = $cli_estado;
 		}
+		/**
+		* @param Ambigous <NULL, unknown> $cli_user
+		*/
+		public function setCli_user($cli_user){
+			$this->cli_user = $cli_user;
+		}		
 
 		public function exchangeArray($data)
 		{

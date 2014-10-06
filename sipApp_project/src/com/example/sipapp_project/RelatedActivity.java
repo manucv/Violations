@@ -41,6 +41,7 @@ public class RelatedActivity extends Activity {
 	private ListView lstContacts;
 	private ProgressBar loadingContacts;
 	private EditText txtBuscar;
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_related);

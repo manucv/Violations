@@ -2,20 +2,13 @@ package com.example.sipapp_project;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
@@ -24,11 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class WaitingActivity extends Activity {
 	
@@ -41,6 +30,7 @@ public class WaitingActivity extends Activity {
 	private TextView lblTiempoContratado;
 	private long restantes=0;
 	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiting);
@@ -136,7 +126,8 @@ public class WaitingActivity extends Activity {
 	    		 if(restantes > 0){ 
 		    		 new CountDownTimer(milliseconds, 1000) {
 	
-		    		     public void onTick(long millisUntilFinished) {
+		    		     @Override
+						public void onTick(long millisUntilFinished) {
 		    		    	long secondsUntilFinished=millisUntilFinished/1000;
 			    	    	int hours = (int) secondsUntilFinished / 3600;
 	    		    	    int remainder = (int) secondsUntilFinished - hours * 3600;
@@ -147,7 +138,8 @@ public class WaitingActivity extends Activity {
 		    		    	lblTimer.setText(String.format("%02d", hours)+":"+String.format("%02d", mins)+":"+String.format("%02d", secs));
 		    		     }
 	
-		    		     public void onFinish() {
+		    		     @Override
+						public void onFinish() {
 		    		    	lblTimer.setText("Tu Tiempo Ha Expirado");
 		    		     }
 		    		  }.start();

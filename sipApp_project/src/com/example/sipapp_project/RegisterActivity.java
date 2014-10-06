@@ -30,9 +30,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
-	private ProgressBar loadingRegister;
 	
 	private Bundle bundle = new Bundle();
+	private Button btnAccount;
+	private ProgressBar loadingRegister;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class RegisterActivity extends Activity {
 		final EditText txtUser = (EditText)findViewById(R.id.TxtUser);
 		final EditText txtNewPassword = (EditText)findViewById(R.id.TxtNewPassword);
 		final EditText txtVerifyPassword = (EditText)findViewById(R.id.TxtVerifyPassword);
-        final Button btnAccount = (Button)findViewById(R.id.BtnAccount);
+        btnAccount = (Button)findViewById(R.id.BtnAccount);
 		loadingRegister = (ProgressBar)findViewById(R.id.loadingRegister);
 		
         loadingRegister.setVisibility(View.GONE);
@@ -66,6 +67,7 @@ public class RegisterActivity extends Activity {
 				
 					if(txtNewPassword.getText().toString().equals(txtVerifyPassword.getText().toString())){
 						loadingRegister.setVisibility(View.VISIBLE);
+						btnAccount.setVisibility(View.GONE);
 						
 						TareaWSRegistrar tarea = new TareaWSRegistrar();
 						tarea.execute(
@@ -95,9 +97,10 @@ public class RegisterActivity extends Activity {
 	}
 	
 	private class TareaWSRegistrar extends AsyncTask<String,Integer,Boolean> {
-
+		private String message = "";
 		@Override
 		protected Boolean doInBackground(String... params) {
+			boolean result = false;
 			
 			String url = "http://www.hawasolutions.com/Violations/public/api/api/clientes";
 			String cli_nombre = params[0];		//txtName
@@ -119,19 +122,33 @@ public class RegisterActivity extends Activity {
 			try{
 				post.setEntity(new UrlEncodedFormEntity(paramsArray));
 				HttpResponse response = httpClient.execute(post);
-				String responseStr = EntityUtils.toString(response.getEntity());
-				if(!responseStr.equals("")){
-					JSONObject responseJSON = new JSONObject(responseStr); 
+				int status = response.getStatusLine().getStatusCode();
+				switch (status){
+					case 200: 	//case success
+						String responseStr = EntityUtils.toString(response.getEntity());
+						if(!responseStr.equals("")){
+							JSONObject responseJSON = new JSONObject(responseStr); 
 
-					bundle.putString("ID", responseJSON.getString("cli_id"));
-					bundle.putString("NOMBRE", responseJSON.getString("cli_nombre"));
-					bundle.putString("SALDO", responseJSON.getString("cli_saldo"));
-					
-					return true;
-				}else{
-					return false;
+							bundle.putString("ID", responseJSON.getString("cli_id"));
+							bundle.putString("NOMBRE", responseJSON.getString("cli_nombre"));
+							bundle.putString("SALDO", responseJSON.getString("cli_saldo"));
+							
+							result = true;
+						}else{
+							result = false;
+							message = "Error al crear el cliente";
+						}
+					break;	
+					case 409: //conflict	
+						result = false;
+						message = "El email — usuario ya existe";
+					break;
+					default:
+						result = false;
+						message = "Error al crear el cliente";
+					break;	
 				}
-				
+
 				
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
@@ -143,11 +160,12 @@ public class RegisterActivity extends Activity {
 				e.printStackTrace();
 			}
 			
-			return null;
+			return result;
 		}
 	    @Override
 		protected void onPostExecute(Boolean result) {
 	    	loadingRegister.setVisibility(View.GONE);
+	    	btnAccount.setVisibility(View.VISIBLE);
 	    	if(result){
 	    		Intent intent = new Intent(RegisterActivity.this, WelcomeActivity.class);
 	    		intent.putExtras(bundle);
@@ -155,11 +173,10 @@ public class RegisterActivity extends Activity {
 	    	}else{
 	    		Context context = getApplicationContext();
 				int duration = Toast.LENGTH_SHORT;
-                CharSequence text = "Hubo un error. Intente de nuevo";
+                CharSequence text = message;
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
 	    	}
 	    }
-		
 	}
 }
