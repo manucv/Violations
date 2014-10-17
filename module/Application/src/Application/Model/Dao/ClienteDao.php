@@ -42,10 +42,12 @@ class ClienteDao implements InterfaceCrud {
     
     	$data = array(
 			'cli_nombre' => $cliente->getCli_nombre(),
+            'cli_apellido' => $cliente->getCli_apellido(),
 			'cli_email' => $cliente->getCli_email(),
 			'cli_passw' => $cliente->getCli_passw(),
 			'cli_saldo' => $cliente->getCli_saldo(),
-			'cli_estado' => $cliente->getCli_estado()
+			'cli_estado' => $cliente->getCli_estado(),
+            'cli_user' => $cliente->getCli_user()
     	);
     	
     	$data ['cli_id'] = $id;
@@ -60,9 +62,29 @@ class ClienteDao implements InterfaceCrud {
     		}
     	}else{
     		$this->tableGateway->insert ( $data );
+            $id = $this->tableGateway->lastInsertValue;
     	}
+
+        return $id;
     }
     
+    public function verificar(Cliente $cliente){    
+
+            $sql = new Sql($this->tableGateway->getAdapter());
+            $select = $sql->select();
+            $select->from('cliente');
+            $select->where            
+                    ->equalTo('cli_email',$cliente->getCli_email())
+                    ->or
+                    ->equalTo('cli_user',$cliente->getCli_user());
+            
+            $statement = $sql->prepareStatementForSqlObject($select);
+            $results = $statement->execute();
+            $count =  $results->count();
+
+            return $count;
+    }
+
 	public function eliminar($id) {
 		if ($this->traer ( $id )) {
 			return $this->tableGateway->delete ( array (

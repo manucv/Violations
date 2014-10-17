@@ -71,4 +71,52 @@ class TransferenciaSaldoDao implements InterfaceCrud {
 			throw new \Exception ( 'No se encontro el id para eliminar' );
 		}
 	}
+
+    public function traerPorClienteJSON($cli_id,$tipo='OUT'){
+        $adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT  tra_sal_id,
+                    cd.cli_id as cli_id_de, 
+                    cd.cli_nombre as cli_nombre_de, 
+                    cp.cli_id as cli_id_para, 
+                    cp.cli_nombre as cli_nombre_para, 
+                    tra_sal_valor, 
+                    tra_sal_hora
+            FROM transferencia_saldo AS t
+            JOIN cliente AS cd ON cd.cli_id = t.cli_id_de
+            JOIN cliente AS cp ON cp.cli_id = t.cli_id_para ";
+
+        if($tipo=='OUT'){
+            //Transfiero A
+            $query .= " WHERE cd.cli_id = $cli_id ";
+        }else{
+            //Me Transfieren
+            $query .= " WHERE cp.cli_id = $cli_id ";
+        }
+
+        $query .= " ORDER BY t.tra_sal_hora DESC ";
+
+        $statement = $adapter->query($query);
+        $results = $statement->execute();
+
+        $sectores = new \ArrayObject();
+    
+        $count=0;
+        $jsonArray=array();
+
+        foreach ($results as $row){
+            $jsonArray[$count]['tra_sal_id']       = $row['tra_sal_id'];
+            $jsonArray[$count]['cli_id_de']       = $row['cli_id_de'];
+            $jsonArray[$count]['cli_nombre_de']   = $row['cli_nombre_de'];
+            $jsonArray[$count]['cli_id_para']     = $row['cli_id_para'];
+            $jsonArray[$count]['cli_nombre_para'] = $row['cli_nombre_para'];
+            $jsonArray[$count]['tra_sal_valor']   = $row['tra_sal_valor'];
+            $jsonArray[$count]['tra_sal_hora']    = $row['tra_sal_hora'];
+
+            $count++;
+        }
+
+        return json_encode($jsonArray);
+        return $results;
+    }    
 }	
