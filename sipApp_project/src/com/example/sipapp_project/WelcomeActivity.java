@@ -27,7 +27,9 @@ public class WelcomeActivity extends Activity {
         Button btnMiCuenta = (Button)findViewById(R.id.BtnMiCuenta);
         Button btnComprar = (Button)findViewById(R.id.BtnComprar);
         Button btnPrestar = (Button)findViewById(R.id.BtnPrestar);
+        Button btnInfo = (Button)findViewById(R.id.BtnInfo);
         Button btnSalir = (Button)findViewById(R.id.BtnSalir);
+        Button btnEstado = (Button)findViewById(R.id.BtnEstado);
         
         
         //Recuperamos la informaci—n pasada en el intent
@@ -43,9 +45,8 @@ public class WelcomeActivity extends Activity {
             @Override
             public void onClick(View v) {
             	Log.v("click","click en categorias");
-                Intent intent =
-                        new Intent(WelcomeActivity.this,LocationActivity.class);
-                
+                //Intent intent = new Intent(WelcomeActivity.this,LocationActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this,LocationActivity.class);
                 Bundle b = new Bundle();
                 b.putString("ID", cli_id);
                 b.putString("SALDO", saldo);
@@ -108,7 +109,36 @@ public class WelcomeActivity extends Activity {
                 startActivity(intent);	
             	        	
             }
+       });  
+        
+        btnEstado.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(WelcomeActivity.this,MapActivity.class);
+                Bundle b = new Bundle();
+                b.putString("ID", cli_id);
+                b.putString("SALDO", saldo);
+                intent.putExtras(b);                
+                
+                startActivity(intent);	            	        	
+            }
+       });
+        
+        btnInfo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(WelcomeActivity.this,InfoActivity.class);
+                Bundle b = new Bundle();
+                b.putString("ID", cli_id);
+                b.putString("SALDO", saldo);
+                intent.putExtras(b);                
+                
+                startActivity(intent);	            	        	
+            }
        });        
+        
         btnSalir.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

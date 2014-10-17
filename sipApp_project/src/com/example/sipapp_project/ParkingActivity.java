@@ -3,9 +3,7 @@ package com.example.sipapp_project;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -49,6 +47,7 @@ public class ParkingActivity extends Activity {
 	private Spinner spnLog_par_horas_parqueo;
 	private Double price = 0.8;
 	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking);

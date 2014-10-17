@@ -46,12 +46,14 @@
                     <ProgressBar
                         android:id="@+id/loadingHistory"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal" />
 
                     <ListView
                         android:id="@+id/LstHistory"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent"
+                        android:background="@android:color/white" >
                     </ListView>
 
                 </LinearLayout>
@@ -62,13 +64,157 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
 
-                    <TextView
-                        android:id="@+id/textView1"
+                    <ProgressBar
+                        android:id="@+id/loadingTransfer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_gravity="center_horizontal" />
+
+                    <ListView
+                        android:id="@+id/LstTransfer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" 
+                        android:background="@android:color/white" >
+                    </ListView>
 
                 </LinearLayout>
+                
+                <LinearLayout
+                    android:id="@+id/tabTransferIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <ProgressBar
+                        android:id="@+id/loadingTransferIn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal" />
+
+                    <ListView
+                        android:id="@+id/LstTransferIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+						android:background="@android:color/white" >
+                    </ListView>
+
+                </LinearLayout>   
+                
+                <LinearLayout
+                    android:id="@+id/tabRecarga"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/tabCuenta"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <EditText
+                        android:id="@+id/TxtNameAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nombres" 
+
+				 		android:ems="10"
+						android:layout_margin="5dp"
+						android:padding="10dp"
+				        android:background="#ffffff"
+				        android:lines="1"
+				        android:maxLines="1"
+				       	android:singleLine="true"                            
+                        >
+
+                        <requestFocus />
+                    </EditText>
+
+                    <EditText
+                        android:id="@+id/TxtLastNameAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Apellidos" 
+				 		android:ems="10"
+						android:layout_margin="5dp"
+						android:padding="10dp"
+				        android:background="#ffffff"
+				        android:lines="1"
+				        android:maxLines="1"
+				       	android:singleLine="true"                        
+                        />
+
+                    <EditText
+                        android:id="@+id/TxtEmailAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="E-mail"
+                        android:inputType="textEmailAddress" 
+				 		android:ems="10"
+						android:layout_margin="5dp"
+						android:padding="10dp"
+				        android:background="#ffffff"
+				        android:lines="1"
+				        android:maxLines="1"
+				       	android:singleLine="true"                        
+                        />
+
+                    <EditText
+                        android:id="@+id/TxtPhoneAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Teléfono"
+                        android:inputType="phone" 
+				 		android:ems="10"
+						android:layout_margin="5dp"
+						android:padding="10dp"
+				        android:background="#ffffff"
+				        android:lines="1"
+				        android:maxLines="1"
+				       	android:singleLine="true"                        
+                        />
+
+                    <EditText
+                        android:id="@+id/TxtPasswordAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Contraseña"
+                        android:inputType="textPassword" 
+				 		android:ems="10"
+						android:layout_margin="5dp"
+						android:padding="10dp"
+				        android:background="#ffffff"
+				        android:lines="1"
+				        android:maxLines="1"
+				       	android:singleLine="true"                        
+                        />
+
+                    <EditText
+                        android:id="@+id/TxtPasswordConfirmAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Verificar Contraseña"
+                        android:inputType="textPassword" 
+				 		android:ems="10"
+						android:layout_margin="5dp"
+						android:padding="10dp"
+				        android:background="#ffffff"
+				        android:lines="1"
+				        android:maxLines="1"
+				       	android:singleLine="true"                        
+                        />
+
+                    <Button
+                        android:id="@+id/BtnAccount"
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Actualizar" 
+        				android:background="#000000"
+        				android:textColor="#ffffff"                        
+                        />
+
+                </LinearLayout>   
             </FrameLayout>
         </LinearLayout>
     </TabHost>

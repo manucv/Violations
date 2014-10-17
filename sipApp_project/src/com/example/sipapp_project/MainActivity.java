@@ -1,12 +1,14 @@
 package com.example.sipapp_project;
 
 import android.support.v7.app.ActionBarActivity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import android.content.Context;
@@ -44,16 +46,32 @@ public class MainActivity extends ActionBarActivity {
         final EditText txtPassword = (EditText)findViewById(R.id.TxtPassword);
         final Button btnLogIn = (Button)findViewById(R.id.BtnLogIn);
         final Button btnSignIn = (Button)findViewById(R.id.BtnSignIn);
+        final TextView lblRecover = (TextView)findViewById(R.id.LblRecover);
+        final TextView lblSMS = (TextView)findViewById(R.id.LblSMS);
         
         progressBar = (ProgressBar)findViewById(R.id.loadingLogin);
         progressBar.setVisibility(View.GONE);
         btnLogIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
+            	
+            	if(txtEmail.getText().toString().equals("") || txtPassword.getText().toString().equals("")){
+            		
+            		Context context = getApplicationContext();
+                    CharSequence text = "Ingrese su usuario y contrase–a";
+                    int duration = Toast.LENGTH_SHORT;
 
-            	TareaWSLogin tarea = new TareaWSLogin();
-				tarea.execute(txtEmail.getText().toString(),txtPassword.getText().toString() );            	
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                    
+                    progressBar.setVisibility(View.GONE);
+	                
+            	}else{
+            		progressBar.setVisibility(View.VISIBLE);
+            		
+	            	TareaWSLogin tarea = new TareaWSLogin();
+					tarea.execute(txtEmail.getText().toString(),txtPassword.getText().toString() );
+            	}
 
             }
        });
@@ -64,7 +82,28 @@ public class MainActivity extends ActionBarActivity {
                 Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
-       });        
+       });    
+        
+       lblSMS.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(View v) {
+        	   Intent sendIntent = new Intent(Intent.ACTION_VIEW);         
+        	   sendIntent.setData(Uri.parse("sms:"));
+        	   sendIntent.setType("vnd.android-dir/mms-sms"); 
+        	   sendIntent.putExtra("address", "0995867216");
+        	   sendIntent.putExtra("sms_body", "PARQUEO"); 
+        	   startActivity(sendIntent);
+           }
+      });    
+       
+       lblRecover.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(MainActivity.this, RecoverActivity.class);
+               startActivity(intent);
+           }
+      });    
+       
 
 	}
 
@@ -126,7 +165,6 @@ public class MainActivity extends ActionBarActivity {
 		        	}else{
 		        		return false;
 		        	}
-
 		        	
 		        }
 		        catch(Exception ex)
@@ -167,6 +205,6 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	public void onBackPressed()
 	{
-		
+        //finish();
 	}
 }
