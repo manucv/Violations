@@ -20,13 +20,6 @@ class CiudadController extends AbstractActionController
 	protected $ciudadDao;
 	protected $estadoDao;
 	
-	public function indexAction(){
-		return $this->redirect ()->toRoute ( 'parametros', array (
-				'controller' => 'ciudad',
-				'action' => 'listado'
-		) );
-	}
-	
     public function listadoAction()
     {
         return array('ciudad' => $this->getCiudadDao()->traerTodos());

@@ -135,7 +135,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		
         if(0 === strpos($controller, __NAMESPACE__, 0)){
         	switch($controller){
-        		case 'Application\Controller\Login':
+        		 case 'Application\Controller\Login':
         			if(in_array($action, array('index', 'autenticar'))){
         				return;
         			}
@@ -144,7 +144,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
         		case 'Application\Controller\Error':
         			return;
         			break;
-
+ 
         		case 'Application\Controller\Index':
         				return;
         				break;

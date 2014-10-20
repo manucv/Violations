@@ -66,7 +66,7 @@ class LoginController extends AbstractActionController {
 			$this->login->login ( $usuario, $this->secret($clave) );
 			
 			$usuario_rol = $this->getUsuarioDao()->traerPorUsuarioClave($usuario, $clave);
-			$rolUsuarioObjeto = $this->getRolUsuarioDao()->rolPorCodigo( $usuario_rol->getUsu_id() );
+		    $rolUsuarioObjeto = $this->getRolUsuarioDao()->rolPorCodigo( $usuario_rol->getUsu_id() );
 			
 			if(is_object($rolUsuarioObjeto)){ 
 				$role=$rolUsuarioObjeto->getRol_id();
