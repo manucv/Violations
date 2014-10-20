@@ -7,6 +7,7 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
 use Application\Model\Entity\Cliente;
 use Application\Model\Dao\InterfaceCrud;
+use Application\Model\Entity\Usuario;
 
 class ClienteDao implements InterfaceCrud {
 	
@@ -18,6 +19,7 @@ class ClienteDao implements InterfaceCrud {
     
     public function traerTodos(){
     	$select = $this->tableGateway->getSql ()->select ();
+    	$select->join ( 'usuario', 'usuario.usu_id  = cliente.usu_id' );
     	$resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;
     }
@@ -30,7 +32,7 @@ class ClienteDao implements InterfaceCrud {
     	$row =  $resultSet->current();
     	
     	if(!$row){
-    		throw new \Exception('No se encontro el ID de la ciudad');
+    		throw new \Exception('No se encontro el ID del cliente');
     	}
     	
     	return $row;
@@ -41,13 +43,9 @@ class ClienteDao implements InterfaceCrud {
     	$id = (int) $cliente->getCli_id();
     
     	$data = array(
-			'cli_nombre' => $cliente->getCli_nombre(),
-            'cli_apellido' => $cliente->getCli_apellido(),
-			'cli_email' => $cliente->getCli_email(),
-			'cli_passw' => $cliente->getCli_passw(),
-			'cli_saldo' => $cliente->getCli_saldo(),
-			'cli_estado' => $cliente->getCli_estado(),
-            'cli_user' => $cliente->getCli_user()
+			'usu_id' => $cliente->getUsu_id(),
+            'cli_saldo' => $cliente->getCli_saldo(),
+			'cli_foto' => $cliente->getCli_foto(),
     	);
     	
     	$data ['cli_id'] = $id;
@@ -68,15 +66,15 @@ class ClienteDao implements InterfaceCrud {
         return $id;
     }
     
-    public function verificar(Cliente $cliente){    
+    public function verificar(Usuario $usuario){    
 
             $sql = new Sql($this->tableGateway->getAdapter());
             $select = $sql->select();
-            $select->from('cliente');
+            $select->from('usuario');
             $select->where            
-                    ->equalTo('cli_email',$cliente->getCli_email())
+                    ->equalTo('usu_email',$usuario->getUsu_email())
                     ->or
-                    ->equalTo('cli_user',$cliente->getCli_user());
+                    ->equalTo('usu_usuario',$usuario->getUsu_usuario());
             
             $statement = $sql->prepareStatementForSqlObject($select);
             $results = $statement->execute();
@@ -97,7 +95,7 @@ class ClienteDao implements InterfaceCrud {
 
     public function buscarPorEmail($email,$passw){
 
-        $resultSet = $this->tableGateway->select(array('cli_email' => $email, 'cli_passw'=>$passw));
+        $resultSet = $this->tableGateway->select(array('usu_email' => $email, 'usu_clave'=>$passw));
         $row =  $resultSet->current();
         
         
@@ -108,12 +106,12 @@ class ClienteDao implements InterfaceCrud {
         
         $sql = new Sql($this->tableGateway->getAdapter());
         $select = $sql->select();
-        $select->from('cliente');
-        $select->where->like('cli_email', $email);
+        $select->from('usuario');
+        $select->where->like('usu_email', $email);
         $select->where->or;
-        $select->where->like('cli_user', $email);
+        $select->where->like('usu_usuario', $email);
         if(!is_null($passw)){
-            $select->where(array('cli_passw'=>$passw));
+            $select->where(array('usu_clave'=>$passw));
         }
         $statement = $sql->prepareStatementForSqlObject($select);
         $results = $statement->execute();

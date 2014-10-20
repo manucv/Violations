@@ -13,8 +13,26 @@ use Zend\Mvc\Controller\AbstractActionController;
 
 class ComprasController extends AbstractActionController
 {
+    
+    private $transaccionDao;
+    
     public function indexAction()
     {
         return array();
+    }
+    
+    public function transaccionAction(){
+        return array(
+            'transaccion' => $this->getTransaccionDao()->traerTodos()
+        );
+    }
+    
+    public function getTransaccionDao()
+    {
+        if (! $this->transaccionDao) {
+            $sm = $this->getServiceLocator();
+            $this->transaccionDao = $sm->get('Application\Model\Dao\TransaccionDao');
+        }
+        return $this->transaccionDao;
     }
 }

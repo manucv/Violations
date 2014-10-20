@@ -44,6 +44,7 @@ class UsuarioDao implements InterfaceCrud {
     			'usu_apellido' => $usuario->getUsu_apellido (),
     			'usu_clave' => $usuario->getUsu_clave (),
     			'usu_estado' => $usuario->getUsu_estado (),
+    	        'usu_fecha_registro' => date('Y-m-d H:i:s'),
     	);
     
     	$data ['usu_id'] = $id;

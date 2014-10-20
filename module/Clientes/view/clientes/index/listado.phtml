@@ -4,26 +4,46 @@
  <table class="table table-striped table-hover" style="font-size: 12px;" >
  <thead>
  <tr>
- 	 <th>&nbsp;</th>
- 	 <th>Estado</th>
-     <th>Nombre Espa&ntilde;ol</th>
-     <th>Nombre Ingl&eacute;s</th>
-     <th>C&oacute;digo de Tel&eacute;fono</th>
+ 	<!--  <th>&nbsp;</th>  -->
+ 	 <th>Nombre</th>
+ 	 <th>Apellido</th>
+     <th>Email</th>
+     <th>Usuario</th>
+     <th>Saldo</th>
+     <th>Estado</th>
+     <th>Fecha Registro</th>
  </tr>
  </thead>
  <tbody>
  <?php 
- foreach ($this->ciudad as $vehiculos) : ?>
+ $suma = 0;
+ foreach ($this->cliente as $cliente) : ?>
  <tr>
+    <!-- 
  	 <td width="7%" style=" background-color: #fff;">
- 	 	<a class="btn btn-success" href="<?php echo $this->url('parametros', array('controller' => 'ciudad', 'action' => 'editar', 'id' => $vehiculos->getCiu_id()))?>"><i class="fa fa-pencil"></i></a>
- 	 	<a class="btn btn-danger" href="<?php echo $this->url('parametros', array('controller' => 'ciudad', 'action' => 'eliminar', 'id' => $vehiculos->getCiu_id()))?>" onclick="return eliminarRegistro('<?php echo $vehiculos->getCiu_nombre_es()?>');"><i class="fa fa-trash-o"></i></a>
+ 	 	<a class="btn btn-success" href="<?php //echo $this->url('parametros', array('controller' => 'ciudad', 'action' => 'editar', 'id' => $cliente->getCiu_id()))?>"><i class="fa fa-pencil"></i></a>
  	 </td>
-     <td><?php echo $this->escapeHtml($vehiculos->getEst_nombre_es());?></td>
-     <td><?php echo $this->escapeHtml($vehiculos->getCiu_nombre_es());?></td>
-     <td><?php echo $this->escapeHtml($vehiculos->getCiu_nombre_en());?></td>
-     <td><?php echo $this->escapeHtml($vehiculos->getCiu_codigo_telefono());?></td>
+ 	 -->
+     <td><?php echo $this->escapeHtml($cliente->getUsu_nombre());?></td>
+     <td><?php echo $this->escapeHtml($cliente->getUsu_apellido());?></td>
+     <td><?php echo $this->escapeHtml($cliente->getUsu_email());?></td>
+     <td><?php echo $this->escapeHtml($cliente->getUsu_usuario());?></td>
+     <td><?php echo '$ ' . $this->escapeHtml($cliente->getCli_saldo());?></td>
+     <td><?php echo $cliente->getUsu_estado() == 'A' ? 'Activo' : 'Inactivo'; ?></td>
+     <td><?php echo $this->escapeHtml($cliente->getUsu_fecha_registro());?></td>
  </tr>
+ 
+ <?php $suma += $cliente->getCli_saldo(); ?>
+ 
  <?php endforeach; ?>
+ <tr>
+    <td >&nbsp;</td>
+    <td style="border-left: 1px solid #ffffff;">&nbsp;</td>
+    <td style="border-left: 1px solid #ffffff;">&nbsp;</td>
+    <td style="font-size: 14px;"><b>Saldo Total: </b></td>
+    <td style="font-size: 14px;"><b><?php echo '$ ' . $suma;?></b></td>
+    <td style="border-left: 1px solid #ffffff;">&nbsp;</td>
+    <td style="border-left: 1px solid #ffffff;">&nbsp;</td>
+ </tr>
  </tbody>
  </table>
