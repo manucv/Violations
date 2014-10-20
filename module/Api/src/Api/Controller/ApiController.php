@@ -620,7 +620,7 @@ class ApiController extends AbstractActionController
 
     public function recover_passwordAction()
     {
-        echo 'here';
+        
         /*if($this->getRequest()->isPOST()){
 
             $data = $this->request->getPost ();
