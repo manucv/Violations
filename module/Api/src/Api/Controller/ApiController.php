@@ -195,10 +195,43 @@ class ApiController extends AbstractActionController
                 $response->setContent($content);
                 return $response;
             }else{
-                return $this->redirect ()->toRoute ( 'parametros', array (
-                    'controller' => 'index',
-                    'action' => 'index'
-                ));
+
+                $par_id =  $this->getRequest()->getQuery('par_id');
+                $aut_placa =  $this->getRequest()->getQuery('aut_placa');
+                $log_par_horas_parqueo =  $this->getRequest()->getQuery('log_par_horas_parqueo');
+
+                $est_id=1;
+
+                $precioHora=0.8;
+                $horas=$log_par_horas_parqueo;
+                $total=$precioHora*$horas;
+
+                $data=array();
+                $data['aut_placa'] = $aut_placa;
+
+                if(!$this->getAutomovilDao()->traer($aut_placa)){
+                    $automovil = new AutomovilEntity();
+                    $automovil->exchangeArray ( $data );
+                    $aut_placa = $this->getAutomovilDao()->guardar ( $automovil );
+                }
+
+                $data['log_par_fecha_ingreso'] = date('Y-m-d H:i:s');
+                $data['log_par_estado'] = 'O';
+                $data['log_par_horas_parqueo'] = $log_par_horas_parqueo;
+                $data['par_id'] = $par_id;
+                $data['tra_id'] = 0;
+
+                $log_parqueadero = new LogParqueaderoEntity();
+                $log_parqueadero->exchangeArray ( $data );
+                $log_par_id = $this->getLogParqueaderoDao()->guardar( $log_parqueadero );
+
+                $content=json_encode(true);
+
+                $response=$this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                return $response;
+
             }
         }else{
             return $this->redirect ()->toRoute ( 'parametros', array (
@@ -587,7 +620,7 @@ class ApiController extends AbstractActionController
 
     public function recover_passwordAction()
     {
-        echo 'here';
+        
         /*if($this->getRequest()->isPOST()){
 
             $data = $this->request->getPost ();
@@ -617,7 +650,7 @@ class ApiController extends AbstractActionController
                     'action' => 'index'
             ) );
         }*/
-    } 
+    }      
 
     public function getClienteDao() {
         if (! $this->clienteDao) {
