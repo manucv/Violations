@@ -35,7 +35,6 @@ class AclListener implements ListenerAggregateInterface{
         }
     }
     
-
     public function onDispatch(MvcEvent $e){
     	
     		//session_unset();
@@ -70,14 +69,28 @@ class AclListener implements ListenerAggregateInterface{
     		$results = $statement->execute();
     		 
     		foreach($results as $resource){
-    			$acl->addResource(new Resource($resource['apl_descripcion']));
+    		   
+    		    $recurso = array();
+    		    $recurso = explode(':', $resource['apl_descripcion']);
+    		    
+    			//$acl->addResource(new Resource($resource['apl_descripcion']));
+    		    if(empty($recurso[2]) || is_null($recurso[2])){
+    		      $acl->addResource(new Resource($recurso[0] . ':' . $recurso[1]));
+    		    }
     		}
     		
     		foreach($permissionsArray as $rol_id=>$permission){
     			$acl->addRole(new Role($rol_id));
+    			$recurso = array();
     			foreach($permission as $apl_id=>$resource){
-    				$acl->allow($rol_id, $resource);
-    				$this->permisosArray[$rol_id][]=$resource;
+    			    $recurso = explode(':', $resource);
+    			    if(empty($recurso[2]) || is_null($recurso[2])){
+    			        //$acl->deny(null, $recurso[0] . ':' . $recurso[1]);
+    			        //$this->permisosArray[$rol_id][]=$resource;
+    			    }else{
+    			        $acl->allow($rol_id, $recurso[0] . ':' . $recurso[1], array($recurso[2]));
+    			        $this->permisosArray[$rol_id][]=$resource;
+    			    }
     			}
     		}
     		

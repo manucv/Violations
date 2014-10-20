@@ -19,13 +19,6 @@ class TipoInfraccionController extends AbstractActionController
 {
 	protected $tipoInfraccionDao;
 	
-	public function indexAction(){
-		return $this->redirect ()->toRoute ( 'parametros', array (
-				'controller' => 'tipoinfraccion',
-				'action' => 'listado'
-		) );
-	}
-	
     public function listadoAction()
     {
         return array('infraccion' => $this->getTipoInfraccionDao()->traerTodos());

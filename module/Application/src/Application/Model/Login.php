@@ -15,6 +15,7 @@ class Login {
 
     private $auth;
     private $authAdapter;
+    private $dbAdapter;
 
     const NOT_IDENTITY = 'notIdentity';
     const INVALID_CREDENTIAL = 'invalidCredential';
@@ -36,19 +37,29 @@ class Login {
     );
 
     public function __construct($dbAdapter) {
-        $this->authAdapter = new AuthAdapter($dbAdapter,
-                        'usuario',
-                        'usu_usuario',
-                        'usu_clave');
-
-        $select = $this->authAdapter->getDbSelect();
-        //$select->where('usu_estado = 1');
-        
+        $this->dbAdapter = $dbAdapter;
         $this->auth = new AuthenticationService();
-        
     }
 
     public function login($username, $password) {
+        
+        $identity = null;
+         
+        if(filter_var($username, FILTER_VALIDATE_EMAIL)){
+            $identity= 'usu_email';
+        }else{
+            $identity = 'usu_usuario';
+        }
+        
+        $this->authAdapter = new AuthAdapter($this->dbAdapter,
+            'usuario',
+            $identity,
+            'usu_clave');
+        
+        $select = $this->authAdapter->getDbSelect();
+        //$select->where('usu_estado = 1');
+        
+        
         if (!empty($username) && !empty($password)) {
 
             $this->authAdapter->setIdentity($username);

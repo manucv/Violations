@@ -20,13 +20,6 @@ class ParqueaderoController extends AbstractActionController
 	protected $parqueaderoDao;
 	protected $sectorDao;
 	
-	public function indexAction(){
-		return $this->redirect ()->toRoute ( 'parametros', array (
-				'controller' => 'parqueadero',
-				'action' => 'listado'
-		) );
-	}
-	
     public function listadoAction()
     {
         return array('parqueadero' => $this->getParqueaderoDao()->traerTodos());

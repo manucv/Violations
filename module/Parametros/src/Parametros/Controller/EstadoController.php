@@ -20,10 +20,6 @@ class EstadoController extends AbstractActionController
 	protected $estadoDao;
 	protected $paisDao;
 	
-	public function indexAction(){
-		return $this->redirect()->toRoute('parametros', array('controller' => 'estado', 'action' => 'listado'));
-	}
-	
     public function listadoAction()
     {
         return array('estado' => $this->getEstadoDao()->traerTodos());

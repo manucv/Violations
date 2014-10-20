@@ -15,13 +15,6 @@ class AplicacionesController extends AbstractActionController
 {
 	protected $aplicacionDao;
 	
-	public function indexAction(){
-		return $this->redirect ()->toRoute ( 'usuarios', array (
-				'controller' => 'aplicaciones',
-				'action' => 'listado' 
-		) );
-	}
-	
     public function listadoAction()
     {
         return array('aplicaciones' => $this->getAplicacionDao()->traerTodos());

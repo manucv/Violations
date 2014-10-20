@@ -15,13 +15,6 @@ class RolesController extends AbstractActionController {
 	protected $aplicacionDao;
 	protected $rolAplicacionDao;
 	
-	public function indexAction() {
-		return $this->redirect ()->toRoute ( 'usuarios', array (
-				'controller' => 'roles',
-				'action' => 'listado' 
-		) );
-	}
-	
 	public function listadoAction() {
 		return new ViewModel ( array (
 				'roles' => $this->getRolDao ()->traerTodos () 
