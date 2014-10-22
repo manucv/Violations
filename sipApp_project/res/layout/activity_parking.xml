@@ -10,105 +10,109 @@
     <TextView
         android:id="@+id/TxtSaldoParking"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_weight="1"
         android:padding="5dp"
         android:text="$0.00"
         android:textColor="@android:color/white"
         android:textSize="26sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/LblOcupados"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
-        android:paddingLeft="20dp"
-        android:text="Parqueaderos Ocupados"
-        android:textColor="@android:color/white" 
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/LblLibres"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
-        android:paddingLeft="20dp"
-        android:text="Parqueaderos Libres"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp" >
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Tiempo:"
-            android:textColor="@android:color/white" />
-
-        <Spinner
-            android:id="@+id/SpnLog_par_horas_parqueo"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:background="#ffffff"
-            android:entries="@array/tiempo_parqueadero" />
-    </LinearLayout>
-
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="No. Placa:"
-            android:textColor="@android:color/white" />
-
-        <EditText
-            android:id="@+id/TxtAut_placa"
-            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_height="36dp"
-            android:background="#ffffff" >
+            android:padding="5dp" >
 
-            <requestFocus />
-        </EditText>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/LblSMS"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Disponible:"
+                android:textColor="@android:color/white" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+            <EditText
+                android:id="@+id/TxtPar_id"
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:padding="5dip"
+			    android:background="@drawable/rounded_corner"      
+			    android:lines="1"
+       	 		android:maxLines="1"
+       			android:singleLine="true"	
+       			>
+       			<requestFocus /> 
+      		</EditText>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/LblSMS"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Disponible:"
-            android:textColor="@android:color/white" />
-
-        <Spinner
-            android:id="@+id/SpnPar_id"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:background="#ffffff" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="No. Placa:"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:id="@+id/TxtAut_placa"
+         		android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			    android:padding="5dip"
+                android:lines="1"
+       	 		android:maxLines="1"
+       			android:singleLine="true"
+       			android:background="@drawable/rounded_corner">
+
+                
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Tiempo:"
+                android:textColor="@android:color/white" />
+
+            <Spinner
+                android:id="@+id/SpnLog_par_horas_parqueo"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:entries="@array/tiempo_parqueadero"
+                android:background="@drawable/rounded_corner" />
+        </LinearLayout>
+
+        <fragment
+            android:id="@+id/mapParking"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1.70" />
+
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:gravity="right" >
 
         <ImageView
@@ -129,7 +133,8 @@
             android:scaleType="centerInside"
             android:text="0.00 Ctvos"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="20sp"
+             android:textStyle="bold" />
     </RelativeLayout>
 
     <Button
@@ -139,7 +144,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/btn_pagar"
         android:height="@dimen/default_gap"
-        android:paddingTop="20dp"
+        android:layout_marginTop="20dp"
         android:textColor="#ffffff" />
 
 </LinearLayout>

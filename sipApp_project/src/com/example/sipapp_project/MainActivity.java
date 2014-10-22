@@ -1,8 +1,8 @@
 package com.example.sipapp_project;
 
 import android.support.v7.app.ActionBarActivity;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -37,6 +37,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
 	private ProgressBar progressBar;
+	private boolean doubleBackToExitPressedOnce=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,7 +73,6 @@ public class MainActivity extends ActionBarActivity {
 	            	TareaWSLogin tarea = new TareaWSLogin();
 					tarea.execute(txtEmail.getText().toString(),txtPassword.getText().toString() );
             	}
-
             }
        });
         
@@ -87,24 +87,26 @@ public class MainActivity extends ActionBarActivity {
        lblSMS.setOnClickListener(new OnClickListener() {
            @Override
            public void onClick(View v) {
-        	   Intent sendIntent = new Intent(Intent.ACTION_VIEW);         
+        	   /*Intent sendIntent = new Intent(Intent.ACTION_VIEW);         
         	   sendIntent.setData(Uri.parse("sms:"));
         	   sendIntent.setType("vnd.android-dir/mms-sms"); 
-        	   sendIntent.putExtra("address", "0995867216");
+        	   sendIntent.putExtra("address", "20500");
         	   sendIntent.putExtra("sms_body", "PARQUEO"); 
-        	   startActivity(sendIntent);
-           }
-      });    
-       
-       lblRecover.setOnClickListener(new OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Intent intent = new Intent(MainActivity.this, RecoverActivity.class);
+        	   startActivity(sendIntent);*/
+               Intent intent = new Intent(MainActivity.this, SMSActivity.class);
+               intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                startActivity(intent);
            }
       });    
        
-
+      lblRecover.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(MainActivity.this, RecoverActivity.class);
+               intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+               startActivity(intent);
+           }
+      });    
 	}
 
 
@@ -131,8 +133,7 @@ public class MainActivity extends ActionBarActivity {
 			URI uri = null;
 			try {
 				uri = new URI( url + "?" + URLEncodedUtils.format( paramsArray, "utf-8" ));
-				HttpGet del = 
-						new HttpGet(uri);
+				HttpGet del = new HttpGet(uri);
 				Log.v("query",uri.toString());
 				del.setHeader("content-type", "application/json");
 				
@@ -145,9 +146,8 @@ public class MainActivity extends ActionBarActivity {
 		        		JSONObject respJSON = new JSONObject(respStr); 
 			        	if(respStr.length() > 0){
 			                 //Creamos el Intent
-			                 Intent intent =
-			                         new Intent(MainActivity.this, WelcomeActivity.class);
-	
+			                 Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+			                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			                 //Creamos la informaci—n a pasar entre actividades
 			                 Bundle b = new Bundle();
 			                 b.putString("ID", respJSON.getString("cli_id"));
@@ -165,20 +165,16 @@ public class MainActivity extends ActionBarActivity {
 		        	}else{
 		        		return false;
 		        	}
-		        	
 		        }
 		        catch(Exception ex)
 		        {
 		        	Log.e("ServicioRest","Error!", ex);
 		        	resul = false;
 		        }
-				
-				
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	 
 	        return resul;
 			//return true;
 	    }
@@ -203,8 +199,25 @@ public class MainActivity extends ActionBarActivity {
 	}
 	
 	@Override
-	public void onBackPressed()
-	{
-        //finish();
-	}
+	public void onBackPressed() {
+	    if (doubleBackToExitPressedOnce) {
+	        super.onBackPressed();
+	        finish();
+	        return;
+	    }
+
+	    this.doubleBackToExitPressedOnce = true;
+	    Toast.makeText(this, "Presiona ATRAS nuevamente para salir de la aplicaci—n", Toast.LENGTH_SHORT).show();
+	    
+	    new Handler().postDelayed(new Runnable() {
+	    	
+	        @Override
+	        public void run() {
+	            doubleBackToExitPressedOnce=false;                       
+	        }
+	    }, 2000);
+	} 
+	
+
+
 }

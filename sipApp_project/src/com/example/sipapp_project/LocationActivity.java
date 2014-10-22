@@ -16,7 +16,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -36,18 +35,17 @@ import android.widget.Spinner;
 
 
 
-public class LocationActivity extends Activity {
+public class LocationActivity extends ParqueaderoActivity {
 	
 	//private Spinner pai_id;
 	private Spinner est_id;
 	private Spinner ciu_id;
 	private Spinner sec_id;
 
-	
-	private String[] idSectores;
-	
 	private String cli_id;
 	private String saldo;
+	
+	private String[] idSectores;
 	
 	private ProgressBar loadingLocation;
 	private Button btnVerEpacios;
@@ -57,7 +55,6 @@ public class LocationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
         
-        //pai_id = (Spinner) findViewById(R.id.pai_id);
         est_id = (Spinner) findViewById(R.id.est_id);
         ciu_id = (Spinner) findViewById(R.id.ciu_id);
         sec_id = (Spinner) findViewById(R.id.sec_id);
@@ -65,24 +62,15 @@ public class LocationActivity extends Activity {
         
         loadingLocation = (ProgressBar)findViewById(R.id.LoadingLocation);
         
-        
-        //TareaWSListarPaises tarea = new TareaWSListarPaises();
-		//tarea.execute();
-        
 		TareaWSListarEstados tareaEst = new TareaWSListarEstados();
 		tareaEst.execute("63");  
 		
-		
 		btnVerEpacios = (Button)findViewById(R.id.BtnVerEpacios);
         
-        
-        //Recuperamos la informaci—n pasada en el intent
-        Bundle bundle = this.getIntent().getExtras();
-        
-        //Construimos el mensaje a mostrar
-        cli_id=bundle.getString("ID");		
-        saldo=bundle.getString("SALDO");
-        
+		
+		cli_id=super.getCli_id();
+		saldo=super.getSaldo();
+		
         txtSaldo.setText("$"+Float.parseFloat(saldo));
 		
 		btnVerEpacios.setOnClickListener(new OnClickListener() {
@@ -106,88 +94,6 @@ public class LocationActivity extends Activity {
        });
 
    }
-		
-	
-	/*private class TareaWSListarPaises extends AsyncTask<String,Integer,Boolean> {
-		private String[] paises;
-		private String[] idPaises;
-		 
-	    @Override
-		protected Boolean doInBackground(String... params) {
-	    	
-	    	boolean resul = true;
-	    	
-	    	HttpClient httpClient = new DefaultHttpClient();
-			
-			HttpGet del = 
-					new HttpGet("http://www.hawasolutions.com/Violations/public/api/api/paises");
-			
-			del.setHeader("content-type", "application/json");
-			
-			try
-	        {			
-	        	HttpResponse resp = httpClient.execute(del);
-	        	String respStr = EntityUtils.toString(resp.getEntity());
-	        	Log.v("result",respStr);
-	        	JSONArray respJSON = new JSONArray(respStr);
-	        	
-	        	paises = new String[respJSON.length()];
-	        	idPaises = new String[respJSON.length()];
-	        			
-	        	for(int i=0; i<respJSON.length(); i++)
-	        	{
-	        		JSONObject obj = respJSON.getJSONObject(i);
-		        	String pai_nombre = obj.getString("pai_nombre_es").toUpperCase();
-		        	String pai_id = obj.getString("pai_id");
-		        	
-		        	paises[i] = pai_nombre;
-		        	idPaises[i] = pai_id;
-	        	}
-	        }
-	        catch(Exception ex)
-	        {
-	        	Log.e("ServicioRest","Error!", ex);
-	        	resul = false;
-	        }
-	 
-	        return resul;
-	    }
-	    
-	    @Override
-		protected void onPostExecute(Boolean result) {
-	    	
-	    	if (result)
-	    	{
-		    	//Rellenamos la lista con los nombres de los clientes
-	    		//Rellenamos la lista con los resultados
-	        	ArrayAdapter<String> adaptador =
-	        		    new ArrayAdapter<String>(LocationActivity.this,
-	        		        android.R.layout.simple_spinner_dropdown_item, paises);
-	        		 
-	        	pai_id.setAdapter(adaptador);
-	        	pai_id.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-					@Override
-					public void onItemSelected(AdapterView<?> parent,
-							View view, int position, long id) {
-						// TODO Auto-generated method stub
-						
-						TareaWSListarEstados tareaEst = new TareaWSListarEstados();
-						tareaEst.execute(idPaises[position]);   
-						
-						
-					}
-
-					@Override
-					public void onNothingSelected(AdapterView<?> parent) {
-						// TODO Auto-generated method stub
-						
-					}
-
-	        	});
-	    	}
-	    }
-	}*/
 	
 	private class TareaWSListarEstados extends AsyncTask<String,Integer,Boolean> {
 		private String[] estados;
@@ -492,5 +398,6 @@ public class LocationActivity extends Activity {
 	        	});
 	    	}
 	    }
-	}	
+	}
+
 }

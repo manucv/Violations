@@ -46,7 +46,7 @@ public class WelcomeActivity extends Activity {
             public void onClick(View v) {
             	Log.v("click","click en categorias");
                 //Intent intent = new Intent(WelcomeActivity.this,LocationActivity.class);
-                Intent intent = new Intent(WelcomeActivity.this,LocationActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this,ParkingActivity.class);
                 Bundle b = new Bundle();
                 b.putString("ID", cli_id);
                 b.putString("SALDO", saldo);
@@ -80,10 +80,11 @@ public class WelcomeActivity extends Activity {
             public void onClick(View v) {
             	Log.v("click","click en mi cuenta");
                 Intent intent =
-                        new Intent(WelcomeActivity.this,BuyActivity.class);
+                        new Intent(WelcomeActivity.this,MethodActivity.class);
                 
                 Bundle b = new Bundle();
                 b.putString("ID", cli_id);
+                b.putString("SALDO", saldo);
                 
                 intent.putExtras(b);                
                 
@@ -144,6 +145,7 @@ public class WelcomeActivity extends Activity {
             public void onClick(View v) {
             	
                 Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);		            	
                 
                 finish();
