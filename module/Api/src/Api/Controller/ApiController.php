@@ -15,6 +15,8 @@ use Application\Model\Entity\Cliente as ClienteEntity;
 
 class ApiController extends AbstractActionController
 {
+    
+    protected $usuarioDao;
     protected $clienteDao;
     protected $categoriaDao;
     protected $establecimientoDao;
@@ -43,10 +45,10 @@ class ApiController extends AbstractActionController
             $email =  $this->getRequest()->getQuery('email');
             $passw =  $this->getRequest()->getQuery('passw');
 
-            $cliente = $this->getClienteDao()->buscarPorEmailOUsuario($email,$passw);
+            $usuario = $this->getUsuarioDao()->buscarPorEmailOUsuario($email,$passw);
             $content='';
-            if(is_object($cliente)){
-                $content=json_encode($cliente->getArrayCopy());
+            if(is_array($usuario)){
+                $content=json_encode(json_decode(json_encode($usuario),FALSE));
             }else{
                 $content=json_encode(array());
             }
@@ -669,6 +671,14 @@ class ApiController extends AbstractActionController
             ) );
         }*/
     }      
+
+    public function getUsuarioDao() {
+        if (! $this->usuarioDao) {
+            $sm = $this->getServiceLocator ();
+            $this->usuarioDao = $sm->get ( 'Application\Model\Dao\UsuarioDao' );
+        }
+        return $this->usuarioDao;
+    }    
 
     public function getClienteDao() {
         if (! $this->clienteDao) {
