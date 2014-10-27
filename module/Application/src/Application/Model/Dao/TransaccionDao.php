@@ -18,7 +18,13 @@ class TransaccionDao implements InterfaceCrud {
     
     public function traerTodos(){
     	$select = $this->tableGateway->getSql ()->select ();
-    	$resultSet = $this->tableGateway->selectWith ( $select );
+        $select->join ( 'log_parqueadero', 'transaccion.tra_id  = log_parqueadero.tra_id' );
+        $select->join ( 'parqueadero', 'log_parqueadero.par_id  = parqueadero.par_id' );
+        $select->join ( 'sector', 'sector.sec_id  = parqueadero.sec_id' );
+        $select->join ( 'ciudad', 'sector.ciu_id  = ciudad.ciu_id' );
+        $select->join ( 'cliente', 'cliente.cli_id  = transaccion.cli_id' );
+        $select->join ( 'usuario', 'usuario.usu_id  = cliente.usu_id' );
+        $resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;
     }
 
@@ -169,8 +175,5 @@ class TransaccionDao implements InterfaceCrud {
 		} else {
 			throw new \Exception ( 'No se encontro el id para eliminar' );
 		}
-	}
-
-
-    
+	}   
 }

@@ -25,10 +25,14 @@ class ParqueaderosController extends AbstractActionController
 
     public function indexAction()
     {
+        $this->layout()->setVariable('activo', '8');
         $form = $this->getFormBusqueda ();
         $form->get('pai_id' )->setValueOptions ( $this->getPaisDao ()->traerTodosArreglo () );
         //$sectores=$this->getSectorDao ()->traerTodosJSON();
-        return array('formulario' => $form);//, 'sectores'=>$sectores);
+        return array(
+            'formulario' => $form,
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Buscar parqueaderos disponibles' => array('parqueaderos','parqueaderos','index')) ),
+        );//, 'sectores'=>$sectores);
     }
 
     public function ocupadosAction(){

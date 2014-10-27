@@ -15,9 +15,11 @@ class MenuController extends AbstractActionController {
 	protected $menuDao;
 	
 	public function indexAction() {
-		return new ViewModel ( array (
-				'menu' => $this->getMenuDao ()->traerTodos () 
-		) );
+	    $this->layout()->setVariable('activo', '6');
+		return array (
+				'menu' => $this->getMenuDao ()->traerTodos (),
+		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Men&uacute; de Opciones' => array('usuarios','menu','index')) ),
+		);
 	}
 	public function ingresarAction() {
 		$form = $this->getForm();

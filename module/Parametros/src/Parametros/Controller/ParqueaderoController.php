@@ -22,7 +22,11 @@ class ParqueaderoController extends AbstractActionController
 	
     public function listadoAction()
     {
-        return array('parqueadero' => $this->getParqueaderoDao()->traerTodos());
+        $this->layout()->setVariable('activo', '4');
+        return array(
+            'parqueadero' => $this->getParqueaderoDao()->traerTodos(),
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Parqueaderos' => array('parametros','parqueadero','listado')) ),
+        );
     }
     
     public function ingresarAction(){

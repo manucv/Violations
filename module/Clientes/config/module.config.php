@@ -3,6 +3,12 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Clientes\Controller\Index' => 'Clientes\Controller\IndexController',
+            'Clientes\Controller\Asignar' => 'Clientes\Controller\AsignarController',
+            'Clientes\Controller\Compras' => 'Clientes\Controller\ComprasController',
+            'Clientes\Controller\Recargas' => 'Clientes\Controller\RecargasController',
+            'Clientes\Controller\TransferenciasRealizadas' => 'Clientes\Controller\TransferenciasRealizadasController',
+            'Clientes\Controller\TransferenciasRecibidas' => 'Clientes\Controller\TransferenciasRecibidasController',
+            'Clientes\Controller\Perfil' => 'Clientes\Controller\PerfilController',
         ),
     ),
     'router' => array(

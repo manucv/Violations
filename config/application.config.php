@@ -8,7 +8,9 @@ return array(
     	'Infraccion',
     	'Parqueaderos',
         'Api',
+        'Reportes',
     	'Clientes',
+        
     ),
 
     // These are various options for the listeners attached to the ModuleManager

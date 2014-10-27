@@ -27,8 +27,10 @@ class SectorController extends AbstractActionController
 
     public function listadoAction()
     {
+        $this->layout()->setVariable('activo', '3');
         return array(
-            'sector' => $this->getSectorDao()->traerTodos()
+            'sector' => $this->getSectorDao()->traerTodos(),
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Sectores' => array('parametros','sector','listado')) ),
         );
     }
 

@@ -28,14 +28,15 @@ return array (
 		
 		'module_layouts' => array (
 				'Application' => 'layout/layout.phtml',
-				'Usuarios' => 'layout/layoutGeneral.phtml',
-				'Monitoreo' => 'layout/layoutGeneral.phtml',
-				'Parametros' => 'layout/layoutGeneral.phtml',
+				'Usuarios' => 'layout/layoutBootstrap.phtml',
+				'Monitoreo' => 'layout/layoutBootstrap.phtml',
+				'Parametros' => 'layout/layoutBootstrap.phtml',
 				'Vehiculo' => 'layout/layoutGeneral.phtml',
-				'Infraccion' => 'layout/layoutInfraccion.phtml',
-				'Parqueaderos' => 'layout/layoutGeneral.phtml',
+				'Infraccion' => 'layout/layoutBootstrap.phtml',
+				'Parqueaderos' => 'layout/layoutBootstrap.phtml',
 				'Api' => 'layout/layoutGeneral.phtml',
-				'Clientes' => 'layout/layoutGeneral.phtml',
+				'Clientes' => 'layout/layoutBootstrap.phtml',
+		        'Reportes' => 'layout/layoutBootstrap.phtml',
 		),
 		
 		'translator' => array (

@@ -21,8 +21,11 @@ class PaisController extends AbstractActionController
 
     public function listadoAction()
     {
+        $this->layout()->setVariable('activo', '1');
+        
         return array(
-            'pais' => $this->getPaisDao()->traerTodos()
+            'pais' => $this->getPaisDao()->traerTodos(),
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Paises' => array('parametros','pais','listado')) ),
         );
     }
 

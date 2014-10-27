@@ -22,7 +22,12 @@ class EstadoController extends AbstractActionController
 	
     public function listadoAction()
     {
-        return array('estado' => $this->getEstadoDao()->traerTodos());
+        
+        $this->layout()->setVariable('activo', '2');
+        return array(
+            'estado' => $this->getEstadoDao()->traerTodos(),
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Estados' => array('parametros','estado','listado')) ),
+        );
     }
     
     public function ingresarAction(){

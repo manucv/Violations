@@ -22,7 +22,11 @@ class CiudadController extends AbstractActionController
 	
     public function listadoAction()
     {
-        return array('ciudad' => $this->getCiudadDao()->traerTodos());
+        $this->layout()->setVariable('activo', '3');
+        return array(
+            'ciudad' => $this->getCiudadDao()->traerTodos(),
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Ciudades' => array('parametros','ciudad','listado')) ),
+        );
     }
     
     public function ingresarAction(){

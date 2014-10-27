@@ -21,7 +21,12 @@ class TipoInfraccionController extends AbstractActionController
 	
     public function listadoAction()
     {
-        return array('infraccion' => $this->getTipoInfraccionDao()->traerTodos());
+        $this->layout()->setVariable('activo', '5');
+        return array(
+            'infraccion' => $this->getTipoInfraccionDao()->traerTodos(),
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado Tipos de Infracci&oacute;n' => array('parametros','tipoinfraccion','listado')) ),
+        );
+        
     }
     
     public function ingresarAction(){

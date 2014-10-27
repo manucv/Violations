@@ -16,8 +16,13 @@ class Transaccion
 	private $log_par_horas_parqueo;
 	private $sec_valor_hora;
 	private $par_id;
+	private $usu_nombre;
+	private $usu_apellido;
+	private $aut_placa;
+	
 	
 	public function __construct(){}
+
 
 	/**
      * @return the $tra_id
@@ -108,6 +113,30 @@ class Transaccion
     }
 
 	/**
+     * @return the $usu_nombre
+     */
+    public function getUsu_nombre()
+    {
+        return $this->usu_nombre;
+    }
+
+	/**
+     * @return the $usu_apellido
+     */
+    public function getUsu_apellido()
+    {
+        return $this->usu_apellido;
+    }
+
+	/**
+     * @return the $aut_placa
+     */
+    public function getAut_placa()
+    {
+        return $this->aut_placa;
+    }
+
+	/**
      * @param Ambigous <NULL, unknown> $tra_id
      */
     public function setTra_id($tra_id)
@@ -195,6 +224,30 @@ class Transaccion
         $this->par_id = $par_id;
     }
 
+	/**
+     * @param Ambigous <NULL, unknown> $usu_nombre
+     */
+    public function setUsu_nombre($usu_nombre)
+    {
+        $this->usu_nombre = $usu_nombre;
+    }
+
+	/**
+     * @param Ambigous <NULL, unknown> $usu_apellido
+     */
+    public function setUsu_apellido($usu_apellido)
+    {
+        $this->usu_apellido = $usu_apellido;
+    }
+
+	/**
+     * @param Ambigous <NULL, unknown> $aut_placa
+     */
+    public function setAut_placa($aut_placa)
+    {
+        $this->aut_placa = $aut_placa;
+    }
+
 	public function exchangeArray($data)
 	{
 		$this->tra_id = (isset($data['tra_id'])) ? $data['tra_id'] : null;
@@ -209,6 +262,9 @@ class Transaccion
 		$this->log_par_horas_parqueo = (isset($data['log_par_horas_parqueo'])) ? $data['log_par_horas_parqueo'] : null;
 		$this->sec_valor_hora = (isset($data['sec_valor_hora'])) ? $data['sec_valor_hora'] : null;
 		$this->par_id = (isset($data['par_id'])) ? $data['par_id'] : null;
+		$this->usu_nombre = (isset($data['usu_nombre'])) ? $data['usu_nombre'] : null;
+		$this->usu_apellido = (isset($data['usu_apellido'])) ? $data['usu_apellido'] : null;
+		$this->aut_placa = (isset($data['aut_placa'])) ? $data['aut_placa'] : null;
 	}
 		
 	public function getArrayCopy(){

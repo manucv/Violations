@@ -21,9 +21,11 @@ class UsuariosController extends AbstractActionController {
 	
 	// protected $max_detalle_contacto=5;
 	public function indexAction() {
-		return new ViewModel ( array (
-				'usuarios' => $this->getUsuarioDao ()->traerTodos () 
-		) );
+	    $this->layout()->setVariable('activo', '6');
+		return array (
+			'usuarios' => $this->getUsuarioDao ()->traerTodos (),
+		    'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Usuarios' => array('usuarios','usuarios','index')) ),
+		) ;
 	}
 	public function addAction() {
 		$form = $this->getForm();

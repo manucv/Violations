@@ -16,9 +16,11 @@ class RolesController extends AbstractActionController {
 	protected $rolAplicacionDao;
 	
 	public function listadoAction() {
-		return new ViewModel ( array (
-				'roles' => $this->getRolDao ()->traerTodos () 
-		) );
+	    $this->layout()->setVariable('activo', '7');
+		return array (
+		      'roles' => $this->getRolDao ()->traerTodos (),
+		      'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Roles' => array('usuarios','roles','listado')) ),
+		);
 	}
 	
 	public function ingresarAction() {

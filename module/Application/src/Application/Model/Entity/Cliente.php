@@ -13,6 +13,14 @@ class Cliente
 
     private $cli_foto;
     
+    private $cli_cod_pais;
+    
+    private $cli_cod_ciudad;
+    
+    private $cli_direccion;
+    
+    private $cli_movil;
+    
     private $usu_usuario;
     
     private $usu_email;
@@ -20,6 +28,8 @@ class Cliente
     private $usu_nombre;
     
     private $usu_apellido;
+    
+    private $usu_clave;
     
     private $usu_estado;
     
@@ -60,6 +70,38 @@ class Cliente
     }
 
 	/**
+     * @return the $cli_cod_pais
+     */
+    public function getCli_cod_pais()
+    {
+        return $this->cli_cod_pais;
+    }
+
+	/**
+     * @return the $cli_cod_ciudad
+     */
+    public function getCli_cod_ciudad()
+    {
+        return $this->cli_cod_ciudad;
+    }
+
+	/**
+     * @return the $cli_direccion
+     */
+    public function getCli_direccion()
+    {
+        return $this->cli_direccion;
+    }
+
+	/**
+     * @return the $cli_movil
+     */
+    public function getCli_movil()
+    {
+        return $this->cli_movil;
+    }
+
+	/**
      * @return the $usu_usuario
      */
     public function getUsu_usuario()
@@ -89,6 +131,14 @@ class Cliente
     public function getUsu_apellido()
     {
         return $this->usu_apellido;
+    }
+
+	/**
+     * @return the $usu_clave
+     */
+    public function getUsu_clave()
+    {
+        return $this->usu_clave;
     }
 
 	/**
@@ -140,6 +190,38 @@ class Cliente
     }
 
 	/**
+     * @param Ambigous <NULL, unknown> $cli_cod_pais
+     */
+    public function setCli_cod_pais($cli_cod_pais)
+    {
+        $this->cli_cod_pais = $cli_cod_pais;
+    }
+
+	/**
+     * @param Ambigous <NULL, unknown> $cli_cod_ciudad
+     */
+    public function setCli_cod_ciudad($cli_cod_ciudad)
+    {
+        $this->cli_cod_ciudad = $cli_cod_ciudad;
+    }
+
+	/**
+     * @param Ambigous <NULL, unknown> $cli_direccion
+     */
+    public function setCli_direccion($cli_direccion)
+    {
+        $this->cli_direccion = $cli_direccion;
+    }
+
+	/**
+     * @param Ambigous <NULL, unknown> $cli_movil
+     */
+    public function setCli_movil($cli_movil)
+    {
+        $this->cli_movil = $cli_movil;
+    }
+
+	/**
      * @param Ambigous <NULL, unknown> $usu_usuario
      */
     public function setUsu_usuario($usu_usuario)
@@ -172,6 +254,14 @@ class Cliente
     }
 
 	/**
+     * @param Ambigous <NULL, unknown> $usu_clave
+     */
+    public function setUsu_clave($usu_clave)
+    {
+        $this->usu_clave = $usu_clave;
+    }
+
+	/**
      * @param Ambigous <NULL, unknown> $usu_estado
      */
     public function setUsu_estado($usu_estado)
@@ -193,11 +283,16 @@ class Cliente
         $this->usu_id = (isset($data['usu_id'])) ? $data['usu_id'] : null;
         $this->cli_saldo = (isset($data['cli_saldo'])) ? $data['cli_saldo'] : null;
         $this->cli_foto = (isset($data['cli_foto'])) ? $data['cli_foto'] : null;
+        $this->cli_cod_pais = (isset($data['cli_cod_pais'])) ? $data['cli_cod_pais'] : null;
+        $this->cli_cod_ciudad = (isset($data['cli_cod_ciudad'])) ? $data['cli_cod_ciudad'] : null;
+        $this->cli_direccion = (isset($data['cli_direccion'])) ? $data['cli_direccion'] : null;
+        $this->cli_movil = (isset($data['cli_movil'])) ? $data['cli_movil'] : null;
         
         $this->usu_usuario = (isset($data['usu_usuario'])) ? $data['usu_usuario'] : null;
         $this->usu_email = (isset($data['usu_email'])) ? $data['usu_email'] : null;
         $this->usu_nombre = (isset($data['usu_nombre'])) ? $data['usu_nombre'] : null;
         $this->usu_apellido = (isset($data['usu_apellido'])) ? $data['usu_apellido'] : null;
+        $this->usu_clave = (isset($data['usu_clave'])) ? $data['usu_clave'] : null;
         $this->usu_estado = (isset($data['usu_estado'])) ? $data['usu_estado'] : null;
         $this->usu_fecha_registro = (isset($data['usu_fecha_registro'])) ? $data['usu_fecha_registro'] : null;
     }

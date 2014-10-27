@@ -1,49 +1,118 @@
-<div class="titulo-ventana"><i class="fa fa-road fa-fw"></i> Parqueaderos - Buscar sectores registrados para parqueaderos</div>
-<hr class="hr-style" />
-<br />
-<?php
-	$form = $this->formulario;
-	$form->prepare ();
-	$form->setAttribute ( 'action', $this->url ( 'parqueaderos', array (
-			'controller' => 'parqueaderos',
-			'action' => 'validar' 
-	) ) )->setAttribute ( 'method', 'post' );
+<?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); ?>
 
-	$formLabel = $this->plugin ( 'formLabel' );
+<div class="row">
+    <div class="col-md-6" >
+        <div class="box">
+            <div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-gears fa-fw"></i>
+					<span>Seleccionar ubicaci&oacute;n</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content" style="min-height: 80px;">
+                <?php
+                	$form = $this->formulario;
+                	$form->prepare ();
+                	$form->setAttribute ( 'action', $this->url ( 'parqueaderos', array (
+                			'controller' => 'parqueaderos',
+                			'action' => 'validar' 
+                	) ) )->setAttribute ( 'method', 'post' );
+                
+                	$formLabel = $this->plugin ( 'formLabel' );
+                
+                	$ciu_id = $form->get ( 'ciu_id' );
+                	$pai_id = $form->get ( 'pai_id' );
+                	$est_id = $form->get ( 'est_id' );
+                
+                	echo $this->form ()->openTag ( $form );
+                ?>
+                <?php 
+                	echo $formLabel->openTag() . $pai_id->getLabel() . $formLabel->closeTag();
+                  	echo html_entity_decode( $this->formselect ( $pai_id ) );
+                  	echo html_entity_decode( $this->formelementerrors ( $pai_id ) ); 
+                ?>
+                <div><br /></div>
+                <?php 
+                	echo $formLabel->openTag() . $est_id->getLabel() . $formLabel->closeTag();
+                  	echo html_entity_decode( $this->formselect ( $est_id ) );
+                  	echo html_entity_decode( $this->formelementerrors ( $est_id ) ); 
+                ?>
+                <div><br /></div>
+                <?php 
+                	echo $formLabel->openTag() . $ciu_id->getLabel() . $formLabel->closeTag();
+                  	echo html_entity_decode( $this->formselect ( $ciu_id ) );
+                  	echo html_entity_decode( $this->formelementerrors ( $ciu_id ) ); 
+                ?>
+                <div><br /></div>
+			</div>
+        </div>
+    </div>
+    <div class="col-md-6" >
+        <div class="box">
+            <div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-gears fa-fw"></i>
+					<span>Parqueaderos disponibles</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content" style="min-height: 80px;">
+                <div style="width:100%;" >
+                	<div id="map-canvas" style="height:300px; width:100%; margin:0 auto;"></div>
+                </div>
+			</div>
+        </div>
+    </div>
+     
+</div>
 
-	$ciu_id = $form->get ( 'ciu_id' );
-	$pai_id = $form->get ( 'pai_id' );
-	$est_id = $form->get ( 'est_id' );
-
-	echo $this->form ()->openTag ( $form );
-?>
-<div style="width:30%; float:left;" >
-<?php 
-	echo $formLabel->openTag() . $pai_id->getLabel() . $formLabel->closeTag();
-  	echo html_entity_decode( $this->formselect ( $pai_id ) );
-  	echo html_entity_decode( $this->formelementerrors ( $pai_id ) ); 
-?>
-<?php 
-	echo $formLabel->openTag() . $est_id->getLabel() . $formLabel->closeTag();
-  	echo html_entity_decode( $this->formselect ( $est_id ) );
-  	echo html_entity_decode( $this->formelementerrors ( $est_id ) ); 
-?>
-<?php 
-	echo $formLabel->openTag() . $ciu_id->getLabel() . $formLabel->closeTag();
-  	echo html_entity_decode( $this->formselect ( $ciu_id ) );
-  	echo html_entity_decode( $this->formelementerrors ( $ciu_id ) ); 
-?>
+<div class="row" id="resultadosParqueo" style="display: none;">
+    <div class="col-md-12" >
+        <div class="box">
+            <div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-gears fa-fw"></i>
+					<span>Parqueaderos disponibles por sector</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content" style="min-height: 80px;">
+                <div style="clear:both" id="sectores" class="row" >
+                	
+                </div>
+           </div>
+       </div>
+   </div>
 </div>
-<div style="width:70%; float:left;" >
-	<div id="map-canvas" style="height:300px; width:90%; margin:0 auto;"></div>
-</div>
-<div style="clear:both" id="sectores" class="row" >
-	
-</div>
+     
 
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
-
 
 <script>
 	var map;
@@ -58,7 +127,7 @@
 	    var mapOptions = { zoom: 4, center: lugar };
 	    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 		
-		/*var markers=<?php echo $sectores; ?>;
+		/*var markers=<?php //echo $sectores; ?>;
 	     for (i = 0; i < markers.length; i++) {
 			var data = markers[i]
 			var myLatlng = new google.maps.LatLng(data.lat, data.lng);
@@ -70,7 +139,7 @@
 			(function(marker, data) {
 				// Attaching a click event to the current marker
 				google.maps.event.addListener(marker, "click", function(e) {
-					window.location.href="<?php echo $this->basepath(); ?>/parqueaderos/sector/index/"+data.id;
+					window.location.href="<?php //echo $this->basepath(); ?>/parqueaderos/sector/index/"+data.id;
 				});
 
 				var infowindow = new google.maps.InfoWindow({
@@ -242,6 +311,8 @@
 				   	    markers[i].setMap(null);
 				    }
 
+				    $('#resultadosParqueo').attr('style','display:true');
+
 		        	for(sector in sectores){ //foreach sectores
 		        		
 
@@ -368,5 +439,3 @@
 
 	});
 </script>
-
-

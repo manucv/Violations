@@ -15,6 +15,11 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+        return array('navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Dashboard' => array('parametros','index','index')) ));
+    }
+    
+    public function videoAction()
+    {
         return array();
     }
 }

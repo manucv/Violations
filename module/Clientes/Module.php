@@ -35,5 +35,4 @@ class Module implements AutoloaderProviderInterface
     }
 
     public function onBootstrap(MvcEvent $e){}
-    
 }

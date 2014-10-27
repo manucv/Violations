@@ -1,26 +1,48 @@
-<div class="titulo-ventana"><i class="fa fa-gears fa-fw"></i> Par&aacute;metros - Listado Tipos de Infracci&oacute;n</div>
-<hr class="hr-style" />
+ <?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); ?>
 
- <table class="table table-striped table-hover" style="font-size: 12px;" >
- <thead>
- <tr>
- 	 <th width="7%">
- 	 	<a href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action'=>'ingresar'));?>" class="btn btn-primary">
-     	<i class="fa fa-plus-circle"></i> Nuevo</a>
- 	 </th>
-     <th>Descripci&oacute;n</th>
- </tr>
- </thead>
- <tbody>
- <?php 
- foreach ($this->infraccion as $tipo_infraccion) : ?>
- <tr>
- 	 <td style=" background-color: #fff;">
- 	 	<a class="btn btn-success" href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'editar', 'id' => $tipo_infraccion->getTip_inf_id()))?>"><i class="fa fa-pencil"></i></a>
- 	 	<a class="btn btn-danger" href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'eliminar', 'id' => $tipo_infraccion->getTip_inf_id()))?>" onclick="return eliminarRegistro('<?php echo $tipo_infraccion->getTip_inf_descripcion() ?>');"><i class="fa fa-trash-o"></i></a>
- 	 </td>
- 	 <td><?php echo $this->escapeHtml($tipo_infraccion->getTip_inf_descripcion());?></td>
- </tr>
- <?php endforeach; ?>
- </tbody>
- </table>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-12" >
+        <div class="box">
+            <div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-gears fa-fw"></i>
+					<span>Listado Tipos de Infracci&oacute;n</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content" style="min-height: 80px;">
+                 <table class="table table-striped table-hover" style="font-size: 12px;" >
+                 <thead>
+                 <tr>
+                 	 <th width="7%">
+                 	 	<a href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action'=>'ingresar'));?>" class="btn btn-primary">
+                     	<i class="fa fa-plus-circle"></i> Nuevo</a>
+                 	 </th>
+                     <th>Descripci&oacute;n</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                 <?php 
+                 foreach ($this->infraccion as $tipo_infraccion) : ?>
+                 <tr>
+                 	 <td class="dataTableIcons">
+                 	 	<a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'editar', 'id' => $tipo_infraccion->getTip_inf_id()))?>"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;
+                 	 	<a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'eliminar', 'id' => $tipo_infraccion->getTip_inf_id()))?>" onclick="return eliminarRegistro('<?php echo $tipo_infraccion->getTip_inf_descripcion() ?>');"><i class="fa fa-trash-o"></i></a>
+                 	 </td>
+                 	 <td><?php echo $this->escapeHtml($tipo_infraccion->getTip_inf_descripcion());?></td>
+                 </tr>
+                 <?php endforeach; ?>
+                 </tbody>
+                 </table>
+			</div>
+        </div>
+    </div>
+</div>
