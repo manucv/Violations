@@ -17,7 +17,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -35,12 +34,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class RelatedActivity extends Activity {
+public class RelatedActivity extends ParqueaderoActivity {
 	private String cli_id;
 	private String saldo;
 	private ListView lstContacts;
 	private ProgressBar loadingContacts;
 	private EditText txtBuscar;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +49,8 @@ public class RelatedActivity extends Activity {
         loadingContacts = (ProgressBar)findViewById(R.id.LoadingContacts);
         lstContacts = (ListView)findViewById(R.id.LstContacts);
         
-        Bundle bundle = this.getIntent().getExtras();
-        cli_id=bundle.getString("ID");
-        saldo=bundle.getString("SALDO");
+        cli_id=super.getCli_id();
+        saldo=super.getSaldo();
         
         TextView txtSaldo = (TextView)findViewById(R.id.TxtSaldoContactos);
         txtSaldo.setText("$"+Float.parseFloat(saldo));

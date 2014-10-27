@@ -176,7 +176,7 @@ class ApiController extends AbstractActionController
                     $data['log_par_fecha_ingreso'] = date('Y-m-d H:i:s');
                     $data['log_par_estado'] = 'O';
                     $data['log_par_horas_parqueo'] = $log_par_horas_parqueo;
-                    $data['par_id'] = $par_id;
+                    $data['par_id'] = strtoupper($par_id);
                     $data['tra_id'] = $tra_id;
 
                     $log_parqueadero = new LogParqueaderoEntity();
@@ -218,7 +218,7 @@ class ApiController extends AbstractActionController
                 $data['log_par_fecha_ingreso'] = date('Y-m-d H:i:s');
                 $data['log_par_estado'] = 'O';
                 $data['log_par_horas_parqueo'] = $log_par_horas_parqueo;
-                $data['par_id'] = $par_id;
+                $data['par_id'] = strtoupper($par_id);
                 $data['tra_id'] = 0;
 
                 $log_parqueadero = new LogParqueaderoEntity();
@@ -323,46 +323,18 @@ class ApiController extends AbstractActionController
     }
 
     public function sectoresAction(){
-
         if($this->getRequest()->isGET()){        
-                $ciu_id = $this->request->getQuery('ciu_id');
-                if($ciu_id){
-                    $sectores = $this->getSectorDao()->traerTodos($ciu_id);
+            $ciu_id = $this->request->getQuery('ciu_id');
+            if($ciu_id){
+                $sectores = $this->getSectorDao()->traerTodos($ciu_id);
 
-                    $content='';
-                    $sectoresArray=array();
-                    foreach($sectores as $sector){
-                        $sectoresArray[]=$sector->getArrayCopy();
-                    }
-                    
-                    $content=json_encode($sectoresArray);
-
-                    $response = $this->getResponse();
-                    $response->setStatusCode(200);
-                    $response->setContent($content);
-                        
-                    return $response;    
-                }else{
-                    $content = $this->getSectorDao()->traerTodosJSON();
-
-                    $response = $this->getResponse();
-                    $response->setStatusCode(200);
-                    $response->setContent($content);
-                        
-                    return $response;  
-                }
-        }else{
-            return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
-        }
-    }
-
-    public function parqueaderosAction(){
-
-        if($this->getRequest()->isGET()){        
-            $sec_id = $this->request->getQuery('sec_id');
-            if($sec_id){
                 $content='';
-                $content = $this->getParqueaderoDao()->traerVaciosPorSectorJSON($sec_id);
+                $sectoresArray=array();
+                foreach($sectores as $sector){
+                    $sectoresArray[]=$sector->getArrayCopy();
+                }
+                
+                $content=json_encode($sectoresArray);
 
                 $response = $this->getResponse();
                 $response->setStatusCode(200);
@@ -370,11 +342,57 @@ class ApiController extends AbstractActionController
                     
                 return $response;    
             }else{
-                return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+                $content = $this->getSectorDao()->traerTodosJSON();
+
+                $response = $this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                    
+                return $response;  
             }
         }else{
             return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
-        }
+        }    
+    }
+
+    public function parqueaderosAction(){
+
+        if(is_null($this->params('id'))){
+            if($this->getRequest()->isGET()){        
+                $sec_id = $this->request->getQuery('sec_id');
+                if($sec_id){
+                    $content='';
+                    $content = $this->getParqueaderoDao()->traerVaciosPorSectorJSON($sec_id);
+
+                    $response = $this->getResponse();
+                    $response->setStatusCode(200);
+                    $response->setContent($content);
+                        
+                    return $response;    
+                }else{
+                    return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+                }
+            }else{
+                return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+            }
+        }else{
+            $par_id=$this->params('id');
+
+            $parqueaderos = $this->getParqueaderoDao()->traerJerarquia($par_id);
+
+            if($parqueaderos){
+                $content=json_encode($parqueaderos);            
+                $response = $this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                return $response;
+            }else{
+                $response = $this->getResponse();
+                $response->setStatusCode(404);
+                $response->setContent("");
+                return $response;
+            }
+        }    
     }    
 
     public function historialAction()

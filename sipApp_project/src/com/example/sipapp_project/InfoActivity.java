@@ -1,10 +1,9 @@
 package com.example.sipapp_project;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class InfoActivity extends Activity {
+public class InfoActivity extends ParqueaderoActivity {
 	private String cli_id;
 	private String saldo;
 	
@@ -12,11 +11,11 @@ public class InfoActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_info);
+		
+		cli_id=super.getCli_id();
+		saldo=super.getSaldo();
+		
 		TextView txtSaldoInfo = (TextView)findViewById(R.id.TxtSaldoInfo);
-
-		Bundle bundle = this.getIntent().getExtras();
-        saldo=bundle.getString("SALDO");
         txtSaldoInfo.setText("$" + Float.parseFloat(saldo));
-        cli_id=bundle.getString("ID");
 	}
 }

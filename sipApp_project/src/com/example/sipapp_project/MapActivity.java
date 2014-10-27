@@ -21,20 +21,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 
 
 
-public class MapActivity extends Activity implements LocationListener, OnMarkerClickListener{ //es necesario implementar un location listener para q funcione
+public class MapActivity extends ParqueaderoActivity implements LocationListener, OnMarkerClickListener{ //es necesario implementar un location listener para q funcione
 	
 	private GoogleMap map;
 	private HashMap<Marker,Integer> markers=new HashMap<Marker,Integer>();
@@ -46,11 +43,9 @@ public class MapActivity extends Activity implements LocationListener, OnMarkerC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         
-        Bundle bundle = this.getIntent().getExtras();
-        
         //Construimos el mensaje a mostrar
-        cli_id=bundle.getString("ID");		
-        saldo=bundle.getString("SALDO");
+        cli_id=super.getCli_id();		
+        saldo=super.getSaldo();
         
         
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext()); // Getting Google Play availability status
@@ -86,6 +81,7 @@ public class MapActivity extends Activity implements LocationListener, OnMarkerC
         
 	}
 
+	@Override
 	public void onLocationChanged(Location location) {
         
         double latitude = location.getLatitude(); 				// Getting latitude of the current location
@@ -171,12 +167,12 @@ public class MapActivity extends Activity implements LocationListener, OnMarkerC
         		
         		markers.put(marker,Integer.parseInt(idSectores[i]));
         		//TODO: la idea aqu’ es hacer un marker gris s’ es q no hay espacios
-        		
-        		
+
         	}
-	    }		
+	    }
 	}
 
+	@Override
 	public boolean onMarkerClick(Marker marker) {
 		// TODO Auto-generated method stub
 		
@@ -197,6 +193,5 @@ public class MapActivity extends Activity implements LocationListener, OnMarkerC
 	        startActivity(intent);*/			
 		}
 		return false;
-	}
-	
+	}	
 }

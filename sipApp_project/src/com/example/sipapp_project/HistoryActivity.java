@@ -16,7 +16,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -31,7 +30,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class HistoryActivity extends Activity {
+public class HistoryActivity extends ParqueaderoActivity {
 	private String cli_id;
 	private String saldo;
 	private ListView lstHistory;
@@ -59,9 +58,8 @@ public class HistoryActivity extends Activity {
         loadingTransferIn = (ProgressBar)findViewById(R.id.loadingTransferIn);
         lstTransferIn = (ListView)findViewById(R.id.LstTransferIn);
                 
-        Bundle bundle = this.getIntent().getExtras();
-        cli_id=bundle.getString("ID");
-        saldo=bundle.getString("SALDO");
+        cli_id=super.getCli_id();
+        saldo=super.getSaldo();
         
         TextView txtSaldo = (TextView)findViewById(R.id.TxtSaldoHistory);
         txtSaldo.setText("$"+Float.parseFloat(saldo));

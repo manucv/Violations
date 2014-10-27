@@ -24,19 +24,22 @@
         android:padding="5dp" >
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/TxtSMSParqueadero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5.80"
             android:ems="10"
             android:hint="Comentario"
+            android:gravity="top"
             android:inputType="textMultiLine"
             android:lines="7"
-            android:background="#ffffff" 
-            android:layout_margin="5dp" />
+            android:background="@drawable/rounded_corner" 
+            android:layout_margin="5dp" 
+            android:padding="5dp"
+            />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/BtnSMSEnviar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -51,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Contactate con nosotros al: 0995867216\nó a nuestro e-mail: info@sip.ec"
+            android:text="Contactate con nosotros a nuestro e-mail: info@sip.ec"
             android:textAlignment="gravity" />
 
     </LinearLayout>
