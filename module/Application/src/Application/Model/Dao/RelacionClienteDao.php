@@ -25,6 +25,7 @@ class RelacionClienteDao implements InterfaceCrud {
     public function traerTodosPorCliente($cli_id){
         $select = $this->tableGateway->getSql ()->select ();
         $select-> join ('cliente','relacion_cliente.cli_id_relacionado=cliente.cli_id');
+        $select-> join ('usuario','usuario.usu_id=cliente.usu_id');
         $select-> where ( array('relacion_cliente.cli_id'=>$cli_id) );
         $resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;

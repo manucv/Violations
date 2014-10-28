@@ -110,6 +110,7 @@ class ClienteDao implements InterfaceCrud {
         $sql = new Sql($this->tableGateway->getAdapter());
         $select = $sql->select();
         $select->from('usuario');
+        $select->join('cliente','usuario.usu_id  = cliente.usu_id');
         $select->where->like('usu_email', $email);
         $select->where->or;
         $select->where->like('usu_usuario', $email);
@@ -135,7 +136,16 @@ class ClienteDao implements InterfaceCrud {
                 $cliente->setCli_saldo($cliente->getCli_saldo()-$valor);
                 $data = $cliente->getArrayCopy();
 
-                $this->tableGateway->update ( $data, array ( 'cli_id' => $cliente->getCli_id() ) );
+                $data_cliente['cli_id']=$data['cli_id'];
+                $data_cliente['usu_id']=$data['usu_id'];
+                $data_cliente['cli_saldo']=$data['cli_saldo'];
+                $data_cliente['cli_foto']=$data['cli_foto'];
+                $data_cliente['cli_cod_pais']=$data['cli_cod_pais'];
+                $data_cliente['cli_cod_ciudad']=$data['cli_cod_ciudad'];
+                $data_cliente['cli_direccion']=$data['cli_direccion'];
+                $data_cliente['cli_movil']=$data['cli_movil'];
+
+                $this->tableGateway->update ( $data_cliente, array ( 'cli_id' => $cliente->getCli_id() ) );
                 return $cliente;
             }
         }
@@ -147,7 +157,16 @@ class ClienteDao implements InterfaceCrud {
                 $cliente->setCli_saldo($cliente->getCli_saldo()+$valor);
                 $data = $cliente->getArrayCopy();
 
-                $this->tableGateway->update ( $data, array ( 'cli_id' => $cliente->getCli_id() ) );
+                $data_cliente['cli_id']=$data['cli_id'];
+                $data_cliente['usu_id']=$data['usu_id'];
+                $data_cliente['cli_saldo']=$data['cli_saldo'];
+                $data_cliente['cli_foto']=$data['cli_foto'];
+                $data_cliente['cli_cod_pais']=$data['cli_cod_pais'];
+                $data_cliente['cli_cod_ciudad']=$data['cli_cod_ciudad'];
+                $data_cliente['cli_direccion']=$data['cli_direccion'];
+                $data_cliente['cli_movil']=$data['cli_movil'];
+
+                $this->tableGateway->update ( $data_cliente, array ( 'cli_id' => $cliente->getCli_id() ) );
                 return $cliente;
             }
         }

@@ -95,7 +95,8 @@ class RelacionCliente
 		$this->cli_id_relacionado = (isset($data['cli_id_relacionado'])) ? $data['cli_id_relacionado'] : null;
 		$this->rel_cli_hora = (isset($data['rel_cli_hora'])) ? $data['rel_cli_hora'] : null;
 		$this->rel_cli_tipo = (isset($data['rel_cli_tipo'])) ? $data['rel_cli_tipo'] : null;
-		$this->cli_nombre = (isset($data['cli_nombre'])) ? $data['cli_nombre'] : null;
+		$this->usu_nombre = (isset($data['usu_nombre'])) ? $data['usu_nombre'] : null;
+		$this->usu_apellido = (isset($data['usu_apellido'])) ? $data['usu_apellido'] : null;
 	}
 	
 	public function getArrayCopy(){

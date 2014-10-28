@@ -86,33 +86,5 @@ class UsuarioDao implements InterfaceCrud {
     	return $this->tableGateway->select(array('usu_usuario' => $usu_usuario, 'usu_clave' => md5($usu_clave)))->current();
     }
 
-    /* Funciones del API */
 
-    public function buscarPorEmailOUsuario($email,$passw=NULL){
-        
-        $sql = new Sql($this->tableGateway->getAdapter());
-        $select = $sql->select();
-        $select->from('usuario');
-        $select->join('cliente','usuario.usu_id  = cliente.usu_id');
-        $select->where->like('usu_email', $email);
-        $select->where->or;
-        $select->where->like('usu_usuario', $email);
-        if(!is_null($passw)){
-            $select->where(array('usu_clave'=>$passw));
-        }
-
-
-        $statement = $sql->prepareStatementForSqlObject($select);
-        $results = $statement->execute();
-
-        foreach ($results as $row) {
-            return $row;
-        }
-
-        return false;
-    }  
-
-
-
-    
 }

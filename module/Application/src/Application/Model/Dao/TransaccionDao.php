@@ -67,10 +67,8 @@ class TransaccionDao implements InterfaceCrud {
                 t.est_id as establecimiento_id,
                 cli_id,
                 tra_valor,
-                tra_tipo,
                 tra_saldo,
-                tra_descripcion,
-                tra_hora,
+                tra_fecha,
                 log_par_id,
                 log_par_fecha_ingreso,
                 log_par_horas_parqueo,
@@ -109,10 +107,8 @@ class TransaccionDao implements InterfaceCrud {
             $jsonArray[$count]['establecimiento_id']=$row['establecimiento_id'];
             $jsonArray[$count]['cli_id']=$row['cli_id'];
             $jsonArray[$count]['tra_valor']=$row['tra_valor'];
-            $jsonArray[$count]['tra_tipo']=$row['tra_tipo'];
             $jsonArray[$count]['tra_saldo']=$row['tra_saldo'];
-            $jsonArray[$count]['tra_descripcion']=$row['tra_descripcion'];
-            $jsonArray[$count]['tra_hora']=$row['tra_hora'];
+            $jsonArray[$count]['tra_fecha']=$row['tra_fecha'];
             $jsonArray[$count]['log_par_id']=$row['log_par_id'];
             $jsonArray[$count]['log_par_fecha_ingreso']=$row['log_par_fecha_ingreso'];
             $jsonArray[$count]['log_par_horas_parqueo']=$row['log_par_horas_parqueo'];
@@ -121,10 +117,10 @@ class TransaccionDao implements InterfaceCrud {
             $jsonArray[$count]['sec_id']=$row['sec_id'];
             $jsonArray[$count]['sec_nombre']=$row['sec_nombre'];
             $jsonArray[$count]['ciu_id']=$row['ciu_id'];
-            $jsonArray[$count]['est_id']=$row['est_id'];
+            $jsonArray[$count]['eta_id']=$row['eta_id'];
             $jsonArray[$count]['ciu_nombre']=$row['ciu_nombre'];
             $jsonArray[$count]['pai_id']=$row['pai_id'];
-            $jsonArray[$count]['est_nombre']=$row['est_nombre'];
+            $jsonArray[$count]['eta_nombre']=$row['eta_nombre'];
             $jsonArray[$count]['pai_nombre']=$row['pai_nombre'];
 
             $count++;
@@ -141,13 +137,11 @@ class TransaccionDao implements InterfaceCrud {
     	$id = (int) $transaccion->getTra_id();
     
     	$data = array(
-    		'est_id' => $transaccion->getEst_id(),
+    		'eta_id' => $transaccion->getEta_id(),
     		'cli_id' => $transaccion->getCli_id(),
 			'tra_valor' => $transaccion->getTra_valor(),
-			'tra_tipo' => $transaccion->getTra_tipo(),
-            'tra_descripcion' => $transaccion->getTra_descripcion(),
             'tra_saldo' => $transaccion->getTra_saldo(),
-            'tra_hora' => $transaccion->getTra_hora()
+            'tra_fecha' => $transaccion->getTra_fecha()
     	);
     	
     	$data ['tra_id'] = $id;
