@@ -3,6 +3,7 @@ namespace Application\Model\Dao;
 
 use Zend\Db\TableGateway\TableGateway;
 use Application\Model\Entity\Usuario;
+use Zend\Db\Sql\Sql;
 
 class UsuarioDao implements InterfaceCrud {
 	
@@ -84,5 +85,6 @@ class UsuarioDao implements InterfaceCrud {
     public function traerPorUsuarioClave($usu_usuario, $usu_clave){
     	return $this->tableGateway->select(array('usu_usuario' => $usu_usuario, 'usu_clave' => md5($usu_clave)))->current();
     }
-    
+
+
 }

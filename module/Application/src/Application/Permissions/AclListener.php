@@ -57,6 +57,8 @@ class AclListener implements ListenerAggregateInterface{
     		
     		$acl = new Acl();
     		
+
+
     		$permissionsArray=array();
     		
     		foreach($results as $rol){
@@ -93,6 +95,8 @@ class AclListener implements ListenerAggregateInterface{
     			    }
     			}
     		}
+
+
     		
     		if (isset($_SESSION['Zend_Auth']) && is_object($_SESSION['Zend_Auth'])){
     			$_SESSION['Zend_Auth']['storage']->menu=$this->permisosArray;
@@ -112,12 +116,19 @@ class AclListener implements ListenerAggregateInterface{
     		$action = $matches->getParam('action');
     		
     		$resourceName = $module . ':' . $controller;
+
+            /* Roles de  */
+            //$acl->allow('1', NULL);
+            $acl->allow('6', 'api:api', NULL);
+            $acl->allow('6', 'application:login', NULL);
+            //$acl->allow('6', 'api:api', array('paises'));
     		
     		if(!$acl->isAllowed($this->getRole($services), $resourceName, $action)){
     			 
     			$matches->setParam('controller', 'Application\Controller\Error');
     			$matches->setParam('action','denied');
     		}
+
         
    }
     
@@ -131,11 +142,11 @@ class AclListener implements ListenerAggregateInterface{
 
                 $role = $auth->getIdentity()->rol_id;
             } else {
-                $auth->getIdentity()->rol_id = '1';
+                $auth->getIdentity()->rol_id = '6';
                 $role = $auth->getIdentity()->rol_id;
             }
         }else{
-            $role = '1';
+            $role = '6';
         }
         return $role;
     }

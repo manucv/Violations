@@ -151,7 +151,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
         				
         		case 'Console\Controller\Index':
         				return;
-	        			break;	
+	        			break;		        			
 	        	
         	}
         }

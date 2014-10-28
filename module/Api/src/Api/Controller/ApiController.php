@@ -15,6 +15,8 @@ use Application\Model\Entity\Cliente as ClienteEntity;
 
 class ApiController extends AbstractActionController
 {
+    
+    protected $usuarioDao;
     protected $clienteDao;
     protected $categoriaDao;
     protected $establecimientoDao;
@@ -43,6 +45,14 @@ class ApiController extends AbstractActionController
             $email =  $this->getRequest()->getQuery('email');
             $passw =  $this->getRequest()->getQuery('passw');
 
+            /*$usuario = $this->getUsuarioDao()->buscarPorEmailOUsuario($email,$passw);
+            $content='';
+            if(is_array($usuario)){
+                $content=json_encode(json_decode(json_encode($usuario),FALSE));
+            }else{
+                $content=json_encode(array());
+            }*/
+
             $cliente = $this->getClienteDao()->buscarPorEmailOUsuario($email,$passw);
             $content='';
             if(is_object($cliente)){
@@ -50,6 +60,7 @@ class ApiController extends AbstractActionController
             }else{
                 $content=json_encode(array());
             }
+
             $response=$this->getResponse();
             $response->setStatusCode(200);
             $response->setContent($content);
@@ -142,17 +153,16 @@ class ApiController extends AbstractActionController
                 $aut_placa =  $this->getRequest()->getQuery('aut_placa');
                 $log_par_horas_parqueo =  $this->getRequest()->getQuery('log_par_horas_parqueo');
 
-                $est_id=1;
+                $eta_id=1;
 
                 $precioHora=0.8;
                 $horas=$log_par_horas_parqueo;
                 $total=$precioHora*$horas;
 
                 $transaccionData['cli_id']=$cli_id;
-                $transaccionData['est_id']=$est_id;
+                $transaccionData['eta_id']=$eta_id;
                 $transaccionData['tra_valor']=$total;
-                $transaccionData['tra_tipo']='DEBITO';
-                $transaccionData['tra_hora'] = date('Y-m-d H:i:s');
+                $transaccionData['tra_fecha'] = date('Y-m-d H:i:s');
                 $transaccionData['tra_saldo'] = 0;
 
                 $transaccion = new TransaccionEntity();
@@ -423,11 +433,12 @@ class ApiController extends AbstractActionController
             if(!is_null($this->params('id'))){
                 $cli_id=$this->params('id');
                 $email = $this->request->getQuery('cli_email');
-
+                
                 $referido = $this->getClienteDao()->buscarPorEmailOUsuario($email);
                 $content='';
+
                 if(is_object($referido)){
-                
+                    
                     if($cli_id != $referido->getCli_id()){
                         $relacion=array();
                         $relacion['cli_id']=$cli_id;
@@ -669,6 +680,14 @@ class ApiController extends AbstractActionController
             ) );
         }*/
     }      
+
+    public function getUsuarioDao() {
+        if (! $this->usuarioDao) {
+            $sm = $this->getServiceLocator ();
+            $this->usuarioDao = $sm->get ( 'Application\Model\Dao\UsuarioDao' );
+        }
+        return $this->usuarioDao;
+    }    
 
     public function getClienteDao() {
         if (! $this->clienteDao) {
