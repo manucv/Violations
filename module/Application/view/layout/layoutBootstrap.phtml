@@ -147,12 +147,15 @@
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
 									<div class="avatar">
-									<img src="<?php echo $this->basepath() . '/img/avatar.jpg'?>" alt="avatar" class="img-circle">
+									<img src="<?php echo $this->basepath() . '/img/avatar.jpg'?>" alt="avatar" class="img-circle" style="min-width: 43px !important;">
 									</div>
 									<i class="fa fa-ellipsis-v pull-right" style="color: #fff"></i>
 									<div class="user-mini pull-right">
 										<span class="welcome">Hola,</span>
-										<span>Emanuel Carrasco</span>
+										<span><?php
+                                        echo $_SESSION['Zend_Auth']['storage']->usu_nombre . ' ';
+                                        echo $_SESSION['Zend_Auth']['storage']->usu_apellido;
+										?></span>
 									</div>
 								</a>
 								<ul class="dropdown-menu">
