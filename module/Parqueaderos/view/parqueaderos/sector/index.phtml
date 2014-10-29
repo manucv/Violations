@@ -1,20 +1,44 @@
-<div class="titulo-ventana" style="float:left;"><i class="fa fa-road fa-fw"></i> Parqueaderos - Sector: <?php echo $sector->getSec_nombre(); ?></div>
-<button type="button" class="btn btn-warning" id="agregar" style="float:right; clear:right;">Registrar Auto</button>
-<hr class="hr-style"  style="clear:both;" />
+<?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); ?>
 
-<div class='row' style="width:100%; margin:0 auto;">
-<?php foreach($parqueaderos as $parqueadero): ?>
-	<div class="parqueadero-outer" >
-		<div class="parqueadero">
-			<div class="parqueadero-inner <?php echo ($parqueadero->getPar_estado()=='D')?'desocupado':'ocupado'; ?> " 
-					data-par_id="<?php echo $parqueadero->getPar_id() ?>" >
-				<span> <?php echo $parqueadero->getPar_id(); ?> </span>
+<div class="row">
+    <div class="col-md-12" >
+        <div class="box">
+            <div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-table fa-fw"></i>
+					<span>Parqueaderos - Sector: <?php echo $sector->getSec_nombre(); ?></span>
+					<!-- <button type="button" class="btn btn-warning" id="agregar" style="float:right; clear:right;">Registrar Auto</button> -->
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
 			</div>
-		</div>
-		<div class="parqueadero-bottom" data-par_id="<?php echo $parqueadero->getPar_id() ?>"></div>
-	</div>
-<?php endforeach; ?>
+			<div class="box-content" style="min-height: 80px;">
+                <div class='row' style="width:100%; margin:0 auto;">
+                <?php foreach($parqueaderos as $parqueadero): ?>
+                	<div class="parqueadero-outer" >
+                		<div class="parqueadero">
+                			<div class="parqueadero-inner <?php echo ($parqueadero->getPar_estado()=='D')?'desocupado':'ocupado'; ?> " 
+                					data-par_id="<?php echo $parqueadero->getPar_id() ?>" >
+                				<span> <?php echo $parqueadero->getPar_id(); ?> </span>
+                			</div>
+                		</div>
+                		<div class="parqueadero-bottom" data-par_id="<?php echo $parqueadero->getPar_id() ?>"></div>
+                	</div>
+                <?php endforeach; ?>
+                </div>
+			</div>
+        </div>
+    </div>
 </div>
+
+
 <!-- Formulario de Registro de Incidente -->
   <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
@@ -154,19 +178,21 @@
 			$('.bs-solucion-modal-sm').modal('show');
 		});
 		/* Botón agregar automovil */
+		/*
 		$("#agregar").on('click',function(e){
 			e.preventDefault();
 
 	        $.ajax({
-	            url: "<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'agregar')) ?>",
-	            type: "POST",
+	            url: "<?php //echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'agregar')) ?>",
+	            //type: "POST",
 	            dataType: "json",
-	            data: "sec_id=<?php echo $sector->getSec_id(); ?>"
+	            data: "sec_id=<?php //echo $sector->getSec_id(); ?>"
 
 	     	}).done(function(multados) {
       			alert('Un auto fue agregado al sector');
 	        });
 		});
+		*/
 		
 	});
 </script>
