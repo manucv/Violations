@@ -12,6 +12,7 @@ use Application\Model\Entity\Transaccion as TransaccionEntity;
 use Application\Model\Entity\RelacionCliente as RelacionClienteEntity;
 use Application\Model\Entity\TransferenciaSaldo as TransferenciaSaldoEntity;
 use Application\Model\Entity\Cliente as ClienteEntity;
+use Application\Model\Entity\Usuario as UsuarioEntity;
 
 class ApiController extends AbstractActionController
 {
@@ -433,7 +434,7 @@ class ApiController extends AbstractActionController
             if(!is_null($this->params('id'))){
                 $cli_id=$this->params('id');
                 $email = $this->request->getQuery('cli_email');
-                
+
                 $referido = $this->getClienteDao()->buscarPorEmailOUsuario($email);
                 $content='';
 
@@ -620,21 +621,32 @@ class ApiController extends AbstractActionController
 
             $data = $this->request->getPost ();
 
-            $cliente = new ClienteEntity();
-            $data['cli_saldo']=0;
-            $data['cli_estado']='ACTIVO';
+            $usuario = new UsuarioEntity();
+            
+            $data['usu_estado']='A'; 
+            $data['usu_fecha_registro']='0000-00-00 00:00:00'; 
+            $usuario->exchangeArray ( $data );  
 
-            $cliente->exchangeArray ( $data );
+            $usu_id=$this->getUsuarioDao() ->guardar ( $usuario );
+
+            $data_cliente = array();
+            $cliente = new ClienteEntity();
+            $data_cliente['usu_id']=$usu_id;
+            $data_cliente['cli_saldo']=100;
+            $data_cliente['cli_estado']='ACTIVO';
+            $data_cliente['cli_movil']=$data['cli_movil'];
+
+            $cliente->exchangeArray ( $data_cliente );
             $content='';
             $response=$this->getResponse();
-            if(!$this->getClienteDao()->verificar( $cliente )){
+            //if(!$this->getClienteDao()->verificar( $cliente )){
                 $cli_id=$this->getClienteDao() ->guardar ( $cliente );
                 $clienteObj = $this->getClienteDao()->traer ( $cli_id );
                 $content=json_encode($clienteObj->getArrayCopy());
                 $response->setStatusCode(200);
-            }else {
-                $response->setStatusCode(409);
-            }    
+            //}else {
+            //    $response->setStatusCode(409);
+            //}    
             $response->setContent($content);
 
             return $response;

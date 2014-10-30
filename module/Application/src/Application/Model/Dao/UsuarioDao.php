@@ -69,7 +69,9 @@ class UsuarioDao implements InterfaceCrud {
     		}
     	}else{
     		$this->tableGateway->insert ( $data );
+            $id = $this->tableGateway->lastInsertValue;
     	}
+        return $id;
     }
     
 	public function eliminar($id) {
