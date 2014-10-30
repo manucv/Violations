@@ -32,7 +32,7 @@
 					       <p><span style="font-weight: 700;">C&oacute;digo Interno: </span> <span><?php echo $this->cliente->getUsu_clave()  ?></span> <br></p>
 					       <p><span style="font-weight: 700;">M&oacute;vil: </span> <span><?php echo '( +' . $this->cliente->getCli_cod_pais() . ' )' . ' ( ' . $this->cliente->getCli_cod_ciudad() . ' ) ' . $this->cliente->getCli_movil()?></span> <br></p>
 					       <p><span style="font-weight: 700;">Direcci&oacute;n: </span> <span><?php $direccion = $this->cliente->getCli_direccion(); if(!empty($direccion) && !is_null($direccion)): echo $direccion; else: echo '<span style="color:#CCCCCC; font-style:italic; ">No tiene informaci&oacute;n.</span>'; endif;  ?></span> <br></p>
-					       <p><span style="font-weight: 700;">Saldo:</span> <span style="color:#ee9f1f; font-weight: 700;">$<?php echo $this->cliente->getCli_saldo()?></span> <br></p>
+					       <p><span style="font-weight: 700;">Saldo Pendiente:</span> <span style="color:#ee9f1f; font-weight: 700;">$<?php echo $this->cliente->getCli_saldo()?></span> <br></p>
                       </div>
                     </div>
 					
@@ -52,31 +52,39 @@
 					<a class="expand-link">
 						<i class="fa fa-expand"></i>
 					</a>
-					<a class="close-link">
-						<i class="fa fa-times"></i>
-					</a>
 				</div>
 				<div class="no-move"></div>
 			</div>
 			<div class="box-content">
-				<div class="card">
-					<h4 class="page-header">Jonh Smith</h4>
-					<h5 class="page-header">Manager</h5>
-					<p>
-						<span>+1 (123) 434-123445</span> <br>
-						<a href="mailto:john@company.com">john@company.com</a>
-					</p>
-				</div>
-				<div class="card address">
-					<div class="vcard">
-						<a href="#"><i class="fa fa-file"></i>.vCard</a>
-					</div>
-					<h4>Adress:</h4>
-					<p>
-						<span>123456, Silicon walley</span> <br>
-						<span>str. Nonest. building 33</span>
-					</p>
-				</div>
+				<table class="table table-striped table-hover" style="font-size: 12px;" >
+                 <thead>
+			         <tr>
+			             <th>Valor</th>
+			             <th>Fecha Compra</th>
+			         </tr>
+			     </thead>
+                 <tbody>
+				<?php 
+				if(count($this->compras) > 0):
+				$cont = 1;
+				foreach ($this->compras as $compras): ?>
+				     <tr>
+				        <td><?php echo $compras->getTra_valor()?></td>
+				        <td><?php echo $compras->getTra_fecha()?></td>
+				     </tr>
+				<?php 
+				$cont ++;
+				endforeach;
+				else: ?>
+				
+				    <tr>
+				        <td>No tiene compras realizadas.</td>
+				        <td>&nbsp;</td>
+				    </tr>
+				
+				<?php endif;?>
+				</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
@@ -94,31 +102,39 @@
 					<a class="expand-link">
 						<i class="fa fa-expand"></i>
 					</a>
-					<a class="close-link">
-						<i class="fa fa-times"></i>
-					</a>
 				</div>
 				<div class="no-move"></div>
 			</div>
 			<div class="box-content">
-				<div class="card">
-					<h4 class="page-header">Jonh Smith</h4>
-					<h5 class="page-header">Manager</h5>
-					<p>
-						<span>+1 (123) 434-123445</span> <br>
-						<a href="mailto:john@company.com">john@company.com</a>
-					</p>
-				</div>
-				<div class="card address">
-					<div class="vcard">
-						<a href="#"><i class="fa fa-file"></i>.vCard</a>
-					</div>
-					<h4>Adress:</h4>
-					<p>
-						<span>123456, Silicon walley</span> <br>
-						<span>str. Nonest. building 33</span>
-					</p>
-				</div>
+			     <table class="table table-striped table-hover" style="font-size: 12px;" >
+                 <thead>
+			         <tr>
+			             <th>Nombre Completo</th>
+			             <th>Usuario</th>
+			         </tr>
+			     </thead>
+                 <tbody>
+				<?php 
+				if(count($this->usuarios) > 0):
+				$cont = 1;
+				foreach ($this->usuarios as $usuario): ?>
+				     <tr>
+				        <td><?php echo $usuario->getUsu_nombre() . ' ' . $usuario->getUsu_apellido()?></td>
+				        <td><?php echo $usuario->getUsu_usuario()?></td>
+				     </tr>
+				<?php 
+				$cont ++;
+				endforeach;
+				else: ?>
+				
+				    <tr>
+				        <td>No tiene usuarios registrados.</td>
+				        <td>&nbsp;</td>
+				    </tr>
+				
+				<?php endif;?>
+				</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="box">
@@ -134,44 +150,51 @@
 					<a class="expand-link">
 						<i class="fa fa-expand"></i>
 					</a>
-					<a class="close-link">
-						<i class="fa fa-times"></i>
-					</a>
 				</div>
 				<div class="no-move"></div>
 			</div>
 			<div class="box-content">
-				<div class="card">
-					<h4 class="page-header">Chuck Norris</h4>
-					<h5 class="page-header">Designer</h5>
-					<p>
-						<span>+1 (123) 333-856823</span> <br>
-						<a href="mailto:chuck@company.com">chuck@company.com</a>
-					</p>
-				</div>
-				<div class="card address">
-					<div class="vcard">
-						<a href="#"><i class="fa fa-file"></i>.vCard</a>
-					</div>
-					<h4>Adress:</h4>
-					<p>
-						<span>123456, Silicon walley</span> <br>
-						<span>str. Nonest. building 33</span>
-					</p>
-				</div>
+				<table class="table table-striped table-hover" style="font-size: 12px;" >
+                 <thead>
+			         <tr>
+			             <th>Punto de Recarga</th>
+			             <th>Valor</th>
+			             <th>Hora</th>
+			         </tr>
+			     </thead>
+                 <tbody>
+				<?php 
+				if(count($this->recargas) > 0):
+				$cont = 1;
+				foreach ($this->recargas as $recargas): ?>
+				     <tr>
+				        <td><?php echo $recargas->getPun_rec_nombre() ?></td>
+				        <td><?php echo '$' .$recargas->getCom_sal_valor()?></td>
+				        <td><?php echo $recargas->getCom_sal_hora()?></td>
+				     </tr>
+				<?php 
+				$cont ++;
+				endforeach;
+				else: ?>
+				
+				    <tr>
+				        <td>No tiene recargas efectuadas.</td>
+				        <td>&nbsp;</td>
+				        <td>&nbsp;</td>
+				    </tr>
+				
+				<?php endif;?>
+				</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
-// Load OpenLayers library and create test map
-function OpenLayersMap() {
-	$.getScript('http://www.openlayers.org/api/OpenLayers.js', LoadTestMap);
-}
 $(document).ready(function () {
-	// Load Google Map API and callback to OpenLayers
-	$.getScript('http://maps.google.com/maps/api/js?sensor=false&callback=OpenLayersMap');
-	// Add Drag-n-Drop feature
+	$('#DataTables_Table_0_info, #DataTables_Table_1_info, #DataTables_Table_2_info').attr('style','display:none');
+
 	WinMove();
 });
+
 </script>

@@ -34,7 +34,8 @@ class SectorController extends AbstractActionController
 
         return new ViewModel ( array (
             'parqueaderos'  =>  $parqueaderos,
-            'sector'        =>  $sector
+            'sector'        =>  $sector,
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Buscar parqueaderos disponibles' => array('parqueaderos','parqueaderos','index'), 'Disponibilidad de parqueadero' => array('parqueaderos','sector','index', $id)) ),
         ) );
     }
 

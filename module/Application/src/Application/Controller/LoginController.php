@@ -64,7 +64,6 @@ class LoginController extends AbstractActionController {
 			$this->login->setMessage ( 'Usuario inactivo. Comun&iacute;quese con el administrador', LoginService::USER_INACTIVE );
 			
 			$this->login->login ( $usuario, $this->secret($clave) );
-			
 			$usuario_rol = $this->getUsuarioDao()->traerPorUsuarioClave($usuario, $clave);
 		    $rolUsuarioObjeto = $this->getRolUsuarioDao()->rolPorCodigo( $usuario_rol->getUsu_id() );
 			

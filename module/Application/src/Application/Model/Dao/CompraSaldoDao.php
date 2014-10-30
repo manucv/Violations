@@ -36,6 +36,15 @@ class CompraSaldoDao implements InterfaceCrud {
     	return $row;
     }
     
+    public function traerRecargasPorUsuario($cli_id){
+        
+        $select = $this->tableGateway->getSql ()->select ();
+        $select-> join ('punto_recarga','punto_recarga.pun_rec_id = compra_saldo.punto_recarga_pun_rec_id');
+        $select-> where ( array('compra_saldo.cli_id'=>$cli_id) );
+        $resultSet = $this->tableGateway->selectWith ( $select );
+        return $resultSet;
+    }
+    
     public function guardar(CompraSaldo $compraSaldo){
     
     	$id = (int) $compraSaldo->getCom_sal_id();
