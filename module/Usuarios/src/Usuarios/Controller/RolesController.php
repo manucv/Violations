@@ -25,10 +25,10 @@ class RolesController extends AbstractActionController {
 	
 	public function ingresarAction() {
 		$form = $this->getForm ();
-		$aplicaciones = $this->getAplicacionDao ()->traerTodos ();
 		return new ViewModel ( array (
 				'form' => $form,
-				'aplicaciones' => $aplicaciones 
+		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Roles' => array('usuarios','roles','listado'), 'Ingresar Rol' => array('usuarios','roles','ingresar')) ),
+		        'titulo' => 'Nuevo'
 		) );
 	}
 	
@@ -108,7 +108,14 @@ class RolesController extends AbstractActionController {
 		}
 		$form->get('aplicacion')->setAttributes(array('value' => $seleccionado));
 		
-		$viewModel = new ViewModel ( array ( 'title' => 'Editar Rol', 'form' => $form, 'aplicaciones' => $aplicaciones )); 
+		$viewModel = new ViewModel ( 
+		    array ( 
+		        'title' => 'Editar Rol', 
+		        'form' => $form, 
+		        'aplicaciones' => $aplicaciones,
+		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Roles' => array('usuarios','roles','listado'), 'Actualizar Rol' => array('usuarios','roles','editar', $rol_id)) ),
+		        'titulo' => 'Actualizar'
+		 )); 
 		$viewModel->setTemplate ( 'usuarios/roles/ingresar.phtml' ); 
 		return $viewModel; 
 	}

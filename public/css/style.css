@@ -1568,7 +1568,7 @@ ul.DTTT_dropdown.dropdown-menu>li:hover>a {
 }
 
 .form-control {
-	height: 26px;
+	height: 32px;
 	padding: 2px 12px;
 }
 
@@ -2848,4 +2848,8 @@ ul.DTTT_dropdown.dropdown-menu>li:hover>a {
 	#dashboard_links .nav-pills>li.active>a:before {
 		display: none;
 	}
+}
+
+.control-label{
+	text-align: right !important;
 }

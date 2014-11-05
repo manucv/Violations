@@ -15,7 +15,20 @@ class InfraccionController extends AbstractActionController
 {
     public function indexAction()
     {
-        return array();
+        $this->layout()->setVariable('activo', '14');
+        return array(
+            'infraccion' => $this->getInfraccionDao()->traerTodos(),
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
+        );
+    }
+    
+    public function getInfraccionDao()
+    {
+        if (! $this->infraccionDao) {
+            $sm = $this->getServiceLocator();
+            $this->infraccionDao = $sm->get('Application\Model\Dao\InfraccionDao');
+        }
+        return $this->infraccionDao;
     }
 
 }

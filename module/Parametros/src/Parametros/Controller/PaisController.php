@@ -36,7 +36,9 @@ class PaisController extends AbstractActionController
         
         // FORMULARIO DE INGRESO DE INFORMACION
         return new ViewModel(array(
-            'formulario' => $form
+            'formulario' => $form,
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Paises' => array('parametros','pais','listado'), 'Ingresar Pa&iacute;s' => array('parametros','pais','ingresar')) ),
+            'titulo' => 'Nuevo'
         ));
     }
 
@@ -53,7 +55,9 @@ class PaisController extends AbstractActionController
         $form->get('pai_id')->setAttribute('value', $pais->getPai_id());
         
         $view = new ViewModel(array(
-            'formulario' => $form
+            'formulario' => $form,
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Paises' => array('parametros','pais','listado'), 'Actualizar Pa&iacute;s' => array('parametros','pais','editar', $id)) ),
+            'titulo' => 'Actualizar'
         ));
         
         $view->setTemplate('parametros/pais/ingresar');
@@ -86,7 +90,7 @@ class PaisController extends AbstractActionController
         if (! $this->request->isPost()) {
             return $this->redirect()->toRoute('parametros', array(
                 'controller' => 'pais',
-                'action' => 'listado'
+                'action' => 'listado',
             ));
         }
         
@@ -106,7 +110,9 @@ class PaisController extends AbstractActionController
         if (! $form->isValid()) {
             // SI EL FORMULARIO NO ES CORRECTO
             $modelView = new ViewModel(array(
-                'formulario' => $form
+                'formulario' => $form,
+                'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Paises' => array('parametros','pais','listado'), 'Ingresar Pa&iacute;s' => array('parametros','pais','ingresar')) ),
+                'titulo' => 'Validar informaci&oacute;n del'
             ));
             
             $modelView->setTemplate('parametros/pais/ingresar');

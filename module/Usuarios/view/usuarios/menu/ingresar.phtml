@@ -1,12 +1,12 @@
-<?php
+<?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); 
 
 $form = $this->formulario;
-$detalles = $this->detalles;
 $form->prepare ();
 $form->setAttribute ( 'action', $this->url ( 'usuarios', array (
 		'controller' => 'menu',
 		'action' => 'validar' 
-) ) );
+) ) )->setAttribute ( 'method', 'post' )
+->setAttribute ('class', 'form-horizontal');
 
 $formLabel = $this->plugin ( 'formLabel' );
 
@@ -25,69 +25,118 @@ echo $this->formhidden ( $men_id );
 echo $this->formelementerrors ( $men_id );
 ?>
 
-<ul class="error_container bs-callout bs-callout-danger">
-
-</ul>
-
-<div class="panel panel-default">
-	<div class="panel-heading panel-heading-txt">&nbsp;</div>
-	
-	<table width="100%" cellpadding="5">
-			<tr>
-				<td>
-					<br />
-					<div width="50" valign="middle" class="icon-content"><img src="<?php echo $this->basepath() . '/img/png/usuarios_grande.png'?>" border="0" /></div>
-					<div class="txt-icon-content">Ingresar un nuevo men&uacute;<br />Registre toda la informaci&oacute;n solicitada para ingresar un nuevo men&uacute;.</div>
-					<div><br /></div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<?php echo $formLabel->openTag() . $men_nombre->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formtext ( $men_nombre ) );
-					  echo html_entity_decode( $this->formelementerrors ( $men_nombre ) ); 
-				?>
-				</td>
-				<td>
-				<?php echo $formLabel->openTag() . $men_etiqueta->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formtext ( $men_etiqueta ) );
-					  echo html_entity_decode( $this->formelementerrors ( $men_etiqueta ) ); 
-				?>
-				</td>
-				<td>
-				<?php echo $formLabel->openTag() . $apl_id->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formselect ( $apl_id ) );
-					  echo html_entity_decode( $this->formelementerrors ( $apl_id ) ); 
-				?>
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<?php echo $formLabel->openTag() . $men_icon->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formtext ( $men_icon ) );
-					  echo html_entity_decode( $this->formelementerrors ( $men_icon ) ); 
-				?>
-				</td>
-				<td>
-				<?php echo $formLabel->openTag() . $men_padre->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formtext ( $men_padre ) );
-					  echo html_entity_decode( $this->formelementerrors ( $men_padre ) ); 
-				?>
-				</td>
-				<td>
-				<?php echo $formLabel->openTag() . $men_divisor->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formselect ( $men_divisor ) );
-					  echo html_entity_decode( $this->formelementerrors ( $men_divisor ) ); 
-				?>
-				</td>
-			</tr>
-		</table>
-	
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-12" >
+        <div class="box">
+            <div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-gears fa-fw"></i>
+					<span><?php echo $this->titulo ?> opci&oacute;n de men&uacute;</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content">
+			    <div class="row" style="padding-bottom: 12px;">
+        			<div class="col-md-11 col-md-offset-1">
+            		  <label class="control-label" style="color: #ee9f1f;">Ingrese la informaci&oacute;n solicitada. Todos los campos con * son obligatorios.</label>
+        			</div>
+    			</div>
+    			<div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php  
+                		echo $formLabel->openTag() . $men_nombre->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+            			<?php 
+            			echo html_entity_decode( $this->formtext ( $men_nombre ) );
+					    echo html_entity_decode( $this->formelementerrors ( $men_nombre ) ); 
+            			?>
+            		</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                		echo $formLabel->openTag() . $men_etiqueta->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+            			<?php 
+            			echo html_entity_decode( $this->formtext ( $men_etiqueta ) );
+					    echo html_entity_decode( $this->formelementerrors ( $men_etiqueta ) );
+            			?>
+            		</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                		echo $formLabel->openTag() . $apl_id->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+                		<?php 
+                		echo html_entity_decode( $this->formselect ( $apl_id ) );
+					    echo html_entity_decode( $this->formelementerrors ( $apl_id ) );  
+                		?>
+            		</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                        echo $formLabel->openTag() . $men_icon->getLabel() . $formLabel->closeTag();
+                	    ?>
+                    </div>
+                    <div class="col-md-8">
+                		<?php 
+                		echo html_entity_decode( $this->formtext ( $men_icon ) );
+                		echo html_entity_decode( $this->formelementerrors ( $men_icon ) );
+                		?>
+            		</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                        echo $formLabel->openTag() . $men_padre->getLabel() . $formLabel->closeTag();
+                	    ?>
+                    </div>
+                    <div class="col-md-8">
+                		<?php 
+                		echo html_entity_decode( $this->formtext ( $men_padre ) );
+                		echo html_entity_decode( $this->formelementerrors ( $men_padre ) );
+                		?>
+            		</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                        echo $formLabel->openTag() . $men_divisor->getLabel() . $formLabel->closeTag();
+                	    ?>
+                    </div>
+                    <div class="col-md-8">
+                		<?php
+                		echo html_entity_decode( $this->formselect ( $men_divisor ) );
+                		echo html_entity_decode( $this->formelementerrors ( $men_divisor ) );
+                		?>
+            		</div>
+                </div>
+                <div class="row">
+    				<div class="form-group col-md-12">
+            		     <div align="center">
+            				<?php echo $this->formRow($form->get('ingresar')); ?>&nbsp;
+	                        <a href="<?php echo $this->url('usuarios', array('controller' => 'menu', 'action' => 'index'))?>" class ="btn btn-primary">Cancelar</a>
+            			</div>	
+        			</div>
+    			</div>
+			</div>
+        </div>
+    </div>
 </div>
-
-<div align="center">
-	<?php echo $this->formRow($form->get('ingresar')); ?>&nbsp;
-	<a href="<?php echo $this->url('usuarios', array('controller' => 'menu', 'action' => 'index'))?>" class ="btn btn-primary">Cancelar</a>
-</div>
-
 <?php echo $this->form()->closeTag(); ?>

@@ -1,11 +1,13 @@
-<?php
+<?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); 
+
 //FORMULARIO
 $form = $this->formulario;
 $form->prepare ();
 $form->setAttribute ( 'action', $this->url ( 'usuarios', array (
 		'controller' => 'usuarios',
 		'action' => 'validar' 
-) ) )->setAttribute ( 'method', 'post' );
+) ) )->setAttribute ( 'method', 'post' )
+->setAttribute ('class', 'form-horizontal');
 $formLabel = $this->plugin ( 'formLabel' );
 
 $usu_id = $form->get ( 'usu_id' );
@@ -26,80 +28,147 @@ echo $this->formhidden ( $usu_id );
 echo $this->formelementerrors ( $usu_id );
 
 ?>
-<div class="panel panel-default">
-	<div class="panel-heading panel-heading-txt">&nbsp;</div>
-		<table width="100%" cellpadding="5">
-			<tr>
-				<td colspan="3">
-					<br />
-					<div width="50" valign="middle" class="icon-content"><img src="<?php echo $this->basepath() . '/img/png/usuarios_grande.png'?>" border="0" /></div>
-					<div class="txt-icon-content">Ingresar un nuevo usuario<br />Registre toda la informaci&oacute;n solicitada para ingresar un nuevo usuario.</div>
-					<div><br /><hr /></div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<?php echo $formLabel->openTag() . $ciu_id->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formselect ( $ciu_id ) );
-					  echo html_entity_decode( $this->formelementerrors ( $ciu_id ) ); 
-				?>
-				</td>
-				<td>
-				<?php echo $formLabel->openTag() . $usu_nombre->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formtext ( $usu_nombre ) );
-					  echo html_entity_decode( $this->formelementerrors ( $usu_nombre ) ); 
-				?>
-				</td>
-				<td>
-				<?php echo $formLabel->openTag() . $usu_apellido->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formtext ( $usu_apellido ) );
-					  echo html_entity_decode( $this->formelementerrors ( $usu_apellido ) ); 
-				?>
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<?php echo $formLabel->openTag() . $usu_email->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formtext ( $usu_email ) );
-					  echo html_entity_decode( $this->formelementerrors ( $usu_email ) ); 
-				?>
-				</td>
-				<td>
-				<?php echo $formLabel->openTag() . $usu_estado->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formselect ( $usu_estado ) );
-					  echo html_entity_decode( $this->formelementerrors ( $usu_estado ) ); 
-				?>
-				</td>
-				<td>
-				<?php echo $formLabel->openTag() . $usu_usuario->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formtext ( $usu_usuario ) );
-					  echo html_entity_decode( $this->formelementerrors ( $usu_usuario ) ); 
-				?>
-				</td>
-			</tr>
-			<?php if($this->edit !== true) :?>
-			<tr>
-				<td>
-				<?php echo $formLabel->openTag() . $usu_clave->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formpassword ( $usu_clave ) );
-					  echo html_entity_decode( $this->formelementerrors ( $usu_clave ) ); 
-				?>
-				</td>
-				<td>
-				<?php echo $formLabel->openTag() . $usu_clave_check->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formpassword ( $usu_clave_check ) );
-					  echo html_entity_decode( $this->formelementerrors ( $usu_clave_check ) ); 
-				?>
-				</td>
-				<td>&nbsp;</td>
-			</tr>
-			<?php endif;?>
-		</table>
-		<div><br /><hr /></div>	
-		<div align="center">
-				<?php echo $this->formsubmit( $form->get ( 'ingresar' ) ) ?>
-				<a href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'index'))?>" class ="btn btn-primary">Cancelar</a>
-			</div>	
-		<div>&nbsp;</div>	
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-12" >
+        <div class="box">
+            <div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-gears fa-fw"></i>
+					<span><?php echo $this->titulo ?> usuario</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content">
+			    <div class="row" style="padding-bottom: 12px;">
+        			<div class="col-md-11 col-md-offset-1">
+            		  <label class="control-label" style="color: #ee9f1f;">Ingrese la informaci&oacute;n solicitada. Todos los campos con * son obligatorios.</label>
+        			</div>
+    			</div>
+    			<div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php  
+                		echo $formLabel->openTag() . $ciu_id->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+            			<?php 
+            			echo html_entity_decode( $this->formselect ( $ciu_id ) );
+					    echo html_entity_decode( $this->formelementerrors ( $ciu_id ) ); 
+            			?>
+            		</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                		echo $formLabel->openTag() . $usu_nombre->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+            			<?php 
+            			echo html_entity_decode( $this->formtext ( $usu_nombre ) );
+					    echo html_entity_decode( $this->formelementerrors ( $usu_nombre ) );  
+            			?>
+            		</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                		echo $formLabel->openTag() . $usu_apellido->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+                		<?php 
+                		echo html_entity_decode( $this->formtext ( $usu_apellido ) );
+					    echo html_entity_decode( $this->formelementerrors ( $usu_apellido ) );  
+                		?>
+                	</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                        echo $formLabel->openTag() . $usu_email->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+                	   <?php 
+                		echo html_entity_decode( $this->formtext ( $usu_email ) );
+                		echo html_entity_decode( $this->formelementerrors ( $usu_email ) );
+                		?>
+                	</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                        echo $formLabel->openTag() . $usu_estado->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+                		<?php 
+                		echo html_entity_decode( $this->formselect ( $usu_estado ) );
+                		echo html_entity_decode( $this->formelementerrors ( $usu_estado ) );
+                		?>
+            		</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                        echo $formLabel->openTag() . $usu_usuario->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+                		<?php 
+                		echo html_entity_decode( $this->formtext ( $usu_usuario ) );
+					    echo html_entity_decode( $this->formelementerrors ( $usu_usuario ) ); 
+                		?>
+            		</div>
+                </div>
+                
+                <?php if($this->edit !== true) :?>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                        echo $formLabel->openTag() . $usu_clave->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+                		<?php 
+                		echo html_entity_decode( $this->formpassword ( $usu_clave ) );
+					    echo html_entity_decode( $this->formelementerrors ( $usu_clave ) ); 
+                		?>
+            		</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                        echo $formLabel->openTag() . $usu_clave_check->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+                	   <?php 
+                		echo html_entity_decode( $this->formpassword ( $usu_clave_check ) );
+					    echo html_entity_decode( $this->formelementerrors ( $usu_clave_check ) ); 
+                		?>
+            		</div>
+                </div>
+                <?php endif;?>
+                <div class="row">
+    				<div class="form-group col-md-12">
+            		     <div align="center">
+            				<?php echo $this->formsubmit( $form->get ( 'ingresar' ) ) ?>
+				            <a href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'index'))?>" class ="btn btn-primary">Cancelar</a>
+            			</div>	
+        			</div>
+    			</div>
+			</div>
+        </div>
+    </div>
 </div>
 <?php echo $this->form()->closeTag(); ?>

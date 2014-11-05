@@ -37,6 +37,8 @@ class TipoInfraccionController extends AbstractActionController
     	//FORMULARIO DE INGRESO DE INFORMACION
     	return new ViewModel ( array (
     			'formulario' => $form ,
+    	        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado Tipos de Infracci&oacute;n' => array('parametros','tipoinfraccion','listado'), 'Ingresar Tipo de Infracci&oacute;n' => array('parametros','tipoinfraccion','ingresar')) ),
+    	        'titulo' => 'Nuevo'
     	) );
     }
     
@@ -54,6 +56,8 @@ class TipoInfraccionController extends AbstractActionController
     
     	$view = new ViewModel ( array (
     			'formulario' => $form ,
+    	        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado Tipos de Infracci&oacute;n' => array('parametros','tipoinfraccion','listado'), 'Actualizar Tipo de Infracci&oacute;n' => array('parametros','tipoinfraccion','editar', $id)) ),
+    	        'titulo' => 'Actualizar'
     	) );
     
     	$view->setTemplate('parametros/tipo-infraccion/ingresar');
@@ -107,6 +111,8 @@ class TipoInfraccionController extends AbstractActionController
     		// SI EL FORMULARIO NO ES CORRECTO
     		$modelView = new ViewModel ( array (
     				'formulario' => $form ,
+    		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado Tipos de Infracci&oacute;n' => array('parametros','tipoinfraccion','listado'), 'Ingresar Tipo de Infracci&oacute;n' => array('parametros','tipoinfraccion','ingresar')) ),
+    		        'titulo' => 'Validar informaci&oacute;n de la'
     		) );
     		 
     		$modelView->setTemplate ( 'parametros/tipo-infraccion/ingresar' );

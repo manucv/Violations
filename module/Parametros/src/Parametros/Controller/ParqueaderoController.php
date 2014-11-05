@@ -37,23 +37,28 @@ class ParqueaderoController extends AbstractActionController
     	//FORMULARIO DE INGRESO DE INFORMACION
     	return new ViewModel ( array (
     			'formulario' => $form ,
+    	        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Parqueaderos' => array('parametros','parqueadero','listado'), 'Ingresar Parqueadero' => array('parametros','parqueadero','ingresar')) ),
+    	        'titulo' => 'Nuevo'
     	) );
     }
     
     public function editarAction(){
     
-    	$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
+    	$id = $this->params ()->fromRoute ( 'id', 0 );
     	$form = $this->getForm ();
     
     	//FORMULARIO DE ACTUALIZACION DE INFORMACION
     	$parqueadero = $this->getParqueaderoDao()->traer ( $id );
+    	
     	$form->bind ( $parqueadero );
     		
     	$form->get ( 'ingresar' )->setAttribute ( 'value', 'Actualizar' );
-    	$form->get ( 'par_id' )->setAttribute ( 'value', $parqueadero->getPar_id() );
+    	$form->get ( 'par_codigo' )->setAttribute ( 'value', $parqueadero->getPar_id() );
     		
     	$view = new ViewModel ( array (
     			'formulario' => $form ,
+    	        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Parqueaderos' => array('parametros','parqueadero','listado'), 'Actualizar Parqueadero' => array('parametros','parqueadero','editar', $id)) ),
+    	        'titulo' => 'Actualizar'
     	) );
     
     	$view->setTemplate('parametros/parqueadero/ingresar');
@@ -62,7 +67,7 @@ class ParqueaderoController extends AbstractActionController
     
     public function eliminarAction(){
     
-    	$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
+    	$id = $this->params ()->fromRoute ( 'id', 0 );
     	
     	//SE ELIMINA LA INFORMACION EN LA BDD
     	if($this->getParqueaderoDao() ->eliminar ( $id )){
@@ -77,8 +82,6 @@ class ParqueaderoController extends AbstractActionController
             $view->setTemplate('parametros/parqueadero/errorBorrado');
             return $view;  
         }
-    	
-
     }
     
     public function validarAction(){
@@ -107,7 +110,9 @@ class ParqueaderoController extends AbstractActionController
     	if (! $form->isValid ()) {
     		// SI EL FORMULARIO NO ES CORRECTO
     		$modelView = new ViewModel ( array (
-    				'formulario' => $form ,
+    				'formulario' => $form,
+    		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Parqueaderos' => array('parametros','parqueadero','listado'), 'Ingresar Parqueadero' => array('parametros','parqueadero','ingresar')) ),
+    		        'titulo' => 'Validar informaci&oacute;n de'
     		) );
     			
     		$modelView->setTemplate ( 'parametros/parqueadero/ingresar' );
@@ -117,12 +122,17 @@ class ParqueaderoController extends AbstractActionController
     	//->AQUI EL FORMULARIO ES CORRECTO, SE VALIDO CORRECTAMENTE
     	
     	//SE GENERA EL OBJETO DE CONTACTO
-    	$pais = new ParqueaderoEntity();
+    	$parqueadero = new ParqueaderoEntity();
     	//SE CARGA LA ENTIDAD CON LA INFORMACION DEL POST
-    	$pais->exchangeArray ( $data );
+    	$parqueadero->exchangeArray ( $data );
     	
-    	//SE GRABA LA INFORMACION EN LA BDD
-    	$this->getParqueaderoDao() ->guardar ( $pais );
+    	if(!empty($data['par_codigo']) && !is_null($data['par_codigo'])){
+    	    //SE GRABA LA INFORMACION EN LA BDD
+    	    $this->getParqueaderoDao() ->actualizar ( $parqueadero, $data['par_codigo'] );
+    	} else{
+    	    //SE GRABA LA INFORMACION EN LA BDD
+    	    $this->getParqueaderoDao() ->guardar ( $parqueadero );
+    	}
     	
     	//SI SE EJECUTO EXITOSAMENTE SE REGRESA AL LISTADO DE CONTACTOS
     	return $this->redirect ()->toRoute ( 'parametros', array (
@@ -152,5 +162,4 @@ class ParqueaderoController extends AbstractActionController
     	}
     	return $this->sectorDao;
     }
-
 }

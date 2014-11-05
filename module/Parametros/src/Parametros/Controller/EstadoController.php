@@ -38,6 +38,8 @@ class EstadoController extends AbstractActionController
     	//FORMULARIO DE INGRESO DE INFORMACION
     	return new ViewModel ( array (
     			'formulario' => $form ,
+    	        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Estados' => array('parametros','estado','listado'), 'Ingresar Estados' => array('parametros','estado','ingresar')) ),
+    	        'titulo' => 'Nuevo'
     	) );
     }
     
@@ -55,6 +57,8 @@ class EstadoController extends AbstractActionController
     
     	$view = new ViewModel ( array (
     			'formulario' => $form ,
+    	        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Estados' => array('parametros','estado','listado'), 'Actualizar Estados' => array('parametros','estado','editar', $id)) ),
+    	        'titulo' => 'Actualizar'
     	) );
     
     	$view->setTemplate('parametros/estado/ingresar');
@@ -110,6 +114,8 @@ class EstadoController extends AbstractActionController
     		// SI EL FORMULARIO NO ES CORRECTO
     		$modelView = new ViewModel ( array (
     				'formulario' => $form ,
+    		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Estados' => array('parametros','estado','listado'), 'Ingresar Estados' => array('parametros','estado','ingresar')) ),
+    		        'titulo' => 'Validar informaci&oacute;n del',
     		) );
     		 
     		$modelView->setTemplate ( 'parametros/estado/ingresar' );

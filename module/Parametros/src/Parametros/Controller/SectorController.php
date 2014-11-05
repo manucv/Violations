@@ -41,7 +41,9 @@ class SectorController extends AbstractActionController
         
         // FORMULARIO DE INGRESO DE INFORMACION
         return new ViewModel(array(
-            'formulario' => $form
+            'formulario' => $form,
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Sectores' => array('parametros','sector','listado'), 'Ingresar Sector' => array('parametros','sector','ingresar')) ),
+            'titulo' => 'Nuevo'
         ));
     }
 

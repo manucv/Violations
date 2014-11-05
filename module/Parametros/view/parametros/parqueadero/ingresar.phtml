@@ -1,10 +1,12 @@
-<?php
+<?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); 
+
 $form = $this->formulario;
 $form->prepare ();
 $form->setAttribute ( 'action', $this->url ( 'parametros', array (
 		'controller' => 'parqueadero',
 		'action' => 'validar' 
-) ) )->setAttribute ( 'method', 'post' );
+) ) )->setAttribute ( 'method', 'post' )
+->setAttribute ('class', 'form-horizontal');
 $formLabel = $this->plugin ( 'formLabel' );
 
 $par_id= $form->get ( 'par_id' );
@@ -16,47 +18,83 @@ $sec_id = $form->get ( 'sec_id' );
 echo $this->form ()->openTag ( $form );
 
 //CAMPOS OCULTOS
-echo $this->formhidden ( $par_id );
-echo $this->formelementerrors ( $par_id );
+echo $this->formhidden ( $par_codigo );
+echo $this->formelementerrors ( $par_codigo );
 
 ?>
-<div class="panel panel-default">
-	<div class="panel-heading panel-heading-txt">&nbsp;</div>
-		<table width="100%" cellpadding="5">
-			<tr>
-				<td colspan="3">
-					<br />
-					<div width="50" valign="middle" class="icon-content"><img src="<?php echo $this->basepath() . '/img/png/ciudad_grande.png'?>" border="0" /></div>
-					<div class="txt-icon-content">Ingresar un nuevo parqueadero<br />Registre toda la informaci&oacute;n solicitada para ingresar un nuevo parqueadero.</div>
-					<div><br /><hr /></div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<?php echo $formLabel->openTag() . $sec_id->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formselect ( $sec_id ) );
-					  echo html_entity_decode( $this->formelementerrors ( $sec_id ) ); 
-				?>
-				</td>
-				<td>
-				<?php echo $formLabel->openTag() . $par_codigo->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formtext ( $par_codigo ) );
-					  echo html_entity_decode( $this->formelementerrors ( $par_codigo ) ); 
-				?>
-				</td>
-				<td>
-				<?php echo $formLabel->openTag() . $par_estado->getLabel() . $formLabel->closeTag();
-				      echo html_entity_decode( $this->formselect ( $par_estado ) );
-					  echo html_entity_decode( $this->formelementerrors ( $par_estado ) ); 
-				?>
-				</td>
-			</tr>
-		</table>
-		<div><br /><hr /></div>	
-		<div align="center">
-				<?php echo $this->formsubmit( $form->get ( 'ingresar' ) ) ?>
-				<a href="<?php echo $this->url('parametros', array('controller' => 'parqueadero', 'action' => 'listado'))?>" class ="btn btn-primary">Cancelar</a>
-			</div>	
-		<div>&nbsp;</div>	
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-12" >
+        <div class="box">
+            <div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-gears fa-fw"></i>
+					<span><?php echo $this->titulo ?> parqueadero</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content">
+			    <div class="row" style="padding-bottom: 12px;">
+        			<div class="col-md-11 col-md-offset-1">
+            		  <label class="control-label" style="color: #ee9f1f;">Ingrese la informaci&oacute;n solicitada. Todos los campos con * son obligatorios.</label>
+        			</div>
+    			</div>
+    			<div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php  
+                		echo $formLabel->openTag() . $sec_id->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+            			<?php 
+            			echo html_entity_decode( $this->formselect ( $sec_id ) );
+            			echo html_entity_decode( $this->formelementerrors ( $sec_id ) );
+            			?>
+            		</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                		echo $formLabel->openTag() . $par_id->getLabel() . $formLabel->closeTag();
+                	   ?>
+                    </div>
+                    <div class="col-md-8">
+            			<?php 
+            			echo html_entity_decode( $this->formtext ( $par_id ) );
+					    echo html_entity_decode( $this->formelementerrors ( $par_id ) ); 
+            			?>
+            		</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1">
+                        <?php 
+                		echo $formLabel->openTag() . $par_estado->getLabel() . $formLabel->closeTag();
+                	    ?>
+                    </div>
+                    <div class="col-md-8">
+                	   <?php 
+                		echo html_entity_decode( $this->formselect ( $par_estado ) );
+					    echo html_entity_decode( $this->formelementerrors ( $par_estado ) );   
+                	   ?>
+            		</div>
+                </div>
+                <div class="row">
+    				<div class="form-group col-md-12">
+            		     <div align="center">
+            				<?php echo $this->formsubmit( $form->get ( 'ingresar' ) ) ?>
+				            <a href="<?php echo $this->url('parametros', array('controller' => 'parqueadero', 'action' => 'listado'))?>" class ="btn btn-primary">Cancelar</a>
+            			</div>	
+        			</div>
+    			</div>
+			</div>
+        </div>
+    </div>
 </div>
 <?php echo $this->form()->closeTag(); ?>
