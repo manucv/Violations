@@ -639,7 +639,7 @@ class ApiController extends AbstractActionController
             $cliente->exchangeArray ( $data_cliente );
             $content='';
             $response=$this->getResponse();
-            if(!$this->getClienteDao()->verificar( $data )){ //envío los datos del usuario
+            if(!$this->getClienteDao()->verificar( $usuario )){ //envío los datos del usuario
                 $cli_id=$this->getClienteDao() ->guardar ( $cliente );
                 $clienteObj = $this->getClienteDao()->traer ( $cli_id );
                 $content=json_encode($clienteObj->getArrayCopy());
