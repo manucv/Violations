@@ -17,28 +17,29 @@ class Parqueadero extends Form {
 		* ********************************************/
 		
 		$this->add ( array (
-				'name' => 'par_id',
+				'name' => 'par_codigo',
 				'attributes' => array (
 						'type' => 'hidden',
-						'maxlength' => '11',
-						'id' => 'par_id',
+						'maxlength' => '7',
+						'id' => 'par_codigo',
 						'class' => 'form-control'
 				)
 		) );
+		
 		
 		/* ********************************************
 		 * CAMPO CODIGO PARQUEADERO
 		 * ********************************************/
 		
 		$this->add ( array (
-				'name' => 'par_codigo',
+				'name' => 'par_id',
 				'options' => array (
 						'label' => 'N&uacute;mero/C&oacute;digo de Parqueadero*:'
 				),
 				'attributes' => array (
 						'type' => 'text',
 						'maxlength' => '10',
-						'id' => 'par_codigo',
+						'id' => 'par_id',
 						'class' => 'form-control'
 				)
 		) );

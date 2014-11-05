@@ -31,7 +31,9 @@ class UsuariosController extends AbstractActionController {
 		$form = $this->getForm();
 		
 		return new ViewModel ( array (
-				'formulario' => $form 
+				'formulario' => $form,
+		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Usuarios' => array('usuarios','usuarios','index'), 'Ingresar Usuarios' => array('usuarios','usuarios','add')) ),
+		        'titulo' => 'Nuevo'
 		) );
 	}
 	public function editAction() {
@@ -51,7 +53,9 @@ class UsuariosController extends AbstractActionController {
 		
 		$viewModel = new ViewModel ( array (
 				'formulario' => $form ,
-				'edit' => true
+				'edit' => true,
+		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Usuarios' => array('usuarios','usuarios','index'), 'Actualizar Usuarios' => array('usuarios','usuarios','edit', $usu_id)) ),
+		        'titulo' => 'Actualizar'
 		) );
 		
 		$viewModel->setTemplate ( 'usuarios/usuarios/add' );
@@ -140,7 +144,9 @@ class UsuariosController extends AbstractActionController {
 			// SI EL FORMULARIO NO ES CORRECTO
 			$modelView = new ViewModel ( array (
 					'formulario' => $form ,
-					'edit' => $edit
+					'edit' => $edit,
+			        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Usuarios' => array('usuarios','usuarios','index'), 'Ingresar Usuarios' => array('usuarios','usuarios','add')) ),
+			        'titulo' => 'Validar informaci&oacute;n del'
 			) );
 			 
 			$modelView->setTemplate ( 'usuarios/usuarios/add' );

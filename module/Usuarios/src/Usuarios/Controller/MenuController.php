@@ -25,7 +25,9 @@ class MenuController extends AbstractActionController {
 		$form = $this->getForm();
 		
 		return new ViewModel ( array (
-				'formulario' => $form 
+				'formulario' => $form,
+		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Men&uacute; de Opciones' => array('usuarios','menu','index'), 'Ingresar Opci&oacute;n' => array('usuarios','menu','ingresar')) ),
+		        'titulo' => 'Nueva'
 		) );
 	}
 	public function editarAction() {
@@ -45,7 +47,9 @@ class MenuController extends AbstractActionController {
 		
 		$viewModel = new ViewModel ( array (
 				'formulario' => $form ,
-				'edit' => true
+		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Men&uacute; de Opciones' => array('usuarios','menu','index'), 'Actualizar Opci&oacute;n' => array('usuarios','menu','editar', $id)) ),
+		        'titulo' => 'Actualizar'
+		        
 		) );
 		
 		$viewModel->setTemplate ( 'usuarios/menu/ingresar' );
@@ -95,7 +99,9 @@ class MenuController extends AbstractActionController {
 			
 			// SI EL FORMULARIO NO ES CORRECTO
 			$modelView = new ViewModel ( array (
-					'formulario' => $form
+					'formulario' => $form,
+			        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Men&uacute; de Opciones' => array('usuarios','menu','index'), 'Ingresar Opci&oacute;n' => array('usuarios','menu','ingresar')) ),
+			        'titulo' => 'Validar informaci&oacute;n del'
 			) ); 
 			 
 			$modelView->setTemplate ( 'usuarios/menu/ingresar' );

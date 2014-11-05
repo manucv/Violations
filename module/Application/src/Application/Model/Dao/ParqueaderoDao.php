@@ -228,7 +228,7 @@ class ParqueaderoDao implements InterfaceCrud {
 	
 	public function traer($par_id) {
 		
-		$par_id = ( int ) $par_id;
+		$par_id = $par_id;
 		
 		$resultSet = $this->tableGateway->select ( array (
 				'par_id' => $par_id 
@@ -252,29 +252,34 @@ class ParqueaderoDao implements InterfaceCrud {
 				'sec_id' => $parqueadero->getSec_id()
 		);
 		
-		$data ['par_id'] = $id;
-		
-		if (!empty ( $id ) && !is_null ( $id )) {
-			if ($this->traer ( $id )) {
-				
-				$this->tableGateway->update ( $data, array ( 'par_id' => $id ) );
-				
-			} else {
-				throw new \Exception ( 'No se encontro el id para actualizar' );
-			}
-		}else{
-			$this->tableGateway->insert ( $data );
-		}
+		$this->tableGateway->insert ( $data );
+	}
+	
+	public function actualizar(Parqueadero $parqueadero, $par_codigo) {
+	
+	    $id = $parqueadero->getPar_id();
+	
+	    $data = array (
+	        'par_id' => $parqueadero->getPar_id(),
+	        'par_estado' => $parqueadero->getPar_estado(),
+	        'sec_id' => $parqueadero->getSec_id()
+	    );
+	
+	    if (!empty ( $par_codigo ) && !is_null ( $par_codigo )) {
+	        if ($this->traer ( $par_codigo )) {
+	
+	            $this->tableGateway->update ( $data, array ( 'par_id' => $par_codigo ) );
+	
+	        } else {
+	            throw new \Exception ( 'No se encontro el id para actualizar' );
+	        }
+	    }
 	}
 	
 	public function eliminar($id) {
-		if ($this->traer ( $id )) {
-			return $this->tableGateway->delete ( array (
-					'par_id' => $id 
-			) );
-		} else {
-			throw new \Exception ( 'No se encontro el id para eliminar' );
-		}
+		return $this->tableGateway->delete ( array (
+				'par_id' => $id 
+		) );
 	}
 	
 }

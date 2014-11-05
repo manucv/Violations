@@ -37,6 +37,8 @@ class CiudadController extends AbstractActionController
     	//FORMULARIO DE INGRESO DE INFORMACION
     	return new ViewModel ( array (
     			'formulario' => $form ,
+    	        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Ciudades' => array('parametros','ciudad','listado'), 'Ingresar Ciudades' => array('parametros','ciudad','ingresar')) ),
+    	        'titulo' => 'Nueva'
     	) );
     }
     
@@ -54,6 +56,8 @@ class CiudadController extends AbstractActionController
     
     	$view = new ViewModel ( array (
     			'formulario' => $form ,
+    	        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Ciudades' => array('parametros','ciudad','listado'), 'Actualizar Ciudades' => array('parametros','ciudad','editar', $id)) ),
+    	        'titulo' => 'Actualizar'
     	) );
     
     	$view->setTemplate('parametros/ciudad/ingresar');
@@ -109,6 +113,8 @@ class CiudadController extends AbstractActionController
     		// SI EL FORMULARIO NO ES CORRECTO
     		$modelView = new ViewModel ( array (
     				'formulario' => $form ,
+    		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Ciudades' => array('parametros','ciudad','listado'), 'Ingresar Ciudades' => array('parametros','ciudad','ingresar')) ),
+    		        'titulo' => 'Validar informaci&oacute;n de la'
     		) );
     		 
     		$modelView->setTemplate ( 'parametros/ciudad/ingresar' );

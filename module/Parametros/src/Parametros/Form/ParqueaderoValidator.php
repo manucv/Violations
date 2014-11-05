@@ -12,26 +12,24 @@ use Zend\Validator\InArray;
 
 class ParqueaderoValidator extends InputFilter {
 	function __construct() {
+	    
+	    $par_codigo = new Input ( 'par_codigo' );
+	    $par_codigo->setRequired ( false );
+	    $par_codigo->getValidatorChain ()->attach ( new StringLength ( array (
+	        'max' => 7,
+	        'min' => 1
+	    ) ) );
+	    
+	    $this->add ( $par_codigo );
 		
 		$par_id = new Input ( 'par_id' );
-		$par_id->setRequired ( false );
+		$par_id->setRequired ( true );
 		$par_id->getValidatorChain ()->attach ( new StringLength ( array (
-				'max' => 11,
+				'max' => 7,
 				'min' => 1
-		) ) )->attach ( new Digits () );
-		
-		$this->add ( $par_id );
-		
-		
-		$par_codigo = new Input ( 'par_codigo' );
-		$par_codigo->setRequired ( true );
-		$par_codigo->getValidatorChain ()->attach ( new StringLength ( array (
-				'max' => 10,
-		) ) )->attach ( new Alnum ( array (
-				'allowWhiteSpace' => true 
 		) ) )->attach(new NotEmpty());
 		
-		$this->add ( $par_codigo );
+		$this->add ( $par_id );
 		
 		
 		$par_estado = new Input ( 'par_estado' );

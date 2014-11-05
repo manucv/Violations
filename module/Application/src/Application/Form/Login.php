@@ -17,7 +17,8 @@ class Login extends Form {
 						'type' => 'text',
 						'maxlenght' => '255',
 						'id' => 'usu_usuario',
-						'class' => 'form-control' 
+						'class' => 'form-control',
+				        'style' => 'color: #000000; font-weight: 700;'
 				) 
 		) );
 		
@@ -30,7 +31,8 @@ class Login extends Form {
 						'type' => 'password',
 						'maxlenght' => '128',
 						'id' => 'usu_clave',
-						'class' => 'form-control'
+						'class' => 'form-control',
+				        'style' => 'color: #000000; font-weight: 700;'
 				)
 		));
 		
@@ -39,7 +41,8 @@ class Login extends Form {
 				'attributes' => array (
 						'type' => 'submit',
 						'value' => 'Ingresar al sistema',
-						'class' => 'btn btn-primary' 
+						'class' => 'btn btn-primary',
+				    'style' => 'background: #ee5d1f; border: 1px solid #f5b942;' 
 				) 
 		) );
 	}

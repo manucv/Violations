@@ -16,7 +16,12 @@ class InfraccionDao implements InterfaceCrud {
     
     public function traerTodos(){
     	$select = $this->tableGateway->getSql ()->select ();
-    	
+    	$select->join('usuario', 'usuario.usu_id = infraccion.usu_id');
+    	$select->join('tipo_infraccion', 'tipo_infraccion.tip_inf_id = infraccion.tip_inf_id');
+    	$select->join('sector', 'sector.sec_id = infraccion.sec_id');
+    	$select->join('ciudad', 'ciudad.ciu_id = sector.ciu_id');
+    	$select->join('estado', 'estado.est_id = ciudad.est_id');
+    	$select->join('pais', 'pais.pai_id = estado.pai_id');
     	$resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;
     }

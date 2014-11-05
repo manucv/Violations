@@ -65,6 +65,10 @@
 					}
 				}
 	    	});
+
+
+        	 $( "#parametros" ).trigger( "click" );
+
 		}); 
 
 		function eliminarRegistro(texto){
@@ -195,23 +199,23 @@
 			    <li>
 					<a href="<?php echo $this->url('parametros', array('controller' => 'index', 'action' => 'video')) ?>" >
 						<i class="fa fa-chevron-left"></i>
-						<span class="hidden-xs">Inicio</span>
+						<span class="hidden-xs" id="inicio">Inicio</span>
 					</a>
 				</li>
 				<li>
 					<a href="<?php echo $this->url('parametros', array('controller' => 'index', 'action' => 'index')) ?>">
 						<i class="fa fa-dashboard"></i>
-						<span class="hidden-xs">Dashboard</span>
+						<span class="hidden-xs" id="dashboard">Dashboard</span>
 					</a>
 				</li>
-				<li class="dropdown <?php if($this->activo == (1 or 2)): echo 'active'; endif;?>">
+				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-cogs"></i>
-						<span class="hidden-xs">Par&aacute;metros</span>
+						<span class="hidden-xs" id="parametros">Par&aacute;metros</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li <?php if($this->activo == 1): echo 'class="active"'; endif;?>><a href="<?php echo $this->url('parametros', array('controller' => 'pais', 'action' => 'listado')) ?>"><i class="fa fa-globe fa-fw"></i> Paises</a></li>
-						<li <?php if($this->activo == 2): echo 'class="active"'; endif;?>><a href="<?php echo $this->url('parametros', array('controller' => 'estado', 'action' => 'listado')) ?>"><i class="fa fa-building-o fa-fw"></i> Estados</a></li>
+						<li id="paises"><a href="<?php echo $this->url('parametros', array('controller' => 'pais', 'action' => 'listado')) ?>"><i class="fa fa-globe fa-fw"></i> Paises</a></li>
+						<li><a href="<?php echo $this->url('parametros', array('controller' => 'estado', 'action' => 'listado')) ?>"><i class="fa fa-building-o fa-fw"></i> Estados</a></li>
 						<li><a href="<?php echo $this->url('parametros', array('controller' => 'ciudad', 'action' => 'listado')) ?>"><i class="fa fa-flag-checkered fa-fw"></i> Ciudades</a></li>
 						<li><a href="<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'listado')) ?>"><i class="fa fa-location-arrow fa-fw"></i> Sectores</a></li>
 						<li><a href="<?php echo $this->url('parametros', array('controller' => 'parqueadero', 'action' => 'listado')) ?>"><i class="fa fa-map-marker fa-fw"></i> Parqueaderos</a></li>
@@ -221,7 +225,7 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-group"></i>
-						 <span class="hidden-xs">Administraci&oacute;n</span>
+						 <span class="hidden-xs" id="administracion">Administraci&oacute;n</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'index')) ?>"><i class="fa fa-user fa-fw"></i> Usuarios</a></li>
