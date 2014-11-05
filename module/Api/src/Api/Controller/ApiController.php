@@ -639,14 +639,14 @@ class ApiController extends AbstractActionController
             $cliente->exchangeArray ( $data_cliente );
             $content='';
             $response=$this->getResponse();
-            //if(!$this->getClienteDao()->verificar( $cliente )){
+            if(!$this->getClienteDao()->verificar( $data )){ //envío los datos del usuario
                 $cli_id=$this->getClienteDao() ->guardar ( $cliente );
                 $clienteObj = $this->getClienteDao()->traer ( $cli_id );
                 $content=json_encode($clienteObj->getArrayCopy());
                 $response->setStatusCode(200);
-            //}else {
-            //    $response->setStatusCode(409);
-            //}    
+            }else {
+                $response->setStatusCode(409);
+            }    
             $response->setContent($content);
 
             return $response;
@@ -659,8 +659,18 @@ class ApiController extends AbstractActionController
         }
     } 
 
-    public function recover_passwordAction()
+    public function recoverAction()
     {
+        
+        if($this->getRequest()->isPOST()){
+            $data = $this->request->getPost ();
+            //$usuario = Usuario::find();
+
+
+
+            echo $this->passwordGenerator();
+            die(); 
+        } 
         
         /*if($this->getRequest()->isPOST()){
 
@@ -692,6 +702,11 @@ class ApiController extends AbstractActionController
             ) );
         }*/
     }      
+
+    private function passwordGenerator($length=10){
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return substr(str_shuffle($chars),0,$length);
+    }
 
     public function getUsuarioDao() {
         if (! $this->usuarioDao) {
