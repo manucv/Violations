@@ -77,14 +77,16 @@ class TransferenciaSaldoDao implements InterfaceCrud {
         $query = "
             SELECT  tra_sal_id,
                     cd.cli_id as cli_id_de, 
-                    cd.cli_nombre as cli_nombre_de, 
+                    CONCAT(ud.usu_nombre,' ',ud.usu_apellido) as cli_nombre_de, 
                     cp.cli_id as cli_id_para, 
-                    cp.cli_nombre as cli_nombre_para, 
+                    CONCAT(up.usu_nombre,' ',up.usu_apellido) as cli_nombre_para, 
                     tra_sal_valor, 
                     tra_sal_hora
             FROM transferencia_saldo AS t
             JOIN cliente AS cd ON cd.cli_id = t.cli_id_de
-            JOIN cliente AS cp ON cp.cli_id = t.cli_id_para ";
+            JOIN usuario AS ud ON ud.usu_id=cd.usu_id 
+            JOIN cliente AS cp ON cp.cli_id = t.cli_id_para 
+            JOIN usuario AS up ON up.usu_id=cp.usu_id ";
 
         if($tipo=='OUT'){
             //Transfiero A

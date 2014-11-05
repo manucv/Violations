@@ -64,7 +64,7 @@ class TransaccionDao implements InterfaceCrud {
         $query = "
             SELECT 
                 t.tra_id,
-                t.est_id as establecimiento_id,
+                t.eta_id as establecimiento_id,
                 cli_id,
                 tra_valor,
                 tra_saldo,
@@ -117,10 +117,10 @@ class TransaccionDao implements InterfaceCrud {
             $jsonArray[$count]['sec_id']=$row['sec_id'];
             $jsonArray[$count]['sec_nombre']=$row['sec_nombre'];
             $jsonArray[$count]['ciu_id']=$row['ciu_id'];
-            $jsonArray[$count]['eta_id']=$row['eta_id'];
+            $jsonArray[$count]['est_id']=$row['est_id'];
             $jsonArray[$count]['ciu_nombre']=$row['ciu_nombre'];
             $jsonArray[$count]['pai_id']=$row['pai_id'];
-            $jsonArray[$count]['eta_nombre']=$row['eta_nombre'];
+            $jsonArray[$count]['est_nombre']=$row['est_nombre'];
             $jsonArray[$count]['pai_nombre']=$row['pai_nombre'];
 
             $count++;
