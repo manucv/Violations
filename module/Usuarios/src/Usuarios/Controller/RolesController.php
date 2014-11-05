@@ -16,7 +16,7 @@ class RolesController extends AbstractActionController {
 	protected $rolAplicacionDao;
 	
 	public function listadoAction() {
-	    $this->layout()->setVariable('activo', '7');
+	    $this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'roles');
 		return array (
 		      'roles' => $this->getRolDao ()->traerTodos (),
 		      'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Roles' => array('usuarios','roles','listado')) ),
@@ -25,6 +25,8 @@ class RolesController extends AbstractActionController {
 	
 	public function ingresarAction() {
 		$form = $this->getForm ();
+		
+		$this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'roles');
 		return new ViewModel ( array (
 				'form' => $form,
 		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Roles' => array('usuarios','roles','listado'), 'Ingresar Rol' => array('usuarios','roles','ingresar')) ),
@@ -64,6 +66,7 @@ class RolesController extends AbstractActionController {
 			}
 		}
 		
+		$this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'roles');
 		return $this->redirect ()->toRoute ( 'usuarios', array (
 				'controller' => 'roles',
 				'action' => 'listado' 
@@ -108,6 +111,7 @@ class RolesController extends AbstractActionController {
 		}
 		$form->get('aplicacion')->setAttributes(array('value' => $seleccionado));
 		
+		$this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'roles');
 		$viewModel = new ViewModel ( 
 		    array ( 
 		        'title' => 'Editar Rol', 

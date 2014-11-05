@@ -27,7 +27,7 @@ class SectorController extends AbstractActionController
 
     public function listadoAction()
     {
-        $this->layout()->setVariable('activo', '3');
+        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'sectores');
         return array(
             'sector' => $this->getSectorDao()->traerTodos(),
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Sectores' => array('parametros','sector','listado')) ),
@@ -38,6 +38,8 @@ class SectorController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         $form = $this->getForm();
+        
+        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'sectores');
         
         // FORMULARIO DE INGRESO DE INFORMACION
         return new ViewModel(array(
@@ -64,8 +66,12 @@ class SectorController extends AbstractActionController
         $form->get('est_id_hidden')->setValue($sector->getEst_id());
         $form->get('ciu_id_hidden')->setValue($sector->getCiu_id());
         
+        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'sectores');
+        
         $view = new ViewModel(array(
-            'formulario' => $form
+            'formulario' => $form,
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Sectores' => array('parametros','sector','listado'), 'Actualizar Sector' => array('parametros','sector','editar', $id)) ),
+            'titulo' => 'Actualizar'
         ));
         
         $view->setTemplate('parametros/sector/ingresar');
@@ -119,9 +125,13 @@ class SectorController extends AbstractActionController
         
         // SE VALIDA EL FORMULARIO ES CORRECTO
         if (! $form->isValid()) {
+            
+            $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'sectores');
             // SI EL FORMULARIO NO ES CORRECTO
             $modelView = new ViewModel(array(
-                'formulario' => $form
+                'formulario' => $form,
+                'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Sectores' => array('parametros','sector','listado'), 'Ingresar Sector' => array('parametros','sector','ingresar')) ),
+                'titulo' => 'Validar informaci&oacute;n de'
             ));
             
             $modelView->setTemplate('parametros/sector/ingresar');

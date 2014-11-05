@@ -17,7 +17,7 @@ class AplicacionesController extends AbstractActionController
 	
     public function listadoAction()
     {
-        $this->layout()->setVariable('activo', '8');
+        $this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'aplicaciones');
         return array(
             'aplicaciones' => $this->getAplicacionDao()->traerTodos(),
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Aplicaciones' => array('usuarios','aplicaciones','listado')) ),

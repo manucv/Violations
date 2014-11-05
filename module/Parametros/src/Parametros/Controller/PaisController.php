@@ -21,7 +21,7 @@ class PaisController extends AbstractActionController
 
     public function listadoAction()
     {
-        $this->layout()->setVariable('activo', '1');
+        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'paises');
         
         return array(
             'pais' => $this->getPaisDao()->traerTodos(),
@@ -34,6 +34,7 @@ class PaisController extends AbstractActionController
         $id = (int) $this->params()->fromRoute('id', 0);
         $form = $this->getForm();
         
+        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'paises');
         // FORMULARIO DE INGRESO DE INFORMACION
         return new ViewModel(array(
             'formulario' => $form,
@@ -53,6 +54,8 @@ class PaisController extends AbstractActionController
         
         $form->get('ingresar')->setAttribute('value', 'Actualizar');
         $form->get('pai_id')->setAttribute('value', $pais->getPai_id());
+        
+        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'paises');
         
         $view = new ViewModel(array(
             'formulario' => $form,
@@ -108,6 +111,8 @@ class PaisController extends AbstractActionController
         
         // SE VALIDA EL FORMULARIO ES CORRECTO
         if (! $form->isValid()) {
+            
+            $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'paises');
             // SI EL FORMULARIO NO ES CORRECTO
             $modelView = new ViewModel(array(
                 'formulario' => $form,

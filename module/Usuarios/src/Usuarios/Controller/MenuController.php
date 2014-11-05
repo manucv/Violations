@@ -15,7 +15,7 @@ class MenuController extends AbstractActionController {
 	protected $menuDao;
 	
 	public function indexAction() {
-	    $this->layout()->setVariable('activo', '6');
+	    $this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'menus');	       
 		return array (
 				'menu' => $this->getMenuDao ()->traerTodos (),
 		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Men&uacute; de Opciones' => array('usuarios','menu','index')) ),
@@ -24,6 +24,7 @@ class MenuController extends AbstractActionController {
 	public function ingresarAction() {
 		$form = $this->getForm();
 		
+		$this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'menus');
 		return new ViewModel ( array (
 				'formulario' => $form,
 		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Men&uacute; de Opciones' => array('usuarios','menu','index'), 'Ingresar Opci&oacute;n' => array('usuarios','menu','ingresar')) ),
@@ -45,11 +46,11 @@ class MenuController extends AbstractActionController {
 		$form->get('ingresar')->setValue('Actualizar');
 		$form->get('men_id')->setValue($usuario->getMen_id());
 		
+		$this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'menus');
 		$viewModel = new ViewModel ( array (
 				'formulario' => $form ,
 		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Men&uacute; de Opciones' => array('usuarios','menu','index'), 'Actualizar Opci&oacute;n' => array('usuarios','menu','editar', $id)) ),
 		        'titulo' => 'Actualizar'
-		        
 		) );
 		
 		$viewModel->setTemplate ( 'usuarios/menu/ingresar' );
@@ -97,6 +98,7 @@ class MenuController extends AbstractActionController {
 		//SE VALIDA EL FORMULARIO ES CORRECTO
 		if (! $form->isValid ()) {
 			
+		    $this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'menus');
 			// SI EL FORMULARIO NO ES CORRECTO
 			$modelView = new ViewModel ( array (
 					'formulario' => $form,

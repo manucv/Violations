@@ -22,7 +22,8 @@ class CiudadController extends AbstractActionController
 	
     public function listadoAction()
     {
-        $this->layout()->setVariable('activo', '3');
+        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'ciudades');
+        
         return array(
             'ciudad' => $this->getCiudadDao()->traerTodos(),
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Ciudades' => array('parametros','ciudad','listado')) ),
@@ -33,6 +34,8 @@ class CiudadController extends AbstractActionController
     
     	$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
     	$form = $this->getForm ();
+    	
+    	$this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'ciudades');
     
     	//FORMULARIO DE INGRESO DE INFORMACION
     	return new ViewModel ( array (
@@ -54,6 +57,8 @@ class CiudadController extends AbstractActionController
     	$form->get ( 'ingresar' )->setAttribute ( 'value', 'Actualizar' );
     	$form->get ( 'ciu_id' )->setAttribute ( 'value', $ciudad->getCiu_id() );
     
+    	$this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'ciudades');
+    	
     	$view = new ViewModel ( array (
     			'formulario' => $form ,
     	        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Ciudades' => array('parametros','ciudad','listado'), 'Actualizar Ciudades' => array('parametros','ciudad','editar', $id)) ),
@@ -110,6 +115,8 @@ class CiudadController extends AbstractActionController
     
     	//SE VALIDA EL FORMULARIO ES CORRECTO
     	if (! $form->isValid ()) {
+    	    
+    	    $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'ciudades');
     		// SI EL FORMULARIO NO ES CORRECTO
     		$modelView = new ViewModel ( array (
     				'formulario' => $form ,

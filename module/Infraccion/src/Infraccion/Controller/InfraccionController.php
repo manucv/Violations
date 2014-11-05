@@ -15,7 +15,7 @@ class InfraccionController extends AbstractActionController
 {
     public function indexAction()
     {
-        $this->layout()->setVariable('activo', '14');
+        $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'infracciones');
         return array(
             'infraccion' => $this->getInfraccionDao()->traerTodos(),
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),

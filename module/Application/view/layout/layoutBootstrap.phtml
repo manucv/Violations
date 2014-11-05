@@ -66,8 +66,7 @@
 				}
 	    	});
 
-
-        	 $( "#parametros" ).trigger( "click" );
+			//menuActive('<?php echo $this->menupadre; ?>', '<?php echo $this->menuhijo; ?>');
 
 		}); 
 
@@ -79,6 +78,15 @@
 			}
 
 			return false;
+		}
+
+		function menuActive(padre, hijo){
+
+			if(padre != null){
+				$( '#' + padre ).trigger( 'click' );
+			}
+			
+		    $( '#' + hijo ).attr( 'class','active' );
 		}
 	</script>
 				
@@ -215,11 +223,11 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li id="paises"><a href="<?php echo $this->url('parametros', array('controller' => 'pais', 'action' => 'listado')) ?>"><i class="fa fa-globe fa-fw"></i> Paises</a></li>
-						<li><a href="<?php echo $this->url('parametros', array('controller' => 'estado', 'action' => 'listado')) ?>"><i class="fa fa-building-o fa-fw"></i> Estados</a></li>
-						<li><a href="<?php echo $this->url('parametros', array('controller' => 'ciudad', 'action' => 'listado')) ?>"><i class="fa fa-flag-checkered fa-fw"></i> Ciudades</a></li>
-						<li><a href="<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'listado')) ?>"><i class="fa fa-location-arrow fa-fw"></i> Sectores</a></li>
-						<li><a href="<?php echo $this->url('parametros', array('controller' => 'parqueadero', 'action' => 'listado')) ?>"><i class="fa fa-map-marker fa-fw"></i> Parqueaderos</a></li>
-						<li><a href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'listado')) ?>"><i class="fa fa-list fa-fw"></i> Tipo Infracci&oacute;n</a></li>
+						<li id="estados"><a href="<?php echo $this->url('parametros', array('controller' => 'estado', 'action' => 'listado')) ?>"><i class="fa fa-building-o fa-fw"></i> Estados</a></li>
+						<li id="ciudades"><a href="<?php echo $this->url('parametros', array('controller' => 'ciudad', 'action' => 'listado')) ?>"><i class="fa fa-flag-checkered fa-fw"></i> Ciudades</a></li>
+						<li id="sectores"><a href="<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'listado')) ?>"><i class="fa fa-location-arrow fa-fw"></i> Sectores</a></li>
+						<li id="parqueaderos"><a href="<?php echo $this->url('parametros', array('controller' => 'parqueadero', 'action' => 'listado')) ?>"><i class="fa fa-map-marker fa-fw"></i> Parqueaderos</a></li>
+						<li id="tipoInfraccion"><a href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'listado')) ?>"><i class="fa fa-list fa-fw"></i> Tipo Infracci&oacute;n</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -228,31 +236,31 @@
 						 <span class="hidden-xs" id="administracion">Administraci&oacute;n</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'index')) ?>"><i class="fa fa-user fa-fw"></i> Usuarios</a></li>
-						<li><a href="<?php echo $this->url('usuarios', array('controller' => 'roles', 'action' => 'listado')) ?>"><i class="fa fa-random fa-fw"></i> Roles</a></li>
-						<li><a href="<?php echo $this->url('usuarios', array('controller' => 'aplicaciones', 'action' => 'listado')) ?>"><i class="fa fa-reorder fa-fw"></i> Aplicaciones</a></li>
-						<li><a href="<?php echo $this->url('usuarios', array('controller' => 'menu', 'action' => 'index')) ?>"><i class="fa fa-external-link fa-fw"></i> Men&uacute;s</a></li>
+						<li id="usuarios"><a href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'index')) ?>"><i class="fa fa-user fa-fw"></i> Usuarios</a></li>
+						<li id="roles"><a href="<?php echo $this->url('usuarios', array('controller' => 'roles', 'action' => 'listado')) ?>"><i class="fa fa-random fa-fw"></i> Roles</a></li>
+						<li id="aplicaciones"><a href="<?php echo $this->url('usuarios', array('controller' => 'aplicaciones', 'action' => 'listado')) ?>"><i class="fa fa-reorder fa-fw"></i> Aplicaciones</a></li>
+						<li id="menus"><a href="<?php echo $this->url('usuarios', array('controller' => 'menu', 'action' => 'index')) ?>"><i class="fa fa-external-link fa-fw"></i> Men&uacute;s</a></li>
 					</ul>
 				</li>
-				<li>
+				<li id="infracciones">
 					 <a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'index')) ?>">
 						 <i class="fa fa-gavel"></i>
 						 <span class="hidden-xs">Infracciones</span>
 					</a>
 				</li>
-				 <li>
+				 <li id="parqueaderoDisponible">
 					<a href="<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'index')) ?>">
 						 <i class="fa fa-table"></i>
 						 <span class="hidden-xs">Parqueaderos Disponibles</span>
 					</a>
 				 </li>
-				  <li>
+				  <li id="clientes">
 					<a href="<?php echo $this->url('clientes', array('controller' => 'index', 'action' => 'listado')) ?>">
 						 <i class="fa fa-child"></i>
 						 <span class="hidden-xs">Clientes</span>
 					</a>
 				 </li>
-				  <li>
+				  <li id="comprasParqueo">
 					<a href="<?php echo $this->url('clientes', array('controller' => 'compras', 'action' => 'transaccion')) ?>">
 						 <i class="fa fa-dollar"></i>
 						 <span class="hidden-xs">Compras de Parqueo</span>
@@ -261,7 +269,7 @@
 				 <li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-bar-chart-o"></i>
-						<span class="hidden-xs">Reportes</span>
+						<span class="hidden-xs" id="reportes">Reportes</span>
 					</a>
 					<ul class="dropdown-menu">
     					<li><a href="<?php echo $this->url('reportes', array('controller' => 'index', 'action' => 'index')) ?>">Float Charts</a></li>

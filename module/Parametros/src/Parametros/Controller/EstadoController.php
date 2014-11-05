@@ -23,7 +23,8 @@ class EstadoController extends AbstractActionController
     public function listadoAction()
     {
         
-        $this->layout()->setVariable('activo', '2');
+        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'estados');
+        
         return array(
             'estado' => $this->getEstadoDao()->traerTodos(),
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Estados' => array('parametros','estado','listado')) ),
@@ -35,6 +36,7 @@ class EstadoController extends AbstractActionController
     	$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
     	$form = $this->getForm ();
     	 
+    	$this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'estados');
     	//FORMULARIO DE INGRESO DE INFORMACION
     	return new ViewModel ( array (
     			'formulario' => $form ,
@@ -55,6 +57,7 @@ class EstadoController extends AbstractActionController
     	$form->get ( 'ingresar' )->setAttribute ( 'value', 'Actualizar' );
     	$form->get ( 'est_id' )->setAttribute ( 'value', $estado->getEst_id() );
     
+    	$this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'estados');
     	$view = new ViewModel ( array (
     			'formulario' => $form ,
     	        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Estados' => array('parametros','estado','listado'), 'Actualizar Estados' => array('parametros','estado','editar', $id)) ),
@@ -111,6 +114,8 @@ class EstadoController extends AbstractActionController
     	 
     	//SE VALIDA EL FORMULARIO ES CORRECTO
     	if (! $form->isValid ()) {
+    	    
+    	    $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'estados');
     		// SI EL FORMULARIO NO ES CORRECTO
     		$modelView = new ViewModel ( array (
     				'formulario' => $form ,

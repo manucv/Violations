@@ -21,7 +21,7 @@ class TipoInfraccionController extends AbstractActionController
 	
     public function listadoAction()
     {
-        $this->layout()->setVariable('activo', '5');
+        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'tipoInfraccion');
         return array(
             'infraccion' => $this->getTipoInfraccionDao()->traerTodos(),
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado Tipos de Infracci&oacute;n' => array('parametros','tipoinfraccion','listado')) ),
@@ -34,6 +34,7 @@ class TipoInfraccionController extends AbstractActionController
     	$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
     	$form = $this->getForm ();
     	 
+    	$this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'tipoInfraccion');
     	//FORMULARIO DE INGRESO DE INFORMACION
     	return new ViewModel ( array (
     			'formulario' => $form ,
@@ -54,6 +55,7 @@ class TipoInfraccionController extends AbstractActionController
     	$form->get ( 'ingresar' )->setAttribute ( 'value', 'Actualizar' );
     	$form->get ( 'tip_inf_id' )->setAttribute ( 'value', $estado->getTip_inf_id() );
     
+    	$this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'tipoInfraccion');
     	$view = new ViewModel ( array (
     			'formulario' => $form ,
     	        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado Tipos de Infracci&oacute;n' => array('parametros','tipoinfraccion','listado'), 'Actualizar Tipo de Infracci&oacute;n' => array('parametros','tipoinfraccion','editar', $id)) ),
@@ -108,6 +110,8 @@ class TipoInfraccionController extends AbstractActionController
     	 
     	//SE VALIDA EL FORMULARIO ES CORRECTO
     	if (! $form->isValid ()) {
+    	    
+    	    $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'tipoInfraccion');
     		// SI EL FORMULARIO NO ES CORRECTO
     		$modelView = new ViewModel ( array (
     				'formulario' => $form ,

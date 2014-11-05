@@ -22,7 +22,8 @@ class ParqueaderoController extends AbstractActionController
 	
     public function listadoAction()
     {
-        $this->layout()->setVariable('activo', '4');
+        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'parqueaderos');
+        
         return array(
             'parqueadero' => $this->getParqueaderoDao()->traerTodos(),
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Parqueaderos' => array('parametros','parqueadero','listado')) ),
@@ -34,6 +35,7 @@ class ParqueaderoController extends AbstractActionController
     	$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
     	$form = $this->getForm ();
     	
+    	$this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'parqueaderos');
     	//FORMULARIO DE INGRESO DE INFORMACION
     	return new ViewModel ( array (
     			'formulario' => $form ,
@@ -55,6 +57,7 @@ class ParqueaderoController extends AbstractActionController
     	$form->get ( 'ingresar' )->setAttribute ( 'value', 'Actualizar' );
     	$form->get ( 'par_codigo' )->setAttribute ( 'value', $parqueadero->getPar_id() );
     		
+    	$this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'parqueaderos');
     	$view = new ViewModel ( array (
     			'formulario' => $form ,
     	        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Parqueaderos' => array('parametros','parqueadero','listado'), 'Actualizar Parqueadero' => array('parametros','parqueadero','editar', $id)) ),
@@ -108,6 +111,8 @@ class ParqueaderoController extends AbstractActionController
     	
     	//SE VALIDA EL FORMULARIO ES CORRECTO
     	if (! $form->isValid ()) {
+    	    
+    	    $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'parqueaderos');
     		// SI EL FORMULARIO NO ES CORRECTO
     		$modelView = new ViewModel ( array (
     				'formulario' => $form,

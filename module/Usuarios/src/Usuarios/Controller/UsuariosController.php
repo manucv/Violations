@@ -21,7 +21,7 @@ class UsuariosController extends AbstractActionController {
 	
 	// protected $max_detalle_contacto=5;
 	public function indexAction() {
-	    $this->layout()->setVariable('activo', '6');
+	    $this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'usuarios');
 		return array (
 			'usuarios' => $this->getUsuarioDao ()->traerTodos (),
 		    'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Usuarios' => array('usuarios','usuarios','index')) ),
@@ -30,6 +30,7 @@ class UsuariosController extends AbstractActionController {
 	public function addAction() {
 		$form = $this->getForm();
 		
+		$this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'usuarios');
 		return new ViewModel ( array (
 				'formulario' => $form,
 		        'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Usuarios' => array('usuarios','usuarios','index'), 'Ingresar Usuarios' => array('usuarios','usuarios','add')) ),
@@ -51,6 +52,7 @@ class UsuariosController extends AbstractActionController {
 		$form->get('ingresar')->setValue('Actualizar');
 		$form->get('usu_id')->setValue($usuario->getUsu_id());
 		
+		$this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'usuarios');
 		$viewModel = new ViewModel ( array (
 				'formulario' => $form ,
 				'edit' => true,
@@ -82,6 +84,7 @@ class UsuariosController extends AbstractActionController {
 			$form->bind ( $rolUsuario );
 		}
 		
+		$this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'usuarios');
 		$viewModel = new ViewModel (array(
 				'title' => 'Editar Empresa',
 				'formulario' => $form
@@ -141,6 +144,8 @@ class UsuariosController extends AbstractActionController {
 			if(!empty($data['usu_id']) && !is_null($data['usu_id'])){
 				$edit = true;
 			}
+			
+			$this->layout()->setVariable('menupadre', 'administracion')->setVariable('menuhijo', 'usuarios');
 			// SI EL FORMULARIO NO ES CORRECTO
 			$modelView = new ViewModel ( array (
 					'formulario' => $form ,
