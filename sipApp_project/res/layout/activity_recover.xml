@@ -2,42 +2,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:background="@drawable/background_register" >
+    android:background="@drawable/background_register"
+    android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/TxtRecoverPassword"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Usuario ó Email"
-        android:layout_margin="15dp"
-		android:padding="10dp"
-        android:background="#ffffff"
-        android:lines="1"
-        android:maxLines="1"
-       	android:singleLine="true">        
-        <requestFocus />
-    </EditText>
+        android:orientation="vertical"
+        android:padding="5dp" >
 
-    <Button
-        android:id="@+id/BtnRecoverPassword"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Recuperar Contraseña" 
-        android:layout_margin="15dp"
-        android:background="#000000"
-        android:padding="5dp"
-        android:textColor="#ffffff"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Ingresa tu usuario o contraseña, da click en recuperar contraseña. Se enviará un correo a la cuenta de email que registraste para continuar con el proceso de recuperación de contraseña." />
+            <EditText
+                android:id="@+id/TxtRecoverPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/text_bkg"
+                android:ems="10"
+                android:hint="Usuario ó Email"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true" >
+
+                <requestFocus />
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <Button
+                android:id="@+id/BtnRecoverPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="36dp"
+                android:background="@drawable/button_bkg"
+                android:text="Recuperar Contraseña"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/TxtSaldoAddContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Ingresa tu usuario o contraseña, da click en recuperar contraseña. Se enviará un correo a la cuenta de email que registraste para continuar con el proceso de recuperación de contraseña." />
+    </LinearLayout>
 
 </LinearLayout>

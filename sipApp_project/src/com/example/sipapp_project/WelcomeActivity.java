@@ -1,6 +1,5 @@
 package com.example.sipapp_project;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,10 +16,6 @@ public class WelcomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        
-        ActionBar actionBar = getActionBar();
-        String dateString = "SIP                  Quito, "+android.text.format.DateFormat.format("dd 'de' MMM. yyyy", new java.util.Date()).toString();
-        actionBar.setTitle(dateString);
         
         TextView txtSaldo = (TextView)findViewById(R.id.TxtSaldo);
         Button btnCategorias = (Button)findViewById(R.id.BtnCategorias);

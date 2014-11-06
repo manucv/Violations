@@ -35,6 +35,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -43,6 +45,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -205,7 +209,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 	    @Override
 		protected Boolean doInBackground(String... params) {
 	    	
-	    	boolean resul = true;
+	    	boolean resul = false;
 	    	
 	    	HttpClient httpClient = new DefaultHttpClient();
 	        
@@ -213,7 +217,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 			String aut_placa=params[1];
 			String log_par_horas_parqueo=params[2];	
 			
-			String url = "http://www.hawasolutions.com/Violations/public/api/api/comprar/"+cli_id;
+			String url = "http://www.hawasolutions.com/Violations2/public/api/api/comprar/"+cli_id;
 			List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
 			paramsArray.add( new BasicNameValuePair( "par_id", par_id ) );
 			paramsArray.add( new BasicNameValuePair( "aut_placa", aut_placa ) );
@@ -233,24 +237,50 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 		        	JSONObject respJSON = new JSONObject(respStr);
 		        	
 		        	if(respStr.length() > 0){
+		        		
+			    		  /*Envío de Notificación al teléfono*/
+			    		  
+		    		  	NotificationCompat.Builder mBuilder =
+		    			        new NotificationCompat.Builder(ParkingActivity.this)
+		    			        .setSmallIcon(R.drawable.ic_launcher)
+		    			        .setContentTitle("Parqueo Exitoso")
+		    			        .setContentText("Tu parqueadero expira en "+spnLog_par_horas_parqueo.getSelectedItem().toString()+" horas");
+
+		    			Intent resultIntent = new Intent(ParkingActivity.this, MainActivity.class);
+
+		    			TaskStackBuilder stackBuilder = TaskStackBuilder.create(ParkingActivity.this);
+		    			stackBuilder.addParentStack(MainActivity.class);
+		    			stackBuilder.addNextIntent(resultIntent);
+		    			PendingIntent resultPendingIntent =
+		    			        stackBuilder.getPendingIntent(
+		    			            0,
+		    			            PendingIntent.FLAG_UPDATE_CURRENT
+		    			        );
+		    			mBuilder.setContentIntent(resultPendingIntent);
+		    			NotificationManager mNotificationManager =
+		    			    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		    			mNotificationManager.notify(001, mBuilder.build());		    		  
+		    		  
+		    		  /*Fin de Envío de notificación*/		        		
+		        		
 		                 //Creamos el Intent
 		                 Intent intent =
 		                         new Intent(ParkingActivity.this, WaitingActivity.class);
 
 		                 //Creamos la información a pasar entre actividades
 		                 Bundle b = new Bundle();
-		                 b.putString("NOMBRE", respJSON.getString("cli_nombre"));
+		                 b.putString("NOMBRE", respJSON.getString("usu_nombre")+" "+respJSON.getString("usu_apellido"));
 		                 b.putString("SALDO", respJSON.getString("cli_saldo"));
 		                 b.putString("ID", respJSON.getString("cli_id"));
 		                 b.putString("TRA_ID", respJSON.getString("tra_id"));
-		                
-		                 
 		                 
 		                 //Añadimos la información al intent
 		                 intent.putExtras(b);
 
 		                 //Iniciamos la nueva actividad
 		                 startActivity(intent);		
+		                 
+		                 resul=true;
 		        	}
 		        	
 		        }
@@ -291,7 +321,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 
 	    	String sec_id = params[0];
 			
-			String url = "http://www.hawasolutions.com/Violations/public/api/api/parqueaderos";
+			String url = "http://www.hawasolutions.com/Violations2/public/api/api/parqueaderos";
 			List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
 			paramsArray.add( new BasicNameValuePair( "sec_id", sec_id ) );
 			URI uri = null;
@@ -364,7 +394,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 			
 			if(par_id.getText().toString().length()>3){
 				
-				String url="http://www.hawasolutions.com/Violations/public/api/api/parqueaderos/"+par_id.getText().toString();
+				String url="http://www.hawasolutions.com/Violations2/public/api/api/parqueaderos/"+par_id.getText().toString();
 				
 		    	HttpClient httpClient = new DefaultHttpClient();
 		    	HttpGet get = new HttpGet(url);
@@ -402,9 +432,6 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 					e.printStackTrace();
 				}
 				
-				
-				//JSONObject obj = respJSON.getJSONObject(i);
-				//"http://www.hawasolutions.com/Violations/public/api/api/parqueaderos/"+
 			}
 				
 			return false;
@@ -481,7 +508,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 		@Override
 		protected Boolean doInBackground(String... params) {
 	    	
-			String url = "http://www.hawasolutions.com/Violations/public/api/api/sectores";
+			String url = "http://www.hawasolutions.com/Violations2/public/api/api/sectores";
 
 	    	HttpClient httpClient = new DefaultHttpClient();
 			HttpGet get = new HttpGet(url);

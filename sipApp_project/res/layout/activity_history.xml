@@ -41,7 +41,8 @@
                     android:id="@+id/tabCompras"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" >
+                    android:orientation="vertical"
+                    android:padding="10dp" >
 
                     <ProgressBar
                         android:id="@+id/loadingHistory"
@@ -53,7 +54,7 @@
                         android:id="@+id/LstHistory"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@android:color/white" >
+                        android:background="@drawable/text_bkg" >
                     </ListView>
 
                 </LinearLayout>
@@ -62,7 +63,8 @@
                     android:id="@+id/tabTransferencias"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" >
+                    android:orientation="vertical"
+                    android:padding="10dp" >
 
                     <ProgressBar
                         android:id="@+id/loadingTransfer"
@@ -73,8 +75,9 @@
                     <ListView
                         android:id="@+id/LstTransfer"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" 
-                        android:background="@android:color/white" >
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/text_bkg" >
+
                     </ListView>
 
                 </LinearLayout>
@@ -83,7 +86,8 @@
                     android:id="@+id/tabTransferIn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" >
+                    android:orientation="vertical"
+                    android:padding="10dp" >
 
                     <ProgressBar
                         android:id="@+id/loadingTransferIn"
@@ -95,7 +99,8 @@
                         android:id="@+id/LstTransferIn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-						android:background="@android:color/white" >
+                        android:background="@drawable/text_bkg" >
+
                     </ListView>
 
                 </LinearLayout>   
@@ -104,8 +109,11 @@
                     android:id="@+id/tabRecarga"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" >
+                    android:orientation="vertical"
+                    android:padding="10dp" >
+
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/tabCuenta"
                     android:layout_width="match_parent"

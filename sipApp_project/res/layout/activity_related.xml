@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@drawable/background" >
+    android:background="@drawable/background"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/TxtSaldoContactos"
@@ -17,47 +17,67 @@
         android:textStyle="bold"      
          />
 
+    <ProgressBar
+        android:id="@+id/LoadingContacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="5dp" >
 
-        <ProgressBar
-            android:id="@+id/LoadingContacts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
-
-        <TextView
-            android:id="@+id/LblReferencedClient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Buscar Contacto" />
-
-        <EditText
-            android:id="@+id/TxtBuscar"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:padding="5dp" >
 
-        <Button
-            android:id="@+id/BtnAgregar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Agregar Contacto" />
+            <EditText
+                android:id="@+id/TxtBuscar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="0.2"
+                android:background="@drawable/text_bkg"
+                android:ems="10"
+                android:fitsSystemWindows="true" 
+               	android:lines="1"
+            	android:maxLines="1"
+            	android:singleLine="true"        
+                >
 
-        <TextView
-            android:id="@+id/LblSMS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mis Contactos" />
+                <requestFocus />
+            </EditText>
 
-        <ListView
-            android:id="@+id/LstContacts"
+            <Button
+                android:id="@+id/BtnAgregar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.8"
+                android:background="@drawable/button_bkg"
+                android:fitsSystemWindows="true"
+                android:text="+"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <ListView
+                android:id="@+id/LstContacts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/text_bkg" >
+
+            </ListView>
+
+        </LinearLayout>
 
     </LinearLayout>
 

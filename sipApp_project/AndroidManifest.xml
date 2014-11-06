@@ -13,12 +13,14 @@
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<uses-permission android:name="android.permission.SEND_SMS" />
+	
 	<uses-feature
         android:glEsVersion="0x00020000"
         android:required="true"/>	
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
+        android:logo="@drawable/action_bar_icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         
@@ -29,8 +31,9 @@
 		            
         <activity
             android:name="com.example.sipapp_project.MainActivity"
-            android:label="@string/app_name"
             android:screenOrientation="portrait" 
+	        android:icon="@drawable/ic_launcher"
+	        android:label="@string/app_name"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,91 +42,114 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.sipapp_project.WelcomeActivity"
-                  android:label="SIP" 
+                  android:icon="@drawable/action_bar_icon"
+            	  android:label="" 
                   android:screenOrientation="portrait" 
                   android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name="com.example.sipapp_project.CategoriesActivity"
+                  android:icon="@drawable/action_bar_icon"
                   android:label="Categorias"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan"  >
         </activity>
         <activity android:name="com.example.sipapp_project.CategoryActivity"
                   android:label="Categoría" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity android:name="com.example.sipapp_project.EstablishmentActivity"
                   android:label="Establecimiento" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>      
         <activity android:name="com.example.sipapp_project.ParkingActivity"
                   android:label="Parqueaderos" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>   
         <activity android:name="com.example.sipapp_project.LocationActivity"
                   android:label="Ubicación" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
 		<activity android:name="com.example.sipapp_project.HistoryActivity"
                   android:label="Mis Transacciones" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity android:name="com.example.sipapp_project.BuyActivity"
                   android:label="Cargar Saldo" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity android:name="com.example.sipapp_project.RelatedActivity"
                   android:label="Contactos" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan"
                    >
         </activity>
         <activity android:name="com.example.sipapp_project.TransferActivity"
                   android:label="Transferencias" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>     
 		<activity android:name="com.example.sipapp_project.WaitingActivity"
                   android:label="Tiempo Disponible" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity> 
 		<activity android:name="com.example.sipapp_project.RegisterActivity"
                   android:label="Registrate" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>   
 		<activity android:name="com.example.sipapp_project.MapActivity"
                   android:label="Mapa" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
 		<activity android:name="com.example.sipapp_project.RecoverActivity"
                   android:label="Recuperar Contraseña" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity android:name="com.example.sipapp_project.InfoActivity"
                   android:label="Acerca De" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>  
         <activity android:name="com.example.sipapp_project.SMSActivity"
                   android:label="Envio de SMS" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity android:name="com.example.sipapp_project.MethodActivity"
                   android:label="Forma de Recarga" 
+                  android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
-        </activity> 
+        </activity>
+        <activity android:name="com.example.sipapp_project.AddContactActivity"
+                  android:label="Agregar Contacto" 
+                  android:icon="@drawable/action_bar_icon"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan" >
+        </activity>  
     </application>
 
 </manifest>

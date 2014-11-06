@@ -111,7 +111,7 @@ public class MapActivity extends ParqueaderoActivity implements LocationListener
 		@Override
 		protected Boolean doInBackground(String... params) {
 	    	
-			String url = "http://www.hawasolutions.com/Violations/public/api/api/sectores";
+			String url = "http://www.hawasolutions.com/Violations2/public/api/api/sectores";
 
 	    	HttpClient httpClient = new DefaultHttpClient();
 			HttpGet get = new HttpGet(url);

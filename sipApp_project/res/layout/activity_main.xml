@@ -2,18 +2,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_login"
-    android:padding="10dp"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical"
+    android:background="@drawable/background_register"
     android:screenOrientation="portrait"
     tools:context="com.example.sipapp_project.MainActivity"
     tools:ignore="MergeRootFrame" >
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="vertical" >
+        android:layout_gravity="center_vertical"
+        android:gravity="center|center_vertical"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_horizontal"
+                android:adjustViewBounds="true"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo" />
+
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/loadingLogin"
@@ -21,56 +42,78 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />
 
-        <EditText
-            android:id="@+id/TxtEmail"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:alpha="1"
-            android:background="#ffffff"
-            android:ems="10"
-            android:hint="Usuario o Email"
-            android:lines="1"
-            android:maxLines="1"
-            android:padding="10dp"
-            android:singleLine="true" >
+            android:layout_weight="0.01"
+            android:padding="5dp" >
 
-            <requestFocus />
-        </EditText>
+            <EditText
+                android:id="@+id/TxtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:alpha="1"
+                android:background="@drawable/text_bkg"
+                android:ems="10"
+                android:hint="Usuario o Email"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true" >
 
-        <EditText
-            android:id="@+id/TxtPassword"
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:background="#ffffff"
-            android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:lines="1"
-            android:maxLines="1"
-            android:padding="10dp"
-            android:singleLine="true" />
+            android:layout_weight="0.01"
+            android:padding="5dp" >
 
-        <Button
-            android:id="@+id/BtnLogIn"
+            <EditText
+                android:id="@+id/TxtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/text_bkg"
+                android:ems="10"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:background="#000000"
-            android:padding="5dp"
-            android:text="Ingresar"
-            android:textColor="#ffffff" />
+            android:layout_weight="0.01"
+            android:padding="5dp" >
 
-        <Button
-            android:id="@+id/BtnSignIn"
+            <Button
+                android:id="@+id/BtnLogIn"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:background="@drawable/button_bkg"
+                android:text="Ingresar"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:background="#000000"
-            android:padding="5dp"
-            android:text="Registrate"
-            android:textColor="#ffffff" />
+            android:layout_weight="0.01"
+            android:padding="5dp" >
+
+            <Button
+                android:id="@+id/BtnSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:background="@drawable/button_bkg"
+                android:text="Registrate"
+                android:textColor="#ffffff" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/LblRecover"
@@ -78,7 +121,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
-            android:layout_weight="0.09"
             android:text="¿Olvidó su contraseña?" />
 
         <TextView
@@ -88,7 +130,6 @@
             android:layout_gravity="center_horizontal"
             android:padding="5dp"
             android:text="¿Sin internet? Parquea con un SMS" />
-
     </LinearLayout>
 
 </FrameLayout>

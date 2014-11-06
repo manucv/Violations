@@ -75,29 +75,31 @@ public class HistoryActivity extends ParqueaderoActivity {
 		Resources res = getResources();
 		TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
 		tabHost.setup();
+		
 		TabHost.TabSpec tabSpec=tabHost.newTabSpec ("Compras");
 		tabSpec.setContent(R.id.tabCompras);
-		tabSpec.setIndicator("Compras", res.getDrawable(android.R.drawable.ic_dialog_info));
+		tabSpec.setIndicator("", getResources().getDrawable(R.drawable.ic_compra));
 		tabHost.addTab(tabSpec);
 		
 		tabSpec=tabHost.newTabSpec ("Transferencias");
 		tabSpec.setContent(R.id.tabTransferencias);
-		tabSpec.setIndicator("Transferencias");
+		tabSpec.setIndicator("",getResources().getDrawable(R.drawable.ic_transfer));
 		tabHost.addTab(tabSpec);		
+		
 		
 		tabSpec=tabHost.newTabSpec ("Recibidos");
 		tabSpec.setContent(R.id.tabTransferIn);
-		tabSpec.setIndicator("Recibidos");
+		tabSpec.setIndicator("",getResources().getDrawable(R.drawable.ic_recibido));
 		tabHost.addTab(tabSpec);
 		
 		tabSpec=tabHost.newTabSpec ("Recargas");
 		tabSpec.setContent(R.id.tabRecarga);
-		tabSpec.setIndicator("Recargas");
+		tabSpec.setIndicator("",getResources().getDrawable(R.drawable.ic_recarga));
 		tabHost.addTab(tabSpec);		
 		
 		tabSpec=tabHost.newTabSpec ("Mi Cuenta");
 		tabSpec.setContent(R.id.tabCuenta);
-		tabSpec.setIndicator("Mi Cuenta");
+		tabSpec.setIndicator("",getResources().getDrawable(R.drawable.ic_cuenta));
 		tabHost.addTab(tabSpec);			
 		
    }
@@ -109,13 +111,13 @@ public class HistoryActivity extends ParqueaderoActivity {
 	    @Override
 		protected Boolean doInBackground(String... params) {
 	    	
-	    	boolean resul = true;
+	    	boolean resul = false;
 	    	String cli_id=params[0];
 	    	
 	    	HttpClient httpClient = new DefaultHttpClient();
 			
 			HttpGet del = 
-					new HttpGet("http://www.hawasolutions.com/Violations/public/api/api/historial/"+cli_id);
+					new HttpGet("http://www.hawasolutions.com/Violations2/public/api/api/historial/"+cli_id);
 			
 			del.setHeader("content-type", "application/json");
 			
@@ -151,7 +153,8 @@ public class HistoryActivity extends ParqueaderoActivity {
 	    		        	
 	    		        	idTransacciones[i] = tra_id;
 	    		        	
-	    		        }	        			
+	    		        }	
+	    	        	resul = true;
 	        		}
 	        	}
 	        }
@@ -190,11 +193,9 @@ public class HistoryActivity extends ParqueaderoActivity {
 	              
 	                 }
 	             });	        	
-	        	
-	        	
-	        	loadingHistory.setVisibility(View.GONE);
 
 	    	}
+	    	loadingHistory.setVisibility(View.GONE);
 	    }
 	}
 	
@@ -205,14 +206,14 @@ public class HistoryActivity extends ParqueaderoActivity {
 	    @Override
 		protected Boolean doInBackground(String... params) {
 	    	
-	    	boolean resul = true;
+	    	boolean resul = false;
 	    	String cli_id=params[0];
 	    	
 	    	
 	    	HttpClient httpClient = new DefaultHttpClient();
 	        			
 			//String url = "http://www.hawasolutions.com/Violations/public/api/api/login";
-			String url = "http://www.hawasolutions.com/Violations/public/api/api/transferencias/"+cli_id;
+			String url = "http://www.hawasolutions.com/Violations2/public/api/api/transferencias/"+cli_id;
 			List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
 			paramsArray.add( new BasicNameValuePair( "tipo", "OUT" ) );
 			URI uri = null;
@@ -253,7 +254,8 @@ public class HistoryActivity extends ParqueaderoActivity {
 		    		        					"De: "+cli_nombre_de+" Para: "+cli_nombre_para;
 		    		        	idTransferencias[i] = tra_sal_id;
 		    		        	
-		    		        }	        			
+		    		        }	  
+		    	        	resul = true;
 		        		}
 		        	}
 		        }
@@ -282,26 +284,10 @@ public class HistoryActivity extends ParqueaderoActivity {
 	        		        android.R.layout.simple_list_item_1, transferencias);
 	        		 	
 	        	lstTransfer.setAdapter(adaptador);
-	        	lstTransfer.setOnItemClickListener(new OnItemClickListener() {
-	                 @Override
-					public void onItemClick(AdapterView<?> parent, View view, int position,
-	                         long id) {
-
-	                         Intent intent =
-	                                 new Intent(HistoryActivity.this, WaitingActivity.class);
-	                         
-	                         intent.putExtra("ID",cli_id);
-	                         intent.putExtra("SALDO",saldo);
-	                         intent.putExtra("TRA_ID",idTransacciones[position]);
-	                         startActivity(intent);	
-	              
-	                 }
-	             });	        	
 	        	
-	        	
-	        	loadingTransfer.setVisibility(View.GONE);
-
 	    	}
+	    	loadingTransfer.setVisibility(View.GONE);
+
 	    }
 	}	
 	
@@ -312,14 +298,14 @@ public class HistoryActivity extends ParqueaderoActivity {
 	    @Override
 		protected Boolean doInBackground(String... params) {
 	    	
-	    	boolean resul = true;
+	    	boolean resul = false;
 	    	String cli_id=params[0];
 	    	
 	    	
 	    	HttpClient httpClient = new DefaultHttpClient();
 	        			
 			//String url = "http://www.hawasolutions.com/Violations/public/api/api/login";
-			String url = "http://www.hawasolutions.com/Violations/public/api/api/transferencias/"+cli_id;
+			String url = "http://www.hawasolutions.com/Violations2/public/api/api/transferencias/"+cli_id;
 			List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
 			paramsArray.add( new BasicNameValuePair( "tipo", "IN" ) );
 			URI uri = null;
@@ -360,7 +346,8 @@ public class HistoryActivity extends ParqueaderoActivity {
 		    		        					"De: "+cli_nombre_de+" Para: "+cli_nombre_para;
 		    		        	idTransferencias[i] = tra_sal_id;
 		    		        	
-		    		        }	        			
+		    		        }	  
+		    	        	resul = true;
 		        		}
 		        	}
 		        }
@@ -389,26 +376,10 @@ public class HistoryActivity extends ParqueaderoActivity {
 	        		        android.R.layout.simple_list_item_1, transferencias);
 	        		 	
 	        	lstTransferIn.setAdapter(adaptador);
-	        	lstTransferIn.setOnItemClickListener(new OnItemClickListener() {
-	                 @Override
-					public void onItemClick(AdapterView<?> parent, View view, int position,
-	                         long id) {
-
-	                         Intent intent =
-	                                 new Intent(HistoryActivity.this, WaitingActivity.class);
-	                         
-	                         intent.putExtra("ID",cli_id);
-	                         intent.putExtra("SALDO",saldo);
-	                         intent.putExtra("TRA_ID",idTransacciones[position]);
-	                         startActivity(intent);	
-	              
-	                 }
-	             });	        	
 	        	
-	        	
-	        	loadingTransferIn.setVisibility(View.GONE);
 
 	    	}
+	    	loadingTransferIn.setVisibility(View.GONE);
 	    }
 	}		
 }

@@ -1,5 +1,6 @@
 package com.example.sipapp_project;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -7,12 +8,14 @@ import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -26,8 +29,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class TransferActivity extends Activity {
+public class TransferActivity extends ParqueaderoActivity {
 	private String cli_id;
 	private String saldo;
 	private String cli_id_ref;
@@ -52,15 +56,22 @@ public class TransferActivity extends Activity {
         Button btnTransfer = (Button)findViewById(R.id.BtnTransfer);
         txtTransferValue = (EditText)findViewById(R.id.TxtTransferValue);
         
+        TextView txtSaldo = (TextView)findViewById(R.id.TxtSaldoTransfer);
+        cli_id=super.getCli_id();		
+        saldo=super.getSaldo();
+        
+        txtSaldo.setText("$"+Float.parseFloat(saldo));
+        
         btnTransfer.setOnClickListener(new OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
-	            	loadingTransfer.setVisibility(View.VISIBLE);
-	            	Log.v("click","click en categorias");
-	            	TareaWSTransferirSaldo tarea = new TareaWSTransferirSaldo();
-	            	
-					tarea.execute(	cli_id_ref,
-									txtTransferValue.getText().toString());        
+	            	if(Float.parseFloat(txtTransferValue.getText().toString())>0 && Float.parseFloat(txtTransferValue.getText().toString())<Float.parseFloat(saldo)){
+	            		loadingTransfer.setVisibility(View.VISIBLE);
+		            	TareaWSTransferirSaldo tarea = new TareaWSTransferirSaldo();
+						tarea.execute(	cli_id_ref, txtTransferValue.getText().toString());        
+	            	}else{
+	            		Toast.makeText(TransferActivity.this, "Tu saldo debe ser superior al valor a transferir", Toast.LENGTH_SHORT).show();
+	            	}
 	            }
 	       });
         
@@ -77,7 +88,7 @@ public class TransferActivity extends Activity {
 	    	
 	    	HttpClient httpClient = new DefaultHttpClient();
 
-	    	String url = "http://www.hawasolutions.com/Violations/public/api/api/transferir/"+cli_id;
+	    	String url = "http://www.hawasolutions.com/Violations2/public/api/api/transferir/"+cli_id;
 			List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
 			paramsArray.add( new BasicNameValuePair( "cli_id_para", cli_id_para ) );
 			paramsArray.add( new BasicNameValuePair( "tra_sal_valor", tra_sal_valor ) );
@@ -88,35 +99,38 @@ public class TransferActivity extends Activity {
 						new HttpGet(uri);
 						del.setHeader("content-type", "application/json");	    	
 						Log.v("query",uri.toString());
-				try
-		        {			
-		        	HttpResponse resp = httpClient.execute(del);
-		        	String respStr = EntityUtils.toString(resp.getEntity());		        	
-		        	JSONObject respJSON = new JSONObject(respStr);
-		        	
-		        	if(respStr.length() > 0){
-		                 //Creamos el Intent
-		                 Intent intent =
-		                         new Intent(TransferActivity.this, WelcomeActivity.class);
+						
+	        	HttpResponse resp = httpClient.execute(del);
+	        	String respStr = EntityUtils.toString(resp.getEntity());		        	
+	        	JSONObject respJSON = new JSONObject(respStr);
+	        	
+	        	if(respStr.length() > 0){
+	                 //Creamos el Intent
+	                 Intent intent =
+	                         new Intent(TransferActivity.this, WelcomeActivity.class);
 
-		                 //Creamos la informaci—n a pasar entre actividades
-		                 Bundle b = new Bundle();
-		                 b.putString("NOMBRE", respJSON.getString("cli_nombre"));
-		                 b.putString("SALDO", respJSON.getString("cli_saldo"));
-		                 b.putString("ID", respJSON.getString("cli_id"));
-		                 //A–adimos la informaci—n al intent
-		                 intent.putExtras(b);
+	                 //Creamos la informaci—n a pasar entre actividades
+	                 Bundle b = new Bundle();
+	                 b.putString("NOMBRE", respJSON.getString("usu_nombre")+" "+respJSON.getString("usu_apellido"));
+	                 b.putString("SALDO", respJSON.getString("cli_saldo"));
+	                 b.putString("ID", respJSON.getString("cli_id"));
+	                 //A–adimos la informaci—n al intent
+	                 intent.putExtras(b);
 
-		                 //Iniciamos la nueva actividad
-		                 startActivity(intent);		
-		        	}
-		        }
-		        catch(Exception ex)
-		        {
-		        	Log.e("ServicioRest","Error!", ex);
-		        	resul = false;
-		        }
+	                 //Iniciamos la nueva actividad
+	                 startActivity(intent);		
+	        	}
+	
 			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -128,19 +142,6 @@ public class TransferActivity extends Activity {
 	    @Override
 		protected void onPostExecute(Boolean result) {
 	    	loadingTransfer.setVisibility(View.GONE);
-	    	/*if (result)
-	    	{
-
-	    	}else{
-				Context context = getApplicationContext();
-                CharSequence text = "Usuario no existe";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-                
-                loadingContacts.setVisibility(View.GONE);
-	    	}*/
 	    }
 	}			
 }

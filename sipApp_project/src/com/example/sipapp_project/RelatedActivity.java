@@ -17,10 +17,13 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,7 +43,7 @@ public class RelatedActivity extends ParqueaderoActivity {
 	private ListView lstContacts;
 	private ProgressBar loadingContacts;
 	private EditText txtBuscar;
-	
+	private ArrayAdapter<String> adaptador;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,19 +63,41 @@ public class RelatedActivity extends ParqueaderoActivity {
 		
 		
 		txtBuscar = (EditText)findViewById(R.id.TxtBuscar);
-        Button btnAgregar = (Button)findViewById(R.id.BtnAgregar);
+        
+		txtBuscar.addTextChangedListener(new TextWatcher(){
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+			@Override
+			public void afterTextChanged(Editable s) { 
+				try{
+					adaptador.getFilter().filter(s);
+				}catch(Exception e){
+					Toast.makeText(RelatedActivity.this, "Debe agregar un contacto primero", Toast.LENGTH_SHORT).show();
+				}
+			}
+				
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) { }
+			
+		});
+
+		Button btnAgregar = (Button)findViewById(R.id.BtnAgregar);
 		
         btnAgregar.setOnClickListener(new OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
-	            	loadingContacts.setVisibility(View.VISIBLE);
-	            	Log.v("click","click en categorias");
-	            	TareaWSAgregarContacto tarea = new TareaWSAgregarContacto();
+	            		
+                    Intent intent = new Intent(RelatedActivity.this, AddContactActivity.class);
+                    
+                    intent.putExtra("ID",cli_id);
+                    intent.putExtra("SALDO",saldo);
+                    
+                    startActivity(intent);	
 	            	
-					tarea.execute(	cli_id,
-									txtBuscar.getText().toString());        
 	            }
-	       });	
+	    });	
 	}
 	
 	private class TareaWSListarContactos extends AsyncTask<String,Integer,Boolean> {
@@ -88,7 +113,7 @@ public class RelatedActivity extends ParqueaderoActivity {
 	    	HttpClient httpClient = new DefaultHttpClient();
 			
 			HttpGet del = 
-					new HttpGet("http://www.hawasolutions.com/Violations/public/api/api/relacionados/"+cli_id);
+					new HttpGet("http://www.hawasolutions.com/Violations2/public/api/api/relacionados/"+cli_id);
 			
 			del.setHeader("content-type", "application/json");
 			
@@ -107,7 +132,7 @@ public class RelatedActivity extends ParqueaderoActivity {
 	    	        	for(int i=0; i<respJSON.length(); i++)
 	    	        	{
 	    	        		JSONObject obj = respJSON.getJSONObject(i);
-	    		        	String cli_nombre = obj.getString("cli_nombre");
+	    		        	String cli_nombre = obj.getString("usu_nombre")+" "+obj.getString("usu_apellido");
 	    		        	String cli_id_relacionado = obj.getString("cli_id_relacionado");
 	    		        	
 	    		        	contactos[i] = ""+cli_nombre;
@@ -133,7 +158,7 @@ public class RelatedActivity extends ParqueaderoActivity {
 		    	//Rellenamos la lista con los nombres de los clientes
 	    		//Rellenamos la lista con los resultados
 	    		if(contactos != null && contactos.length > 0){
-		        	ArrayAdapter<String> adaptador =
+		        	adaptador =
 		        		    new ArrayAdapter<String>(RelatedActivity.this,
 		        		        android.R.layout.simple_list_item_1, contactos);
 		        		 	
@@ -148,6 +173,7 @@ public class RelatedActivity extends ParqueaderoActivity {
 		                                 new Intent(RelatedActivity.this, TransferActivity.class);
 		                         
 		                         intent.putExtra("ID",cli_id);
+		                         intent.putExtra("SALDO",saldo);
 		                         intent.putExtra("CLI_ID_REF",idContactos[position]);
 		                         intent.putExtra("CLI_ID_REF_NOMBRE",contactos[position]);
 		                         startActivity(intent);	
@@ -159,116 +185,5 @@ public class RelatedActivity extends ParqueaderoActivity {
 
 	    	}
 	    }
-	}	
-	
-	
-	private class TareaWSAgregarContacto extends AsyncTask<String,Integer,Boolean> { 
-		private String[] contactos;
-		private String[] idContactos;
-		
-		@Override
-		protected Boolean doInBackground(String... params) {
-	    	
-	    	boolean resul = true;
-	    	String cli_id=params[0];
-	    	String cli_email=params[1];
-	    	
-	    	HttpClient httpClient = new DefaultHttpClient();
-
-	    	String url = "http://www.hawasolutions.com/Violations/public/api/api/relacion/"+cli_id;
-			List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
-			paramsArray.add( new BasicNameValuePair( "par_id", cli_id ) );
-			paramsArray.add( new BasicNameValuePair( "cli_email", cli_email ) );
-			URI uri = null;
-			try {
-				uri = new URI( url + "?" + URLEncodedUtils.format( paramsArray, "utf-8" ));
-				HttpGet del = 
-						new HttpGet(uri);
-						del.setHeader("content-type", "application/json");	    	
-						Log.v("query",uri.toString());
-				try
-		        {			
-		        	HttpResponse resp = httpClient.execute(del);
-		        	String respStr = EntityUtils.toString(resp.getEntity());		        	
-		        	if(!respStr.equals("")){
-		        		JSONArray respJSON = new JSONArray(respStr);
-		        		if(respJSON.length() > 0){
-		        			
-		        			contactos = new String[respJSON.length()];
-		        			idContactos = new String[respJSON.length()];
-		        			
-		    	        	for(int i=0; i<respJSON.length(); i++)
-		    	        	{
-		    	        		JSONObject obj = respJSON.getJSONObject(i);
-		    		        	String cli_nombre = obj.getString("cli_nombre");
-		    		        	String cli_id_relacionado = obj.getString("cli_id_relacionado");
-		    		        	
-		    		        	contactos[i] = ""+cli_nombre;
-		    		        	idContactos[i] = ""+cli_id_relacionado;
-		    		        	
-		    		        }	        			
-		        		}else{
-		        			return false;
-		        		}
-		        	}
-		        }
-		        catch(Exception ex)
-		        {
-		        	Log.e("ServicioRest","Error!", ex);
-		        	resul = false;
-		        }
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	 
-	 
-	        return resul;
-	    }
-	    
-	    @Override
-		protected void onPostExecute(Boolean result) {
-	    	if (result)
-	    	{
-		    	//Rellenamos la lista con los nombres de los clientes
-	    		//Rellenamos la lista con los resultados
-	        	ArrayAdapter<String> adaptador =
-	        		    new ArrayAdapter<String>(RelatedActivity.this,
-	        		        android.R.layout.simple_list_item_1, contactos);
-	        		 	
-	        	lstContacts.setAdapter(adaptador);
-	        	lstContacts.setOnItemClickListener(new OnItemClickListener() {
-	                 @Override
-					public void onItemClick(AdapterView<?> parent, View view, int position,
-	                         long id) {
-	                	 
-	                	
-	                         Intent intent =
-	                                 new Intent(RelatedActivity.this, TransferActivity.class);
-	                         
-	                         intent.putExtra("ID",cli_id);
-	                         intent.putExtra("CLI_ID_REF",idContactos[position]);
-	                         intent.putExtra("CLI_ID_REF_NOMBRE",contactos[position]);
-	                         startActivity(intent);	
-	                	 
-	                 }
-	             });   
-	        	loadingContacts.setVisibility(View.GONE);
-	        	txtBuscar.setText("");
-	        	
-	        	
-	        	
-
-	    	}else{
-				Context context = getApplicationContext();
-                CharSequence text = "Usuario no existe";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-                
-                loadingContacts.setVisibility(View.GONE);
-	    	}
-	    }
-	}		
+	}			
 }

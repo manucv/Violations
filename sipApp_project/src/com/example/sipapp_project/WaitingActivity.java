@@ -62,7 +62,7 @@ public class WaitingActivity extends Activity {
 	    	boolean resul = true;
 	    	HttpClient httpClient = new DefaultHttpClient();
 			
-			String url = "http://www.hawasolutions.com/Violations/public/api/api/estado/"+tra_id;
+			String url = "http://www.hawasolutions.com/Violations2/public/api/api/estado/"+tra_id;
 
 			URI uri = null;
 			try {
