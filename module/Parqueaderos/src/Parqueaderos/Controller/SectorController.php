@@ -32,6 +32,7 @@ class SectorController extends AbstractActionController
         $sector = $this->getSectorDao()->traer ( $id );
         $parqueaderos = $this->getParqueaderoDao()->traerTodosPorSector($id);
 
+        $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'parqueaderodis');
         return new ViewModel ( array (
             'parqueaderos'  =>  $parqueaderos,
             'sector'        =>  $sector,

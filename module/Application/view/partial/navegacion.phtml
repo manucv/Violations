@@ -1,6 +1,7 @@
+<div class="visible-xs hidden-sm hidden-md hidden-lg"><br /></div>
 <!--Inicio Navegacion -->
-<div class="row">
-	<div id="breadcrumb" class="col-xs-12">
+<div class="row hidden-xs">
+	<div id="breadcrumb">
 		<ol class="breadcrumb">
 		    <?php foreach ($this->datos as $opcion => $valores ): ?>
 			<li><a href="<?php echo $this->url($valores[0], array('controller' => $valores[1], 'action' => $valores[2], 'id' => $valores[3]))?>"><?php echo $opcion ?></a></li>

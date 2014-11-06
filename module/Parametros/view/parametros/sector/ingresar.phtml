@@ -56,7 +56,7 @@ echo $this->formhidden ( $form->get ( 'ciu_id_hidden' ) );
 					<i class="fa fa-gears fa-fw"></i>
 					<span><?php echo $this->titulo ?> sector</span>
 				</div>
-				<div class="box-icons">
+				<div class="box-icons hidden-xs">
 					<a class="collapse-link">
 						<i class="fa fa-chevron-up"></i>
 					</a>
@@ -73,12 +73,12 @@ echo $this->formhidden ( $form->get ( 'ciu_id_hidden' ) );
         			</div>
     			</div>
     			<div class="form-group">
-                    <div class="control-label col-md-2 col-md-offset-1">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <?php  
                 		echo $formLabel->openTag() . $pai_id->getLabel() . $formLabel->closeTag();
                 	   ?>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
             			<?php 
             			echo html_entity_decode( $this->formselect ( $pai_id ) );
 					    echo html_entity_decode( $this->formelementerrors ( $pai_id ) ); 
@@ -86,12 +86,12 @@ echo $this->formhidden ( $form->get ( 'ciu_id_hidden' ) );
             		</div>
                 </div>
                 <div class="form-group">
-                    <div class="control-label col-md-2 col-md-offset-1">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <?php 
                 		echo $formLabel->openTag() . $est_id->getLabel() . $formLabel->closeTag();
                 	   ?>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
             			<?php 
             			echo html_entity_decode( $this->formselect ( $est_id ) );
 					    echo html_entity_decode( $this->formelementerrors ( $est_id ) );
@@ -99,12 +99,12 @@ echo $this->formhidden ( $form->get ( 'ciu_id_hidden' ) );
             		</div>
                 </div>
                 <div class="form-group">
-                    <div class="control-label col-md-2 col-md-offset-1">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <?php 
                 		echo $formLabel->openTag() . $ciu_id->getLabel() . $formLabel->closeTag();
                 	    ?>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                 	   <?php 
                 		echo html_entity_decode( $this->formselect ( $ciu_id ) );
 					    echo html_entity_decode( $this->formelementerrors ( $ciu_id ) );   
@@ -112,12 +112,12 @@ echo $this->formhidden ( $form->get ( 'ciu_id_hidden' ) );
             		</div>
                 </div>
                 <div class="form-group">
-                    <div class="control-label col-md-2 col-md-offset-1">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <?php 
                 		echo $formLabel->openTag() . $sec_nombre->getLabel() . $formLabel->closeTag();
                 	    ?>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                 		<?php 
                 		echo html_entity_decode( $this->formtext ( $sec_nombre ) );
 					    echo html_entity_decode( $this->formelementerrors ( $sec_nombre ) );     
@@ -125,28 +125,28 @@ echo $this->formhidden ( $form->get ( 'ciu_id_hidden' ) );
             		</div>
                 </div>
                 <div class="form-group">
-                    <div class="control-label col-md-2 col-md-offset-1">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <?php 
                         echo $formLabel->openTag() . $sec_ubicacion->getLabel() . $formLabel->closeTag();
                 	    ?>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-xs-8 col-sm-11 col-md-7 col-lg-7">
                 		<?php 
                 		echo html_entity_decode( $this->formtext ( $sec_ubicacion ) );
 					    echo html_entity_decode( $this->formelementerrors ( $sec_ubicacion ) );    
                 		?>
             		</div>
-            		<div class="col-md-1">
+            		<div class="col-xs-4 col-sm-1 col-md-1 col-lg-1">
             		  <input type="button" value="Buscar" class="btn btn-primary" onclick="ubicacion();" style="margin-left: 5px;">
             		</div>
                 </div>
                 <div class="form-group">
-                    <div class="control-label col-md-2 col-md-offset-1">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <?php 
                 		echo $formLabel->openTag() . $sec_latitud->getLabel() . $formLabel->closeTag();
                 	    ?>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                 		<?php 
                 		echo html_entity_decode( $this->formtext ( $sec_latitud ) );
 					    echo html_entity_decode( $this->formelementerrors ( $sec_latitud ) );     
@@ -154,12 +154,12 @@ echo $this->formhidden ( $form->get ( 'ciu_id_hidden' ) );
             		</div>
                 </div>
                 <div class="form-group">
-                    <div class="control-label col-md-2 col-md-offset-1">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <?php 
                 		echo $formLabel->openTag() . $sec_longitud->getLabel() . $formLabel->closeTag();
                 	    ?>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                 		<?php 
                 		echo html_entity_decode( $this->formtext ( $sec_longitud ) );
 					    echo html_entity_decode( $this->formelementerrors ( $sec_longitud ) );   
@@ -168,7 +168,7 @@ echo $this->formhidden ( $form->get ( 'ciu_id_hidden' ) );
                 </div>
                 <div class="form-group">
                     <div class="control-label col-md-2 col-md-offset-1"><strong>Ubicaci&oacute;n*:</strong></div>
-                    <div class="col-md-8">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                         <div style="height: 500px;">
                             <input id="address" type="hidden" value="">
                         	<div id="map-canvas"></div>

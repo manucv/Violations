@@ -28,7 +28,7 @@ class PerfilController extends AbstractActionController
         
         $cli_id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
         
-        $this->layout()->setVariable('activo', '12');
+        $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'clientes');
         return array(
             'usuarios' => $this->getRelacionClienteDao()->traerTodosPorCliente($cli_id),
             'recargas' => $this->getCompraSaldoDao()->traerRecargasPorUsuario($cli_id),

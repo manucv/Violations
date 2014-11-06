@@ -4,6 +4,9 @@ echo $this->doctype(); ?>
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" sizes="196x196" href="ico-hres.png">
+       <link rel="icon" sizes="128x128" href="ico-lres.png">
 <link rel="icon" type="image/gif" href="<?php echo $this->basepath();?>/img/icoLogo.gif" />
         <?php echo $this->headTitle($this->translate('Sistema de Citas'))->setSeparator(' - ')->setAutoEscape(false)?>
 

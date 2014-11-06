@@ -2797,7 +2797,7 @@ ul.DTTT_dropdown.dropdown-menu>li:hover>a {
 
 @media ( max-width : 767px) {
 	#main {
-		margin-top: 100px;
+		margin-top: 54px;
 	}
 	#messages-menu {
 		top: 140px;
@@ -2851,5 +2851,11 @@ ul.DTTT_dropdown.dropdown-menu>li:hover>a {
 }
 
 .control-label{
-	text-align: right !important;
+	text-align: left !important;
+}
+
+
+.dataTableMargins{
+	padding: 0px !important;
+	padding-bottom: 10px !important;
 }

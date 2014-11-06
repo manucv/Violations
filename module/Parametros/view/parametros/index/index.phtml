@@ -1,70 +1,55 @@
 <?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); ?>
 
 <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-12">
-        <div class="box">
-            <div class="box-header">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<div class="box-header">
 				<div class="box-name">
-					<i class="fa fa-search"></i>
-					<span>Ingresos, Infracciones y Gastos</span>
+					<i class="fa fa-search"></i> <span class="hidden-xs">Ingresos,
+						Infracciones y Gastos</span> <span
+						class="visible-xs-inline-block hidden-sm hidden-md hidden-lg">Estad&iacute;sticas</span>
 				</div>
-				<div class="box-icons">
-					<a class="collapse-link">
-						<i class="fa fa-chevron-up"></i>
-					</a>
-					<a class="expand-link">
-						<i class="fa fa-expand"></i>
-					</a>
-					<a class="close-link">
-						<i class="fa fa-times"></i>
+				<div class="box-icons hidden-xs">
+					<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+					</a> <a class="expand-link"> <i class="fa fa-expand"></i>
 					</a>
 				</div>
 				<div class="no-move"></div>
 			</div>
-			<div class="box-content" style="min-height: 80px;">
-				<div class="col-xs-3">
-				    <div class="sparkline-dashboard" id="sparkline-1"></div>
-    				<div class="sparkline-dashboard-info">
-    					<i class="fa fa-usd"></i>756.45M
-    					<span class="txt-primary">Ingresos</span>
-    				</div>
-			     </div>
-				 <div class="col-xs-3">
-    				<div class="sparkline-dashboard" id="sparkline-2"></div>
-    				<div class="sparkline-dashboard-info">
-    					<i class="fa fa-usd"></i>245.12M
-    					<span class="txt-info">Gastos</span>
-    				</div>
-			     </div>
-    			 <div class="col-xs-3">
-        			<div class="sparkline-dashboard" id="sparkline-3"></div>
-        			<div class="sparkline-dashboard-info">
-        				<i class="fa fa-usd"></i>107.83M
-        				<span>Utilidades</span>
-        			</div>
-    			</div>
+			<div class="box-content" style="display: inline-block; width: 100% !important;">
+				<div class="col-xs-4 col-sm-4 col-lg-4">
+					<div class="sparkline-dashboard" id="sparkline-1"></div>
+					<div class="sparkline-dashboard-info">
+						<i class="fa fa-usd"></i>756.45M <span class="txt-primary">Ingresos</span>
+					</div>
+				</div>
+				<div class="col-xs-4 col-sm-4 col-lg-4">
+					<div class="sparkline-dashboard" id="sparkline-2"></div>
+					<div class="sparkline-dashboard-info">
+						<i class="fa fa-usd"></i>245.12M <span class="txt-info">Gastos</span>
+					</div>
+				</div>
+				<div class="col-xs-4 col-sm-4 col-lg-4">
+					<div class="sparkline-dashboard" id="sparkline-3"></div>
+					<div class="sparkline-dashboard-info">
+						<i class="fa fa-usd"></i>245.12M <span class="">Utilidades</span>
+					</div>
+				</div>
 			</div>
-			
-        </div>
-    </div>
+
+		</div>
+	</div>
 </div>
 <div class="row">
 	<div class="col-xs-12 col-sm-6 col-md-12" style="min-height: 100px;">
 		<div class="box">
 			<div class="box-header">
 				<div class="box-name">
-					<i class="fa fa-search"></i>
-					<span>Compras de parqueo</span>
+					<i class="fa fa-search"></i> <span>Compras de parqueo</span>
 				</div>
-				<div class="box-icons">
-					<a class="collapse-link">
-						<i class="fa fa-chevron-up"></i>
-					</a>
-					<a class="expand-link">
-						<i class="fa fa-expand"></i>
-					</a>
-					<a class="close-link">
-						<i class="fa fa-times"></i>
+				<div class="box-icons hidden-xs">
+					<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+					</a> <a class="expand-link"> <i class="fa fa-expand"></i>
 					</a>
 				</div>
 				<div class="no-move"></div>
@@ -80,102 +65,106 @@
 		<div class="box">
 			<div class="box-header">
 				<div class="box-name">
-					<i class="fa fa-search"></i>
-					<span>Clientes</span>
+					<i class="fa fa-search"></i> <span>Clientes</span>
 				</div>
-				<div class="box-icons">
-					<a class="collapse-link">
-						<i class="fa fa-chevron-up"></i>
-					</a>
-					<a class="expand-link">
-						<i class="fa fa-expand"></i>
-					</a>
-					<a class="close-link">
-						<i class="fa fa-times"></i>
+				<div class="box-icons hidden-xs">
+					<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+					</a> <a class="expand-link"> <i class="fa fa-expand"></i>
 					</a>
 				</div>
 				<div class="no-move"></div>
 			</div>
 			<div class="box-content" style="min-height: 80px;">
-    			<div id="dashboard-overview" class="row" style="visibility: visible; position: relative;">
-    			<div id="ow-marketplace" class="col-sm-12 col-md-12">
-    				<div id="ow-setting">
-    					<a href="#"><i class="fa fa-folder-open"></i></a>
-    					<a href="#"><i class="fa fa-credit-card"></i></a>
-    					<a href="#"><i class="fa fa-ticket"></i></a>
-    					<a href="#"><i class="fa fa-bookmark-o"></i></a>
-    					<a href="#"><i class="fa fa-globe"></i></a>
-    				</div>
-    				<table id="ticker-table" class="table m-table table-bordered table-hover table-heading">
-    					<thead>
-    						<tr>
-    							<th>Ticker</th>
-    							<th>Price</th>
-    							<th>Change</th>
-    							<th>Weekly Chart</th>
-    						</tr>
-    					</thead>
-    					<tbody>
-    						<tr>
-    							<td class="m-ticker"><b>BRDM</b><span>Broadem Inc.</span></td>
-    							<td class="m-price">33.27</td>
-    							<td class="m-change"><i class="fa fa-angle-up"></i> 1.45 (27&#37;)</td>
-    							<td class="td-graph"></td>
-    						</tr>
-    						<tr>
-    							<td class="m-ticker"><b>ASWLL</b><span>Aswell Corp.</span></td>
-    							<td class="m-price">45.13</td>
-    							<td class="m-change"><i class="fa fa-angle-up"></i> 6.32 (12&#37;)</td>
-    							<td class="td-graph"></td>
-    						</tr>
-    						<tr>
-    							<td class="m-ticker"><b>MIXL</b><span>Mixal LTD.</span></td>
-    							<td class="m-price">71.13</td>
-    							<td class="m-change"><i class="fa fa-angle-down"></i> 7.2 (12&#37;)</td>
-    							<td class="td-graph"></td>
-    						</tr>
-    						<tr>
-    							<td class="m-ticker"><b>LMPRD</b><span>L.A. Prod.</span></td>
-    							<td class="m-price">30.24</td>
-    							<td class="m-change"><i class="fa fa-angle-up"></i> 5.3 (18&#37;)</td>
-    							<td class="td-graph"></td>
-    						</tr>
-    						<tr>
-    							<td class="m-ticker"><b>ALK</b><span>Allien K.</span></td>
-    							<td class="m-price">51.1</td>
-    							<td class="m-change"><i class="fa fa-angle-up"></i> 7.5 (3.5&#37;)</td>
-    							<td class="td-graph"></td>
-    						</tr>
-    						<tr>
-    							<td class="m-ticker"><b>LNISW</b><span>Lenstri Sweet</span></td>
-    							<td class="m-price">123.12</td>
-    							<td class="m-change"><i class="fa fa-angle-down"></i> 54.3 (15.3&#37;)</td>
-    							<td class="td-graph"></td>
-    						</tr>
-    						<tr>
-    							<td class="m-ticker"><b>RNLD</b><span>Ron LEED</span></td>
-    							<td class="m-price">64.14</td>
-    							<td class="m-change"><i class="fa fa-angle-up"></i> 12.33 (0.3&#37;)</td>
-    							<td class="td-graph"></td>
-    						</tr>
-    						<tr>
-    							<td class="m-ticker"><b>BCN</b><span>BeetCN Corp.</span></td>
-    							<td class="m-price">64.14</td>
-    							<td class="m-change"><i class="fa fa-angle-up"></i> 12.33 (0.3&#37;)</td>
-    							<td class="td-graph"></td>
-    						</tr>
-    						<tr>
-    							<td class="m-ticker"><b>AWS</b><span>Awesome Inc.</span></td>
-    							<td class="m-price">64.14</td>
-    							<td class="m-change"><i class="fa fa-angle-up"></i> 12.33 (0.3&#37;)</td>
-    							<td class="td-graph"></td>
-    						</tr>
-    					</tbody>
-    				</table>
-    			</div>
-    		</div>
-			
-			
+				<div id="dashboard-overview" class="row"
+					style="visibility: visible; position: relative;">
+					<div id="ow-marketplace" class="col-sm-12 col-md-12">
+						<div id="ow-setting">
+							<a href="#"><i class="fa fa-folder-open"></i></a> <a href="#"><i
+								class="fa fa-credit-card"></i></a> <a href="#"><i
+								class="fa fa-ticket"></i></a> <a href="#"><i
+								class="fa fa-bookmark-o"></i></a> <a href="#"><i
+								class="fa fa-globe"></i></a>
+						</div>
+						<table id="ticker-table"
+							class="table m-table table-bordered table-hover table-heading">
+							<thead>
+								<tr>
+									<th>Ticker</th>
+									<th>Price</th>
+									<th>Change</th>
+									<th>Weekly Chart</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="m-ticker"><b>BRDM</b><span>Broadem Inc.</span></td>
+									<td class="m-price">33.27</td>
+									<td class="m-change"><i class="fa fa-angle-up"></i> 1.45
+										(27&#37;)</td>
+									<td class="td-graph"></td>
+								</tr>
+								<tr>
+									<td class="m-ticker"><b>ASWLL</b><span>Aswell Corp.</span></td>
+									<td class="m-price">45.13</td>
+									<td class="m-change"><i class="fa fa-angle-up"></i> 6.32
+										(12&#37;)</td>
+									<td class="td-graph"></td>
+								</tr>
+								<tr>
+									<td class="m-ticker"><b>MIXL</b><span>Mixal LTD.</span></td>
+									<td class="m-price">71.13</td>
+									<td class="m-change"><i class="fa fa-angle-down"></i> 7.2
+										(12&#37;)</td>
+									<td class="td-graph"></td>
+								</tr>
+								<tr>
+									<td class="m-ticker"><b>LMPRD</b><span>L.A. Prod.</span></td>
+									<td class="m-price">30.24</td>
+									<td class="m-change"><i class="fa fa-angle-up"></i> 5.3
+										(18&#37;)</td>
+									<td class="td-graph"></td>
+								</tr>
+								<tr>
+									<td class="m-ticker"><b>ALK</b><span>Allien K.</span></td>
+									<td class="m-price">51.1</td>
+									<td class="m-change"><i class="fa fa-angle-up"></i> 7.5
+										(3.5&#37;)</td>
+									<td class="td-graph"></td>
+								</tr>
+								<tr>
+									<td class="m-ticker"><b>LNISW</b><span>Lenstri Sweet</span></td>
+									<td class="m-price">123.12</td>
+									<td class="m-change"><i class="fa fa-angle-down"></i> 54.3
+										(15.3&#37;)</td>
+									<td class="td-graph"></td>
+								</tr>
+								<tr>
+									<td class="m-ticker"><b>RNLD</b><span>Ron LEED</span></td>
+									<td class="m-price">64.14</td>
+									<td class="m-change"><i class="fa fa-angle-up"></i> 12.33
+										(0.3&#37;)</td>
+									<td class="td-graph"></td>
+								</tr>
+								<tr>
+									<td class="m-ticker"><b>BCN</b><span>BeetCN Corp.</span></td>
+									<td class="m-price">64.14</td>
+									<td class="m-change"><i class="fa fa-angle-up"></i> 12.33
+										(0.3&#37;)</td>
+									<td class="td-graph"></td>
+								</tr>
+								<tr>
+									<td class="m-ticker"><b>AWS</b><span>Awesome Inc.</span></td>
+									<td class="m-price">64.14</td>
+									<td class="m-change"><i class="fa fa-angle-up"></i> 12.33
+										(0.3&#37;)</td>
+									<td class="td-graph"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+
 			</div>
 		</div>
 	</div>

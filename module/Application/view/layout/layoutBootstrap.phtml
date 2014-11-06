@@ -2,17 +2,19 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>DevOOPS</title>
+		<title>Sistema Integral de Parqueaderos - SIP</title>
 		<meta name="description" content="description">
-		<meta name="author" content="DevOOPS">
+		<meta name="author" content="SIP">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
+		<meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" sizes="196x196" href="ico-hres.png">
+       <link rel="icon" sizes="128x128" href="ico-lres.png">
 		<?php
 								
         echo $this->headLink ( array (
 					'rel' => 'shortcut icon',
-					'type' => 'image/vnd.microsoft.icon',
-					'href' => $this->basePath () . '/img/favicon.ico' 
+					'type' => 'image/png',
+					'href' => $this->basePath () . '/img/png/favicon.png' 
 					) )
 					
 					->prependStylesheet ( $this->basePath () . '/css/style-old.css')
@@ -34,9 +36,9 @@
                     ->prependFile ( $this->basePath () . '/js/dataTables.bootstrap.js')
                     ->prependFile ( $this->basePath () . '/js/dataTable/media/js/jquery.dataTables.min.js')
                     ->prependFile ( $this->basePath () . '/js/devoops.js' )
-                    ->prependFile ( $this->basePath () . '/plugins/tinymce/jquery.tinymce.min.js' )
-                    ->prependFile ( $this->basePath () . '/plugins/tinymce/tinymce.min.js' )
-                    ->prependFile ( $this->basePath () . '/plugins/justified-gallery/jquery.justifiedgallery.min.js' )
+                    //->prependFile ( $this->basePath () . '/plugins/tinymce/jquery.tinymce.min.js' )
+                    //->prependFile ( $this->basePath () . '/plugins/tinymce/tinymce.min.js' )
+                    //->prependFile ( $this->basePath () . '/plugins/justified-gallery/jquery.justifiedgallery.min.js' )
                     ->prependFile ( $this->basePath () . '/plugins/bootstrap/bootstrap.min.js' )
                     ->prependFile ( $this->basePath () . '/plugins/jquery-ui/jquery-ui.min.js' )
                     ->prependFile ( $this->basePath () . '/plugins/jquery/jquery-2.1.0.min.js');
@@ -66,7 +68,7 @@
 				}
 	    	});
 
-			//menuActive('<?php echo $this->menupadre; ?>', '<?php echo $this->menuhijo; ?>');
+			menuActive('<?php echo $this->menupadre; ?>', '<?php echo $this->menuhijo; ?>');
 
 		}); 
 
@@ -90,43 +92,29 @@
 		}
 	</script>
 				
-					
+			<style>
+	
+		html, body {
+	margin: 0 0;
+			padding: 0 0;
+}
+	
+	</style>		
 					
 	</head>
+	
 <body>
 <!--Start Header-->
-<div id="screensaver">
-	<canvas id="canvas"></canvas>
-	<i class="fa fa-lock" id="screen_unlock"></i>
-</div>
-<div id="modalbox">
-	<div class="devoops-modal">
-		<div class="devoops-modal-header">
-			<div class="modal-header-name">
-				<span>Basic table</span>
-			</div>
-			<div class="box-icons">
-				<a class="close-link">
-					<i class="fa fa-times"></i>
-				</a>
-			</div>
-		</div>
-		<div class="devoops-modal-inner">
-		</div>
-		<div class="devoops-modal-bottom">
-		</div>
-	</div>
-</div>
 <header class="navbar">
 	<div class="container-fluid expanded-panel">
 		<div class="row">
-			<div id="logo" class="col-xs-12 col-sm-2">
-				<div style="float: left; padding-right: 30px;"><a href="index.html">SIP <span style="font-size: 12px;">(versi&oacute;n 1.0)</span></a></div>
+			<div id="logo" class="col-xs-8 col-sm-8">
+				<div style="float: left; padding-right: 10px;"><a href="index.html"><img src="<?php echo $this->basepath() . '/img/png/logo_sip.png'?>" width="80px" /> <span style="font-size: 12px;">(v1.0)</span></a></div>
 				<div><a href="#" class="show-sidebar"><i class="fa fa-bars"></i></a></div>
 			</div>
-			<div id="top-panel" class="col-xs-12 col-sm-10">
+			<div id="top-panel" class="col-xs-4 col-sm-4">
 				<div class="row">
-					<div class="col-xs-8 col-sm-4">
+					<div class="hidden-xs col-sm-6">
 						<!-- 
 						<div id="search">
 							<input type="text" placeholder="search"/>
@@ -154,7 +142,7 @@
 							</li>
 						</ul>
 					</div>
-					<div class="col-xs-4 col-sm-8 top-panel-right">
+					<div class="col-xs-12 col-sm-6 top-panel-right">
 						<ul class="nav navbar-nav pull-right panel-menu">
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
@@ -200,20 +188,20 @@
 </header>
 <!--End Header-->
 <!--Start Container-->
-<div id="main" class="container-fluid">
-	<div class="row">
+<div id="main">
 		<div id="sidebar-left" class="col-xs-2 col-sm-2">
+		
 			<ul class="nav main-menu">
-			    <li>
+			    <li id="inicio">
 					<a href="<?php echo $this->url('parametros', array('controller' => 'index', 'action' => 'video')) ?>" >
 						<i class="fa fa-chevron-left"></i>
-						<span class="hidden-xs" id="inicio">Inicio</span>
+						<span class="hidden-xs">Inicio</span>
 					</a>
 				</li>
-				<li>
+				<li id="dashboard">
 					<a href="<?php echo $this->url('parametros', array('controller' => 'index', 'action' => 'index')) ?>">
 						<i class="fa fa-dashboard"></i>
-						<span class="hidden-xs" id="dashboard">Dashboard</span>
+						<span class="hidden-xs">Dashboard</span>
 					</a>
 				</li>
 				<li class="dropdown">
@@ -248,7 +236,7 @@
 						 <span class="hidden-xs">Infracciones</span>
 					</a>
 				</li>
-				 <li id="parqueaderoDisponible">
+				 <li id="parqueaderodis">
 					<a href="<?php echo $this->url('parqueaderos', array('controller' => 'parqueaderos', 'action' => 'index')) ?>">
 						 <i class="fa fa-table"></i>
 						 <span class="hidden-xs">Parqueaderos Disponibles</span>
@@ -285,7 +273,6 @@
 		  <?php echo $this->content;?> 
 		 </div>
 		<!--End Content-->
-	</div>
 </div>
 </body>
 </html>
