@@ -4,6 +4,13 @@ namespace Api\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+
+use Zend\Mail;
+use Zend\Mime\Message as MimeMessage;
+use Zend\Mime\Part as MimePart;
+use Zend\Mail\Transport\Smtp as SmtpTransport;
+use Zend\Mail\Transport\SmtpOptions;
+
 use Zend\Json\Json;
 
 use Application\Model\Entity\LogParqueadero as LogParqueaderoEntity;
@@ -618,28 +625,27 @@ class ApiController extends AbstractActionController
     public function clientesAction()
     {
         if($this->getRequest()->isPOST()){
-
             $data = $this->request->getPost ();
-
-            $usuario = new UsuarioEntity();
-            
-            $data['usu_estado']='A'; 
-            $data['usu_fecha_registro']='0000-00-00 00:00:00'; 
-            $usuario->exchangeArray ( $data );  
-
-            $usu_id=$this->getUsuarioDao() ->guardar ( $usuario );
-
-            $data_cliente = array();
-            $cliente = new ClienteEntity();
-            $data_cliente['usu_id']=$usu_id;
-            $data_cliente['cli_saldo']=100;
-            $data_cliente['cli_estado']='ACTIVO';
-            $data_cliente['cli_movil']=$data['cli_movil'];
-
-            $cliente->exchangeArray ( $data_cliente );
             $content='';
             $response=$this->getResponse();
-            if(!$this->getClienteDao()->verificar( $usuario )){ //envío los datos del usuario
+            if(!$this->getClienteDao()->verificar( $data )){ //envío los datos del usuario
+                $usuario = new UsuarioEntity();
+                
+                $data['usu_estado']='A'; 
+                $data['usu_fecha_registro']='0000-00-00 00:00:00'; 
+                $usuario->exchangeArray ( $data );  
+
+                $usu_id=$this->getUsuarioDao() ->guardar ( $usuario );
+
+                $data_cliente = array();
+                $cliente = new ClienteEntity();
+
+                $data_cliente['usu_id']=$usu_id;
+                $data_cliente['cli_saldo']=100;
+                $data_cliente['cli_estado']='ACTIVO';
+                $data_cliente['cli_movil']=$data['cli_movil'];
+
+                $cliente->exchangeArray ( $data_cliente );
                 $cli_id=$this->getClienteDao() ->guardar ( $cliente );
                 $clienteObj = $this->getClienteDao()->traer ( $cli_id );
                 $content=json_encode($clienteObj->getArrayCopy());
@@ -661,46 +667,68 @@ class ApiController extends AbstractActionController
 
     public function recoverAction()
     {
-        
         if($this->getRequest()->isPOST()){
-            $data = $this->request->getPost ();
+            $data = $this->request->getPost();
+            $email=$data['email'];
+            $cliente = $this->getClienteDao()->buscarPorEmailOUsuario($email);
+            $usu_id=$cliente->getUsu_id();
+            $usuario=$this->getUsuarioDao()->traer($usu_id);
+
+            $codigo_generado=$this->passwordGenerator(32);
+
+            $usuario->setUsu_codigo_recuperacion($codigo_generado);
+            
+            echo '<pre>';
+            print_r($usuario);
+            echo '</pre>';
+            
+            $usu_id=$this->getUsuarioDao()->guardar ( $usuario );
+
+            die();
             //$usuario = Usuario::find();
 
-
-
+            $uri = $this->getRequest()->getUri();
+            $scheme = $uri->getScheme();
+            $host = $uri->getHost();
+            $base = sprintf('%s://%s', $scheme, $host);
+            $basePath = $base .$this->getRequest()->getBasePath();
+            
+            
+            
+            $body = "<a href='www.hawasolutions.com/Violations2/'>Link</a>";
+         
+            $htmlPart = new MimePart($body);
+            $htmlPart->type = 'text/html';
+             
+            $textPart = new MimePart($body);
+            $textPart->type = 'text/plain';
+             
+            $body = new MimeMessage();
+            $body->setParts(array($textPart, $htmlPart));
+            $message = new Mail\Message();
+             
+            $message->addTo('lmponceb@gmail.com')
+            ->setFrom('ercarrasco@hawasolutions.com')
+            ->setSubject('Recuperación de Contraseña')
+            ->setEncoding("UTF-8")
+            ->setBody($body);
+            $message->getHeaders()->get('content-type')->setType('multipart/alternative');
+             
+            $transport = new SmtpTransport();
+            $options = new SmtpOptions(array(
+                    'name' => 'mail.hawasolutions.com',
+                    'host' => 'host114.hostmonster.com',
+                    'connection_class' => 'login',
+                    'connection_config' => array(
+                            'username' => 'prueba@hawasolutions.com',
+                            'password' => 'prueba2013',
+                    )
+            ));
+            $transport->setOptions($options);
+            $transport->send($message);
             echo $this->passwordGenerator();
-            die(); 
+            die();
         } 
-        
-        /*if($this->getRequest()->isPOST()){
-
-            $data = $this->request->getPost ();
-
-            $cliente = new ClienteEntity();
-            $data['cli_saldo']=0;
-            $data['cli_estado']='ACTIVO';
-
-            $cliente->exchangeArray ( $data );
-            $content='';
-            $response=$this->getResponse();
-            if(!$this->getClienteDao()->verificar( $cliente )){
-                $cli_id=$this->getClienteDao() ->guardar ( $cliente );
-                $clienteObj = $this->getClienteDao()->traer ( $cli_id );
-                $content=json_encode($clienteObj->getArrayCopy());
-                $response->setStatusCode(200);
-            }else {
-                $response->setStatusCode(409);
-            }    
-            $response->setContent($content);
-
-            return $response;
-
-        }else{
-            return $this->redirect ()->toRoute ( 'parametros', array (
-                    'controller' => 'index',
-                    'action' => 'index'
-            ) );
-        }*/
     }      
 
     private function passwordGenerator($length=10){

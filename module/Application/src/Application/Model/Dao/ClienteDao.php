@@ -69,15 +69,15 @@ class ClienteDao implements InterfaceCrud {
         return $id;
     }
     
-    public function verificar(Usuario $usuario){    
+    public function verificar($usuario){    
 
             $sql = new Sql($this->tableGateway->getAdapter());
             $select = $sql->select();
             $select->from('usuario');
             $select->where            
-                    ->equalTo('usu_email',$usuario->getUsu_email())
+                    ->equalTo('usu_email',$usuario['usu_email'])
                     ->or
-                    ->equalTo('usu_usuario',$usuario->getUsu_usuario());
+                    ->equalTo('usu_usuario',$usuario['usu_usuario']);
             
             $statement = $sql->prepareStatementForSqlObject($select);
             $results = $statement->execute();

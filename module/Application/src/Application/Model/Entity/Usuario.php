@@ -13,6 +13,8 @@ class Usuario {
 	private $usu_estado;
 	private $usu_fecha_registro;
 	
+    private $usu_codigo_recuperacion;
+
 	private $ciu_nombre_es;
 	private $ciu_nombre_en;
 	
@@ -106,6 +108,14 @@ class Usuario {
         return $this->ciu_nombre_en;
     }
 
+    /**
+     * @return the $usu_id
+     */
+    public function getUsu_codigo_recuperacion()
+    {
+        return $this->usu_codigo_recuperacion;
+    }    
+
 	/**
      * @param Ambigous <NULL, unknown> $usu_id
      */
@@ -194,6 +204,14 @@ class Usuario {
         $this->ciu_nombre_en = $ciu_nombre_en;
     }
 
+    /**
+     * @param Ambigous <NULL, unknown> $usu_codigo_recuperacion
+     */
+    public function setUsu_codigo_recuperacion($usu_codigo_recuperacion)
+    {
+        $this->usu_codigo_recuperacion = $usu_codigo_recuperacion;
+    }
+
 	public function exchangeArray($data) {
 		$this->usu_id = (isset ( $data ['usu_id'] )) ? $data ['usu_id'] : null;
 		$this->ciu_id = (isset ( $data ['ciu_id'] )) ? $data ['ciu_id'] : null;
@@ -204,6 +222,7 @@ class Usuario {
 		$this->usu_clave = (isset ( $data ['usu_clave'] )) ? $data ['usu_clave'] : null;
 		$this->usu_estado = (isset ( $data ['usu_estado'] )) ? $data ['usu_estado'] : null;
 		$this->usu_fecha_registro = (isset ( $data ['usu_fecha_registro'] )) ? $data ['usu_fecha_registro'] : null;
+        $this->usu_codigo_recuperacion = (isset ( $data ['usu_codigo_recuperacion'] )) ? $data ['usu_codigo_recuperacion'] : null;
 		
 		$this->ciu_nombre_es = (isset ( $data ['ciu_nombre_es'] )) ? $data ['ciu_nombre_es'] : null;
 		$this->ciu_nombre_en = (isset ( $data ['ciu_nombre_en'] )) ? $data ['ciu_nombre_en'] : null;

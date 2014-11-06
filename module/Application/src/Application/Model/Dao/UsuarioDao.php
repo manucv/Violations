@@ -46,6 +46,7 @@ class UsuarioDao implements InterfaceCrud {
     			'usu_clave' => $usuario->getUsu_clave (),
     			'usu_estado' => $usuario->getUsu_estado (),
     	        'usu_fecha_registro' => date('Y-m-d H:i:s'),
+                'usu_codigo_recuperacion' => $usuario->getUsu_codigo_recuperacion()
     	);
     
     	$data ['usu_id'] = $id;
@@ -60,6 +61,7 @@ class UsuarioDao implements InterfaceCrud {
     					'usu_nombre' => $usuario->getUsu_nombre (),
     					'usu_apellido' => $usuario->getUsu_apellido (),
     					'usu_estado' => $usuario->getUsu_estado (),
+                        'usu_codigo_recuperacion' => $usuario->getUsu_codigo_recuperacion (),
     			);
     
     			$this->tableGateway->update ( $data, array ( 'usu_id' => $id ) );
