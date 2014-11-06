@@ -22,7 +22,7 @@ class ComprasController extends AbstractActionController
     }
     
     public function transaccionAction(){
-        $this->layout()->setVariable('activo', '10');
+        $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'comprasParqueo');
         return array(
             'transaccion' => $this->getTransaccionDao()->traerTodos(),
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Compras de Parqueo' => array('clientes','compras','transaccion')) ),

@@ -8,7 +8,7 @@
 					<i class="fa fa-gears fa-fw"></i>
 					<span>Listado de Infracciones</span>
 				</div>
-				<div class="box-icons">
+				<div class="box-icons hidden-xs">
 					<a class="collapse-link">
 						<i class="fa fa-chevron-up"></i>
 					</a>
@@ -23,14 +23,14 @@
                      <thead>
                      <tr>
                          <th>&nbsp;</th>
-                     	 <th>Tipo de Infracci&oacute;n</th>
+                     	 <th><span class="hidden-xs">Tipo de </span>Infracci&oacute;n</th>
                          <th>Placa</th>
-                         <th>Fecha</th>
-                         <th>Pa&iacute;s</th>
-                         <th>Estado</th>
-                         <th>Ciudad</th>
-                         <th>Sector</th>
-                         <th>Vigilante</th>
+                         <th class="hidden-xs">Fecha</th>
+                         <th class="hidden-xs">Pa&iacute;s</th>
+                         <th class="hidden-xs">Estado</th>
+                         <th class="hidden-xs">Ciudad</th>
+                         <th class="hidden-xs">Sector</th>
+                         <th class="hidden-xs">Vigilante</th>
                      </tr>
                      </thead>
                      <tbody>
@@ -40,12 +40,12 @@
                          <td style="text-align: center;"><a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'detalle'))?>"><i class="fa fa-gavel fa-fw"></i></a></td>
                          <td><?php echo $this->escapeHtml($infraccion->getTip_inf_descripcion());?></td>
                          <td><?php echo $this->escapeHtml($infraccion->getInf_detalles());?></td>
-                         <td><?php echo $this->escapeHtml($infraccion->getInf_fecha());?></td>
-                         <td><?php echo $this->escapeHtml($infraccion->getPai_nombre_es());?></td>
-                         <td><?php echo $this->escapeHtml($infraccion->getEst_nombre_es());?></td>
-                         <td><?php echo $this->escapeHtml($infraccion->getCiu_nombre_es());?></td>
-                         <td><?php echo $this->escapeHtml($infraccion->getSec_nombre());?></td>
-                         <td><?php echo $this->escapeHtml($infraccion->getUsu_nombre() . ' ' . $infraccion->getUsu_apellido);?></td>
+                         <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getInf_fecha());?></td>
+                         <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getPai_nombre_es());?></td>
+                         <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getEst_nombre_es());?></td>
+                         <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getCiu_nombre_es());?></td>
+                         <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getSec_nombre());?></td>
+                         <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getUsu_nombre() . ' ' . $infraccion->getUsu_apellido);?></td>
                      </tr>
                      <?php endforeach; ?>
                      </tbody>

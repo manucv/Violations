@@ -15,11 +15,13 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+        $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'dashboard');
         return array('navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Dashboard' => array('parametros','index','index')) ));
     }
     
     public function videoAction()
     {
+        $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'inicio');
         return array();
     }
 }

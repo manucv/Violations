@@ -30,7 +30,7 @@ echo $this->formelementerrors ( $par_codigo );
 					<i class="fa fa-gears fa-fw"></i>
 					<span><?php echo $this->titulo ?> parqueadero</span>
 				</div>
-				<div class="box-icons">
+				<div class="box-icons hidden-xs">
 					<a class="collapse-link">
 						<i class="fa fa-chevron-up"></i>
 					</a>
@@ -47,12 +47,12 @@ echo $this->formelementerrors ( $par_codigo );
         			</div>
     			</div>
     			<div class="form-group">
-                    <div class="control-label col-md-2 col-md-offset-1">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <?php  
                 		echo $formLabel->openTag() . $sec_id->getLabel() . $formLabel->closeTag();
                 	   ?>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
             			<?php 
             			echo html_entity_decode( $this->formselect ( $sec_id ) );
             			echo html_entity_decode( $this->formelementerrors ( $sec_id ) );
@@ -60,12 +60,12 @@ echo $this->formelementerrors ( $par_codigo );
             		</div>
                 </div>
                 <div class="form-group">
-                    <div class="control-label col-md-2 col-md-offset-1">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <?php 
                 		echo $formLabel->openTag() . $par_id->getLabel() . $formLabel->closeTag();
                 	   ?>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
             			<?php 
             			echo html_entity_decode( $this->formtext ( $par_id ) );
 					    echo html_entity_decode( $this->formelementerrors ( $par_id ) ); 
@@ -73,12 +73,12 @@ echo $this->formelementerrors ( $par_codigo );
             		</div>
                 </div>
                 <div class="form-group">
-                    <div class="control-label col-md-2 col-md-offset-1">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <?php 
                 		echo $formLabel->openTag() . $par_estado->getLabel() . $formLabel->closeTag();
                 	    ?>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                 	   <?php 
                 		echo html_entity_decode( $this->formselect ( $par_estado ) );
 					    echo html_entity_decode( $this->formelementerrors ( $par_estado ) );   

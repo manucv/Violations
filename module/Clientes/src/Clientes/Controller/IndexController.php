@@ -23,7 +23,7 @@ class IndexController extends AbstractActionController
 
     public function listadoAction()
     {
-        $this->layout()->setVariable('activo', '9');
+        $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'clientes');
         return array(
             'cliente' => $this->getClienteDao()->traerTodos(),
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Clientes' => array('clientes','index','listado')) ),
