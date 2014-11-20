@@ -82,6 +82,8 @@ use Application\Model\Entity\TransferenciaSaldo;
 use Application\Model\Dao\TransferenciaSaldoDao;
 use Application\Model\Entity\RelacionCliente;
 use Application\Model\Dao\RelacionClienteDao;
+use Application\Model\Entity\Publicidad;
+use Application\Model\Dao\PublicidadDao;
 //END NEW
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface{
@@ -153,6 +155,9 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
         				return;
 	        			break;		        			
 	        	
+	        	case 'Application\Controller\Console':
+        				return;
+	        			break;
         	}
         }
         
@@ -410,6 +415,13 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$tableGateway = new TableGateway('relacion_cliente', $dbAdapter, null, $resultSetPrototype);
 		                	return new RelacionClienteDao($tableGateway);
 		                },
+		                'Application\Model\Dao\PublicidadDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Publicidad());
+		                	$tableGateway = new TableGateway('publicidad', $dbAdapter, null, $resultSetPrototype);
+		                	return new PublicidadDao($tableGateway);
+		                },		                
 
 		                'Navigation' => 'Application\Clases\MyNavigationFactory'
 				),
@@ -451,4 +463,6 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 				array( 'PASSWORD',     'Valid Password to execute the cron job'     ),
 		);
 	}
+
+
 }

@@ -104,6 +104,24 @@ class ParqueaderoDao implements InterfaceCrud {
 
 	}		
 
+	public function liberarParqueaderos() {
+		$adapter = $this->tableGateway->getAdapter();
+		$query = "
+			UPDATE parqueadero SET par_estado='D' WHERE par_id 
+			NOT IN (
+			select lp.par_id 
+			FROM log_parqueadero AS lp 
+			WHERE log_par_fecha_ingreso > NOW() - INTERVAL 2 DAY 
+			AND (log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR) > NOW()
+			) AND par_estado = 'O'
+		";
+    	
+    	$statement = $adapter->query($query);
+    	$result = $statement->execute();
+
+		return true;		
+	}
+
 
 	public function traerVaciosPorSectorJSON($sec_id) {
 
