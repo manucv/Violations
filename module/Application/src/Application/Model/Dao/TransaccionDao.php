@@ -61,7 +61,7 @@ class TransaccionDao implements InterfaceCrud {
             lp.par_id,
             aut_placa, 
             ( log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR ) AS hora_salida,
-            TIMESTAMPDIFF(MINUTE,NOW(), ( log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR )) AS falta,
+            TIMESTAMPDIFF(SECOND,NOW(), ( log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR )) AS falta,
             lp.log_par_horas_parqueo
             FROM log_parqueadero AS lp
             JOIN transaccion AS tr ON lp.tra_id = tr.tra_id
