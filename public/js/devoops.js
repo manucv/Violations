@@ -772,6 +772,7 @@ function Table2Json(table) {
 /*-------------------------------------------
 	Demo graphs for Flot Chart page (charts_flot.html)
 ---------------------------------------------*/
+/*
 //
 // Graph1 created in element with id = box-one-content
 //
@@ -780,6 +781,7 @@ function FlotGraph1(){
 	// be fetched from a server
 	var data = [],
 	totalPoints = 300;
+	
 	function getRandomData() {
 		if (data.length > 0)
 			data = data.slice(1);
@@ -794,6 +796,7 @@ function FlotGraph1(){
 			}
 			data.push(y);
 		}
+		
 		// Zip the generated y values with the x values
 		var res = [];
 		for (var i = 0; i < data.length; ++i) {
@@ -801,7 +804,8 @@ function FlotGraph1(){
 		}
 		return res;
 	}
-	var updateInterval = 30;
+	
+	var updateInterval = 1000;
 	var plot = $.plot("#box-one-content", [ getRandomData() ], {
 		series: {
 			shadowSize: 0	// Drawing is faster without shadows
@@ -816,7 +820,7 @@ function FlotGraph1(){
 		setTimeout(update, updateInterval);
 	}
 	update();
-}
+}*/
 //
 // Graph2 created in element with id = box-two-content
 //
