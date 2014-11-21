@@ -121,6 +121,7 @@ class AclListener implements ListenerAggregateInterface{
             //$acl->allow('1', NULL);
             $acl->allow('6', 'api:api', NULL);
             $acl->allow('6', 'application:login', NULL);
+            $acl->allow('6', 'application:console', NULL);
             //$acl->allow('6', 'api:api', array('paises'));
     		
     		if(!$acl->isAllowed($this->getRole($services), $resourceName, $action)){

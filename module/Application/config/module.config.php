@@ -50,8 +50,9 @@ return array (
 														'defaults' => array () 
 												) 
 										) 
-								) 
-						) 
+								)
+						),
+
 				) 
 		),
 		'service_manager' => array (
@@ -78,6 +79,7 @@ return array (
 						'Application\Controller\LoginC' => 'Application\Controller\LoginController',
 						'Application\Controller\Error' => 'Application\Controller\ErrorController',
 						'Application\Controller\Index' => 'Application\Controller\IndexController',
+						'Application\Controller\Console' => 'Application\Controller\ConsoleController', //Agrego al controlador de consola como invocable
 				) 
 		),
 		'view_manager' => array (
@@ -108,7 +110,7 @@ return array (
 														'action'     => 'resetpassword'
 												)
 										)
-								)
+								)						
 						)
 				)
 		),

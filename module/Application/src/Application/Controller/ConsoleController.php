@@ -11,6 +11,7 @@ use Application\Model\Entity\Componente;
 class ConsoleController extends AbstractActionController {
 	
 	private $componenteDao;
+	private $parqueaderoDao;
 	
 	public function indexAction() {
 		/* return $this->redirect ()->toRoute ( 'application', array (
@@ -141,10 +142,21 @@ class ConsoleController extends AbstractActionController {
 	    			return "\n\n Login Failure. You can not execute the command line. \n";
 	    		}
 	}
+
+
+	public function parqueaderosAction() {	
+		// Ejecutar wget -q http://localhost/hawa/violations/public/application/console/parqueaderos para liberar parqueaderos	
+		$this->getParqueaderoDao()->liberarParqueaderos();
+		$content="";
+    	$response=$this->getResponse();
+        $response->setStatusCode(200);
+        $response->setContent($content);
+        return $response;
+	}	
 	
 	/* public function resetpasswordAction()
 	{
-		
+			
 		
 	} */
 	
@@ -155,7 +167,14 @@ class ConsoleController extends AbstractActionController {
 		}
 		return $this->componenteDao;
 	}
-			
+
+	public function getParqueaderoDao() {
+		if (! $this->parqueaderoDao) {
+			$sm = $this->getServiceLocator ();
+			$this->parqueaderoDao = $sm->get ( 'Application\Model\Dao\ParqueaderoDao' );
+		}
+		return $this->parqueaderoDao;
+	}	
 	//COMO EJECTUTAR DESDE LA LINEA DE COMANDO
 	//*/1 * * * * /usr/bin/php /var/www/Violations/public/index.php user resetpassword -v emanuelcarrasco@gmail.com root
 }

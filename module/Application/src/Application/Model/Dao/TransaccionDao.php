@@ -18,6 +18,7 @@ class TransaccionDao implements InterfaceCrud {
     
     public function traerTodos(){
     	$select = $this->tableGateway->getSql ()->select ();
+
         $select->join ( 'log_parqueadero', 'transaccion.tra_id  = log_parqueadero.tra_id' );
         $select->join ( 'parqueadero', 'log_parqueadero.par_id  = parqueadero.par_id' );
         $select->join ( 'sector', 'sector.sec_id  = parqueadero.sec_id' );
@@ -51,6 +52,44 @@ class TransaccionDao implements InterfaceCrud {
     	return $row;
     }
     
+    public function traerActivosPorClienteJSON($cli_id){
+
+        $adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT 
+            lp.tra_id,
+            lp.par_id,
+            aut_placa, 
+            ( log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR ) AS hora_salida,
+            TIMESTAMPDIFF(MINUTE,NOW(), ( log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR )) AS falta,
+            lp.log_par_horas_parqueo
+            FROM log_parqueadero AS lp
+            JOIN transaccion AS tr ON lp.tra_id = tr.tra_id
+            WHERE ( log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR ) > NOW() AND cli_id = $cli_id
+        ";
+        
+        $statement = $adapter->query($query);
+        $results = $statement->execute();
+
+
+        $sectores = new \ArrayObject();
+    
+        $count=0;
+        $jsonArray=array();
+
+        foreach ($results as $row){
+            $jsonArray[$count]['tra_id']=$row['tra_id'];
+            $jsonArray[$count]['par_id']=$row['par_id'];
+            $jsonArray[$count]['aut_placa']=$row['aut_placa'];
+            $jsonArray[$count]['hora_salida']=$row['hora_salida'];
+            $jsonArray[$count]['log_par_horas_parqueo']=$row['log_par_horas_parqueo'];
+            $jsonArray[$count]['falta']=$row['falta'];
+
+            $count++;
+        }
+
+        return json_encode($jsonArray);        
+    }    
     /*public function traerPorCliente($cli_id){
         $select = $this->tableGateway->getSql()->select ();
 

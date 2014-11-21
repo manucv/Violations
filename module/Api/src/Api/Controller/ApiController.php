@@ -20,6 +20,7 @@ use Application\Model\Entity\RelacionCliente as RelacionClienteEntity;
 use Application\Model\Entity\TransferenciaSaldo as TransferenciaSaldoEntity;
 use Application\Model\Entity\Cliente as ClienteEntity;
 use Application\Model\Entity\Usuario as UsuarioEntity;
+use Application\Model\Entity\Publicidad as PublicidadEntity;
 
 class ApiController extends AbstractActionController
 {
@@ -41,6 +42,7 @@ class ApiController extends AbstractActionController
     protected $transaccionDao;
     protected $relacionClienteDao;
     protected $transferenciaSaldoDao;
+    protected $publicidadDao;
 
     public function indexAction()
     {
@@ -66,7 +68,7 @@ class ApiController extends AbstractActionController
             if(is_object($cliente)){
                 $content=json_encode($cliente->getArrayCopy());
             }else{
-                $content=json_encode(array());
+                $content=json_encode(new stdClass());
             }
 
             $response=$this->getResponse();
@@ -736,6 +738,51 @@ class ApiController extends AbstractActionController
         return substr(str_shuffle($chars),0,$length);
     }
 
+
+    public function publicidadAction()
+    {
+        if($this->getRequest()->isGET()){
+
+            $anuncio = $this->getPublicidadDao()->traerRnd();
+
+            $content='';
+
+            $content=json_encode($anuncio);
+            
+            $response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+            return $response;
+        }else{
+            return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ) );
+        }
+    }  
+
+    public function activosAction()
+    {
+        if($this->getRequest()->isGET()){
+            if(!is_null($this->params('id'))){
+                $cli_id=$this->params('id');
+
+                $transacciones = $this->getTransaccionDao()->traerActivosPorClienteJSON($cli_id);
+                
+                $response=$this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($transacciones);
+                return $response;
+            }
+
+        }else{
+            return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ) );
+        }
+    }        
+
     public function getUsuarioDao() {
         if (! $this->usuarioDao) {
             $sm = $this->getServiceLocator ();
@@ -847,5 +894,13 @@ class ApiController extends AbstractActionController
         }
         return $this->transferenciaSaldoDao;
     }
+                    
+    public function getPublicidadDao() {
+        if (! $this->publicidadDao) {
+            $sm = $this->getServiceLocator ();
+            $this->publicidadDao = $sm->get ( 'Application\Model\Dao\PublicidadDao' );
+        }
+        return $this->publicidadDao;
+    }        
 }
 
