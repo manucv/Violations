@@ -12,13 +12,12 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
-
 import android.app.Activity;
-import android.app.Notification;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -45,6 +44,8 @@ public class SMSActivity extends Activity {
 		final EditText txtPlaca = (EditText)findViewById(R.id.TxtSMSPlaca);
 		final EditText txtParqueadero = (EditText)findViewById(R.id.TxtSMSParqueadero);
 		final Spinner spnHoras = (Spinner)findViewById(R.id.SpnSMSHoras);
+		final String phoneNo = "0983344115";//0995661449";
+
 		
 		btnSendSMS = (Button)findViewById(R.id.BtnSMSEnviar);
 		
@@ -52,61 +53,82 @@ public class SMSActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-			      Log.i("Send SMS", "");
+		      
+		      try {
+		    	  
+		    	  if(!txtPlaca.getText().toString().equals("") && !txtParqueadero.getText().toString().equals("")){
+		    		  
+				    AlertDialog.Builder alert = new AlertDialog.Builder(SMSActivity.this);
+				    alert.setTitle("Confirmación de Parqueo");
+			    	alert.setMessage("Esta seguro de que desea enviar el mensaje, el costo de SMS es de 80ctvs por hora de parqueo.");
+	
+				    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				        @Override
+						public void onClick(DialogInterface dialog, int whichButton) {
+				        	
+				        	  String message = txtPlaca.getText().toString()+"\n"+txtParqueadero.getText().toString()+"\n"+spnHoras.getSelectedItem().toString();
+				        	
+		 					  SmsManager smsManager = SmsManager.getDefault();
+				    		  smsManager.sendTextMessage(phoneNo, null, message, null, null);
+				    		  
+				    		  Toast.makeText(SMSActivity.this, "Su SMS fue enviado exitosamente.", Toast.LENGTH_SHORT).show();
+				    		  
+				    		  //Este bloque se debe quitar más adelante
+				    		  TareaWSComprarSMS tarea = new TareaWSComprarSMS();
+				            	
+				    		  tarea.execute(  txtParqueadero.getText().toString(),
+												txtPlaca.getText().toString(),
+												spnHoras.getSelectedItem().toString());
+				    		  //Fin del bloque	
+				    		  
+				    		  //Envío de Notificación al teléfono
+				    		  
+				    		  	NotificationCompat.Builder mBuilder =
+				    			        new NotificationCompat.Builder(SMSActivity.this)
+				    			        .setSmallIcon(R.drawable.ic_launcher)
+				    			        .setContentTitle("Parqueo Exitoso")
+				    			        .setContentText("Tu parqueadero expira en "+spnHoras.getSelectedItem().toString()+" horas");
+			
+				    			Intent resultIntent = new Intent(SMSActivity.this, MainActivity.class);
+			
+				    			TaskStackBuilder stackBuilder = TaskStackBuilder.create(SMSActivity.this);
+				    			stackBuilder.addParentStack(MainActivity.class);
+				    			stackBuilder.addNextIntent(resultIntent);
+				    			PendingIntent resultPendingIntent =
+				    			        stackBuilder.getPendingIntent(
+				    			            0,
+				    			            PendingIntent.FLAG_UPDATE_CURRENT
+				    			        );
+				    			mBuilder.setContentIntent(resultPendingIntent);
+				    			NotificationManager mNotificationManager =
+				    			    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+				    			mNotificationManager.notify(001, mBuilder.build());		    		  
+				    		  
+				    		  //Fin de Envío de notificación			        	
+			        	
+				        }
+				    });
+	
+				    alert.setNegativeButton("Cancel",
+				        new DialogInterface.OnClickListener() {
+				            @Override
+							public void onClick(DialogInterface dialog, int whichButton) {
+				            	//Do Nothing
+				            }
+				        });
+	
+				    alert.show();
+		    		  
+		    		  
+		    	  }else{
+		    		  Toast.makeText(SMSActivity.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+		    	  }
+		         
+		      } catch (Exception e) {
+		      		Toast.makeText(SMSActivity.this, "Hubo un error al enviar su SMS.", Toast.LENGTH_SHORT).show();
+		      		e.printStackTrace();
+		      }					
 
-			      String phoneNo = "0995661449";
-			      String message = txtPlaca.getText().toString()+"\n"+txtParqueadero.getText().toString()+"\n"+spnHoras.getSelectedItem().toString();
-
-			      try {
-			    	  if(!txtPlaca.getText().toString().equals("") && !txtParqueadero.getText().toString().equals("")){
-			    		  
-			    		  SmsManager smsManager = SmsManager.getDefault();
-			    		  smsManager.sendTextMessage(phoneNo, null, message, null, null);
-			    		  
-			    		  Toast.makeText(SMSActivity.this, "Su SMS fue enviado exitosamente.", Toast.LENGTH_SHORT).show();
-			    		  
-			    		  /*Este bloque se debe quitar más adelante*/
-			    		  TareaWSComprarSMS tarea = new TareaWSComprarSMS();
-			            	
-			    		  tarea.execute(  txtParqueadero.getText().toString(),
-											txtPlaca.getText().toString(),
-											spnHoras.getSelectedItem().toString());
-			    		  /*Fin del bloque*/	
-			    		  
-			    		  /*Envío de Notificación al teléfono*/
-			    		  
-			    		  	NotificationCompat.Builder mBuilder =
-			    			        new NotificationCompat.Builder(SMSActivity.this)
-			    			        .setSmallIcon(R.drawable.ic_launcher)
-			    			        .setContentTitle("Parqueo Exitoso")
-			    			        .setContentText("Tu parqueadero expira en "+spnHoras.getSelectedItem().toString()+" horas");
-
-			    			Intent resultIntent = new Intent(SMSActivity.this, MainActivity.class);
-
-			    			TaskStackBuilder stackBuilder = TaskStackBuilder.create(SMSActivity.this);
-			    			stackBuilder.addParentStack(MainActivity.class);
-			    			stackBuilder.addNextIntent(resultIntent);
-			    			PendingIntent resultPendingIntent =
-			    			        stackBuilder.getPendingIntent(
-			    			            0,
-			    			            PendingIntent.FLAG_UPDATE_CURRENT
-			    			        );
-			    			mBuilder.setContentIntent(resultPendingIntent);
-			    			NotificationManager mNotificationManager =
-			    			    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-			    			mNotificationManager.notify(001, mBuilder.build());		    		  
-			    		  
-			    		  /*Fin de Envío de notificación*/
-			    		  
-			    		  
-			    	  }else{
-			    		  Toast.makeText(SMSActivity.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
-			    	  }
-			         
-			      	} catch (Exception e) {
-			      		Toast.makeText(SMSActivity.this, "Hubo un error al enviar su SMS.", Toast.LENGTH_SHORT).show();
-			      		e.printStackTrace();
-			      	}
 			}
         });
 	}

@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical" >
-
+	<TextView
+	    android:id="@+id/LblSignIn"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="top|center_horizontal"
+	    android:padding="10dp"
+	    android:text="Saldo Total"
+	    android:textColor="@android:color/white"
+	    android:textSize="20sp"
+	    android:textStyle="bold" />
+	
     <TextView
         android:id="@+id/TxtSaldoContactos"
         android:layout_width="wrap_content"
@@ -17,17 +27,33 @@
         android:textStyle="bold"      
          />
 
-    <ProgressBar
-        android:id="@+id/LoadingContacts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
         android:orientation="vertical"
         android:padding="5dp" >
+
+        <ProgressBar
+            android:id="@+id/LoadingContacts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <Button
+                android:id="@+id/BtnAgregar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/button_bkg"
+                android:fitsSystemWindows="true"
+                android:text="Agregar Contacto"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,25 +67,14 @@
                 android:layout_weight="0.2"
                 android:background="@drawable/text_bkg"
                 android:ems="10"
-                android:fitsSystemWindows="true" 
-               	android:lines="1"
-            	android:maxLines="1"
-            	android:singleLine="true"        
-                >
+                android:fitsSystemWindows="true"
+                android:hint="Filtrar"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true" >
 
                 <requestFocus />
             </EditText>
-
-            <Button
-                android:id="@+id/BtnAgregar"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="0.8"
-                android:background="@drawable/button_bkg"
-                android:fitsSystemWindows="true"
-                android:text="+"
-                android:textColor="#ffffff" />
 
         </LinearLayout>
 
@@ -81,4 +96,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

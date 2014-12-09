@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -32,7 +35,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -43,20 +45,62 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity {
 	private ProgressBar progressBar;
 	private boolean doubleBackToExitPressedOnce=false;
+	public static final String PREFS_NAME = "Preferencias";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
 		setContentView(R.layout.activity_main);
 		
         final EditText txtEmail = (EditText)findViewById(R.id.TxtEmail);
         final EditText txtPassword = (EditText)findViewById(R.id.TxtPassword);
         final Button btnLogIn = (Button)findViewById(R.id.BtnLogIn);
-        final Button btnSignIn = (Button)findViewById(R.id.BtnSignIn);
-        final TextView lblRecover = (TextView)findViewById(R.id.LblRecover);
-        final TextView lblSMS = (TextView)findViewById(R.id.LblSMS);
+        final TextView btnSignIn = (TextView)findViewById(R.id.LblSignIn);
+        final Button lblRecover = (Button)findViewById(R.id.BtnRecover);
+        final Button lblSMS = (Button)findViewById(R.id.BtnSMS);
         
         progressBar = (ProgressBar)findViewById(R.id.loadingLogin);
         progressBar.setVisibility(View.GONE);
+        
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        int cli_id = settings.getInt("ID", 0);
+        String nombre = settings.getString("NOMBRE", "");
+        float saldo = settings.getFloat("SALDO", 0);
+        
+        Log.v("MsgMain",""+cli_id);
+        
+        if(cli_id>0){
+        	if (isNetworkAvailable()) {
+        		//Debemos hacer verificaci—n del usuario
+                //Creamos el Intent
+                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //Creamos la informaci—n a pasar entre actividades
+                Bundle b = new Bundle();
+                b.putString("ID", ""+cli_id);
+                b.putString("NOMBRE", nombre);
+                b.putString("SALDO", ""+saldo);
+                
+                //A–adimos la informaci—n al intent
+                intent.putExtras(b);
+
+                //Iniciamos la nueva actividad
+                startActivity(intent);
+                finish();
+                System.exit(0);
+                
+        	}else{
+				Toast toast=Toast.makeText(MainActivity.this, "No es posible verificar su identidad en este momento, necesita acceso a Internet", Toast.LENGTH_LONG);
+				toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 500);
+				toast.show();        		
+        	}
+        }
+        
         btnLogIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +170,7 @@ public class MainActivity extends ActionBarActivity {
 			String passw = params[1];
 			passw= md5(passw);
 			
+			
 			//String url = "http://www.hawasolutions.com/Violations/public/api/api/login";
 			String url = "http://www.hawasolutions.com/Violations2/public/api/api/login";
 			List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
@@ -133,19 +178,19 @@ public class MainActivity extends ActionBarActivity {
 			paramsArray.add( new BasicNameValuePair( "passw", passw ) );
 			URI uri = null;
 			try {
-				Log.v("Ejemplo","llego hasta aca");
 				uri = new URI( url + "?" + URLEncodedUtils.format( paramsArray, "utf-8" ));
 				HttpGet del = new HttpGet(uri);
-				Log.v("Query",uri.toString());
 				del.setHeader("content-type", "application/json");
 			
 	        	HttpResponse resp = httpClient.execute(del);
 	        	String respStr = EntityUtils.toString(resp.getEntity());
-	        	Log.v("result",respStr);
+
 	        	if(!respStr.equals("")){
+	        		Log.v("MsgMainJson",respStr);
 	        		JSONObject respJSON = new JSONObject(respStr); 
 		        	if(respStr.length() > 0){
 		                 //Creamos el Intent
+		        		
 		                 Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
 		                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		                 //Creamos la informaci—n a pasar entre actividades
@@ -154,11 +199,26 @@ public class MainActivity extends ActionBarActivity {
 		                 b.putString("NOMBRE", respJSON.getString("usu_nombre")+" "+respJSON.getString("usu_apellido"));
 		                 b.putString("SALDO", respJSON.getString("cli_saldo"));
 		                 
+		                 /*Bloque preferencias compartidas*/
+		                 SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		                 SharedPreferences.Editor editor = settings.edit();
+		                 
+		                 editor.putInt("ID", Integer.parseInt(respJSON.getString("cli_id")));
+		                 editor.putString("NOMBRE", respJSON.getString("usu_nombre")+" "+respJSON.getString("usu_apellido"));
+		                 editor.putFloat("SALDO", Float.parseFloat(respJSON.getString("cli_saldo")));
+		                 editor.putInt("ATTEMPT", 0);
+		                 
+		                 editor.commit();
+		                 /*Fin Bloque preferencias compartidas*/
+		                 
 		                 //A–adimos la informaci—n al intent
 		                 intent.putExtras(b);
 
 		                 //Iniciamos la nueva actividad
 		                 startActivity(intent);		
+		                 
+		                 finish();
+		                 System.exit(0);
 		        	}else{
 		        		return false;
 		        	}
@@ -171,7 +231,6 @@ public class MainActivity extends ActionBarActivity {
 		        	Log.e("ServicioRest","Error!", ex);
 		        	resul = false;
 		    }
-
 	        return resul;
 			//return true;
 	    }
@@ -184,6 +243,22 @@ public class MainActivity extends ActionBarActivity {
 	    		//lblResultado.setText("" + idCli + "-" + nombCli + "-" + telefCli);
 	    	}else{
 	    		Toast.makeText(MainActivity.this, "Usuario o Contrasena Incorrectos", Toast.LENGTH_SHORT).show();
+                
+	    		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+	    		int attempt = settings.getInt("ATTEMPT", 0);
+	    		SharedPreferences.Editor editor = settings.edit();
+	    		attempt=attempt+1;
+                editor.putInt("ATTEMPT", attempt);
+                editor.commit();
+                
+                if(attempt>=3){
+                	//attempt=0;
+                	//editor.putInt("ATTEMPT", attempt);
+                	//editor.commit();
+                    Intent intent = new Intent(MainActivity.this, RecoverActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
                 
                 progressBar.setVisibility(View.GONE);
 	    	}

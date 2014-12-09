@@ -13,7 +13,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -33,11 +32,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
@@ -53,9 +54,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,7 +72,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 	private Integer ocupados=0;
 	private TextView lblTotal;
 	private Spinner spnLog_par_horas_parqueo;
-	private Double price = 0.8;
+	private Double price = 0.0;
 	
 	private GoogleMap map;
 	private HashMap<Marker,Integer> markers=new HashMap<Marker,Integer>();
@@ -83,21 +84,25 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 	
 	Marker currentMarker;
 	
+	private ProgressBar progressBar;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking);
         
-        TextView txtSaldo = (TextView)findViewById(R.id.TxtSaldoParking);
-
-        lblTotal = (TextView)findViewById(R.id.LblTotal);
         final EditText txtAut_placa = (EditText)findViewById(R.id.TxtAut_placa);
+        
+        TextView txtSaldo = (TextView)findViewById(R.id.TxtSaldoParking);
+        lblTotal = (TextView)findViewById(R.id.LblTotal);
         spnLog_par_horas_parqueo = (Spinner) findViewById(R.id.SpnLog_par_horas_parqueo);
         par_id = (EditText) findViewById(R.id.TxtPar_id);
         
+        progressBar = (ProgressBar)findViewById(R.id.loadingParking);
+        progressBar.setVisibility(View.GONE);
+        
 		cli_id=super.getCli_id();
 		saldo=super.getSaldo();
-        
 		
 		par_id.addTextChangedListener(new TextWatcher(){
 
@@ -107,6 +112,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 			@Override
 			public void afterTextChanged(Editable s) { 
 				if(par_id.getText().toString().length()>3){
+					progressBar.setVisibility(View.VISIBLE);
 					TareaWSBuscarParqueadero tarea = new TareaWSBuscarParqueadero();
 					tarea.execute();
 				}else{
@@ -134,9 +140,47 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
             map = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapParking)).getMap();
             map.setMyLocationEnabled(true);
             map.setOnMarkerClickListener(this);
+            map.getUiSettings().setScrollGesturesEnabled(false);
             
             
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE); // Getting LocationManager object from System Service LOCATION_SERVICE
+            
+            
+            Boolean gps_enabled = null;
+            Boolean network_enabled = null;
+            try{
+                gps_enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            }catch(Exception ex){}
+            try{
+            	network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            }catch(Exception ex){}
+            
+            
+            if(!gps_enabled || !network_enabled){
+                Builder  dialog = new AlertDialog.Builder(this);
+                dialog.setMessage("Desea Activar los servicios de localizaci—n?" );
+                 dialog.setPositiveButton("Ir", new DialogInterface.OnClickListener() {
+
+                     @Override
+                     public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                         // TODO Auto-generated method stub
+                         startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),100);//android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 100);
+                     }
+                 });
+                 dialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
+                     @Override
+                     public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                         // TODO Auto-generated method stub
+
+                     }
+                 });
+                 dialog.show();
+
+            }            
+                        
+            
+            
             Criteria criteria = new Criteria(); // Creating a criteria object to retrieve provider
             String provider = locationManager.getBestProvider(criteria, true); // Getting the name of the best provider
             Location location = locationManager.getLastKnownLocation(provider); // Getting Current Location
@@ -146,9 +190,6 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
             }
             
             locationManager.requestLocationUpdates(provider, 20000, 0, this);
-            
-            //TareaWSSectores tarea = new TareaWSSectores();
-			//tarea.execute();
 
         }				
         
@@ -163,13 +204,40 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
             @Override
             public void onClick(View v) {
             
-            	Log.v("mensaje","Ejemplo");
             	
             	if(!par_id.getText().toString().equals("") && !txtAut_placa.getText().toString().equals("")){
-	            	TareaWSComprar tarea = new TareaWSComprar();
-					tarea.execute(	par_id.getText().toString(),
-									txtAut_placa.getText().toString(), 
-									spnLog_par_horas_parqueo.getSelectedItemPosition()+1+"" );      
+            		
+				    AlertDialog.Builder alert = new AlertDialog.Builder(ParkingActivity.this);
+				    alert.setTitle("Confirmaci—n de Parqueo");
+		            DecimalFormat df = new DecimalFormat();
+					df.setMaximumFractionDigits(2);
+		            
+			    	alert.setMessage("Est‡ seguro de que desea realizar esta compra, se debitar‡n "+
+			    			"$"+(df.format(Integer.parseInt(spnLog_par_horas_parqueo.getSelectedItem().toString())*price))
+			    			+" por "+spnLog_par_horas_parqueo.getSelectedItem().toString()+" Horas.");
+	
+				    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				        @Override
+						public void onClick(DialogInterface dialog, int whichButton) {
+				        	progressBar.setVisibility(View.VISIBLE);
+			            	TareaWSComprar tarea = new TareaWSComprar();
+							tarea.execute(	par_id.getText().toString(),
+											txtAut_placa.getText().toString(), 
+											spnLog_par_horas_parqueo.getSelectedItemPosition()+1+"" );
+				        }
+				    });
+	
+				    alert.setNegativeButton("Cancel",
+				        new DialogInterface.OnClickListener() {
+				            @Override
+							public void onClick(DialogInterface dialog, int whichButton) {
+				            	//Do Nothing
+				            }
+				        });
+	
+				    alert.show();
+					
+					
             	} else {
             		Toast.makeText(ParkingActivity.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
             	}
@@ -195,8 +263,6 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 			}
 
     	});        
-        
-        
         
 	} 
 
@@ -264,8 +330,8 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 		    		  /*Fin de Env’o de notificaci—n*/		        		
 		        		
 		                 //Creamos el Intent
-		                 Intent intent =
-		                         new Intent(ParkingActivity.this, WaitingActivity.class);
+		                 Intent intent = 
+		                         new Intent(ParkingActivity.this, WelcomeActivity.class);
 
 		                 //Creamos la informaci—n a pasar entre actividades
 		                 Bundle b = new Bundle();
@@ -278,7 +344,11 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 		                 intent.putExtras(b);
 
 		                 //Iniciamos la nueva actividad
-		                 startActivity(intent);		
+		                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		                 startActivity(intent);		            	
+		                 
+		                 //finish();
+		                 //System.exit(0);	
 		                 
 		                 resul=true;
 		        	}
@@ -303,7 +373,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 	    	
 	    	if (result)
 	    	{
-	    		
+	    		progressBar.setVisibility(View.GONE);
 	    		//lblResultado.setText("" + idCli + "-" + nombCli + "-" + telefCli);
 	    	}
 	    }
@@ -367,23 +437,18 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 			        		j++;
 			        	}	
 		        	}	
-
-		        
 		        }
 		        catch(Exception ex)
 		        {
 		        	Log.e("ServicioRest","Error!", ex);
 		        	resul = false;
 		        }
-			
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}			
-	 
+			}
 	        return resul;
 	    }
-	    
 	}
 	
 	private class TareaWSBuscarParqueadero extends AsyncTask<String,Integer,Boolean> {
@@ -407,12 +472,12 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 							String responseStr = EntityUtils.toString(response.getEntity());
 							if(!responseStr.equals("")){
 								JSONObject responseJSON = new JSONObject(responseStr); 
-															
+								Log.v("resultado",responseStr);
 								sec_id = responseJSON.getString("sec_id");	
 								sec_latitud = responseJSON.getString("sec_latitud");
 								sec_longitud = responseJSON.getString("sec_longitud");
 								sec_nombre = responseJSON.getString("sec_nombre");
-								
+								price = Double.parseDouble(responseJSON.getString("sec_valor_hora"));
 								return true;
 							}
 						break;
@@ -450,9 +515,15 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 	    		
 	        	LatLng latLng = new LatLng(Double.parseDouble(sec_latitud), Double.parseDouble(sec_longitud));
 	            map.moveCamera(CameraUpdateFactory.newLatLng(latLng));	// Showing the current location in Google Map
+				
+	            DecimalFormat df = new DecimalFormat();
+				df.setMaximumFractionDigits(2);
+				
+	            lblTotal.setText("$"+(df.format(Integer.parseInt(spnLog_par_horas_parqueo.getSelectedItem().toString())*price)));
 	    	}else{
 	    		Toast.makeText(ParkingActivity.this, message, Toast.LENGTH_SHORT).show();
 	    	}
+	    	progressBar.setVisibility(View.GONE);
 	    }
 	}
 

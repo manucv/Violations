@@ -21,13 +21,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.TextView;
 
 
 
@@ -47,6 +52,8 @@ public class MapActivity extends ParqueaderoActivity implements LocationListener
         cli_id=super.getCli_id();		
         saldo=super.getSaldo();
         
+		TextView txtSaldoMap = (TextView)findViewById(R.id.TxtSaldoMap);
+        txtSaldoMap.setText("$" + Float.parseFloat(saldo));        
         
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext()); // Getting Google Play availability status
 
@@ -59,14 +66,50 @@ public class MapActivity extends ParqueaderoActivity implements LocationListener
         	
             map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
             map.setMyLocationEnabled(true);
-            map.setOnMarkerClickListener(this);
-            
+            map.setOnMarkerClickListener(this);         
             
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE); // Getting LocationManager object from System Service LOCATION_SERVICE
+            
+            Boolean gps_enabled = null;
+            Boolean network_enabled = null;
+            try{
+                gps_enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            }catch(Exception ex){}
+            try{
+            	network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            }catch(Exception ex){}
+            
+            
+            if(!gps_enabled || !network_enabled){
+                Builder  dialog = new AlertDialog.Builder(this);
+                dialog.setMessage("Desea Activar los servicios de localizaci—n?" );
+                 dialog.setPositiveButton("Ir", new DialogInterface.OnClickListener() {
+
+                     @Override
+                     public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                         // TODO Auto-generated method stub
+                         startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),100);//android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 100);
+                     }
+                 });
+                 dialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
+                     @Override
+                     public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                         // TODO Auto-generated method stub
+
+                     }
+                 });
+                 dialog.show();
+
+            }            
+            
+                        
+            
+            
             Criteria criteria = new Criteria(); // Creating a criteria object to retrieve provider
             String provider = locationManager.getBestProvider(criteria, true); // Getting the name of the best provider
             Location location = locationManager.getLastKnownLocation(provider); // Getting Current Location
-
+            
             if(location!=null){
                 onLocationChanged(location);
             }

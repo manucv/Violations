@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical" >
-
+	<TextView
+	    android:id="@+id/LblSignIn"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="top|center_horizontal"
+	    android:padding="10dp"
+	    android:text="Saldo Total"
+	    android:textColor="@android:color/white"
+	    android:textSize="20sp"
+	    android:textStyle="bold" />
+	
     <TextView
         android:id="@+id/TxtSaldoTransfer"
         android:layout_width="wrap_content"
@@ -14,19 +24,20 @@
         android:text="$0.00"
         android:textColor="@android:color/white"
         android:textSize="26sp"
-        android:textStyle="bold"   />
-
-    <ProgressBar
-        android:id="@+id/LoadingTransfer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
         android:orientation="vertical"
         android:padding="5dp" >
+
+        <ProgressBar
+            android:id="@+id/LoadingTransfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,7 +59,7 @@
             android:padding="5dp" >
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/LblParking"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
@@ -87,4 +98,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

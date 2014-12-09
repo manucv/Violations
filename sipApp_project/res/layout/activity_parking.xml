@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
@@ -7,147 +7,176 @@
     android:padding="0dp"
     android:textAlignment="gravity" >
 
-    <TextView
-        android:id="@+id/TxtSaldoParking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:padding="5dp"
-        android:text="$0.00"
-        android:textColor="@android:color/white"
-        android:textSize="26sp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="5dp" >
-
-            <TextView
-                android:id="@+id/LblSMS"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Espacio:"
-                android:textColor="@android:color/white" />
-
-            <EditText
-                android:id="@+id/TxtPar_id"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/text_bkg"
-                android:fitsSystemWindows="true"
-                android:lines="1"
-                android:maxLines="1"
-                android:padding="5dip"
-                android:singleLine="true" >
-
-       			<requestFocus /> 
-      		</EditText>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="5dp" >
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="No. Placa:"
-                android:textColor="@android:color/white" />
-
-            <EditText
-                android:id="@+id/TxtAut_placa"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/text_bkg"
-                android:fitsSystemWindows="true"
-                android:lines="1"
-                android:maxLines="1"
-                android:padding="5dip"
-                android:singleLine="true" >
-                
-            </EditText>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="5dp" >
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Tiempo:"
-                android:textColor="@android:color/white" />
-
-            <Spinner
-                android:id="@+id/SpnLog_par_horas_parqueo"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_weight="1"
-                android:background="@drawable/spinner_bkg"
-                android:entries="@array/tiempo_parqueadero"
-                android:fitsSystemWindows="true" />
-
-        </LinearLayout>
-
-        <fragment
-            android:id="@+id/mapParking"
-            android:name="com.google.android.gms.maps.MapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1.70" />
-
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right" >
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/valor_background" />
+        android:layout_height="match_parent" >
 
         <TextView
-            android:id="@+id/LblTotal"
+            android:id="@+id/TxtSaldoParking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/LblSignIn"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="41dp"
-            android:scaleType="centerInside"
-            android:text="0.00 Ctvos"
+            android:layout_marginRight="9dp"
+            android:padding="5dp"
+            android:text="$0.00"
+            android:textColor="@android:color/white"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/LblSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:text="Saldo Total"
             android:textColor="@android:color/white"
             android:textSize="20sp"
-             android:textStyle="bold" />
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:orientation="vertical"
+            android:padding="5dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/LblSMS"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Parqueadero:"
+                    android:textColor="@android:color/white" />
+
+                <EditText
+                    android:id="@+id/TxtPar_id"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/text_bkg"
+                    android:digits="@string/formatAlphaNumeric"
+                    android:fitsSystemWindows="true"
+                    android:inputType="textCapCharacters"
+                    android:lines="1"
+                    android:maxLength="4"
+                    android:maxLines="1"
+                    android:padding="5dip"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="No. Placa:"
+                    android:textColor="@android:color/white" />
+
+                <EditText
+                    android:id="@+id/TxtAut_placa"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/text_bkg"
+                    android:digits="@string/formatAlphaNumeric"
+                    android:fitsSystemWindows="true"
+                    android:inputType="textCapCharacters"
+                    android:lines="1"
+                    android:maxLength="7"
+                    android:maxLines="1"
+                    android:padding="5dip"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Tiempo:"
+                    android:textColor="@android:color/white" />
+
+                <Spinner
+                    android:id="@+id/SpnLog_par_horas_parqueo"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_bkg"
+                    android:entries="@array/tiempo_parqueadero"
+                    android:fitsSystemWindows="true" />
+            </LinearLayout>
+
+            <fragment
+                android:id="@+id/mapParking"
+                android:name="com.google.android.gms.maps.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.70" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right" >
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/valor_background" />
+
+                <TextView
+                    android:id="@+id/LblTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="41dp"
+                    android:scaleType="centerInside"
+                    android:text="0.00 Ctvos"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/BtnComprarParqueadero"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_pagar"
+                android:height="@dimen/default_gap"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/loadingParking"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />        
+        
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/BtnComprarParqueadero"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/btn_pagar"
-        android:height="@dimen/default_gap"
-        android:layout_marginTop="20dp"
-        android:textColor="#ffffff" />
-
-</LinearLayout>
+</FrameLayout>

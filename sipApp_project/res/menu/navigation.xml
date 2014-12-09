@@ -18,27 +18,27 @@
 	           <item
 		        android:id="@+id/ItemCargar"
 		        android:orderInCategory="2"
-		        android:title="Cargar Saldo"
+		        android:title="Recargas"
 		        android:showAsAction="never"/>	   
 			   
 			   <item
 		        android:id="@+id/ItemContactos"
 		        android:orderInCategory="3"
-		        android:title="Contactos"
+		        android:title="Transferir"
 		        android:showAsAction="never"/>
 			   
-			   <item
-		        android:id="@+id/ItemDisponibilidad"
-		        android:orderInCategory="4"
-		        android:title="Ver Disponibilidad"
-		        android:showAsAction="never"/>	   
-		
 			   <item
 		        android:id="@+id/ItemMiCuenta"
 		        android:orderInCategory="5"
 		        android:title="Mi Cuenta"
-		        android:showAsAction="never"/>    	   
-			   	   
+		        android:showAsAction="never"/>
+			     			   
+			   <item
+		        android:id="@+id/ItemDisponibilidad"
+		        android:orderInCategory="4"
+		        android:title="Disponibles"
+		        android:showAsAction="never"/>	   
+		
 			   <item
 		        android:id="@+id/ItemAcercaDe"
 		        android:orderInCategory="6"

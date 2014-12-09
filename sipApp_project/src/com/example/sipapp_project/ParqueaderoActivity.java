@@ -4,11 +4,14 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.content.res.Resources;
+import android.widget.Toast;
 
 
 public class ParqueaderoActivity extends Activity {
@@ -18,6 +21,7 @@ public class ParqueaderoActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -30,6 +34,18 @@ public class ParqueaderoActivity extends Activity {
         saldo=bundle.getString("SALDO");
         
         this.setSaldo(saldo);
+        
+        //Controlamos que exista conexi—n a internet
+		 if (!isNetworkAvailable()) {
+			 Toast toast=Toast.makeText(ParqueaderoActivity.this, "Su  dispositivo no tiene conexi—n a Internet en este momento", Toast.LENGTH_LONG);
+			 toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 500);
+			 toast.show();
+			 
+             Intent intent = new Intent(ParqueaderoActivity.this, MainActivity.class);
+             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+             startActivity(intent);
+		 }	 
+        //Fin de control de acceso a Internet 
         
 	}
 	
@@ -95,4 +111,28 @@ public class ParqueaderoActivity extends Activity {
     	return super.onOptionsItemSelected(item);
     	
     }
+    
+	private boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager 
+	         = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null;
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+        Intent intent = new Intent(ParqueaderoActivity.this, WelcomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //Creamos la informaci—n a pasar entre actividades
+        Bundle b = new Bundle();
+        b.putString("NOMBRE", "");
+        b.putString("SALDO", saldo);
+        b.putString("ID", cli_id);
+        
+        intent.putExtras(b);
+
+        //Iniciamos la nueva actividad
+        startActivity(intent);	
+	}	
 }

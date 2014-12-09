@@ -16,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -27,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -60,7 +62,7 @@ public class HistoryActivity extends ParqueaderoActivity {
                 
         cli_id=super.getCli_id();
         saldo=super.getSaldo();
-        
+                
         TextView txtSaldo = (TextView)findViewById(R.id.TxtSaldoHistory);
         txtSaldo.setText("$"+Float.parseFloat(saldo));
         
@@ -76,31 +78,35 @@ public class HistoryActivity extends ParqueaderoActivity {
 		TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
 		tabHost.setup();
 		
-		TabHost.TabSpec tabSpec=tabHost.newTabSpec ("Compras");
+		TabHost.TabSpec tabSpec=tabHost.newTabSpec ("Mis Compras");
 		tabSpec.setContent(R.id.tabCompras);
 		tabSpec.setIndicator("", getResources().getDrawable(R.drawable.ic_compra));
 		tabHost.addTab(tabSpec);
 		
-		tabSpec=tabHost.newTabSpec ("Transferencias");
+		tabSpec=tabHost.newTabSpec ("Dinero Enviado");
 		tabSpec.setContent(R.id.tabTransferencias);
 		tabSpec.setIndicator("",getResources().getDrawable(R.drawable.ic_transfer));
 		tabHost.addTab(tabSpec);		
 		
-		
-		tabSpec=tabHost.newTabSpec ("Recibidos");
+		tabSpec=tabHost.newTabSpec ("Dinero Recibido");
 		tabSpec.setContent(R.id.tabTransferIn);
 		tabSpec.setIndicator("",getResources().getDrawable(R.drawable.ic_recibido));
 		tabHost.addTab(tabSpec);
 		
-		tabSpec=tabHost.newTabSpec ("Recargas");
+		tabSpec=tabHost.newTabSpec ("Mis Recargas");
 		tabSpec.setContent(R.id.tabRecarga);
 		tabSpec.setIndicator("",getResources().getDrawable(R.drawable.ic_recarga));
 		tabHost.addTab(tabSpec);		
-		
-		tabSpec=tabHost.newTabSpec ("Mi Cuenta");
-		tabSpec.setContent(R.id.tabCuenta);
-		tabSpec.setIndicator("",getResources().getDrawable(R.drawable.ic_cuenta));
-		tabHost.addTab(tabSpec);			
+				
+		tabHost.setOnTabChangedListener(new OnTabChangeListener(){
+
+			@Override
+			public void onTabChanged(String tabId) {
+		        ActionBar actionBar = getActionBar();
+		        actionBar.setTitle(tabId);
+			}
+			
+		});
 		
    }
 	

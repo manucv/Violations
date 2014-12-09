@@ -26,16 +26,20 @@
        	<item>$10.00</item>
 		<item>$20.00</item>
 	</string-array>
+	
+	<string-array name="tarjetas"> 
+       	<item>Visa</item>
+       	<item>Mastercard</item>
+	</string-array>	
 
 	<string-array name="menu"> 
        	<item>Inicio</item>
-       	<item>Comprar</item>
-       	<item>Recargar</item>
-       	<item>Contactos</item>
+       	<item>Parquear</item>
+       	<item>Recargas</item>
        	<item>Transferir</item>
-       	<item>Disponibilidad</item>
+       	<item>Disponibles</item>
        	<item>Acerca de</item>
 		<item>Salir</item>
 	</string-array>	
-	
+	<string name="formatAlphaNumeric">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
 </resources>

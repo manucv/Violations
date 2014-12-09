@@ -56,7 +56,6 @@ public class RegisterActivity extends Activity {
 		loadingRegister = (ProgressBar)findViewById(R.id.loadingRegister);
 		
         loadingRegister.setVisibility(View.GONE);
-
         
         btnAccount.setOnClickListener(new OnClickListener(){
 
