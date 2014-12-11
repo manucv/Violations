@@ -23,8 +23,12 @@
 	use Application\Model\Entity\Usuario as UsuarioEntity;
 	use Application\Model\Entity\Publicidad as PublicidadEntity;
 
-	class ApiVigilanteController extends AbstractActionController
+	class VigilanteController extends AbstractActionController
 	{
+
+	    protected $usuarioDao;
+    	protected $clienteDao;
+
 	    public function indexAction()
 	    {
 	        return new ViewModel();
@@ -41,7 +45,7 @@
 	            if(is_object($cliente)){
 	                $content=json_encode($cliente->getArrayCopy());
 	            }else{
-	                $content=json_encode(new stdClass());
+	                $content='{}';
 	            }
 
 	            $response=$this->getResponse();
@@ -52,7 +56,23 @@
 				return $this->redirect()->toRoute ( 'parametros', array (
 						'controller' => 'index',
 						'action' => 'index'
-				) );
+				) );	
 	        }
 	    }
+
+		public function getUsuarioDao() {
+		    if (! $this->usuarioDao) {
+		        $sm = $this->getServiceLocator ();
+		        $this->usuarioDao = $sm->get ( 'Application\Model\Dao\UsuarioDao' );
+		    }
+		    return $this->usuarioDao;
+		}    
+
+		public function getClienteDao() {
+		    if (! $this->clienteDao) {
+		        $sm = $this->getServiceLocator ();
+		        $this->clienteDao = $sm->get ( 'Application\Model\Dao\ClienteDao' );
+		    }
+		    return $this->clienteDao;
+		}  	    
 	}

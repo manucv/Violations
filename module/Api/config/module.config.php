@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Api\Controller\Api' => 'Api\Controller\ApiController',
+            'Api\Controller\Vigilante' => 'Api\Controller\VigilanteController',
         ),
     ),
     'router' => array(

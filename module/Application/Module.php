@@ -84,6 +84,9 @@ use Application\Model\Entity\RelacionCliente;
 use Application\Model\Dao\RelacionClienteDao;
 use Application\Model\Entity\Publicidad;
 use Application\Model\Dao\PublicidadDao;
+
+use Application\Model\Entity\SectorVigilante;
+use Application\Model\Dao\SectorVigilanteDao;
 //END NEW
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface{
@@ -163,8 +166,8 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
         
 		$sm = $application->getServiceManager();
 		$auth = $sm->get('Application\Model\Login');
-
-		if($controller != 'Api\Controller\Api' ){
+		
+		if($controller != 'Api\Controller\Api' && $controller != 'Api\Controller\Vigilante'){
 			if(!$auth->isLoggedIn()){
 				$matches->setParam('controller', 'Application\Controller\Login');
 				$matches->setParam('action', 'index');
@@ -421,7 +424,14 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$resultSetPrototype->setArrayObjectPrototype(new Publicidad());
 		                	$tableGateway = new TableGateway('publicidad', $dbAdapter, null, $resultSetPrototype);
 		                	return new PublicidadDao($tableGateway);
-		                },		                
+		                },		
+		                'Application\Model\Dao\SectorVigilanteDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new SectorVigilante());
+		                	$tableGateway = new TableGateway('sector_vigilante', $dbAdapter, null, $resultSetPrototype);
+		                	return new SectorVigilanteDao($tableGateway);
+		                },		    		                                
 
 		                'Navigation' => 'Application\Clases\MyNavigationFactory'
 				),
