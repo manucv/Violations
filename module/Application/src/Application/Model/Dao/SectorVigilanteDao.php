@@ -17,6 +17,7 @@ class SectorVigilanteDao implements InterfaceCrud {
 
     public function traerTodos($usu_id=null){
     	$select = $this->tableGateway->getSql ()->select ();
+        $select->join ( 'sector', 'sector_vigilante.sec_id  = sector.sec_id' );
         $select->where ( array('usu_id'=>$usu_id) );
     	$resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;
@@ -61,4 +62,14 @@ class SectorVigilanteDao implements InterfaceCrud {
     		$this->tableGateway->insert ( $data );
     	}
     }
+
+    public function eliminar($id) {
+        if ($this->traer ( $id )) {
+            return $this->tableGateway->delete ( array (
+                    'sec_vig_id' => $id 
+            ) );
+        } else {
+            throw new \Exception ( 'No se encontro el id para eliminar' );
+        }
+    }    
 }

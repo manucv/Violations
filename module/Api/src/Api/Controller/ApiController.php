@@ -347,7 +347,7 @@ class ApiController extends AbstractActionController
             $ciu_id = $this->request->getQuery('ciu_id');
             if($ciu_id){
                 $sectores = $this->getSectorDao()->traerTodos($ciu_id);
-
+                
                 $content='';
                 $sectoresArray=array();
                 foreach($sectores as $sector){

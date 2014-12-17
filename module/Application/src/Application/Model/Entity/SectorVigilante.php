@@ -9,6 +9,7 @@ class SectorVigilante
 	private $sec_vig_id;
 	private $usu_id;
 	private $sec_id;
+	private $sec_nombre;
 
 	/**
 	 * @return the $sec_vig_id
@@ -65,6 +66,7 @@ class SectorVigilante
 		$this->sec_vig_id = (isset($data['sec_vig_id'])) ? $data['sec_vig_id'] : null;
 		$this->usu_id = (isset($data['usu_id'])) ? $data['usu_id'] : null;
 		$this->sec_id = (isset($data['sec_id'])) ? $data['sec_id'] : null;
+		$this->sec_nombre = (isset($data['sec_nombre'])) ? $data['sec_nombre'] : null;;
     }
 
     public function getArrayCopy()

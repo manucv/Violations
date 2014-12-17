@@ -45,11 +45,16 @@ class ParqueaderoDao implements InterfaceCrud {
 		
 	}	
 
-	public function traerTodosPorSector($sec_id) {
+	public function traerTodosPorSector($sec_id,$par_estado=null) {
 		
 		$select = $this->tableGateway->getSql ()->select ();
-		$select-> where ( array('sec_id'=>$sec_id) );
-		 
+		$condiciones = array('sec_id'=>$sec_id);
+		if(!is_null($par_estado)){
+			$condiciones['par_estado']=$par_estado;	
+		}
+
+		$select-> where ( $condiciones );
+		
 		$resultSet = $this->tableGateway->selectWith ( $select );
 		return $resultSet;
 		
@@ -99,9 +104,7 @@ class ParqueaderoDao implements InterfaceCrud {
 
 			$count++;
 		}
-
 		return json_encode($jsonArray);
-
 	}		
 
 	public function liberarParqueaderos() {
