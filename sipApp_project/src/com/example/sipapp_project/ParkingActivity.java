@@ -284,6 +284,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 			String log_par_horas_parqueo=params[2];	
 			
 			String url = "http://www.hawasolutions.com/Violations2/public/api/api/comprar/"+cli_id;
+			//String url = "http://192.168.1.169/Hawa/Violations/public/api/api/comprar/"+cli_id;
 			List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
 			paramsArray.add( new BasicNameValuePair( "par_id", par_id ) );
 			paramsArray.add( new BasicNameValuePair( "aut_placa", aut_placa ) );

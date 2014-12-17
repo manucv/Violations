@@ -130,13 +130,10 @@ public class RegisterActivity extends Activity {
 				post.setEntity(new UrlEncodedFormEntity(paramsArray));
 				HttpResponse response = httpClient.execute(post);
 				int status = response.getStatusLine().getStatusCode();
-				
-				Log.v("status",""+status);
-				
+								
 				switch (status){
 					case 200: 	//case success
 						String responseStr = EntityUtils.toString(response.getEntity());
-						Log.v("resp",responseStr);
 						if(!responseStr.equals("")){
 							JSONObject responseJSON = new JSONObject(responseStr); 
 

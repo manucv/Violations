@@ -63,7 +63,29 @@
                 android:id="@+id/textView1"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Valor:"
+                android:text="Valor Recarga:"
+                android:textColor="@android:color/white" />
+
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:background="@drawable/spinner_bkg"
+                android:entries="@array/valor_recarga" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/TextView3"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Nro. Tarjeta:"
                 android:textColor="@android:color/white" />
 
             <EditText
@@ -73,10 +95,38 @@
                 android:layout_weight="1"
                 android:background="@drawable/text_bkg"
                 android:ems="10"
-                android:inputType="number" >
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true" >
 
                 <requestFocus />
             </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="CCV:"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/text_bkg"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true" />
 
         </LinearLayout>
 
