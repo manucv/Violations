@@ -20,7 +20,8 @@ class LogParqueaderoDao implements InterfaceCrud {
 		$select->where ( 'sector', 'parqueadero.sec_id  = sector.sec_id' ); 
 		$resultSet = $this->tableGateway->selectWith ( $select );
 		return $resultSet;
-	}	
+	}
+		
 	public function guardar(LogParqueadero $logParqueadero) {
 		
 		$id = ( int ) $logParqueadero->getLog_par_id();

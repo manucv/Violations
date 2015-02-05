@@ -15,7 +15,7 @@
             android:id="@+id/TxtSaldoAddContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Llena los campos a continuación, al dar click en enviar se enviará un mensaje al 20500 con tu información de parqueo. Costo por hora 20ctv incluido impuestos" />
+            android:text="Llena los campos a continuación, al dar click en enviar se enviará un mensaje al 20500 con tu información de parqueo." />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,15 +34,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_bkg"
-                android:fitsSystemWindows="true"
-                android:hint="Parqueadero"
-                android:lines="1"
-                android:maxLines="1"
-                android:singleLine="true"
                 android:digits="@string/formatAlphaNumeric"
-                android:maxLength="4"
+                android:fitsSystemWindows="true"
+                android:hint="Ingrese numero de spot"
                 android:inputType="textCapCharacters"
-                >
+                android:lines="1"
+                android:maxLength="4"
+                android:maxLines="1"
+                android:singleLine="true" >
 
                 <requestFocus />
             </EditText>
@@ -68,16 +67,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_bkg"
-                android:fitsSystemWindows="true"
-                android:hint="Placa"
-                android:lines="1"
-                android:maxLines="1"
-                android:singleLine="true"
                 android:digits="@string/formatAlphaNumeric"
+                android:fitsSystemWindows="true"
+                android:hint="Ingrese la placa"
+                android:inputType="textCapCharacters"
+                android:lines="1"
                 android:maxLength="7"
-                android:inputType="textCapCharacters" />   
-            
-
+                android:maxLines="1"
+                android:singleLine="true" />
 
         </LinearLayout>
 
@@ -121,5 +118,15 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true"
+        android:onClick="onRateClick"
+        android:text="Ver Tarifario"
+        android:textColor="#ffffff" />
 
 </LinearLayout>

@@ -60,6 +60,15 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal" />
 
+                    <TextView
+                        android:id="@+id/EmptyHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="No existen Registros"
+                        android:visibility="gone" />
+
                     <ListView
                         android:id="@+id/LstHistory"
                         android:layout_width="match_parent"
@@ -82,12 +91,20 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal" />
 
+                    <TextView
+                        android:id="@+id/EmptyTransfer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="No existen Registros"
+                        android:visibility="gone" />
+
                     <ListView
                         android:id="@+id/LstTransfer"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/list_bkg" >
-
                     </ListView>
 
                 </LinearLayout>
@@ -105,14 +122,21 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal" />
 
+                    <TextView
+                        android:id="@+id/EmptyTransferIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="No existen Registros"
+                        android:visibility="gone" />
+
                     <ListView
                         android:id="@+id/LstTransferIn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/list_bkg" >
-
                     </ListView>
-
                 </LinearLayout>   
                 
                 <LinearLayout
@@ -127,6 +151,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" 
                         android:layout_gravity="center_horizontal" />
+
+                    <TextView
+                        android:id="@+id/EmptyRecarga"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="No existen Registros"
+                        android:visibility="gone" />
 
                     <ListView
                         android:id="@+id/LstCredit"

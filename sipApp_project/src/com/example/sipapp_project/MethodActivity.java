@@ -82,13 +82,14 @@ public class MethodActivity extends ParqueaderoActivity {
     	i.setData(Uri.parse(url));
     	startActivityForResult(i,1);
     }
+    
     public void onCardClick(View pressed) {
 	    Intent intent = new Intent(MethodActivity.this,CardActivity.class);
 	    Bundle b = new Bundle();
 	    b.putString("ID", cli_id);
 	    b.putString("SALDO", saldo);
-	    intent.putExtras(b);                
+	    intent.putExtras(b);
 	    
-	    startActivity(intent);	    
-    }    
+	    startActivity(intent);
+    }
 }

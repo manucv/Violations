@@ -5,8 +5,8 @@ class Parqueadero {
 	
 	private $par_id;
 	private $par_estado;
+	private $par_tipo;
 	private $sec_id;
-	
 	private $sec_nombre;
 	
 	function __construct() {}
@@ -23,6 +23,13 @@ class Parqueadero {
 	 */
 	public function getPar_estado() {
 		return $this->par_estado;
+	}
+
+	/**
+	 * @return the $par_estado
+	 */
+	public function getPar_tipo() {
+		return $this->par_tipo;
 	}
 
 	/**
@@ -54,6 +61,13 @@ class Parqueadero {
 	}
 
 	/**
+	 * @param Ambigous <NULL, unknown> $par_estado
+	 */
+	public function setPar_tipo($par_tipo) {
+		$this->par_tipo = $par_tipo;
+	}
+
+	/**
 	 * @param Ambigous <NULL, unknown> $sec_id
 	 */
 	public function setSec_id($sec_id) {
@@ -71,8 +85,11 @@ class Parqueadero {
 	{
 		$this->par_id = (isset($data['par_id'])) ? $data['par_id'] : null;
 		$this->par_estado = (isset($data['par_estado'])) ? $data['par_estado'] : null;
+		$this->par_tipo = (isset($data['par_tipo'])) ? $data['par_tipo'] : null;
 		$this->sec_id = (isset($data['sec_id'])) ? $data['sec_id'] : null;
 		$this->sec_nombre = (isset($data['sec_nombre'])) ? $data['sec_nombre'] : null;
+
+		$this->aut_placa = (isset($data['aut_placa'])) ? $data['aut_placa'] : null;
 	}
 	
 	public function getArrayCopy(){

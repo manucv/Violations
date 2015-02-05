@@ -2,8 +2,11 @@ package com.example.sipapp_project;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ public class ParqueaderoActivity extends Activity {
 	
 	private String cli_id;
 	private String saldo;
+	public static final String PREFS_NAME = "Preferencias";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +93,52 @@ public class ParqueaderoActivity extends Activity {
     			intent = new Intent(context,InfoActivity.class);
     		break;
     		case R.id.ItemSalir:
-                intent = new Intent(context, MainActivity.class);
+                /*intent = new Intent(context, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);		            	
                 
                 finish();
-                System.exit(0);  
+                System.exit(0);  */
+    			
+			    AlertDialog.Builder alert = new AlertDialog.Builder(ParqueaderoActivity.this);
+			    alert.setTitle("Salir");
+		    	alert.setMessage("Esta seguro de que desea salir y cerrar sesi—n del sistema.");
+
+			    alert.setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+			        @Override
+					public void onClick(DialogInterface dialog, int whichButton) {
+			        	
+		                 /*Bloque preferencias compartidas*/
+		                 SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		                 SharedPreferences.Editor editor = settings.edit();
+		                 
+		                 editor.putInt("ID", 0);
+		                 editor.putString("NOMBRE", "");
+		                 editor.putFloat("SALDO", 0);
+		                 
+		                 editor.commit();
+		                 /*Fin Bloque preferencias compartidas*/			        	
+			        	
+			        	Intent intent = new Intent(ParqueaderoActivity.this, MainActivity.class);
+		                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		                startActivity(intent);
+		                
+		                finish();
+		                System.exit(0);
+		    	        return;
+			        }
+			    });
+			    
+			    alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+		            @Override
+					public void onClick(DialogInterface dialog, int whichButton) {
+		            	//Do Nothing
+		            }
+	            });
+			    
+			    alert.show();    			
+    			
+    			
     		break;
     	    case android.R.id.home:
     	    	intent = new Intent(context,WelcomeActivity.class);
@@ -102,11 +146,13 @@ public class ParqueaderoActivity extends Activity {
     		
     	}
     	if(intent != null){
+    		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	    	Bundle b = new Bundle();
 	        b.putString("ID", cli_id);
 	        b.putString("SALDO", saldo);
 	        intent.putExtras(b);                
 	        startActivity(intent);
+	        finish();
     	}
     	return super.onOptionsItemSelected(item);
     	

@@ -138,11 +138,17 @@ public class AddContactActivity extends ParqueaderoActivity {
                 intent.putExtra("ID",cli_id);
                 intent.putExtra("SALDO",saldo);
                 startActivity(intent);	
-                
 	    	}else{
             	progressBar.setVisibility(View.GONE);
 	    		Toast.makeText(AddContactActivity.this, "Usuario no existe", Toast.LENGTH_SHORT).show();
 	    	}
 	    }
+	}	
+	public void onCancelAddContactClick (View pressed){
+        Intent intent = new Intent(AddContactActivity.this, RelatedActivity.class);
+        intent.putExtra("ID",cli_id);
+        intent.putExtra("SALDO",saldo);
+        startActivity(intent);
+        finish();
 	}	
 }

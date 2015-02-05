@@ -11,6 +11,13 @@
         android:orientation="vertical"
         android:padding="5dp" >
 
+        <TextView
+            android:id="@+id/TxtSaldoAddContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Ingresa tu usuario o email, da click en recuperar contraseña. Se enviará un correo a la cuenta de email que registraste para continuar con el proceso de recuperación de contraseña." />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,13 +54,6 @@
                 android:textColor="#ffffff" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/TxtSaldoAddContact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Ingresa tu usuario o contraseña, da click en recuperar contraseña. Se enviará un correo a la cuenta de email que registraste para continuar con el proceso de recuperación de contraseña." />
     </LinearLayout>
 
 </LinearLayout>

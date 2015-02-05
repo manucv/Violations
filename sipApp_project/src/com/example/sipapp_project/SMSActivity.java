@@ -12,6 +12,8 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
@@ -19,6 +21,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -26,6 +29,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -41,12 +46,16 @@ public class SMSActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms);
+        
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);        
+        
 		final EditText txtPlaca = (EditText)findViewById(R.id.TxtSMSPlaca);
 		final EditText txtParqueadero = (EditText)findViewById(R.id.TxtSMSParqueadero);
 		final Spinner spnHoras = (Spinner)findViewById(R.id.SpnSMSHoras);
 		final String phoneNo = "0983344115";//0995661449";
 
-		
+
 		btnSendSMS = (Button)findViewById(R.id.BtnSMSEnviar);
 		
 		btnSendSMS.setOnClickListener(new OnClickListener(){
@@ -131,6 +140,8 @@ public class SMSActivity extends Activity {
 
 			}
         });
+		/*Message: Actualmente estamos disponibles solamente en Ibarra */
+		Toast.makeText(SMSActivity.this, "Actualmente estamos disponibles unicamente en Ibarra.", Toast.LENGTH_LONG).show();
 	}
 	
 	private class TareaWSComprarSMS extends AsyncTask<String,Integer,Boolean> {
@@ -181,4 +192,44 @@ public class SMSActivity extends Activity {
 			//return true;
 	    }
 	}	
+	
+	@Override
+	public void onBackPressed()
+	{
+        Intent intent = new Intent(SMSActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);	
+        finish();
+        System.exit(0);
+	}
+	
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+    	super.onOptionsItemSelected(item);
+    	Context context = getApplicationContext();
+    	Intent intent=null;
+    	switch(item.getItemId()){
+    	    case android.R.id.home:
+    	    	intent = new Intent(context,MainActivity.class);
+    	    break;
+    	}
+    	if(intent != null){
+	        startActivity(intent);
+            finish();
+            System.exit(0);
+    	}
+    	return super.onOptionsItemSelected(item);
+    }	
+    
+    public void onRateClick(View pressed){
+    	
+	    AlertDialog.Builder alert = new AlertDialog.Builder(SMSActivity.this);
+	    alert.setTitle("Tarifario");
+    	alert.setMessage("Ibarra $0.20 + imp. la hora");
+	    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+	        @Override
+			public void onClick(DialogInterface dialog, int whichButton) {}
+	    });
+    	alert.show();
+    }
 }

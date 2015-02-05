@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_register"
+    android:orientation="vertical"
+    android:screenOrientation="portrait" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp" >
+
+                    <TextView
+                        android:id="@+id/LblRecoverPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/list_bkg"
+                        android:padding="5dp"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis tristique dui a viverra. Duis finibus consectetur risus non vestibulum. Aenean quis nisl vitae nulla vulputate dignissim sed quis mi. Suspendisse id odio vel elit bibendum viverra quis non metus. Mauris efficitur ornare convallis. Nunc sed dictum ante. Mauris dictum urna et dolor fringilla venenatis. Integer ultrices et ipsum eu rutrum. Aliquam eu purus id neque euismod euismod. Mauris nec sem eget nisi placerat efficitur mollis vitae felis. Integer ultricies nunc id luctus malesuada. Phasellus ac nisl pretium, malesuada nibh vel, lacinia erat. Nulla non dolor in elit tempus interdum et ac ipsum.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis tristique dui a viverra. Duis finibus consectetur risus non vestibulum. Aenean quis nisl vitae nulla vulputate dignissim sed quis mi. Suspendisse id odio vel elit bibendum viverra quis non metus. Mauris efficitur ornare convallis. Nunc sed dictum ante. Mauris dictum urna et dolor fringilla venenatis. Integer ultrices et ipsum eu rutrum. Aliquam eu purus id neque euismod euismod. Mauris nec sem eget nisi placerat efficitur mollis vitae felis. Integer ultricies nunc id luctus malesuada. Phasellus ac nisl pretium, malesuada nibh vel, lacinia erat. Nulla non dolor in elit tempus interdum et ac ipsum.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis tristique dui a viverra. Duis finibus consectetur risus non vestibulum. Aenean quis nisl vitae nulla vulputate dignissim sed quis mi. Suspendisse id odio vel elit bibendum viverra quis non metus. Mauris efficitur ornare convallis. Nunc sed dictum ante. Mauris dictum urna et dolor fringilla venenatis. Integer ultrices et ipsum eu rutrum. Aliquam eu purus id neque euismod euismod. Mauris nec sem eget nisi placerat efficitur mollis vitae felis. Integer ultricies nunc id luctus malesuada. Phasellus ac nisl pretium, malesuada nibh vel, lacinia erat. Nulla non dolor in elit tempus interdum et ac ipsum.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis tristique dui a viverra. Duis finibus consectetur risus non vestibulum. Aenean quis nisl vitae nulla vulputate dignissim sed quis mi. Suspendisse id odio vel elit bibendum viverra quis non metus. Mauris efficitur ornare convallis. Nunc sed dictum ante. Mauris dictum urna et dolor fringilla venenatis. Integer ultrices et ipsum eu rutrum. Aliquam eu purus id neque euismod euismod. Mauris nec sem eget nisi placerat efficitur mollis vitae felis. Integer ultricies nunc id luctus malesuada. Phasellus ac nisl pretium, malesuada nibh vel, lacinia erat. Nulla non dolor in elit tempus interdum et ac ipsum." />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>

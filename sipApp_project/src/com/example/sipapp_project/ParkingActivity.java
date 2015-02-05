@@ -157,6 +157,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
             
             
             if(!gps_enabled || !network_enabled){
+            	
                 Builder  dialog = new AlertDialog.Builder(this);
                 dialog.setMessage("Desea Activar los servicios de localizaci—n?" );
                  dialog.setPositiveButton("Ir", new DialogInterface.OnClickListener() {
@@ -167,19 +168,16 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
                          startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),100);//android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 100);
                      }
                  });
+                 
                  dialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
 
                      @Override
                      public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                          // TODO Auto-generated method stub
-
                      }
                  });
                  dialog.show();
-
-            }            
-                        
-            
+            }
             
             Criteria criteria = new Criteria(); // Creating a criteria object to retrieve provider
             String provider = locationManager.getBestProvider(criteria, true); // Getting the name of the best provider
@@ -188,10 +186,8 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
             if(location!=null){
                 onLocationChanged(location);
             }
-            
             locationManager.requestLocationUpdates(provider, 20000, 0, this);
-
-        }				
+        }
         
         txtSaldo.setText("$"+Float.parseFloat(saldo));
         
@@ -203,8 +199,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
         btnComprarParqueadero.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            
-            	
+
             	if(!par_id.getText().toString().equals("") && !txtAut_placa.getText().toString().equals("")){
             		
 				    AlertDialog.Builder alert = new AlertDialog.Builder(ParkingActivity.this);

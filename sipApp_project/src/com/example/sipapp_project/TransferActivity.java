@@ -18,9 +18,13 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,7 +54,7 @@ public class TransferActivity extends ParqueaderoActivity {
         loadingTransfer = (ProgressBar)findViewById(R.id.LoadingTransfer);
         loadingTransfer.setVisibility(View.GONE);
         TextView lblReferencedClient = (TextView)findViewById(R.id.LblReferencedClient);
-        lblReferencedClient.setText(cli_id_ref_nombre);
+        lblReferencedClient.setText("Contacto a transferir: "+cli_id_ref_nombre);
         
         Button btnTransfer = (Button)findViewById(R.id.BtnTransfer);
         txtTransferValue = (EditText)findViewById(R.id.TxtTransferValue);
@@ -65,9 +69,35 @@ public class TransferActivity extends ParqueaderoActivity {
 	            @Override
 	            public void onClick(View v) {
 	            	if(Float.parseFloat(txtTransferValue.getText().toString())>0 && Float.parseFloat(txtTransferValue.getText().toString())<Float.parseFloat(saldo)){
+	            		final EditText input = new EditText(TransferActivity.this);
+	            		input.setSingleLine(true);
+	            		input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+	            		
+	                    Builder  dialog = new AlertDialog.Builder(TransferActivity.this);
+	                    dialog.setView(input);
+	                    dialog.setMessage("Ingrese su contrase–a nuevamente para continuar con la transferencia" );
+	                    dialog.setPositiveButton("Ir", new DialogInterface.OnClickListener() {
+
+	                         @Override
+	                         public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+	                             // TODO Auto-generated method stub
+	                             startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),100);//android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 100);
+	                         }
+	                     });
+	                     dialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
+	                         @Override
+	                         public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+	                             // TODO Auto-generated method stub
+
+	                         }
+	                     });
+	                     dialog.show();	            		
+	            		/*
 	            		loadingTransfer.setVisibility(View.VISIBLE);
 		            	TareaWSTransferirSaldo tarea = new TareaWSTransferirSaldo();
-						tarea.execute(	cli_id_ref, txtTransferValue.getText().toString());        
+						tarea.execute(	cli_id_ref, txtTransferValue.getText().toString());   
+						*/     
 	            	}else{
 	            		Toast.makeText(TransferActivity.this, "Tu saldo debe ser superior al valor a transferir", Toast.LENGTH_SHORT).show();
 	            	}
@@ -142,5 +172,13 @@ public class TransferActivity extends ParqueaderoActivity {
 		protected void onPostExecute(Boolean result) {
 	    	loadingTransfer.setVisibility(View.GONE);
 	    }
-	}			
+	}
+	
+	public void onCancelTransferClick (View pressed){
+        Intent intent = new Intent(TransferActivity.this, RelatedActivity.class);
+        intent.putExtra("ID",cli_id);
+        intent.putExtra("SALDO",saldo);
+        startActivity(intent);
+        finish();
+	}	
 }

@@ -5,4 +5,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string-array name="violations"> 
+       	<item>Parqueadero sin pago</item>
+       	<item>Estacionado en paso zebra</item>
+       	<item>Estacionado en parqueadero especial</item>
+       	<item>Estacionado en parqueo para motos</item>
+	</string-array>
+    
 </resources>

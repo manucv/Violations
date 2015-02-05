@@ -18,7 +18,7 @@
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/ImgAmex"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingTop="25dp"

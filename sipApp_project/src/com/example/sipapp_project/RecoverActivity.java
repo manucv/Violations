@@ -83,6 +83,7 @@ public class RecoverActivity extends Activity {
 	        	String respStr = EntityUtils.toString(resp.getEntity());
 	        	Log.v("result","ejemplo");
 	        	Log.v("result",respStr);
+	        	
 	        	return true;
 	        	/*
 	        	if(!respStr.equals("")){

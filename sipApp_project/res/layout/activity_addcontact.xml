@@ -45,6 +45,19 @@
             android:padding="5dp" >
 
             <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingrese el usuario o email del contacto a agregar" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <TextView
                 android:id="@+id/TxtSaldoTransfer"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
@@ -59,27 +72,36 @@
                 android:background="@drawable/text_bkg"
                 android:ems="10"
                 android:fitsSystemWindows="true"
-            	android:lines="1"
-            	android:maxLines="1"
-            	android:singleLine="true"                
-                 />
+                android:hint="Email o usuario"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:padding="5dp" >
 
             <Button
                 android:id="@+id/BtnAddContact"
-                android:layout_width="match_parent"
+                android:layout_width="0px"
+                android:layout_weight="1"
                 android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/button_bkg"
-                android:fitsSystemWindows="true"
                 android:text="Agregar"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/BtnCancelAddContact"
+                android:layout_width="0px"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_bkg"
+                android:onClick="onCancelAddContactClick"
+                android:text="Cancel"
                 android:textColor="#ffffff" />
 
         </LinearLayout>

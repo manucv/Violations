@@ -98,10 +98,10 @@
                 android:background="@drawable/text_bkg"
                 android:ems="10"
                 android:hint="Teléfono Móvil"
+                android:inputType="number"
                 android:lines="1"
                 android:maxLines="1"
                 android:singleLine="true" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -160,6 +160,29 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:singleLine="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" >
+
+            <CheckBox
+                android:id="@+id/ChkTerms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acepto los " />
+
+            <TextView
+                android:id="@+id/LnkTerms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:onClick="onTermsClick"
+                android:text="Terminos y Condiciones"
+                android:textColor="#ffffff"
+                 />
 
         </LinearLayout>
 

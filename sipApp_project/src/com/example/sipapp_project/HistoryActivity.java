@@ -37,12 +37,15 @@ public class HistoryActivity extends ParqueaderoActivity {
 	private String saldo;
 	private ListView lstHistory;
 	private ProgressBar loadingHistory;
-
+	private TextView emptyHistory;
+	
 	private ListView lstTransfer;
-	private ProgressBar loadingTransfer;	
+	private ProgressBar loadingTransfer;
+	private TextView emptyTransfer;
 
 	private ListView lstTransferIn;
 	private ProgressBar loadingTransferIn;	
+	private TextView emptyTransferIn;
 	
 	private String[] idTransacciones;
 	
@@ -53,13 +56,16 @@ public class HistoryActivity extends ParqueaderoActivity {
 
         loadingHistory = (ProgressBar)findViewById(R.id.loadingHistory);
         lstHistory = (ListView)findViewById(R.id.LstHistory);
+        emptyHistory = (TextView)findViewById(R.id.EmptyHistory);
   
         loadingTransfer = (ProgressBar)findViewById(R.id.loadingTransfer);
         lstTransfer = (ListView)findViewById(R.id.LstTransfer);
+        emptyTransfer = (TextView)findViewById(R.id.EmptyTransfer);
         
         loadingTransferIn = (ProgressBar)findViewById(R.id.loadingTransferIn);
         lstTransferIn = (ListView)findViewById(R.id.LstTransferIn);
-                
+        emptyTransferIn = (TextView)findViewById(R.id.EmptyTransferIn);
+        
         cli_id=super.getCli_id();
         saldo=super.getSaldo();
                 
@@ -121,10 +127,7 @@ public class HistoryActivity extends ParqueaderoActivity {
 	    	String cli_id=params[0];
 	    	
 	    	HttpClient httpClient = new DefaultHttpClient();
-			
-			HttpGet del = 
-					new HttpGet("http://www.hawasolutions.com/Violations2/public/api/api/historial/"+cli_id);
-			
+			HttpGet del = new HttpGet("http://www.hawasolutions.com/Violations2/public/api/api/historial/"+cli_id);
 			del.setHeader("content-type", "application/json");
 			
 			try
@@ -149,9 +152,6 @@ public class HistoryActivity extends ParqueaderoActivity {
 	    		        	String sec_nombre = obj.getString("sec_nombre");
 	    		        	String ciu_nombre = obj.getString("ciu_nombre");
 	    		        	String hora = obj.getString("log_par_fecha_ingreso");
-	    		        	//String est_nombre = obj.getString("est_nombre");
-	    		        	//String pai_nombre = obj.getString("pai_nombre");
-	    		        	
 	    		        	
 	    		        	transacciones[i] = "Costo $" + tra_valor +" - "+hora+"\n"+
 	    		        					ciu_nombre.toUpperCase()+" - "+sec_nombre.toUpperCase()+"\n" +
@@ -161,6 +161,8 @@ public class HistoryActivity extends ParqueaderoActivity {
 	    		        	
 	    		        }	
 	    	        	resul = true;
+	        		}else{
+	        			resul = false;
 	        		}
 	        	}
 	        }
@@ -200,6 +202,9 @@ public class HistoryActivity extends ParqueaderoActivity {
 	                 }
 	             });	        	
 
+	    	}else{
+	    		emptyHistory.setVisibility(View.VISIBLE);
+    			lstHistory.setVisibility(View.GONE);
 	    	}
 	    	loadingHistory.setVisibility(View.GONE);
 	    }
@@ -215,7 +220,6 @@ public class HistoryActivity extends ParqueaderoActivity {
 	    	boolean resul = false;
 	    	String cli_id=params[0];
 	    	
-	    	
 	    	HttpClient httpClient = new DefaultHttpClient();
 	        			
 			//String url = "http://www.hawasolutions.com/Violations/public/api/api/login";
@@ -225,8 +229,7 @@ public class HistoryActivity extends ParqueaderoActivity {
 			URI uri = null;
 			try {
 				uri = new URI( url + "?" + URLEncodedUtils.format( paramsArray, "utf-8" ));
-				HttpGet del = 
-						new HttpGet(uri);
+				HttpGet del = new HttpGet(uri);
 				Log.v("query",uri.toString());
 				del.setHeader("content-type", "application/json");
 
@@ -238,9 +241,10 @@ public class HistoryActivity extends ParqueaderoActivity {
 		        	
 		        	if(!respStr.equals("")){
 		        		JSONArray respJSON = new JSONArray(respStr);
+		        		Log.v("Historial 2",""+respJSON.length());
 		        		if(respJSON.length() > 0){
 		        			
-		        			transferencias = new String[respJSON.length()];
+		        			transferencias = 	new String[respJSON.length()];
 		        			idTransferencias = new String[respJSON.length()];
 		        			
 		    	        	for(int i=0; i<respJSON.length(); i++)
@@ -255,13 +259,14 @@ public class HistoryActivity extends ParqueaderoActivity {
 		    	        		String tra_sal_valor = obj.getString("tra_sal_valor");
 		    	        		String tra_sal_hora = obj.getString("tra_sal_hora");
 		    		        	
-		    		        	
-		    	        		transferencias[i] = "Costo $" + tra_sal_valor +" - "+tra_sal_hora+"\n"+
-		    		        					"De: "+cli_nombre_de+" Para: "+cli_nombre_para;
+		    	        		transferencias[i] = "Costo $" + tra_sal_valor +" - " + tra_sal_hora+"\n"+
+		    		        						"De: "+cli_nombre_de+" Para: "+cli_nombre_para;
 		    		        	idTransferencias[i] = tra_sal_id;
 		    		        	
-		    		        }	  
+		    		        }	
 		    	        	resul = true;
+		        		} else {
+		        			resul = false;
 		        		}
 		        	}
 		        }
@@ -291,7 +296,10 @@ public class HistoryActivity extends ParqueaderoActivity {
 	        		 	
 	        	lstTransfer.setAdapter(adaptador);
 	        	
-	    	}
+	    	} else {
+    			emptyTransfer.setVisibility(View.VISIBLE);
+    			lstTransfer.setVisibility(View.GONE);
+    		}
 	    	loadingTransfer.setVisibility(View.GONE);
 
 	    }
@@ -330,6 +338,7 @@ public class HistoryActivity extends ParqueaderoActivity {
 		        	
 		        	if(!respStr.equals("")){
 		        		JSONArray respJSON = new JSONArray(respStr);
+		        		Log.v("Historial 3",""+respJSON.length());
 		        		if(respJSON.length() > 0){
 		        			
 		        			transferencias = new String[respJSON.length()];
@@ -354,6 +363,8 @@ public class HistoryActivity extends ParqueaderoActivity {
 		    		        	
 		    		        }	  
 		    	        	resul = true;
+		        		} else {
+		        			resul = false;
 		        		}
 		        	}
 		        }
@@ -380,11 +391,11 @@ public class HistoryActivity extends ParqueaderoActivity {
 	        	ArrayAdapter<String> adaptador =
 	        		    new ArrayAdapter<String>(HistoryActivity.this,
 	        		        android.R.layout.simple_list_item_1, transferencias);
-	        		 	
 	        	lstTransferIn.setAdapter(adaptador);
-	        	
-
-	    	}
+	    	} else {
+    			emptyTransferIn.setVisibility(View.VISIBLE);
+    			lstTransferIn.setVisibility(View.GONE);
+    		}
 	    	loadingTransferIn.setVisibility(View.GONE);
 	    }
 	}		

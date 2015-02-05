@@ -126,8 +126,15 @@
 	    							$parqueaderos=$this->getParqueaderoDao()->traerTodosPorSector($sec_id);	
 	    						}
 
+							    							
+	    							
+	    							
+
 				                $parqueaderosArray=array();
 					            foreach($parqueaderos as $parqueadero){
+					            	echo '<pre>';
+					            	print_r($parqueadero);
+					            	echo '</pre>';
 					                $parqueaderosArray[]=$parqueadero->getArrayCopy();
 					            }
 	    						$content=json_encode($parqueaderosArray);

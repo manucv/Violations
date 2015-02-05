@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.95" >
+
+        <EditText
+            android:id="@+id/TxtPlateNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.95"
+            android:ems="10"
+            android:hint="Ingrese el número de Placa" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/BtnCamara"
+            android:layout_width="40dp"
+            android:layout_height="38dp"
+            android:layout_weight="0.01"
+            android:background="@drawable/camera_bkg"
+            android:fitsSystemWindows="true"
+            android:onClick="onBtnCamaraClick" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.95" >
+
+        <Spinner
+            android:id="@+id/spinner1"
+            style="@style/AppBaseTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/spinner_bkg"
+            android:entries="@array/violations"
+            android:fitsSystemWindows="true" />
+
+    </LinearLayout>
+
+</LinearLayout>

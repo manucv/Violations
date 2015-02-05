@@ -43,15 +43,55 @@
                 android:layout_height="wrap_content"
                 android:text="Tarjeta:"
                 android:textColor="@android:color/white" />
-            
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_weight="1"
-                android:background="@drawable/spinner_bkg"
-                android:entries="@array/tarjetas" />
 
+            <EditText
+                android:id="@+id/TxtCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_bkg"
+                android:layout_weight="1"
+                android:ems="10" >
+				<requestFocus />
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:padding="5dp" >
+
+            <ImageView
+                android:id="@+id/ImgAmex"
+                android:layout_width="48dp"
+                android:layout_height="32dp"
+                android:src="@drawable/card_amex_disabled" />
+
+            <ImageView
+                android:id="@+id/ImgDiners"
+                android:layout_width="48dp"
+                android:layout_height="32dp"
+                android:src="@drawable/card_diners_disabled" />
+
+            <ImageView
+                android:id="@+id/ImgDiscover"
+                android:layout_width="48dp"
+                android:layout_height="32dp"
+                android:src="@drawable/card_discover_disabled" />
+
+            <ImageView
+                android:id="@+id/ImgMastercard"
+                android:layout_width="48dp"
+                android:layout_height="32dp"
+                android:src="@drawable/card_mastercard_disabled" />
+
+            <ImageView
+                android:id="@+id/ImgVisa"
+                android:layout_width="48dp"
+                android:layout_height="32dp"
+                android:layout_gravity="fill_horizontal"
+                android:src="@drawable/card_visa_disabled" />
         </LinearLayout>
 
         <LinearLayout
@@ -60,14 +100,14 @@
             android:padding="5dp" >
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/EmptyHistory"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Valor Recarga:"
                 android:textColor="@android:color/white" />
 
             <Spinner
-                android:id="@+id/spinner2"
+                android:id="@+id/SpnReload"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:layout_weight="1"
@@ -82,25 +122,28 @@
             android:padding="5dp" >
 
             <TextView
-                android:id="@+id/TextView3"
+                android:id="@+id/textView1"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Nro. Tarjeta:"
+                android:text="Valido Hasta:" 
                 android:textColor="@android:color/white" />
 
-            <EditText
-                android:id="@+id/editText1"
+            <Spinner
+                android:id="@+id/SpnYear"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/text_bkg"
-                android:ems="10"
-                android:lines="1"
-                android:maxLines="1"
-                android:singleLine="true" >
+                android:background="@drawable/spinner_bkg"
+                android:entries="@array/years" />
 
-                <requestFocus />
-            </EditText>
+            <Spinner
+                android:id="@+id/SpnMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:background="@drawable/spinner_bkg"
+                android:entries="@array/months" />
 
         </LinearLayout>
 
@@ -117,7 +160,7 @@
                 android:textColor="@android:color/white" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/SpnCCV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -133,10 +176,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" >
+
+            <CheckBox
+                android:id="@+id/ChkTermsCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acepto los " />
+
+            <TextView
+                android:id="@+id/LnkTermsCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:onClick="onCardTermsClick"
+                android:text="Terminos y Condiciones"
+                android:textColor="#ffffff"
+                 />
+
+        </LinearLayout>        
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="5dp" >
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/BtnCancelTransfer"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/button_bkg"

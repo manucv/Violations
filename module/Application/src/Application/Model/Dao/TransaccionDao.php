@@ -112,7 +112,7 @@ class TransaccionDao implements InterfaceCrud {
                 log_par_fecha_ingreso,
                 log_par_horas_parqueo,
                 p.par_id,
-                aut_placa,
+                l.aut_placa,
                 s.sec_id,
                 sec_nombre,
                 c.ciu_id,

@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -61,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
         final EditText txtPassword = (EditText)findViewById(R.id.TxtPassword);
         final Button btnLogIn = (Button)findViewById(R.id.BtnLogIn);
         final TextView btnSignIn = (TextView)findViewById(R.id.LblSignIn);
-        final Button lblRecover = (Button)findViewById(R.id.BtnRecover);
+        final TextView lblRecoverPass = (TextView)findViewById(R.id.LblRecoverPass);
         final Button lblSMS = (Button)findViewById(R.id.BtnSMS);
         
         progressBar = (ProgressBar)findViewById(R.id.loadingLogin);
@@ -140,17 +141,22 @@ public class MainActivity extends ActionBarActivity {
                Intent intent = new Intent(MainActivity.this, SMSActivity.class);
                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                startActivity(intent);
+               finish();
+               System.exit(0);
            }
       });    
        
-      lblRecover.setOnClickListener(new OnClickListener() {
+      lblRecoverPass.setOnClickListener(new OnClickListener() {
            @Override
            public void onClick(View v) {
                Intent intent = new Intent(MainActivity.this, RecoverActivity.class);
                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                startActivity(intent);
            }
-      });    
+      });
+      
+      /*Message: Actualmente estamos disponibles solamente en Ibarra */
+		Toast.makeText(MainActivity.this, "Actualmente estamos disponibles unicamente en Ibarra.", Toast.LENGTH_LONG).show();
 	}
 
 
@@ -316,5 +322,14 @@ public class MainActivity extends ActionBarActivity {
 	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 	    return activeNetworkInfo != null;
 	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ( keyCode == KeyEvent.KEYCODE_MENU ) {
+	        // do nothing
+	        return true;
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}   	
 
 }

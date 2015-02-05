@@ -43,7 +43,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/ImgAmex"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1.01"

@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -30,6 +31,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -39,6 +41,7 @@ public class RegisterActivity extends Activity {
 	private Bundle bundle = new Bundle();
 	private Button btnAccount;
 	private ProgressBar loadingRegister;
+	public static final String PREFS_NAME = "Preferencias";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,9 @@ public class RegisterActivity extends Activity {
 		final EditText txtNewPassword = (EditText)findViewById(R.id.TxtNewPassword);
 		final EditText txtVerifyPassword = (EditText)findViewById(R.id.TxtVerifyPassword);
 		final EditText txtPhone = (EditText)findViewById(R.id.TxtPhone);
+		final CheckBox chkTerms = (CheckBox)findViewById(R.id.ChkTerms);
+		
+		
         btnAccount = (Button)findViewById(R.id.BtnAccount);
 		loadingRegister = (ProgressBar)findViewById(R.id.loadingRegister);
 		
@@ -71,28 +77,35 @@ public class RegisterActivity extends Activity {
 					!txtVerifyPassword.getText().toString().equals("") &&
 					!txtPhone.getText().toString().equals("")){
 				
-					if(txtNewPassword.getText().toString().equals(txtVerifyPassword.getText().toString())){
-						
-						if (isNetworkAvailable()) {
-							loadingRegister.setVisibility(View.VISIBLE);
-							btnAccount.setVisibility(View.GONE);
-							
-							TareaWSRegistrar tarea = new TareaWSRegistrar();
-							tarea.execute(
-								txtName.getText().toString(),
-								txtLastName.getText().toString(),
-								txtNewEmail.getText().toString(),
-								txtUser.getText().toString(),
-								txtNewPassword.getText().toString(),
-								txtVerifyPassword.getText().toString(),
-								txtPhone.getText().toString()
-								
-							);
-						}else{
-							Toast.makeText(RegisterActivity.this, "Su  dispositivo no tiene conexi—n a Internet en este momento", Toast.LENGTH_LONG).show();
+					if(android.util.Patterns.EMAIL_ADDRESS.matcher(txtNewEmail.getText().toString()).matches()){
+						if(txtNewPassword.getText().toString().equals(txtVerifyPassword.getText().toString())){
+							if(chkTerms.isChecked()){
+								if (isNetworkAvailable()) {
+									loadingRegister.setVisibility(View.VISIBLE);
+									btnAccount.setVisibility(View.GONE);
+									
+									TareaWSRegistrar tarea = new TareaWSRegistrar();
+									tarea.execute(
+										txtName.getText().toString(),
+										txtLastName.getText().toString(),
+										txtNewEmail.getText().toString(),
+										txtUser.getText().toString(),
+										txtNewPassword.getText().toString(),
+										txtVerifyPassword.getText().toString(),
+										txtPhone.getText().toString()
+										
+									);
+								}else{
+									Toast.makeText(RegisterActivity.this, "Su dispositivo no tiene conexi—n a Internet en este momento", Toast.LENGTH_LONG).show();
+								}
+							}else{
+								Toast.makeText(RegisterActivity.this, "Debe aceptar los terminos y condiciones", Toast.LENGTH_SHORT).show();
+							}
+						} else {
+		            		Toast.makeText(RegisterActivity.this, "Ambas contrase–as deben ser iguales", Toast.LENGTH_SHORT).show();
 						}
 					} else {
-	            		Toast.makeText(RegisterActivity.this, "Ambas contrase–as deben ser iguales", Toast.LENGTH_SHORT).show();
+	            		Toast.makeText(RegisterActivity.this, "Debe ingresar una cuenta de correo v‡lida", Toast.LENGTH_SHORT).show();
 					}
 				}else{
 					Toast.makeText(RegisterActivity.this, "Por favor llene todos los campos", Toast.LENGTH_SHORT).show();
@@ -107,7 +120,7 @@ public class RegisterActivity extends Activity {
 		protected Boolean doInBackground(String... params) {
 			boolean result = false;
 			
-			String url = "http://www.hawasolutions.com/Violations2/public/api/api/clientes";
+			String url = "http://www.hawasolutions.com/Violations2/public/api/api/clientes"; //"http://192.168.1.169/hawa/Violations/public/api/api/clientes";//
 			String usu_nombre = params[0];		//txtName
 			String usu_apellido = params[1];	//txtLastName
 			String usu_email = params[2];		//txtNewEmail
@@ -129,17 +142,29 @@ public class RegisterActivity extends Activity {
 			try{
 				post.setEntity(new UrlEncodedFormEntity(paramsArray));
 				HttpResponse response = httpClient.execute(post);
+				
 				int status = response.getStatusLine().getStatusCode();
 								
 				switch (status){
 					case 200: 	//case success
 						String responseStr = EntityUtils.toString(response.getEntity());
+						Log.v("response",responseStr);
 						if(!responseStr.equals("")){
 							JSONObject responseJSON = new JSONObject(responseStr); 
-
+							
 							bundle.putString("ID", responseJSON.getString("cli_id"));
 							bundle.putString("NOMBRE", responseJSON.getString("usu_nombre")+" "+responseJSON.getString("usu_apellido"));
 							bundle.putString("SALDO", responseJSON.getString("cli_saldo"));
+							
+			                 SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+			                 SharedPreferences.Editor editor = settings.edit();
+			                 
+			                 editor.putInt("ID", Integer.parseInt(responseJSON.getString("cli_id")));
+			                 editor.putString("NOMBRE", responseJSON.getString("usu_nombre")+" "+responseJSON.getString("usu_apellido"));
+			                 editor.putFloat("SALDO", Float.parseFloat(responseJSON.getString("cli_saldo")));
+			                 editor.putInt("ATTEMPT", 0);
+			                 
+			                 editor.commit();							
 							
 							result = true;
 						}else{
@@ -213,4 +238,9 @@ public class RegisterActivity extends Activity {
 	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 	    return activeNetworkInfo != null;
 	}
+	
+	public void onTermsClick(View pressed) {
+		Intent intent = new Intent(RegisterActivity.this, TermsActivity.class);
+		startActivity(intent);
+	}	
 }

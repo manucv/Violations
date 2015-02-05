@@ -66,7 +66,7 @@
                   android:windowSoftInputMode="adjustPan" >
         </activity>      
         <activity android:name="com.example.sipapp_project.ParkingActivity"
-                  android:label="Parqueaderos" 
+                  android:label="Pago de Parqueaderos"
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
@@ -138,8 +138,14 @@
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
+        <activity android:name="com.example.sipapp_project.TermsActivity"
+                  android:label="Terminos y Condiciones" 
+                  android:icon="@drawable/action_bar_icon"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan" >
+        </activity>
         <activity android:name="com.example.sipapp_project.MethodActivity"
-                  android:label="Forma de Recarga" 
+                  android:label="Recarga tu Saldo" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
@@ -151,7 +157,7 @@
                   android:windowSoftInputMode="adjustPan" >
         </activity>  
         <activity android:name="com.example.sipapp_project.CardActivity"
-                  android:label="Compra con Tarjeta" 
+                  android:label="Recarga con Tarjeta" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >

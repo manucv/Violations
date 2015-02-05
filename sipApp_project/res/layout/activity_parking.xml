@@ -64,12 +64,14 @@
                     android:background="@drawable/text_bkg"
                     android:digits="@string/formatAlphaNumeric"
                     android:fitsSystemWindows="true"
+                    android:hint="Ingrese numero de spot"
                     android:inputType="textCapCharacters"
                     android:lines="1"
                     android:maxLength="4"
                     android:maxLines="1"
                     android:padding="5dip"
                     android:singleLine="true" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -93,12 +95,14 @@
                     android:background="@drawable/text_bkg"
                     android:digits="@string/formatAlphaNumeric"
                     android:fitsSystemWindows="true"
+                    android:hint="Ingrese la placa"
                     android:inputType="textCapCharacters"
                     android:lines="1"
                     android:maxLength="7"
                     android:maxLines="1"
                     android:padding="5dip"
                     android:singleLine="true" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -138,7 +142,7 @@
                 android:gravity="right" >
 
                 <ImageView
-                    android:id="@+id/imageView1"
+                    android:id="@+id/ImgAmex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"

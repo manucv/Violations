@@ -132,7 +132,7 @@
         android:gravity="center" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/ImgAmex"
             android:layout_width="fill_parent"
             android:layout_height="70dp"
             android:layout_alignParentBottom="true"

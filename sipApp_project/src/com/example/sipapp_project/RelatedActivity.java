@@ -149,10 +149,8 @@ public class RelatedActivity extends ParqueaderoActivity {
 		    	//Rellenamos la lista con los nombres de los clientes
 	    		//Rellenamos la lista con los resultados
 	    		if(contactos != null && contactos.length > 0){
-		        	adaptador =
-		        		    new ArrayAdapter<String>(RelatedActivity.this,
-		        		        android.R.layout.simple_list_item_1, contactos);
-		        		 	
+		        	//adaptador = new ArrayAdapter<String>(RelatedActivity.this, android.R.layout.simple_list_item_1, contactos);
+		        	adaptador = new ArrayAdapter<String>(RelatedActivity.this, R.layout.single_row, R.id.LnkTerms, contactos);	 	
 		        	lstContacts.setAdapter(adaptador);
 		        	lstContacts.setOnItemClickListener(new OnItemClickListener() {
 		                 @Override

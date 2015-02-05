@@ -55,21 +55,13 @@ class ApiController extends AbstractActionController
             $email =  $this->getRequest()->getQuery('email');
             $passw =  $this->getRequest()->getQuery('passw');
 
-            /*$usuario = $this->getUsuarioDao()->buscarPorEmailOUsuario($email,$passw);
-            $content='';
-            if(is_array($usuario)){
-                $content=json_encode(json_decode(json_encode($usuario),FALSE));
-            }else{
-                $content=json_encode(array());
-            }*/
-
             $cliente = $this->getClienteDao()->buscarPorEmailOUsuario($email,$passw);
             $content='';
             if(is_object($cliente)){
                 $content=json_encode($cliente->getArrayCopy());
             }else{
-                $content=json_encode(new stdClass());
-            }
+                $content=json_encode((object) null);
+            }   
 
             $response=$this->getResponse();
             $response->setStatusCode(200);
@@ -643,7 +635,7 @@ class ApiController extends AbstractActionController
                 $cliente = new ClienteEntity();
 
                 $data_cliente['usu_id']=$usu_id;
-                $data_cliente['cli_saldo']=100;
+                $data_cliente['cli_saldo']=0;
                 $data_cliente['cli_estado']='ACTIVO';
                 $data_cliente['cli_movil']=$data['cli_movil'];
 
@@ -680,13 +672,13 @@ class ApiController extends AbstractActionController
 
             $usuario->setUsu_codigo_recuperacion($codigo_generado);
             
-            echo '<pre>';
+            /*echo '<pre>';
             print_r($usuario);
-            echo '</pre>';
+            echo '</pre>';*/
             
             $usu_id=$this->getUsuarioDao()->guardar ( $usuario );
 
-            die();
+            //die();
             //$usuario = Usuario::find();
 
             $uri = $this->getRequest()->getUri();
@@ -697,7 +689,7 @@ class ApiController extends AbstractActionController
             
             
             
-            $body = "<a href='www.hawasolutions.com/Violations2/'>Link</a>";
+            $body = "<a href='http://192.168.1.169/Hawa/Violations/public/api/api/recover/$codigo_generado'>Recuperar Contraseña</a>";
          
             $htmlPart = new MimePart($body);
             $htmlPart->type = 'text/html';
@@ -714,12 +706,14 @@ class ApiController extends AbstractActionController
             ->setSubject('Recuperación de Contraseña')
             ->setEncoding("UTF-8")
             ->setBody($body);
+
             $message->getHeaders()->get('content-type')->setType('multipart/alternative');
              
             $transport = new SmtpTransport();
             $options = new SmtpOptions(array(
                     'name' => 'mail.hawasolutions.com',
                     'host' => 'host114.hostmonster.com',
+                    'port' => 587,
                     'connection_class' => 'login',
                     'connection_config' => array(
                             'username' => 'prueba@hawasolutions.com',
@@ -728,7 +722,7 @@ class ApiController extends AbstractActionController
             ));
             $transport->setOptions($options);
             $transport->send($message);
-            echo $this->passwordGenerator();
+            //echo $this->passwordGenerator();
             die();
         } 
     }      
@@ -782,6 +776,46 @@ class ApiController extends AbstractActionController
             ) );
         }
     }        
+    //Verificación de contraseña
+    public function verificarAction(){
+
+        if($this->getRequest()->isPOST()){
+            $data = $this->request->getPost ();
+
+            $id =  $data['id'];         //id_usuario
+            $passw =  $data['passw'];   //password
+
+            /*          
+            $usuario = $this->getUsuarioDao()->traerPorUsuarioClave($email,$passw);
+            $content='';
+            if(is_object($usuario)){
+                // Validamos que el usuario que trata de logearse tiene por rol el #4 = Vigilante 
+                $rol_usuario=$this->getRolUsuarioDao()->traerPorUsCodigo($usuario->getUsu_id());
+                if(is_object($rol_usuario)){
+                    $rol=$rol_usuario->getRol_id();
+                    if($rol=4){
+                        $total_sectores=$this->getSectorVigilanteDao()->traerTodos($usuario->getUsu_id())->count();
+                        if($total_sectores>0){
+                            $content=json_encode($usuario->getArrayCopy());     
+                        }
+                    }
+                }   
+            }
+            */
+
+            $response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+            return $response;
+        }else{
+            return $this->redirect()->toRoute ( 'parametros', array (
+                    'controller' => 'index',
+                    'action' => 'index'
+            ) );    
+        }
+
+
+    }
 
     public function getUsuarioDao() {
         if (! $this->usuarioDao) {

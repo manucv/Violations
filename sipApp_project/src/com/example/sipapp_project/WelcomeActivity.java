@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -74,7 +75,7 @@ public class WelcomeActivity extends Activity {
         txtSaldo.setText("$" + Float.parseFloat(saldo));
         //cli_id=bundle.getString("ID");
         
-        ImageView banner = (ImageView) findViewById(R.id.imageView1);
+        ImageView banner = (ImageView) findViewById(R.id.ImgAmex);
         ImageView closeBanner = (ImageView) findViewById(R.id.closeBanner);
         final RelativeLayout bannerBottom = (RelativeLayout) findViewById(R.id.bannerBottom);
         
@@ -201,8 +202,7 @@ public class WelcomeActivity extends Activity {
         btnSalir.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            			            	
-                
+            			            	             
 			    AlertDialog.Builder alert = new AlertDialog.Builder(WelcomeActivity.this);
 			    alert.setTitle("Salir");
 		    	alert.setMessage("Esta seguro de que desea salir y cerrar sesi—n del sistema.");
@@ -398,6 +398,9 @@ public class WelcomeActivity extends Activity {
 		    	    int secs = remainder;
 			    	
 		    	    lblParking.setText(String.format("%02d", hours)+":"+String.format("%02d", mins)+":"+String.format("%02d", secs));
+		    	    if(secondsUntilFinished<(15*60)){
+		    	    	lblParking.setTextColor(Color.parseColor("#ff0000"));
+		    	    }
 			     }
 			     
 			     @Override
