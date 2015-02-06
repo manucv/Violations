@@ -1092,14 +1092,15 @@ containing a value of this type.
         public static final int text_bkg=0x7f020060;
     }
     public static final class id {
-        public static final int BtnCamara=0x7f050047;
+        public static final int BtnCamara=0x7f050046;
         public static final int BtnLogIn=0x7f05003f;
         public static final int BtnSeleccione=0x7f050044;
+        public static final int ImgPlate=0x7f05003c;
         public static final int SpnSectores=0x7f050043;
         public static final int TableParking=0x7f050042;
         public static final int TxtEmail=0x7f05003d;
         public static final int TxtPassword=0x7f05003e;
-        public static final int TxtPlateNumber=0x7f050046;
+        public static final int TxtPlateNumber=0x7f050047;
         public static final int TxtWelcome=0x7f050045;
         public static final int TxtZone=0x7f050041;
         public static final int action_bar=0x7f05001c;
@@ -1132,7 +1133,6 @@ containing a value of this type.
         public static final int icon=0x7f05002a;
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
-        public static final int imageView1=0x7f05003c;
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
         public static final int loadingLogin=0x7f050040;

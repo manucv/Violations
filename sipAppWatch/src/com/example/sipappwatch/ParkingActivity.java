@@ -1,5 +1,7 @@
 package com.example.sipappwatch;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +13,17 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +43,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -52,6 +62,7 @@ public class ParkingActivity extends Activity {
 	
 	private static final int TOTAL_COLS=10;
 	static int ANPR_REQUEST = 1;
+	static String IMG_PATH= "/sdcard/sdk/example/images/";
 	private int sec_id;
 	private String sec_nombre;
 	private int totalSpots=0;
@@ -90,7 +101,67 @@ public class ParkingActivity extends Activity {
 		tareaParqueaderosXSector.execute();
 		
 	}	
-	
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)	// this called when ANPR app finished
+    {
+    	if (requestCode == ANPR_REQUEST)	// ANPR app id 
+        {
+            if (resultCode == RESULT_OK)	// if ANPR app terminated normally 
+            {
+            	Bundle b = data.getExtras();	// result of ANPR app  (a Bundle var)
+        	    if (b != null)
+        	    {
+        	    	String error = b.getString("Errors");	// in bundle the recognized string
+        	    	String s = b.getString("PlateNums");	// in bundle the error string
+        	    	if (s != null)
+        	    	{
+				     	Toast.makeText(ParkingActivity.this, "Placa Indentificada: "+s, Toast.LENGTH_LONG).show();
+				     	EditText txtPlateNumber = (EditText) dialogViolation.findViewById(R.id.TxtPlateNumber);
+				     	txtPlateNumber.setText(s);
+				     	
+        	    		String name = IMG_PATH + s + ".jpg";	// photo file on the SD card
+	    			    Bitmap bitmap = BitmapFactory.decodeFile(name);
+	    			    if (bitmap != null)
+	    			    {
+		    			    ImageView imageView = (ImageView)dialogViolation.findViewById(R.id.ImgPlate);
+		    			    imageView.setImageBitmap(bitmap);
+	    			    }
+        	    	}
+        	    }
+            }
+        }
+    }
+    
+    /*Dispara Software ANPR (Reconocimiento de Placas) */
+    public void onBtnCamaraClick(View pressed){
+		Intent intent = new Intent("android.intent.action.SEND");
+		intent.addCategory("android.intent.category.DEFAULT");
+		intent.setComponent(new ComponentName("com.birdorg.anpr.sdk.simple.camera", "com.birdorg.anpr.sdk.simple.camera.ANPRSimpleCameraSDK"));
+				    
+		intent.putExtra("Orientation", "landscape");
+		intent.putExtra("FullScreen", true);
+		intent.putExtra("MaxRecognizeNumber", 1);
+		
+		intent.putExtra("SoundEnable", true);
+		intent.putExtra("ResolutionWidth", 960);
+		intent.putExtra("ResolutionHeight", 720);
+		intent.putExtra("ImageSaveDirectory", IMG_PATH);
+		
+		intent.putExtra("TitleText", "SIP Vigia");	// text on titlebar 
+		
+	    try
+		{
+		    startActivityForResult(intent, ANPR_REQUEST);	// call ANPR app with intent
+		}
+		catch (ActivityNotFoundException e)		// if ANPR intent not found (not installed)
+		{
+	     	Toast toast = Toast.makeText(ParkingActivity.this, "The ANPR not installed!", Toast.LENGTH_LONG);
+	    	toast.show();    
+		}
+    }
+    
+	/*Clase Spot Definici—n de espacio en la interfaz*/
 	private class spot{
 		private String par_id;
 		private String par_estado;
@@ -135,10 +206,9 @@ public class ParkingActivity extends Activity {
 			this.par_estado = par_estado;
 		}
 		
-	}
-	
-	
-	
+	}    
+    
+	/* Web Services */
 	private class TareaWSParqueaderosXSector extends AsyncTask<String,Integer,Boolean> {
 		boolean result = false;
 		private String message;
@@ -273,11 +343,14 @@ public class ParkingActivity extends Activity {
 		                    //dialog.setView(layout);
 		                    dialog.setMessage("Reportar este lugar, ingrese la placa" );
 		                    dialog.setPositiveButton("Reportar", new DialogInterface.OnClickListener() {
-
+		                    	
 		                         @Override
 		                         public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 		                             // TODO Auto-generated method stub
-		                             //startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),100);//android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 100);
+		                        	 Toast.makeText(ParkingActivity.this, "Se dio click en reportar", Toast.LENGTH_LONG).show();
+		                        	 TareaWSRegistroInfraccion registrarInfraccion = new TareaWSRegistroInfraccion();
+		                        	 registrarInfraccion.execute("Q001","POL110");
+		                        	 
 		                         }
 		                     });
 		                     dialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -312,12 +385,10 @@ public class ParkingActivity extends Activity {
 	    	            }, 
 	    	           5000 
 	    	    );
-
-	    	    
 	    	}
 	    }
-	}	
-	
+	}	    
+    
 	private class TareaWSOcupadosXSector extends AsyncTask<String,Integer,Boolean> {
 		boolean result = false;
 		private String message;
@@ -349,12 +420,6 @@ public class ParkingActivity extends Activity {
 				        		String par_id = obj.getString("par_id");
 					        	String par_estado = obj.getString("par_estado").toUpperCase();
 					        	((spot) parqueaderos.get(par_id)).setPar_estado("O");
-					        	
-					        	//Button button = ((spot) parqueaderos.get(par_id)).getButton();
-					        	//button.setBackgroundResource(R.drawable.occupied);
-					        	
-					        	//Crearemos objetos m‡s adelante
-				        		//parqueaderos.put(par_id, par_estado);
 				        	}
 							
 							result = true;
@@ -421,53 +486,61 @@ public class ParkingActivity extends Activity {
     	           5000 
     	    );
 	    }
+	}    
+
+	private class TareaWSRegistroInfraccion extends AsyncTask<String,Integer,Boolean> {
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			
+	    	boolean result = false;
+			
+			//String url = "http://www.hawasolutions.com/Violations2/public/api/vigilante/infracciones";
+	    	String url = "http://192.168.1.169/Hawa/Violations/public/api/vigilante/infracciones";
+			
+			String par_id = params[0];
+			String aut_placa = params[1];
+			
+	    	HttpClient httpClient = new DefaultHttpClient();
+	    	HttpPost post = new HttpPost(url);
+			
+	    	List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
+			paramsArray.add( new BasicNameValuePair( "par_id", par_id ) );
+			paramsArray.add( new BasicNameValuePair( "aut_placa", aut_placa ) );
+			
+			try{
+				post.setEntity(new UrlEncodedFormEntity(paramsArray));
+				
+				File file = new File(IMG_PATH + "XXB5353.jpg");
+				
+				/*InputStreamEntity reqEntity = new InputStreamEntity( new FileInputStream(file), -1);
+				System.out.println(reqEntity);
+				reqEntity.setContentType("binary/octet-stream");
+			    reqEntity.setChunked(true); // Send in multiple parts if needed */
+				
+				MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
+				multipartEntity.addBinaryBody("image", file, ContentType.create("image/jpeg"), file.getName());
+
+				post.setEntity(multipartEntity.build());
+				
+				HttpResponse response = httpClient.execute(post);
+				int status = response.getStatusLine().getStatusCode();
+				
+				switch (status){
+					case 200: 	//case success		
+						String responseStr = EntityUtils.toString(response.getEntity());
+						System.out.println(responseStr);
+						
+					break;
+				}
+			} catch(Exception ex)
+			{
+				Log.e("ServicioRest","Error!", ex);
+	        	result = false;
+		    }
+	        return result;
+		}
+		
 	}
-	
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)	// this called when ANPR app finished
-    {
-    	if (requestCode == ANPR_REQUEST)	// ANPR app id 
-        {
-            if (resultCode == RESULT_OK)	// if ANPR app terminated normally 
-            {
-            	Bundle b = data.getExtras();	// result of ANPR app  (a Bundle var)
-        	    if (b != null)
-        	    {
-        	    	String error = b.getString("Errors");	// in bundle the recognized string
-        	    	String s = b.getString("PlateNums");	// in bundle the error string
-        	    	if (s != null)
-        	    	{
-				     	Toast.makeText(ParkingActivity.this, "Placa Indentificada: "+s, Toast.LENGTH_LONG).show();
-				     	EditText txtPlateNumber = (EditText) dialogViolation.findViewById(R.id.TxtPlateNumber);
-				     	txtPlateNumber.setText(s);
-        	    	}
-        	    }
-            }
-        }
-    }
-    
-    public void onBtnCamaraClick(View pressed){
-		Intent intent = new Intent("android.intent.action.SEND");
-		intent.addCategory("android.intent.category.DEFAULT");
-		intent.setComponent(new ComponentName("com.birdorg.anpr.sdk.simple.camera", "com.birdorg.anpr.sdk.simple.camera.ANPRSimpleCameraSDK"));
-				    
-		intent.putExtra("Orientation", "landscape");
-		intent.putExtra("FullScreen", true);
-		intent.putExtra("MaxRecognizeNumber", 1);
-		
-		intent.putExtra("SoundEnable", true);
-		intent.putExtra("ResolutionWidth", 960);
-		intent.putExtra("ResolutionHeight", 720);
-		intent.putExtra("ImageSaveDirectory", "/sdcard/sdk/example/images/");
-		
-	    try
-		{
-		    startActivityForResult(intent, ANPR_REQUEST);	// call ANPR app with intent
-		}
-		catch (ActivityNotFoundException e)		// if ANPR intent not found (not installed)
-		{
-	     	Toast toast = Toast.makeText(ParkingActivity.this, "The ANPR not installed!", Toast.LENGTH_LONG);
-	    	toast.show();    
-		}
-    }
+
 }

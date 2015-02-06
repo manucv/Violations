@@ -16,7 +16,9 @@
 
 	use Application\Model\Entity\Cliente as ClienteEntity;
 	use Application\Model\Entity\RolUsuario as RolUsuarioEntity;
-	
+
+	use Zend\Http\PhpEnvironment\Request;
+	use Zend\Filter\File;
 
 	class VigilanteController extends AbstractActionController
 	{
@@ -126,15 +128,8 @@
 	    							$parqueaderos=$this->getParqueaderoDao()->traerTodosPorSector($sec_id);	
 	    						}
 
-							    							
-	    							
-	    							
-
 				                $parqueaderosArray=array();
 					            foreach($parqueaderos as $parqueadero){
-					            	echo '<pre>';
-					            	print_r($parqueadero);
-					            	echo '</pre>';
 					                $parqueaderosArray[]=$parqueadero->getArrayCopy();
 					            }
 	    						$content=json_encode($parqueaderosArray);
@@ -161,6 +156,34 @@
             $response->setContent($content);
             return $response;
 
+	    }
+
+	    public function infraccionesAction()
+	    {
+
+	    	$content="";
+	    	echo 'Request:<pre>';
+	    	print_r ($_REQUEST);
+	    	echo '</pre>';
+
+	    	echo 'Files:<pre>';
+	    	print_r ($_FILES);
+	    	echo '</pre>';
+
+	    	$target_dir = "/Applications/XAMPP/xamppfiles/htdocs/Hawa/Violations/files/";
+			$target_file = $target_dir . basename($_FILES["image"]["name"]);
+			move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+
+	        /*if($this->getRequest()->isPOST()){ //hay que cambiar esto
+	        	$content="";
+	        }else{
+	        	//Funcionalidad sí es q es GET, es decir consulta de infracciones
+	            return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	        }*/
+            $response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+            return $response;
 	    }
 
 		public function getUsuarioDao() {
