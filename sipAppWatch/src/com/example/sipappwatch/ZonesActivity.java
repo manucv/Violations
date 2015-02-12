@@ -76,7 +76,7 @@ public class ZonesActivity extends Activity {
         Bundle b = new Bundle();
         b.putString("SEC_NOMBRE", spnSectores.getSelectedItem().toString());
         b.putInt("SEC_ID", sectores.get(spnSectores.getSelectedItem()));
-        intent.putExtras(b);                
+        intent.putExtras(b);
         startActivity(intent);
 	}
 	
@@ -88,7 +88,7 @@ public class ZonesActivity extends Activity {
 	    @Override
 		protected Boolean doInBackground(String... params) {
 	    	
-			String url = "http://www.hawasolutions.com/Violations2/public/api/vigilante/vigilantes/"+usu_id+"/sectores";
+			String url = "http://54.209.66.42/violations/public/api/vigilante/vigilantes/"+usu_id+"/sectores";
 			
 	    	HttpClient httpClient = new DefaultHttpClient();
 	    	HttpGet get = new HttpGet(url);

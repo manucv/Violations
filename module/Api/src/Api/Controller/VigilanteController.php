@@ -16,6 +16,8 @@
 
 	use Application\Model\Entity\Cliente as ClienteEntity;
 	use Application\Model\Entity\RolUsuario as RolUsuarioEntity;
+	use Application\Model\Entity\Infraccion as InfraccionEntity;
+	use Application\Model\Entity\MultaParqueadero as MultaParqueaderoEntity;
 
 	use Zend\Http\PhpEnvironment\Request;
 	use Zend\Filter\File;
@@ -28,6 +30,9 @@
 	    protected $rolUsuarioDao;
 	    protected $sectorVigilanteDao;
 	    protected $parqueaderoDao;
+	    protected $tipoInfraccionDao;
+		protected $infraccionDao;
+		protected $multaParqueaderoDao;
 
 	    public function indexAction()
 	    {
@@ -155,13 +160,55 @@
             $response->setStatusCode(200);
             $response->setContent($content);
             return $response;
-
 	    }
+
+	    public function categoriaInfraccionesAction() //categoria_infracciones
+	    {	 	    
+	    	if($this->getRequest()->isGET()){
+	    		if(!is_null($this->params('id'))){
+	    			$cat_inf_id=$this->params('id');
+	    			if(!is_null($this->params('option'))){
+	    				$option=$this->params('option');	
+	    				switch($option){
+	    					case 'tipo_infracciones':
+								$tiposInfraccion=$this->getTipoInfraccionDao()->traerTodosPorCategoria($cat_inf_id);
+
+				                $tiposInfraccionArray=array();
+					            foreach($tiposInfraccion as $tipoInfraccion){
+					                $tiposInfraccionArray[]=$tipoInfraccion->getArrayCopy();
+					            }
+	    						$content=json_encode($tiposInfraccionArray);
+	    						
+	    					break;
+	    					deafult:
+	    						return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	    					break;
+	    				}
+	    			}else{
+	    				//Funcionalidad sí no hay opción, es decir solo el id del vigilante
+	    				return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	    			}
+	    		}else{
+	    			//Funcionalidad sí no hay id, es decir retorne todos los vigilantes
+	    			return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	    		}
+	    	}else{
+	    		//Funcionalidad sí es q es post, es decir guarde un vigilante
+	            return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	    	}
+
+            $response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+            return $response;
+
+	    }	    
 
 	    public function infraccionesAction()
 	    {
 
 	    	$content="";
+	    	/*
 	    	echo 'Request:<pre>';
 	    	print_r ($_REQUEST);
 	    	echo '</pre>';
@@ -169,17 +216,58 @@
 	    	echo 'Files:<pre>';
 	    	print_r ($_FILES);
 	    	echo '</pre>';
+	    	*/
+			
+	        if($this->getRequest()->isPOST()){ //hay que cambiar esto
+	        	$data = $this->request->getPost ();
 
-	    	$target_dir = "/Applications/XAMPP/xamppfiles/htdocs/Hawa/Violations/files/";
-			$target_file = $target_dir . basename($_FILES["image"]["name"]);
-			move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+				$par_id 		= $data['par_id'];
+				$aut_placa 		= $data['aut_placa'];
+				$inf_latitud 	= floatval($data['inf_latitud']);
+				$inf_longitud 	= floatval($data['inf_longitud']);
+				$inf_fecha 		= $data['inf_fecha'];
+				$tip_inf_id 	= $data['tip_inf_id'];
 
-	        /*if($this->getRequest()->isPOST()){ //hay que cambiar esto
-	        	$content="";
+		    	$target_dir = "/home2/hawasol1/public_html/Violations2/files/";
+				$target_file = $target_dir . basename($_FILES["image"]["name"]);
+				move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+
+				$infraccion = new InfraccionEntity();
+
+				$infraccionData=array();
+				$infraccionData['inf_fecha']	=$inf_fecha;
+				$infraccionData['inf_detalles']	="(Ningún)";
+				$infraccionData['usu_id']		=1;	//Reemplazar
+				$infraccionData['tip_inf_id']	=$tip_inf_id;
+				$infraccionData['sec_id']		=5;	//Reemplazar
+				$infraccionData['inf_latitud']	=$inf_latitud;
+				$infraccionData['inf_longitud']	=$inf_longitud;
+
+				$infraccion->exchangeArray ( $infraccionData );
+                $inf_id=$this->getInfraccionDao()->guardar($infraccion);
+
+				$multaParqueadero = new MultaParqueaderoEntity();
+				$multaParqueaderoData=array();
+				$multaParqueaderoData['par_id']			= $par_id;
+				$multaParqueaderoData['aut_placa']		= $aut_placa;
+				$multaParqueaderoData['inf_id']			= $inf_id;
+				$multaParqueaderoData['mul_par_estado']	= 'R'; //Reemplazar
+				$multaParqueaderoData['mul_par_valor']	= 0; //Reemplazar
+				$multaParqueaderoData['mul_par_imagen']	= $target_file;
+
+    			echo 'Multa Parqueadero:<pre>';
+	    		print_r ($multaParqueaderoData);
+	    		echo '</pre>';
+
+				$multaParqueadero->exchangeArray ( $multaParqueaderoData );
+				$mul_par_id=$this->getMultaParqueaderoDao()->guardar($multaParqueadero);
+
+				echo $mul_par_id;
+
 	        }else{
 	        	//Funcionalidad sí es q es GET, es decir consulta de infracciones
 	            return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
-	        }*/
+	        }
             $response=$this->getResponse();
             $response->setStatusCode(200);
             $response->setContent($content);
@@ -217,4 +305,26 @@
 	        }
 	        return $this->parqueaderoDao;
 	    }		
+	    public function getInfraccionDao() {
+	        if (! $this->infraccionDao) {
+	            $sm = $this->getServiceLocator ();
+	            $this->infraccionDao = $sm->get ( 'Application\Model\Dao\InfraccionDao' );
+	        }
+	        return $this->infraccionDao;
+	    }			    
+	    public function getTipoInfraccionDao() {
+	        if (! $this->tipoInfraccionDao) {
+	            $sm = $this->getServiceLocator ();
+	            $this->tipoInfraccionDao = $sm->get ( 'Application\Model\Dao\TipoInfraccionDao' );
+	        }
+	        return $this->tipoInfraccionDao;
+	    }		
+	    public function getMultaParqueaderoDao(){
+	    	if (! $this->multaParqueaderoDao) {
+	            $sm = $this->getServiceLocator ();
+	            $this->multaParqueaderoDao = $sm->get ( 'Application\Model\Dao\MultaParqueaderoDao' );
+	        }
+	        return $this->multaParqueaderoDao;
+	    }
+
 	}

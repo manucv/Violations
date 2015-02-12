@@ -9,6 +9,8 @@ class Infraccion {
 	private $usu_id;
 	private $tip_inf_id;
 	private $sec_id;
+    private $inf_latitud;
+    private $inf_longitud;    
 	
 	private $usu_nombre;
 	private $usu_apellido;
@@ -66,6 +68,22 @@ class Infraccion {
     public function getSec_id()
     {
         return $this->sec_id;
+    }
+
+    /**
+     * @return the $inf_latitud
+     */
+    public function getInf_latitud()
+    {
+        return $this->inf_latitud;
+    }
+
+    /**
+     * @return the $inf_latitud
+     */
+    public function getInf_longitud()
+    {
+        return $this->inf_longitud;
     }
 
 	/**
@@ -172,6 +190,22 @@ class Infraccion {
         $this->sec_id = $sec_id;
     }
 
+    /**
+     * @param Ambigous <NULL, unknown> $inf_latitud
+     */
+    public function setInf_latitud($inf_latitud)
+    {
+        $this->inf_latitud = $inf_latitud;
+    }
+
+    /**
+     * @param Ambigous <NULL, unknown> $inf_longitud
+     */
+    public function setInf_longitud($inf_longitud)
+    {
+        $this->inf_longitud = $inf_longitud;
+    }
+
 	/**
      * @param Ambigous <NULL, unknown> $usu_nombre
      */
@@ -236,6 +270,9 @@ class Infraccion {
 		$this->usu_id = (isset($data['usu_id'])) ? $data['usu_id'] : null;
 		$this->tip_inf_id = (isset($data['tip_inf_id'])) ? $data['tip_inf_id'] : null;
 		$this->sec_id = (isset($data['sec_id'])) ? $data['sec_id'] : null;
+        $this->inf_latitud = (isset($data['inf_latitud'])) ? $data['inf_latitud'] : null;
+        $this->inf_longitud = (isset($data['inf_longitud'])) ? $data['inf_longitud'] : null;
+
 		
 		$this->usu_nombre = (isset($data['usu_nombre'])) ? $data['usu_nombre'] : null;
 		$this->usu_apellido = (isset($data['usu_apellido'])) ? $data['usu_apellido'] : null;

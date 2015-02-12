@@ -9,6 +9,7 @@ class MultaParqueadero {
 	private $inf_id;
 	private $mul_par_estado;
 	private $mul_par_valor;
+	private $mul_par_imagen;
 	
 	function __construct() {}
 
@@ -55,6 +56,13 @@ class MultaParqueadero {
 	}
 
 	/**
+	 * @return the $mul_par_imagen
+	 */
+	public function getMul_par_imagen() {
+		return $this->mul_par_imagen;
+	}
+
+	/**
 	 * @param Ambigous <NULL, unknown> $mul_par_id
 	 */
 	public function setMul_par_id($mul_par_id) {
@@ -96,6 +104,13 @@ class MultaParqueadero {
 		$this->mul_par_valor = $mul_par_valor;
 	}
 
+	/**
+	 * @param Ambigous <NULL, unknown> $mul_par_imagen
+	 */
+	public function setMul_par_imagen($mul_par_imagen) {
+		$this->mul_par_imagen = $mul_par_imagen;
+	}
+
 	public function exchangeArray($data)
 	{
 		$this->mul_par_id = (isset($data['mul_par_id'])) ? $data['mul_par_id'] : null;
@@ -104,6 +119,7 @@ class MultaParqueadero {
 		$this->inf_id = (isset($data['inf_id'])) ? $data['inf_id'] : null;
 		$this->mul_par_estado = (isset($data['mul_par_estado'])) ? $data['mul_par_estado'] : null;
 		$this->mul_par_valor = (isset($data['mul_par_valor'])) ? $data['mul_par_valor'] : null;
+		$this->mul_par_imagen = (isset($data['mul_par_imagen'])) ? $data['mul_par_imagen'] : null;
 	}
 	
 	public function getArrayCopy(){

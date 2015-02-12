@@ -161,7 +161,7 @@
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
-        </activity>        
+        </activity>
         <service android:name="com.paypal.android.sdk.payments.PayPalService"
             android:exported="false" />
         

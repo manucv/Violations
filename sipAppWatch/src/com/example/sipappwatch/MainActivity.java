@@ -100,7 +100,7 @@ public class MainActivity extends ActionBarActivity {
 	    	
 	    	boolean result = false;
 			
-			String url = "http://www.hawasolutions.com/Violations2/public/api/vigilante/login";
+			String url = "http://54.209.66.42/violations/public/api/vigilante/login";
 			
 			String email = params[0];
 			String passw = params[1];

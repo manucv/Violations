@@ -90,6 +90,8 @@ class Parqueadero {
 		$this->sec_nombre = (isset($data['sec_nombre'])) ? $data['sec_nombre'] : null;
 
 		$this->aut_placa = (isset($data['aut_placa'])) ? $data['aut_placa'] : null;
+		$this->par_fecha_ingreso = (isset($data['par_fecha_ingreso'])) ? $data['par_fecha_ingreso'] : null;
+		$this->par_horas_parqueo = (isset($data['par_horas_parqueo'])) ? $data['par_horas_parqueo'] : null;
 	}
 	
 	public function getArrayCopy(){

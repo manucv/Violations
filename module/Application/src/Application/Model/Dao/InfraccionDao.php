@@ -49,7 +49,9 @@ class InfraccionDao implements InterfaceCrud {
     			'inf_detalles' => $infraccion->getInf_detalles(),
     			'usu_id' => $infraccion->getUsu_id(),
     			'tip_inf_id' => $infraccion->getTip_inf_id(),
-    			'sec_id' => $infraccion->getSec_id()
+    			'sec_id' => $infraccion->getSec_id(),
+                'inf_latitud' => $infraccion->getInf_latitud(),
+                'inf_longitud' => $infraccion->getInf_longitud()
     	);
     	
     	$data ['inf_id'] = $id;

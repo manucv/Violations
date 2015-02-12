@@ -197,7 +197,7 @@ public class WelcomeActivity extends Activity {
                 
                 startActivity(intent);	            	        	
             }
-       });        
+       });
         
         btnSalir.setOnClickListener(new OnClickListener() {
             @Override
@@ -241,8 +241,7 @@ public class WelcomeActivity extends Activity {
 			    
 			    alert.show();
             }
-       });           
-         
+       });
    }
 	
 	@Override
@@ -265,7 +264,7 @@ public class WelcomeActivity extends Activity {
 	        public void run() {
 	            doubleBackToExitPressedOnce=false;                       
 	        }
-	    }, 2000);		
+	    }, 2000);
 	}	
 	
 	

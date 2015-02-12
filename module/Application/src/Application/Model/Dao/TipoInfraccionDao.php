@@ -32,7 +32,16 @@ class TipoInfraccionDao implements InterfaceCrud {
     	return $row;
     }
     
-    
+    public function traerTodosPorCategoria($cat_inf_id) {
+        
+        $select = $this->tableGateway->getSql()->select();
+        $condiciones = array('cat_inf_id'=>$cat_inf_id);
+        $select-> where ( $condiciones );
+        $resultSet = $this->tableGateway->selectWith ( $select );
+        
+        return $resultSet;
+    }   
+
     public function guardar(TipoInfraccion $tipo_infraccion) {
     
     	$id = ( int ) $tipo_infraccion->getTip_inf_id ();

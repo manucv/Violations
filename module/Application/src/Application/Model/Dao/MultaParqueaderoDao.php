@@ -36,19 +36,20 @@ class MultaParqueaderoDao implements InterfaceCrud {
     }
     
     public function guardar(MultaParqueadero $multaParqueadero){
-    
+
     	$id = (int) $multaParqueadero->getMul_par_id();
-    
+
     	$data = array(
     			'par_id' => $multaParqueadero->getPar_id(),
     			'aut_placa' => $multaParqueadero->getAut_placa(),
     			'inf_id' => $multaParqueadero->getInf_id(),
     			'mul_par_estado' => $multaParqueadero->getMul_par_estado(),
-    			'mul_par_valor' => $multaParqueadero->getMul_par_valor()
+    			'mul_par_valor' => $multaParqueadero->getMul_par_valor(),
+                'mul_par_imagen' => $multaParqueadero->getMul_par_imagen()
     	);
-    	
+
     	$data ['mul_par_id'] = $id;
-    	
+
     	if (!empty ( $id ) && !is_null ( $id )) {
     		if ($this->traer ( $id )) {
     	
