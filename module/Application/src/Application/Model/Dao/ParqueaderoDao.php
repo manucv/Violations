@@ -20,7 +20,7 @@ class ParqueaderoDao implements InterfaceCrud {
 		 
 		$resultSet = $this->tableGateway->selectWith ( $select );
 		return $resultSet;
-		
+	
 	}
 
 	public function traerJerarquia($par_id) {
@@ -107,23 +107,34 @@ class ParqueaderoDao implements InterfaceCrud {
 		return json_encode($jsonArray);
 	}		
 
-	public function liberarParqueaderos() {
+	public function liberarParqueaderos($par_id=null) {
 		$adapter = $this->tableGateway->getAdapter();
-		$query = "
-			UPDATE 	parqueadero SET par_estado = 'D',
-					aut_placa = '', 
-					par_fecha_ingreso = '0000-00-00 00:00:00',
-					par_fecha_salida = '0000-00-00 00:00:00', 
-					par_horas_parqueo = 0 
-			WHERE par_id 
-				NOT IN (
-					SELECT lp.par_id 
-					FROM log_parqueadero AS lp 
-					WHERE log_par_fecha_ingreso > NOW() - INTERVAL 2 DAY 
-					AND (log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR) > NOW()
-				) 
-				AND par_estado = 'O'
-		";
+		if(is_null($par_id)){
+			$query = "
+				UPDATE 	parqueadero SET par_estado = 'D',
+						aut_placa = '', 
+						par_fecha_ingreso = '0000-00-00 00:00:00',
+						par_fecha_salida = '0000-00-00 00:00:00', 
+						par_horas_parqueo = 0 
+				WHERE par_id 
+					NOT IN (
+						SELECT lp.par_id 
+						FROM log_parqueadero AS lp 
+						WHERE log_par_fecha_ingreso > NOW() - INTERVAL 2 DAY 
+						AND (log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR) > NOW()
+					) 
+					AND par_estado = 'O'
+			";
+		}else{
+			$query = "
+				UPDATE 	parqueadero SET par_estado = 'D',
+						aut_placa = '', 
+						par_fecha_ingreso = '0000-00-00 00:00:00',
+						par_fecha_salida = '0000-00-00 00:00:00', 
+						par_horas_parqueo = 0 
+				WHERE par_id = '$par_id'
+			";
+		}
     	
     	$statement = $adapter->query($query);
     	$result = $statement->execute();

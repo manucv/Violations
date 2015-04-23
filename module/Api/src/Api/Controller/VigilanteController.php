@@ -208,62 +208,62 @@
 	    {
 
 	    	$content="";
-	    	/*
-	    	echo 'Request:<pre>';
-	    	print_r ($_REQUEST);
-	    	echo '</pre>';
-
-	    	echo 'Files:<pre>';
-	    	print_r ($_FILES);
-	    	echo '</pre>';
-	    	*/
 			
 	        if($this->getRequest()->isPOST()){ //hay que cambiar esto
 	        	$data = $this->request->getPost ();
 
-				$par_id 		= $data['par_id'];
-				$aut_placa 		= $data['aut_placa'];
-				$inf_latitud 	= floatval($data['inf_latitud']);
-				$inf_longitud 	= floatval($data['inf_longitud']);
-				$inf_fecha 		= $data['inf_fecha'];
-				$tip_inf_id 	= $data['tip_inf_id'];
+	        	if(!is_null($this->params('id'))){
+	        		if(!is_null($this->params('option'))){
+	    				$option=$this->params('option');	
+	    				switch($option){
+	    					case 'liberar':
+	    						$par_id = $this->params('id');
+	    						$this->getParqueaderoDao()->liberarParqueaderos($par_id);
+	    						echo $data['observation'];
 
-		    	$target_dir = "/home2/hawasol1/public_html/Violations2/files/";
-				$target_file = $target_dir . basename($_FILES["image"]["name"]);
-				move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+	    					break;
+	    				}
+	    			}
+	        	}else{
+					$par_id 		= $data['par_id'];
+					$aut_placa 		= $data['aut_placa'];
+					$inf_latitud 	= floatval($data['inf_latitud']);
+					$inf_longitud 	= floatval($data['inf_longitud']);
+					$inf_fecha 		= $data['inf_fecha'];
+					$tip_inf_id 	= $data['tip_inf_id'];
 
-				$infraccion = new InfraccionEntity();
+			    	$target_dir = "/home2/hawasol1/public_html/Violations2/files/";
+					$target_file = $target_dir . basename($_FILES["image"]["name"]);
+					move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 
-				$infraccionData=array();
-				$infraccionData['inf_fecha']	=$inf_fecha;
-				$infraccionData['inf_detalles']	="(Ningún)";
-				$infraccionData['usu_id']		=1;	//Reemplazar
-				$infraccionData['tip_inf_id']	=$tip_inf_id;
-				$infraccionData['sec_id']		=5;	//Reemplazar
-				$infraccionData['inf_latitud']	=$inf_latitud;
-				$infraccionData['inf_longitud']	=$inf_longitud;
+					$infraccion = new InfraccionEntity();
 
-				$infraccion->exchangeArray ( $infraccionData );
-                $inf_id=$this->getInfraccionDao()->guardar($infraccion);
+					$infraccionData=array();
+					$infraccionData['inf_fecha']	=$inf_fecha;
+					$infraccionData['inf_detalles']	="(Ningún)";
+					$infraccionData['usu_id']		=1;	//Reemplazar
+					$infraccionData['tip_inf_id']	=$tip_inf_id;
+					$infraccionData['sec_id']		=5;	//Reemplazar
+					$infraccionData['inf_latitud']	=$inf_latitud;
+					$infraccionData['inf_longitud']	=$inf_longitud;
 
-				$multaParqueadero = new MultaParqueaderoEntity();
-				$multaParqueaderoData=array();
-				$multaParqueaderoData['par_id']			= $par_id;
-				$multaParqueaderoData['aut_placa']		= $aut_placa;
-				$multaParqueaderoData['inf_id']			= $inf_id;
-				$multaParqueaderoData['mul_par_estado']	= 'R'; //Reemplazar
-				$multaParqueaderoData['mul_par_valor']	= 0; //Reemplazar
-				$multaParqueaderoData['mul_par_imagen']	= $target_file;
+					$infraccion->exchangeArray ( $infraccionData );
+	                $inf_id=$this->getInfraccionDao()->guardar($infraccion);
 
-    			echo 'Multa Parqueadero:<pre>';
-	    		print_r ($multaParqueaderoData);
-	    		echo '</pre>';
+					$multaParqueadero = new MultaParqueaderoEntity();
+					$multaParqueaderoData=array();
+					$multaParqueaderoData['par_id']			= $par_id;
+					$multaParqueaderoData['aut_placa']		= $aut_placa;
+					$multaParqueaderoData['inf_id']			= $inf_id;
+					$multaParqueaderoData['mul_par_estado']	= 'R'; //Reemplazar
+					$multaParqueaderoData['mul_par_valor']	= 0; //Reemplazar
+					$multaParqueaderoData['mul_par_imagen']	= $target_file;
 
-				$multaParqueadero->exchangeArray ( $multaParqueaderoData );
-				$mul_par_id=$this->getMultaParqueaderoDao()->guardar($multaParqueadero);
+					$multaParqueadero->exchangeArray ( $multaParqueaderoData );
+					$mul_par_id=$this->getMultaParqueaderoDao()->guardar($multaParqueadero);
 
-				echo $mul_par_id;
-
+					$content=json_encode($multaParqueadero->getArrayCopy());
+				}	
 	        }else{
 	        	//Funcionalidad sí es q es GET, es decir consulta de infracciones
 	            return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
