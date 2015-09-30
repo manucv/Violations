@@ -266,7 +266,7 @@
 					$inf_fecha 		= $data['inf_fecha'];
 					$tip_inf_id 	= $data['tip_inf_id'];
 
-			    	$target_dir = "/home2/hawasol1/public_html/Violations2/files/";
+			    	$target_dir = "/var/www/html/violations/files/";
 					$target_file = $target_dir . basename($_FILES["image"]["name"]);
 					move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 
