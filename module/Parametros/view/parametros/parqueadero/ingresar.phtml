@@ -12,6 +12,7 @@ $formLabel = $this->plugin ( 'formLabel' );
 $par_id= $form->get ( 'par_id' );
 $par_estado = $form->get ( 'par_estado' );
 $par_codigo = $form->get ( 'par_codigo' );
+$par_tipo = $form->get ( 'par_tipo' );
 $sec_id = $form->get ( 'sec_id' );
 
 //$date = new Fecha();
@@ -85,6 +86,21 @@ echo $this->formelementerrors ( $par_codigo );
                 	   ?>
             		</div>
                 </div>
+
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+                        <?php 
+                        echo $formLabel->openTag() . $par_tipo->getLabel() . $formLabel->closeTag();
+                        ?>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                       <?php 
+                        echo html_entity_decode( $this->formselect ( $par_tipo ) );
+                        echo html_entity_decode( $this->formelementerrors ( $par_tipo ) );   
+                       ?>
+                    </div>
+                </div>
+
                 <div class="row">
     				<div class="form-group col-md-12">
             		     <div align="center">

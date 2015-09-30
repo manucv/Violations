@@ -287,6 +287,7 @@ class ParqueaderoDao implements InterfaceCrud {
 		$data = array (
 				'par_id' => $parqueadero->getPar_id(),
 				'par_estado' => $parqueadero->getPar_estado(),
+				'par_tipo' => $parqueadero->getPar_tipo(),
 				'sec_id' => $parqueadero->getSec_id()
 		);
 		
@@ -300,6 +301,7 @@ class ParqueaderoDao implements InterfaceCrud {
 	    $data = array (
 	        'par_id' => $parqueadero->getPar_id(),
 	        'par_estado' => $parqueadero->getPar_estado(),
+	        'par_tipo' => $parqueadero->getPar_tipo(),
 	        'sec_id' => $parqueadero->getSec_id()
 	    );
 	

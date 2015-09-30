@@ -62,6 +62,28 @@ class Parqueadero extends Form {
 				'disable_inarray_validator' => false, // <-- disable
 		));
 		$this->add($par_estado);
+
+
+		/* ********************************************
+		 * CAMPO TIPO
+		* ********************************************/
+		
+		$par_tipo = new Select('par_tipo');
+		$par_tipo->setLabel('Estado*: ');
+		$par_tipo->setAttributes(array('class' => 'form-control'));
+		$par_tipo->setAttributes(array('id' => 'par_tipo'));
+		$par_tipo->setEmptyOption('-- Seleccione --');
+		$par_tipo->setValueOptions(array(
+				'N' => 'Automovil',
+				'D' => 'Capacidades Especiales',
+				'E' => 'Mujeres Embarazadas',
+				'M' => 'Motos',
+				'B' => 'Biciletas',
+		));
+		$par_tipo->setOptions(array(
+				'disable_inarray_validator' => false, // <-- disable
+		));
+		$this->add($par_tipo);		
 		
 		
 		/* ********************************************

@@ -12,6 +12,8 @@ $formLabel = $this->plugin ( 'formLabel' );
 
 $tip_inf_id = $form->get ( 'tip_inf_id' );
 $tip_inf_descripcion = $form->get ( 'tip_inf_descripcion' );
+$tip_inf_legal = $form->get ( 'tip_inf_legal' );
+$tip_inf_valor = $form->get ( 'tip_inf_valor' );
 
 //EMPIEZA A ESCRIBIRSE EL FORMULARIO
 echo $this->form ()->openTag ( $form );
@@ -58,6 +60,35 @@ echo $this->formelementerrors ( $tip_inf_id );
             			?>
             		</div>
                 </div>
+
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+                        <?php  
+                        echo $formLabel->openTag() . $tip_inf_legal->getLabel() . $formLabel->closeTag();
+                       ?>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <?php 
+                        echo html_entity_decode( $this->formtextarea( $tip_inf_legal ) );
+                        echo html_entity_decode( $this->formelementerrors ( $tip_inf_legal ) );
+                        ?>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+                        <?php  
+                        echo $formLabel->openTag() . $tip_inf_valor->getLabel() . $formLabel->closeTag();
+                       ?>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <?php 
+                        echo html_entity_decode( $this->formtext( $tip_inf_valor ) );
+                        echo html_entity_decode( $this->formelementerrors ( $tip_inf_valor ) );
+                        ?>
+                    </div>
+                </div>                
+
                 <div class="row">
     				<div class="form-group col-md-12">
             		     <div align="center">
