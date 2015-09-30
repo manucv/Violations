@@ -36,7 +36,7 @@ class TipoInfraccionDao implements InterfaceCrud {
         
         $select = $this->tableGateway->getSql()->select();
         $condiciones = array('cat_inf_id'=>$cat_inf_id);
-        $select-> where ( $condiciones );
+        $select-> where ( $condiciones )-> order('tip_inf_descripcion ASC');
         $resultSet = $this->tableGateway->selectWith ( $select );
         
         return $resultSet;
