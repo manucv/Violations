@@ -204,6 +204,40 @@
 
 	    }	    
 
+	    public function tipoInfraccionesAction() //tipo_infracciones
+	    {	 	    
+	    	if($this->getRequest()->isGET()){
+	    		if(!is_null($this->params('id'))){
+	    			$tip_inf_id=$this->params('id');
+	    			if(!is_null($this->params('option'))){
+	    				$option=$this->params('option');	
+	    				switch($option){
+	    					default:
+	    						return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	    					break;
+	    				}
+	    			}else{
+	    				//Funcionalidad sí no hay opción, es decir solo el id del vigilante
+	    				$tipoInfraccion=$this->getTipoInfraccionDao()->traer($tip_inf_id);
+	    				$content=json_encode($tipoInfraccion);
+	    			}
+	    		}else{
+	    			//Funcionalidad sí no hay id, es decir retorne todos los vigilantes
+	    			return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	    		}
+	    	}else{
+	    		//Funcionalidad sí es q es post, es decir guarde un vigilante
+	            return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	    	}
+
+            $response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+            return $response;
+
+	    }	
+
+
 	    public function infraccionesAction()
 	    {
 
