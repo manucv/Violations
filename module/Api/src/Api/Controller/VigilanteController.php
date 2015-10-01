@@ -267,7 +267,7 @@
 					$tip_inf_id 	= $data['tip_inf_id'];
 
 			    	$target_dir = "/var/www/html/violations/files/";
-					$target_file = $target_dir . basename($_FILES["image"]["name"]);
+					$target_file = $target_dir .time().'_'. basename($_FILES["image"]["name"]);
 					move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 
 					$infraccion = new InfraccionEntity();
