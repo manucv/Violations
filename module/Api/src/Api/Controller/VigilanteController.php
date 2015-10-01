@@ -258,6 +258,7 @@
 	    					break;
 	    				}
 	    			}
+
 	        	}else{
 					$par_id 		= $data['par_id'];
 					$aut_placa 		= $data['aut_placa'];
@@ -267,8 +268,19 @@
 					$tip_inf_id 	= $data['tip_inf_id'];
 
 			    	$target_dir = "/var/www/html/violations/files/";
-					$target_file = $target_dir .time().'_'. basename($_FILES["image"]["name"]);
-					move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+					
+					if(isset($_FILES["image"])){
+						$target_file = $target_dir .time().'_'. basename($_FILES["image"]["name"]);
+						move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+					}
+					if(isset($_FILES["image2"])){
+						$target_file2 = $target_dir .time().'_'. basename($_FILES["image2"]["name"]);
+						move_uploaded_file($_FILES["image2"]["tmp_name"], $target_file);
+					}
+					if(isset($_FILES["image3"])){
+						$target_file3 = $target_dir .time().'_'. basename($_FILES["image3"]["name"]);
+						move_uploaded_file($_FILES["image3"]["tmp_name"], $target_file);
+					}	
 
 					$infraccion = new InfraccionEntity();
 
@@ -291,7 +303,10 @@
 					$multaParqueaderoData['inf_id']			= $inf_id;
 					$multaParqueaderoData['mul_par_estado']	= 'R'; //Reemplazar
 					$multaParqueaderoData['mul_par_valor']	= 0; //Reemplazar
-					$multaParqueaderoData['mul_par_imagen']	= $target_file;
+
+					$multaParqueaderoData['mul_par_prueba_1']	= $target_file;
+					$multaParqueaderoData['mul_par_prueba_2']	= $target_file2;
+					$multaParqueaderoData['mul_par_prueba_3']	= $target_file3;
 
 					$multaParqueadero->exchangeArray ( $multaParqueaderoData );
 					$mul_par_id=$this->getMultaParqueaderoDao()->guardar($multaParqueadero);
