@@ -10,6 +10,9 @@ class MultaParqueadero {
 	private $mul_par_estado;
 	private $mul_par_valor;
 	private $mul_par_imagen;
+	private $mul_par_prueba_1;
+	private $mul_par_prueba_2;
+	private $mul_par_prueba_3;
 	
 	function __construct() {}
 
@@ -63,6 +66,29 @@ class MultaParqueadero {
 	}
 
 	/**
+	 * @return the $mul_par_prueba_1
+	 */
+	public function getMul_par_prueba_1() {
+		return $this->mul_par_prueba_1;
+	}
+
+	/**
+	 * @return the $mul_par_prueba_2
+	 */
+	public function getMul_par_prueba_2() {
+		return $this->mul_par_prueba_2;
+	}
+
+	/**
+	 * @return the $mul_par_prueba_3
+	 */
+	public function getMul_par_prueba_3() {
+		return $this->mul_par_prueba_3;
+	}
+
+
+
+	/**
 	 * @param Ambigous <NULL, unknown> $mul_par_id
 	 */
 	public function setMul_par_id($mul_par_id) {
@@ -111,6 +137,27 @@ class MultaParqueadero {
 		$this->mul_par_imagen = $mul_par_imagen;
 	}
 
+	/**
+	 * @param Ambigous <NULL, unknown> $mul_par_prueba_1
+	 */
+	public function setMul_par_prueba_1($mul_par_prueba_1) {
+		$this->mul_par_prueba_1 = $mul_par_prueba_1;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $mul_par_prueba_2
+	 */
+	public function setMul_par_prueba_2($mul_par_prueba_2) {
+		$this->mul_par_prueba_2 = $mul_par_prueba_2;
+	}
+
+	/**
+	 * @param Ambigous <NULL, unknown> $mul_par_prueba_3
+	 */
+	public function setMul_par_prueba_3($mul_par_prueba_3) {
+		$this->mul_par_prueba_3 = $mul_par_prueba_3;
+	}		
+
 	public function exchangeArray($data)
 	{
 		$this->mul_par_id = (isset($data['mul_par_id'])) ? $data['mul_par_id'] : null;
@@ -120,6 +167,9 @@ class MultaParqueadero {
 		$this->mul_par_estado = (isset($data['mul_par_estado'])) ? $data['mul_par_estado'] : null;
 		$this->mul_par_valor = (isset($data['mul_par_valor'])) ? $data['mul_par_valor'] : null;
 		$this->mul_par_imagen = (isset($data['mul_par_imagen'])) ? $data['mul_par_imagen'] : null;
+		$this->mul_par_prueba_1 = (isset($data['mul_par_prueba_1'])) ? $data['mul_par_prueba_1'] : null;
+		$this->mul_par_prueba_2 = (isset($data['mul_par_prueba_2'])) ? $data['mul_par_prueba_2'] : null;
+		$this->mul_par_prueba_3 = (isset($data['mul_par_prueba_3'])) ? $data['mul_par_prueba_3'] : null;
 	}
 	
 	public function getArrayCopy(){

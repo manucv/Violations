@@ -275,11 +275,11 @@
 					}
 					if(isset($_FILES["image2"])){
 						$target_file2 = $target_dir .time().'_'. basename($_FILES["image2"]["name"]);
-						move_uploaded_file($_FILES["image2"]["tmp_name"], $target_file);
+						move_uploaded_file($_FILES["image2"]["tmp_name"], $target_file2);
 					}
 					if(isset($_FILES["image3"])){
 						$target_file3 = $target_dir .time().'_'. basename($_FILES["image3"]["name"]);
-						move_uploaded_file($_FILES["image3"]["tmp_name"], $target_file);
+						move_uploaded_file($_FILES["image3"]["tmp_name"], $target_file3);
 					}	
 
 					$infraccion = new InfraccionEntity();
