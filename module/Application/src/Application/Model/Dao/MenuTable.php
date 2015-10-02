@@ -20,10 +20,9 @@ class MenuTable extends AbstractTableGateway implements AdapterAwareInterface {
 	}
 	
 	public function fetchAllPadres() {
+			$rol_id = 6; 
 			if(isset($_SESSION['Zend_Auth'])){
 				$rol_id = $_SESSION['Zend_Auth']['storage']->rol_id; 
-			}else{
-				$rol_id = 6;
 			}
 
 			$resultSet = $this->select ( function (Select $select) {
