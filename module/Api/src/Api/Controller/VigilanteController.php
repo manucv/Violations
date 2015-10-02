@@ -289,13 +289,6 @@
 					$data['log_par_horas_parqueo'] = $log_par_horas_parqueo;
 					$data['par_id'] = strtoupper($par_id);
 					$data['tra_id'] = 0;
-					$myfile = fopen("/home/ec2-user/testfile.txt", "w");
-					foreach($data as $key => $value){
-						fwrite($myfile, "$key => $value \n");	
-					}
-					
-					fclose($myfile);
-					
 
 					$log_parqueadero = new LogParqueaderoEntity();
 					$log_parqueadero->exchangeArray ( $data );
