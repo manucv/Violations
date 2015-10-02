@@ -278,7 +278,7 @@
 						$automovil->exchangeArray ( $data );
 					  	$aut_placa = $this->getAutomovilDao()->guardar ( $automovil );
 					}
-					
+
 					$fecha_ingreso = date('Y-m-d');
 					$fecha_ingreso .= ' '. $hora_ini.':'.$minutos_ini.':00';
 
@@ -292,8 +292,8 @@
 					$log_parqueadero->exchangeArray ( $data );
 					$log_par_id = $this->getLogParqueaderoDao()->guardar ( $log_parqueadero );
 
-					//$responseArray=$cliente->getArrayCopy();
-					// $responseArray['tra_id'] = $tra_id;
+					//	$responseArray=$cliente->getArrayCopy();
+					//	$responseArray['tra_id'] = $tra_id;
 
 					// $content=json_encode($responseArray);
 	        	}
