@@ -156,7 +156,7 @@ class MultaParqueadero {
 	 */
 	public function setMul_par_prueba_3($mul_par_prueba_3) {
 		$this->mul_par_prueba_3 = $mul_par_prueba_3;
-	}		
+	}
 
 	public function exchangeArray($data)
 	{

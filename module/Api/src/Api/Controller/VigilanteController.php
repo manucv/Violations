@@ -18,6 +18,8 @@
 	use Application\Model\Entity\RolUsuario as RolUsuarioEntity;
 	use Application\Model\Entity\Infraccion as InfraccionEntity;
 	use Application\Model\Entity\MultaParqueadero as MultaParqueaderoEntity;
+	use Application\Model\Entity\Automovil as AutomovilEntity;
+	use Application\Model\Entity\LogParqueadero as LogParqueaderoEntity;
 
 	use Zend\Http\PhpEnvironment\Request;
 	use Zend\Filter\File;
@@ -33,6 +35,9 @@
 	    protected $tipoInfraccionDao;
 		protected $infraccionDao;
 		protected $multaParqueaderoDao;
+		protected $automovilDao;
+		protected $logParqueaderoDao;
+
 
 	    public function indexAction()
 	    {
@@ -60,7 +65,7 @@
 								$content=json_encode($usuario->getArrayCopy());		
 							}
 						}
-					}	
+					}
 	            }
 
 	            $response=$this->getResponse();
@@ -237,6 +242,71 @@
 
 	    }	
 
+		public function ticketsAction(){
+
+			$content="";
+	        if($this->getRequest()->isPOST()){
+
+	        	$data = $this->request->getPost();
+
+	        	if(!is_null($this->params('id'))){
+	        		
+	        		return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	        	}else{
+	        		
+	        		//curl -X POST --data "par_id=Q004&aut_placa=PO0110&nro_ticket=2345656&hora_ini=07&minutos_ini=15&log_par_horas_parqueo=1" https://localhost/hawa/violations/public/api/vigilante/tickets
+	        		if(isset($data['par_id']))
+	        			$par_id= $data['par_id'];
+
+	        		if(isset($data['aut_placa']))
+	        			$aut_placa= $data['aut_placa'];
+
+	        		if(isset($data['nro_ticket']))
+	        			$nro_ticket= $data['nro_ticket'];
+
+	        		if(isset($data['hora_ini']))
+	        			$hora_ini= $data['hora_ini'];
+
+	        		if(isset($data['minutos_ini']))
+	        			$minutos_ini= $data['minutos_ini'];
+
+	        		if(isset($data['log_par_horas_parqueo']))
+	        			$log_par_horas_parqueo= $data['log_par_horas_parqueo'];	        				        				        				        		
+
+					if(!$this->getAutomovilDao()->traer($aut_placa)){
+						$automovil = new AutomovilEntity();
+						$automovil->exchangeArray ( $data );
+					  	$aut_placa = $this->getAutomovilDao()->guardar ( $automovil );
+					}
+
+					$fecha_ingreso = date('Y-m-d');
+					$fecha_ingreso .= ' '. $hora_ini.':'.$minutos_ini.':00';
+
+					$data['log_par_fecha_ingreso'] = $fecha_ingreso;
+					$data['log_par_estado'] = 'O';
+					$data['log_par_horas_parqueo'] = $log_par_horas_parqueo;
+					$data['par_id'] = strtoupper($par_id);
+					$data['tra_id'] = 0;
+
+					$log_parqueadero = new LogParqueaderoEntity();
+					$log_parqueadero->exchangeArray ( $data );
+					$log_par_id = $this->getLogParqueaderoDao()->guardar ( $log_parqueadero );
+
+					//$responseArray=$cliente->getArrayCopy();
+					// $responseArray['tra_id'] = $tra_id;
+
+					// $content=json_encode($responseArray);
+	        	}
+	        }else{
+	        	die("uhu");
+	        	return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	        }
+
+            $response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+            return $response;
+		}
 
 	    public function infraccionesAction()
 	    {
@@ -374,6 +444,20 @@
 	            $this->multaParqueaderoDao = $sm->get ( 'Application\Model\Dao\MultaParqueaderoDao' );
 	        }
 	        return $this->multaParqueaderoDao;
+	    }
+	    public function getAutomovilDao(){
+	    	if (! $this->automovilDao) {
+	            $sm = $this->getServiceLocator ();
+	            $this->automovilDao = $sm->get ( 'Application\Model\Dao\AutomovilDao' );
+	        }
+	        return $this->automovilDao;
+	    }
+	    public function getLogParqueaderoDao() {
+	        if (! $this->logParqueaderoDao) {
+	            $sm = $this->getServiceLocator ();
+	            $this->logParqueaderoDao = $sm->get ( 'Application\Model\Dao\LogParqueaderoDao' );
+	        }
+	        return $this->logParqueaderoDao;
 	    }
 
 	}

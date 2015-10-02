@@ -41,7 +41,6 @@ class AutomovilDao implements InterfaceCrud {
     
     	$id =  $automovil->getAut_placa();
 
-    	
     	$data ['aut_placa'] = $id;
     	
     	/*if (!empty ( $id ) && !is_null ( $id )) {
