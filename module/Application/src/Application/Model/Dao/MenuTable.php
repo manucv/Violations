@@ -20,7 +20,6 @@ class MenuTable extends AbstractTableGateway implements AdapterAwareInterface {
 	}
 	
 	public function fetchAllPadres() {
-      	if(isset($_SESSION['Zend_Auth'])){
 			$resultSet = $this->select ( function (Select $select) {
 				$select->join('rol_aplicacion', 'rol_aplicacion.apl_id = menu.apl_id');
 				$select->join('aplicacion', 'aplicacion.apl_id = menu.apl_id');
@@ -33,8 +32,6 @@ class MenuTable extends AbstractTableGateway implements AdapterAwareInterface {
 			$resultSet = $resultSet->toArray ();
 			
 			return $resultSet;
-		}else{
-			return array();
-		}
+
 	}
 }
