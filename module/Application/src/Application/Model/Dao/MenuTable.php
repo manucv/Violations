@@ -25,7 +25,7 @@ class MenuTable extends AbstractTableGateway implements AdapterAwareInterface {
 				$rol_id = $_SESSION['Zend_Auth']['storage']->rol_id; 
 			}
 
-			$resultSet = $this->select ( function (Select $select) with ($rol_id) {
+			$resultSet = $this->select ( function (Select $select) use ($rol_id) {
 				$select->join('rol_aplicacion', 'rol_aplicacion.apl_id = menu.apl_id');
 				$select->join('aplicacion', 'aplicacion.apl_id = menu.apl_id');
 				$select->where(array('rol_aplicacion.rol_id' => $rol_id));
