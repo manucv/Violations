@@ -278,7 +278,7 @@
 						$automovil->exchangeArray ( $data );
 					  	$aut_placa = $this->getAutomovilDao()->guardar ( $automovil );
 					}
-					die("llego acá");
+					
 					$fecha_ingreso = date('Y-m-d');
 					$fecha_ingreso .= ' '. $hora_ini.':'.$minutos_ini.':00';
 
