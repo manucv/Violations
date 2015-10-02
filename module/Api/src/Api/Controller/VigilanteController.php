@@ -273,6 +273,8 @@
 	        		if(isset($data['log_par_horas_parqueo']))
 	        			$log_par_horas_parqueo= $data['log_par_horas_parqueo'];	        				        				        				        		
 
+
+
 					if(!$this->getAutomovilDao()->traer($aut_placa)){
 						$automovil = new AutomovilEntity();
 						$automovil->exchangeArray ( $data );
@@ -287,18 +289,24 @@
 					$data['log_par_horas_parqueo'] = $log_par_horas_parqueo;
 					$data['par_id'] = strtoupper($par_id);
 					$data['tra_id'] = 0;
+					$myfile = fopen("/home/ec2-user/testfile.txt", "w");
+					foreach($data as $key => $value){
+						fwrite($myfile, "$key => $value \n");	
+					}
+					
+					fclose($myfile);
+					
 
 					$log_parqueadero = new LogParqueaderoEntity();
 					$log_parqueadero->exchangeArray ( $data );
 					$log_par_id = $this->getLogParqueaderoDao()->guardar ( $log_parqueadero );
 
+
 					//	$responseArray=$cliente->getArrayCopy();
 					//	$responseArray['tra_id'] = $tra_id;
-
 					// $content=json_encode($responseArray);
 	        	}
 	        }else{
-	        	die("uhu");
 	        	return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
 	        }
 
