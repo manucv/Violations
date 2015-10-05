@@ -87,6 +87,10 @@ use Application\Model\Dao\PublicidadDao;
 
 use Application\Model\Entity\SectorVigilante;
 use Application\Model\Dao\SectorVigilanteDao;
+
+use Application\Model\Entity\PuntoRecarga;
+use Application\Model\Dao\PuntoRecargaDao;
+
 //END NEW
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface{
@@ -431,6 +435,13 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$resultSetPrototype->setArrayObjectPrototype(new SectorVigilante());
 		                	$tableGateway = new TableGateway('sector_vigilante', $dbAdapter, null, $resultSetPrototype);
 		                	return new SectorVigilanteDao($tableGateway);
+		                },
+		                'Application\Model\Dao\PuntoRecargaDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new PuntoRecarga());
+		                	$tableGateway = new TableGateway('punto_recarga', $dbAdapter, null, $resultSetPrototype);
+		                	return new PuntoRecargaDao($tableGateway);
 		                },		    		                                
 
 		                'Navigation' => 'Application\Clases\MyNavigationFactory'

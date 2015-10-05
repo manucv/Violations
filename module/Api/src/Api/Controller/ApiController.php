@@ -21,6 +21,7 @@ use Application\Model\Entity\TransferenciaSaldo as TransferenciaSaldoEntity;
 use Application\Model\Entity\Cliente as ClienteEntity;
 use Application\Model\Entity\Usuario as UsuarioEntity;
 use Application\Model\Entity\Publicidad as PublicidadEntity;
+use Application\Model\Entity\PuntoRecarga as PuntoRecargaEntity;
 
 class ApiController extends AbstractActionController
 {
@@ -43,6 +44,8 @@ class ApiController extends AbstractActionController
     protected $relacionClienteDao;
     protected $transferenciaSaldoDao;
     protected $publicidadDao;
+
+    protected $puntoRecargaDao;
 
     public function indexAction()
     {
@@ -817,9 +820,41 @@ class ApiController extends AbstractActionController
                     'action' => 'index'
             ) );    
         }
-
-
     }
+
+
+    public function recargasAction(){
+        if($this->getRequest()->isGET()){        
+            // $ciu_id = $this->request->getQuery('ciu_id');
+            // if($ciu_id){
+                $puntos_recarga = $this->getPuntoRecargaDao()->traerTodos();
+                
+                $content='';
+                $puntosArray=array();
+                foreach($puntos_recarga as $punto_recarga){
+                    $puntosArray[]=$punto_recarga->getArrayCopy();
+                }
+                
+                $content=json_encode($puntosArray);
+
+                $response = $this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                    
+                return $response;    
+            // }else{
+            //     $content = $this->getSectorDao()->traerTodosJSON();
+
+            //     $response = $this->getResponse();
+            //     $response->setStatusCode(200);
+            //     $response->setContent($content);
+                    
+            //     return $response;  
+            // }
+        }else{
+            return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+        }    
+    }    
 
     public function getUsuarioDao() {
         if (! $this->usuarioDao) {
@@ -940,5 +975,14 @@ class ApiController extends AbstractActionController
         }
         return $this->publicidadDao;
     }        
+
+    public function getPuntoRecargaDao() {
+        if (! $this->puntoRecargaDao) {
+            $sm = $this->getServiceLocator ();
+            $this->puntoRecargaDao = $sm->get ( 'Application\Model\Dao\PuntoRecargaDao' );
+        }
+        return $this->puntoRecargaDao;
+    }
+    
 }
 
