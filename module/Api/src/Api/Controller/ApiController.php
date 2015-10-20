@@ -783,6 +783,7 @@ class ApiController extends AbstractActionController
             ) );
         }
     }        
+    
     //Verificación de contraseña
     public function verificarAction(){
 

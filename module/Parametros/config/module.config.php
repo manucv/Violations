@@ -12,6 +12,7 @@ return array(
         	'Parametros\Controller\TipoVehiculo' => 'Parametros\Controller\TipoVehiculoController',
         	'Parametros\Controller\Parqueadero' => 'Parametros\Controller\ParqueaderoController',
         	'Parametros\Controller\Sector' => 'Parametros\Controller\SectorController',
+            'Parametros\Controller\PuntoRecarga' => 'Parametros\Controller\PuntoRecargaController',
         ),
     ),
     'router' => array(

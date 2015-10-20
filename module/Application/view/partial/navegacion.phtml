@@ -4,7 +4,13 @@
 	<div id="breadcrumb">
 		<ol class="breadcrumb">
 		    <?php foreach ($this->datos as $opcion => $valores ): ?>
-			<li><a href="<?php echo $this->url($valores[0], array('controller' => $valores[1], 'action' => $valores[2], 'id' => $valores[3]))?>"><?php echo $opcion ?></a></li>
+		    <li>
+		    	<?php if (isset($valores[3])): ?>
+		    		<a href="<?php echo $this->url($valores[0], array('controller' => $valores[1], 'action' => $valores[2], 'id' => $valores[3]))?>"><?php echo $opcion ?></a>
+			    <?php else: ?>
+			    	<a href="<?php echo $this->url($valores[0], array('controller' => $valores[1], 'action' => $valores[2]))?>"><?php echo $opcion ?></a>
+				<?php endif; ?>
+			</li>
 			<?php endforeach; ?>
 		</ol>
 	</div>

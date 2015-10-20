@@ -44,7 +44,6 @@ class PuntoRecargaDao implements InterfaceCrud {
 			'pun_rec_id' => $punto_recarga->getPun_rec_id(),
 			'pun_rec_nombre' => $punto_recarga->getPun_rec_nombre(),
 			'pun_rec_ruc' => $punto_recarga->getPun_rec_ruc(),
-			'pun_rec_codigo' => $punto_recarga->getPun_rec_codigo(),
 			'pun_rec_lat' => $punto_recarga->getPun_rec_lat(),
 			'pun_rec_lng' => $punto_recarga->getPun_rec_lng(),
 			'pun_rec_direccion' => $punto_recarga->getPun_rec_direccion(),
@@ -64,6 +63,31 @@ class PuntoRecargaDao implements InterfaceCrud {
     	}
     }
     
+    public function actualizar(PuntoRecarga $punto_recarga, $pun_rec_id) {
+    
+        $id = $punto_recarga->getPun_rec_id();
+    
+        $data = array (
+            'pun_rec_id' => $punto_recarga->getPun_rec_id(),
+            'pun_rec_nombre' => $punto_recarga->getPun_rec_nombre(),
+            'pun_rec_ruc' => $punto_recarga->getPun_rec_ruc(),
+            'pun_rec_lat' => $punto_recarga->getPun_rec_lat(),
+            'pun_rec_lng' => $punto_recarga->getPun_rec_lng(),
+            'pun_rec_direccion' => $punto_recarga->getPun_rec_direccion(),
+            'pun_rec_observaciones' => $punto_recarga->getPun_rec_observaciones()
+        );
+    
+        if (!empty ( $pun_rec_id ) && !is_null ( $pun_rec_id )) {
+            if ($this->traer ( $pun_rec_id )) {
+    
+                $this->tableGateway->update ( $data, array ( 'pun_rec_id' => $pun_rec_id ) );
+    
+            } else {
+                throw new \Exception ( 'No se encontro el id para actualizar' );
+            }
+        }
+    }
+
 	public function eliminar($id) {
 		if ($this->traer ( $id )) {
 			return $this->tableGateway->delete ( array (
