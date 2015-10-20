@@ -47,7 +47,7 @@ class PuntoRecarga extends Form {
 				),
 				'attributes' => array (
 						'type' => 'text',
-						'maxlength' => '10',
+						'maxlength' => '45',
 						'id' => 'pun_rec_nombre',
 						'class' => 'form-control'
 				)
