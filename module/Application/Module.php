@@ -91,6 +91,12 @@ use Application\Model\Dao\SectorVigilanteDao;
 use Application\Model\Entity\PuntoRecarga;
 use Application\Model\Dao\PuntoRecargaDao;
 
+use Application\Model\Entity\ListaBlanca;
+use Application\Model\Dao\ListaBlancaDao;
+
+use Application\Model\Entity\Calle;
+use Application\Model\Dao\CalleDao;
+
 //END NEW
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface{
@@ -442,7 +448,21 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$resultSetPrototype->setArrayObjectPrototype(new PuntoRecarga());
 		                	$tableGateway = new TableGateway('punto_recarga', $dbAdapter, null, $resultSetPrototype);
 		                	return new PuntoRecargaDao($tableGateway);
-		                },		    		                                
+		                },		
+		                'Application\Model\Dao\ListaBlancaDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new ListaBlanca());
+		                	$tableGateway = new TableGateway('lista_blanca', $dbAdapter, null, $resultSetPrototype);
+		                	return new ListaBlancaDao($tableGateway);
+		                },	    
+		                'Application\Model\Dao\CalleDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Calle());
+		                	$tableGateway = new TableGateway('calle', $dbAdapter, null, $resultSetPrototype);
+		                	return new CalleDao($tableGateway);
+		                },	  
 
 		                'Navigation' => 'Application\Clases\MyNavigationFactory'
 				),

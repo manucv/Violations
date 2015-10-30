@@ -13,6 +13,8 @@ return array(
         	'Parametros\Controller\Parqueadero' => 'Parametros\Controller\ParqueaderoController',
         	'Parametros\Controller\Sector' => 'Parametros\Controller\SectorController',
             'Parametros\Controller\PuntoRecarga' => 'Parametros\Controller\PuntoRecargaController',
+            'Parametros\Controller\ListaBlanca' => 'Parametros\Controller\ListaBlancaController',
+            'Parametros\Controller\Calle' => 'Parametros\Controller\CalleController',
         ),
     ),
     'router' => array(
