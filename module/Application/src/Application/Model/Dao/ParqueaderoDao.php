@@ -198,7 +198,7 @@ class ParqueaderoDao implements InterfaceCrud {
 
 		$adapter = $this->tableGateway->getAdapter();
 		$query = "
-		SELECT p.par_id 
+		SELECT p.par_id, p.par_latitud, p.par_longitud 
 			FROM parqueadero as p
 			WHERE par_estado='D';
 		";
@@ -213,6 +213,8 @@ class ParqueaderoDao implements InterfaceCrud {
 		foreach ($results as $row){
 
 			$jsonArray[$count]['par_id']=$row['par_id'];
+			$jsonArray[$count]['par_latitud']=$row['par_latitud'];
+			$jsonArray[$count]['par_longitud']=$row['par_longitud'];
 
 			$count++;
 		}
