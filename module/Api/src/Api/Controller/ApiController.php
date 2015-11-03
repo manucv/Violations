@@ -377,20 +377,17 @@ class ApiController extends AbstractActionController
     public function parqueaderosAction(){
 
         if(is_null($this->params('id'))){
-            if($this->getRequest()->isGET()){        
-                $sec_id = $this->request->getQuery('sec_id');
-                if($sec_id){
-                    $content='';
-                    $content = $this->getParqueaderoDao()->traerVaciosPorSectorJSON($sec_id);
+            if($this->getRequest()->isGET()){
 
-                    $response = $this->getResponse();
-                    $response->setStatusCode(200);
-                    $response->setContent($content);
-                        
-                    return $response;    
-                }else{
-                    return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
-                }
+                $content='';
+                $content = $this->getParqueaderoDao()->traerVaciosJSON();
+
+                $response = $this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                    
+                return $response;
+
             }else{
                 return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
             }

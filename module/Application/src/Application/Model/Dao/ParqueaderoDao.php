@@ -146,31 +146,6 @@ class ParqueaderoDao implements InterfaceCrud {
 	public function traerVaciosPorSectorJSON($sec_id) {
 
 		$adapter = $this->tableGateway->getAdapter();
-		/*$query = "
-			SELECT * 
-			FROM parqueadero
-			WHERE par_id NOT 
-			IN (
-
-				SELECT up.par_id
-				FROM (
-
-					SELECT lp.par_id, aut_placa, (
-					log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR
-					) AS hora_salida, p.par_estado, lp.log_par_horas_parqueo
-					FROM log_parqueadero AS lp
-					JOIN parqueadero AS p ON lp.par_id = p.par_id
-						AND p.par_estado =  'O'
-					WHERE log_par_fecha_ingreso > NOW( ) - INTERVAL 2 DAY 
-					AND (
-						log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR
-					) > NOW( ) 
-					ORDER BY 3 DESC
-				) AS up
-				GROUP BY up.par_id
-			)
-			AND sec_id=$sec_id
-		";*/
 
 		$query = "
 		SELECT p.par_id , if(o.par_id is not null, 'O', 'D') as par_estado, sec_id
@@ -218,6 +193,33 @@ class ParqueaderoDao implements InterfaceCrud {
 
 	}
 
+
+	public function traerVaciosJSON() {
+
+		$adapter = $this->tableGateway->getAdapter();
+		$query = "
+		SELECT p.par_id 
+			FROM parqueadero as p
+			WHERE par_estado='D';
+		";
+    	$statement = $adapter->query($query);
+    	$results = $statement->execute();
+
+		$sectores = new \ArrayObject();
+	
+		$count=0;
+		$jsonArray=array();
+
+		foreach ($results as $row){
+
+			$jsonArray[$count]['par_id']=$row['par_id'];
+
+			$count++;
+		}
+
+		return json_encode($jsonArray);
+
+	}
 	
 	public function traerMultadosPorSectorJSON($sec_id) {
 
