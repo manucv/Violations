@@ -52,7 +52,9 @@ class CompraSaldoDao implements InterfaceCrud {
         $select-> where ( array('compra_saldo.cli_id'=>$cli_id) );
         $resultSet = $this->tableGateway->selectWith ( $select );
 
-        print_r($resultSet);
+        foreach($resultSet as $row){
+            print_r($row);
+        }
 
         // $sectores = new \ArrayObject();
     
