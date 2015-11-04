@@ -66,11 +66,10 @@ class CompraSaldoDao implements InterfaceCrud {
 
         foreach ($results as $row){
             $jsonArray[$count]['pun_rec_id']=$row['pun_rec_id'];
-            $jsonArray[$count]['par_id']=$row['par_id'];
-            $jsonArray[$count]['aut_placa']=$row['aut_placa'];
-            $jsonArray[$count]['hora_salida']=$row['hora_salida'];
-            $jsonArray[$count]['log_par_horas_parqueo']=$row['log_par_horas_parqueo'];
-            $jsonArray[$count]['falta']=$row['falta'];
+            $jsonArray[$count]['pun_rec_nombre']=$row['pun_rec_nombre'];
+            $jsonArray[$count]['com_sal_valor']=$row['com_sal_valor'];
+            $jsonArray[$count]['com_sal_hora']=$row['com_sal_hora'];
+
 
             $count++;
         }
