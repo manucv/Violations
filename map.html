@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #map {
+        width: 900px;
+        height: 700px;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+      function initialize() {
+        var mapCanvas = document.getElementById('map');
+        var mapOptions = {
+          center: new google.maps.LatLng(0.345660, -78.122375),
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(mapCanvas, mapOptions)
+        map.addListener('click', function(event) {
+          //alert('hizo click'+event.latLng);
+          var text = document.getElementById('listado');
+          text.value = text.value+event.latLng+"\n";
+          marker = new google.maps.Marker({position: event.latLng, map: map});
+        });
+
+
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td><div id="map"></div></td>
+        <td><textarea name="" id="listado" cols="45" rows="50"></textarea>
+        </td>
+      </tr>
+    </table>
+    
+    
+  </body>
+</html>

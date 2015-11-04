@@ -676,14 +676,7 @@ class ApiController extends AbstractActionController
 
             $usuario->setUsu_codigo_recuperacion($codigo_generado);
             
-            /*echo '<pre>';
-            print_r($usuario);
-            echo '</pre>';*/
-            
             $usu_id=$this->getUsuarioDao()->guardar ( $usuario );
-
-            //die();
-            //$usuario = Usuario::find();
 
             $uri = $this->getRequest()->getUri();
             $scheme = $uri->getScheme();
@@ -822,9 +815,18 @@ class ApiController extends AbstractActionController
 
 
     public function recargasAction(){
-        if($this->getRequest()->isGET()){        
-            // $ciu_id = $this->request->getQuery('ciu_id');
-            // if($ciu_id){
+        if($this->getRequest()->isGET()){  
+            if(!is_null($this->params('id'))){
+                $cli_id=$this->params('id');
+
+                $transacciones = $this->getCompraSaldoDao()->traerRecargasPorUsuarioJSON($cli_id);
+                
+                $response=$this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($transacciones);
+                return $response;
+            } else {
+
                 $puntos_recarga = $this->getPuntoRecargaDao()->traerTodos();
                 
                 $content='';
@@ -839,16 +841,8 @@ class ApiController extends AbstractActionController
                 $response->setStatusCode(200);
                 $response->setContent($content);
                     
-                return $response;    
-            // }else{
-            //     $content = $this->getSectorDao()->traerTodosJSON();
-
-            //     $response = $this->getResponse();
-            //     $response->setStatusCode(200);
-            //     $response->setContent($content);
-                    
-            //     return $response;  
-            // }
+                return $response; 
+            }
         }else{
             return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
         }    
