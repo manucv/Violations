@@ -22,6 +22,7 @@ use Application\Model\Entity\Cliente as ClienteEntity;
 use Application\Model\Entity\Usuario as UsuarioEntity;
 use Application\Model\Entity\Publicidad as PublicidadEntity;
 use Application\Model\Entity\PuntoRecarga as PuntoRecargaEntity;
+use Application\Model\Entity\CompraSaldo as CompraSaldoEntity;
 
 class ApiController extends AbstractActionController
 {
@@ -32,18 +33,16 @@ class ApiController extends AbstractActionController
     protected $establecimientoDao;
     protected $logParqueaderoDao;
     protected $automovilDao;
-
     protected $paisDao;
     protected $estadoDao;
     protected $ciudadDao;
     protected $sectorDao;
-
     protected $parqueaderoDao;
-
     protected $transaccionDao;
     protected $relacionClienteDao;
     protected $transferenciaSaldoDao;
     protected $publicidadDao;
+    protected $compraSaldoDao;
 
     protected $puntoRecargaDao;
 
@@ -976,5 +975,13 @@ class ApiController extends AbstractActionController
         return $this->puntoRecargaDao;
     }
     
+    public function getCompraSaldoDao() {
+        if (! $this->compraSaldoDao) {
+            $sm = $this->getServiceLocator ();
+            $this->compraSaldoDao = $sm->get ( 'Application\Model\Dao\CompraSaldoDao' );
+        }
+        return $this->compraSaldoDao;
+    }
+
 }
 
