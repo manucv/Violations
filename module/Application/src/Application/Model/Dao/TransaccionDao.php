@@ -90,13 +90,7 @@ class TransaccionDao implements InterfaceCrud {
 
         return json_encode($jsonArray);        
     }    
-    /*public function traerPorCliente($cli_id){
-        $select = $this->tableGateway->getSql()->select ();
 
-        $select-> where ( array('cli_id'=>$cli_id) );
-        $resultSet = $this->tableGateway->selectWith ( $select );
-        return $resultSet;
-    }*/
 
     public function traerPorClienteJSON($cli_id){
         $adapter = $this->tableGateway->getAdapter();

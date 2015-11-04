@@ -816,10 +816,10 @@ class ApiController extends AbstractActionController
     public function recargasAction(){
         if($this->getRequest()->isGET()){  
             if(!is_null($this->params('id'))){
+
                 $cli_id=$this->params('id');
 
                 $transacciones = $this->getCompraSaldoDao()->traerRecargasPorUsuarioJSON($cli_id);
-                
                 $response=$this->getResponse();
                 $response->setStatusCode(200);
                 $response->setContent($transacciones);

@@ -47,35 +47,36 @@ class CompraSaldoDao implements InterfaceCrud {
 
     public function traerRecargasPorUsuarioJSON($cli_id){
         
-        $select = $this->tableGateway->getSql ()->select ();
-        $select-> join ('punto_recarga','punto_recarga.pun_rec_id = compra_saldo.punto_recarga_pun_rec_id');
-        $select-> where ( array('compra_saldo.cli_id'=>$cli_id) );
-        $resultSet = $this->tableGateway->selectWith ( $select );
+        $adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT *
+            FROM compra_saldo as c join punto_recarga as p
+            ON c.punto_recarga_pun_rec_id = p.pun_rec_id
+            WHERE cli_id = $cli_id
+        ";
+        
+        $statement = $adapter->query($query);
+        $results = $statement->execute();
 
-        foreach($resultSet as $row){
-            print_r($row);
+
+        $sectores = new \ArrayObject();
+    
+        $count=0;
+        $jsonArray=array();
+
+        foreach ($results as $row){
+            $jsonArray[$count]['pun_rec_id']=$row['pun_rec_id'];
+            $jsonArray[$count]['par_id']=$row['par_id'];
+            $jsonArray[$count]['aut_placa']=$row['aut_placa'];
+            $jsonArray[$count]['hora_salida']=$row['hora_salida'];
+            $jsonArray[$count]['log_par_horas_parqueo']=$row['log_par_horas_parqueo'];
+            $jsonArray[$count]['falta']=$row['falta'];
+
+            $count++;
         }
 
-        // $sectores = new \ArrayObject();
-    
-        // $count=0;
-        // $jsonArray=array();
+        return json_encode($jsonArray);    
 
-        // foreach ($results as $row){
-        //     $jsonArray[$count]['tra_id']=$row['tra_id'];
-        //     $jsonArray[$count]['par_id']=$row['par_id'];
-        //     $jsonArray[$count]['aut_placa']=$row['aut_placa'];
-        //     $jsonArray[$count]['hora_salida']=$row['hora_salida'];
-        //     $jsonArray[$count]['log_par_horas_parqueo']=$row['log_par_horas_parqueo'];
-        //     $jsonArray[$count]['falta']=$row['falta'];
-
-        //     $count++;
-        // }
-
-        // return json_encode($jsonArray);      
-
-
-        return $resultSet;
     }    
     
     public function guardar(CompraSaldo $compraSaldo){
