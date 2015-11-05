@@ -181,7 +181,6 @@ class PuntoRecarga extends Form {
 						'data-loading-text' => 'Loading...'
 				)
 		) );
-		
 
 	}
 }

@@ -119,8 +119,6 @@ class ApiController extends AbstractActionController
         }
     }    
 
-
-
     public function establecimientosAction()
     {
         if($this->getRequest()->isGET()){

@@ -30,9 +30,11 @@
                  	 	<a href="<?php echo $this->url('parametros', array('controller' => 'puntorecarga', 'action'=>'ingresar'));?>" class="btn btn-primary">
                      	<i class="fa fa-plus-circle"></i> Nuevo</a>
                  	 </th>
+                     <th>RUC</th>
                      <th>Nombre</th>
-                     <th>Saldo</th>
                      <th>Dirección</th>
+                     <th>Saldo</th>
+                     
                  </tr>
                  </thead>
                  <tbody>
@@ -47,9 +49,11 @@
 
                         <a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'puntorecarga', 'action' => 'cargar', 'id' => $punto->getPun_rec_id()))?>"><i class="fa fa-money"></i></a>
                      </td>
+                     <td><?php echo $this->escapeHtml($punto->getPun_rec_ruc());?></td>
                      <td><?php echo $this->escapeHtml($punto->getPun_rec_nombre());?></td>
-                     <td>$<?php echo $this->escapeHtml($punto->getPun_rec_saldo());?></td>
                      <td><?php echo $this->escapeHtml($punto->getPun_rec_direccion());?></td>
+                     <td>$<?php echo $this->escapeHtml($punto->getPun_rec_saldo());?></td>
+                     
                  </tr>
                  <?php endforeach; ?>
 
