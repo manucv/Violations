@@ -683,7 +683,9 @@ class ApiController extends AbstractActionController
             $base = sprintf('%s://%s', $scheme, $host);
             $basePath = $base .$this->getRequest()->getBasePath();
             
-            
+            require '/Violations/vendor/autoload.php';    
+
+            die();
             
             $body = "<a href='http://ibarra.sip.ec/Violations/public/api/api/recover/$codigo_generado'>Recuperar Contraseña</a>";
          
