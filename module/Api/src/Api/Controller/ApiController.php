@@ -13,6 +13,8 @@ use Zend\Mail\Transport\SmtpOptions;
 
 use Zend\Json\Json;
 
+use Aws\Ses\SesClient;
+
 use Application\Model\Entity\LogParqueadero as LogParqueaderoEntity;
 use Application\Model\Entity\Automovil as AutomovilEntity;
 use Application\Model\Entity\Transaccion as TransaccionEntity;
@@ -683,7 +685,39 @@ class ApiController extends AbstractActionController
             $base = sprintf('%s://%s', $scheme, $host);
             $basePath = $base .$this->getRequest()->getBasePath();
             
-            require '/Violations/vendor/autoload.php';    
+
+            $client = SesClient::factory(array(
+                'profile' => 'default',
+                'region'  => 'US East (N. Virginia)'
+            ));
+
+            $result = $client->sendEmail(array(
+                // Source is required
+                'Source' => 'informacion@sip.ec',
+                // Destination is required
+                'Destination' => array(
+                    'ToAddresses' => array('lmponceb@gmail.com')
+                ),
+                // Message is required
+                'Message' => array(
+                    // Subject is required
+                    'Subject' => array(
+                        // Data is required
+                        'Data' => 'Recupera tu contrasena',
+                    ),
+                    // Body is required
+                    'Body' => array(
+                        'Text' => array(
+                            // Data is required
+                            'Data' => 'Accede alsiguiente link para iniciar el proceso de recuperacion de contrasena',
+                        ),
+                        'Html' => array(
+                            // Data is required
+                            'Data' => '',
+                        ),
+                    ),
+                )
+            ));
 
             die();
             
