@@ -698,7 +698,7 @@ class ApiController extends AbstractActionController
             $message = new Mail\Message();
              
             $message->addTo('lmponceb@gmail.com')
-            ->setFrom('ercarrasco@hawasolutions.com')
+            ->setFrom('informacion@sip.com')
             ->setSubject('Recuperación de Contraseña')
             ->setEncoding("UTF-8")
             ->setBody($body);
@@ -707,13 +707,13 @@ class ApiController extends AbstractActionController
              
             $transport = new SmtpTransport();
             $options = new SmtpOptions(array(
-                    'name' => 'mail.hawasolutions.com',
-                    'host' => 'host114.hostmonster.com',
-                    'port' => 587,
+                    'name' => 'sip.ec',
+                    'host' => 'email-smtp.us-west-2.amazonaws.com',
+                    'port' => 25,
                     'connection_class' => 'login',
                     'connection_config' => array(
-                            'username' => 'prueba@hawasolutions.com',
-                            'password' => 'prueba2013',
+                            'username' => 'AKIAJPAYGXS5YZS6QKTQ',
+                            'password' => 'An8tZM08kwjVtnS3wB0C1A1+Y/f4zIVLkfX6atEiu75V',
                     )
             ));
             $transport->setOptions($options);

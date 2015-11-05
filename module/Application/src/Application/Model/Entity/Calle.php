@@ -50,9 +50,9 @@ class Calle {
 
 	public function exchangeArray($data)
 	{
-		$this->cal_id = (isset($date['cal_id'])) ? $data['cal_id'] : null;
-		$this->cal_codigo = (isset($date['cal_codigo'])) ? $data['cal_codigo'] : null;
-		$this->cal_nombre = (isset($date['cal_nombre'])) ? $data['cal_nombre'] : null;
+		$this->cal_id = (isset($data['cal_id'])) ? $data['cal_id'] : null;
+		$this->cal_codigo = (isset($data['cal_codigo'])) ? $data['cal_codigo'] : null;
+		$this->cal_nombre = (isset($data['cal_nombre'])) ? $data['cal_nombre'] : null;
 	}
 		
 	public function getArrayCopy(){

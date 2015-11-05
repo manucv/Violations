@@ -37,17 +37,16 @@ class CalleDao implements InterfaceCrud {
     }
 
     public function guardar(Calle $calle){
-    
+
     	$id = (int) $calle->getCal_id();
     
     	$data = array(
-			'cal_id' => $calle->getCal_id(),
 			'cal_codigo' => $calle->getCal_codigo(),
 			'cal_nombre' => $calle->getCal_nombre()
     	);
     	
     	$data ['cal_id'] = $id;
-    	
+
     	if (!empty ( $id ) && !is_null ( $id )) {
     		if ($this->traer ( $id )) {
     			$this->tableGateway->update ( $data, array ( 'cal_id' => $id ) );

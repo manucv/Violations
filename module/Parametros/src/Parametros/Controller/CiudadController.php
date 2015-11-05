@@ -103,7 +103,7 @@ class CiudadController extends AbstractActionController
     
     	//CAPTURA LA INFORMACION ENVIADA EN EL POST
     	$data = $this->request->getPost ();
-    
+
     	//VERIFICA EL IDIOMA INGRESADO PARA TRAER EL FORMULARIO SEGUN EL IDIOMA
     	$form = $this->getForm();
     

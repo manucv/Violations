@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
+    <meta charset="utf-8"/>
     <style>
       #map {
         width: 900px;
@@ -25,15 +26,67 @@
         });
 
 
+        var calc = document.getElementById('calcular');
+        calc.addEventListener("click", calcular);
+        function calcular() {
+            //alert ("Hello World!");
+            var ini = parseFloat(document.getElementById('ini').value);
+            var fin = parseFloat(document.getElementById('fin').value);
+            var origen_lat = parseFloat(document.getElementById('origen_lat').value);
+            var origen_lng = parseFloat(document.getElementById('origen_lng').value);
+            var destino_lat = parseFloat(document.getElementById('destino_lat').value);
+            var destino_lng = parseFloat(document.getElementById('destino_lng').value);
+
+            total=fin-ini;
+
+            var diferencia_lat = origen_lat-destino_lat;
+            var diferencia_lng = origen_lng-destino_lng;
+
+            var segmento_lat = diferencia_lat/total;
+            var segmento_lng = diferencia_lng/total;
+
+            var text = document.getElementById('listado');
+            text.value = text.value+"'I"+ini+"','D',7,'N','','000-00-00 00:00:00','000-00-00 00:00:00',0,0,"+origen_lat+","+origen_lng+",NULL,NULL\n";
+
+            for(var i=1;i<total;i++){
+              
+              var punto_lat = origen_lat-(segmento_lat*i);
+              var punto_lng = origen_lng-(segmento_lng*i);
+              //alert(punto_lat+'-'+punto_lng);
+              marker = new google.maps.Marker({ position: {lat: punto_lat, lng: punto_lng}, map: map });
+
+              
+              text.value = text.value+"'I"+(ini+i)+"','D',7,'N','','000-00-00 00:00:00','000-00-00 00:00:00',0,0,"+punto_lat+","+punto_lng+",NULL,NULL\n";
+
+            }
+            text.value = text.value+"'I"+fin+"','D',7,'N','','000-00-00 00:00:00','000-00-00 00:00:00',0,0,"+destino_lat+","+destino_lng+",NULL,NULL\n";
+
+        }
+
       }
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
+    <style>
+      label { width:150px; display:inline-block;}
+      input { margin:5px;}
+    </style>
   </head>
   <body>
+
     <table>
       <tr>
         <td><div id="map"></div></td>
-        <td><textarea name="" id="listado" cols="45" rows="50"></textarea>
+        <td>
+          <label for="">Total Espacios:</label><input type="text" id="ini"><input type="text" id="fin">
+          <br>
+          <label for="">Origen:</label><input type="text" id="origen_lat"><input type="text" id="origen_lng">
+          <br>
+          <label for="">Destino:</label><input type="text" id="destino_lat"><input type="text" id="destino_lng">
+          <br>
+          <button id="calcular">Calcular</button>
+          <br>
+          <hr>
+          <textarea name="" id="listado" cols="45" rows="40"></textarea>
         </td>
       </tr>
     </table>

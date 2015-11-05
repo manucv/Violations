@@ -17,7 +17,7 @@
 	        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'Calles');
 	        
 	        return array(
-	            'placas' => $this->getCalleDao()->traerTodos(),
+	            'calles' => $this->getCalleDao()->traerTodos(),
 	            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Calles' => array('parametros','calle','listado')) ),
 	        );
 	    }
@@ -57,10 +57,9 @@
 	    				'action' => 'listado'
 	    		) );
 	    	}
-	    	
 	    	//CAPTURA LA INFORMACION ENVIADA EN EL POST
 	    	$data = $this->request->getPost ();
-	    	
+
 	    	//VERIFICA EL IDIOMA INGRESADO PARA TRAER EL FORMULARIO SEGUN EL IDIOMA
 	    	$form = $this->getForm();
 	    	
@@ -91,15 +90,18 @@
 	    	
 	    	//SE GENERA EL OBJETO DE CONTACTO
 	    	$calle = new CalleEntity();
+
 	    	//SE CARGA LA ENTIDAD CON LA INFORMACION DEL POST
 	    	$calle->exchangeArray ( $data );
 	    	
 	    	if(!empty($data['cal_id']) && !is_null($data['cal_id'])){
 	    	    //SE GRABA LA INFORMACION EN LA BDD
 	    	    $this->getCalleDao() ->actualizar ( $calle, $data['cal_id'] );
+	    	    
 	    	} else{
-	    	    //SE GRABA LA INFORMACION EN LA BDD
+	    	    //SE GRABA LA INFORMACION EN LA BDD¡
 	    	    $this->getCalleDao() ->guardar ( $calle );
+
 	    	}
 	    	
 	    	//SI SE EJECUTO EXITOSAMENTE SE REGRESA AL LISTADO DE CONTACTOS
