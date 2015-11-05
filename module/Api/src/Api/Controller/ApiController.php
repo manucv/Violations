@@ -688,7 +688,10 @@ class ApiController extends AbstractActionController
             $client = SesClient::factory(array(
                 'profile' => 'default',
                 'region'  => 'us-east-1',
-                'credentials' => Credentials::ini('default', '/var/www/.aws/credentials')
+                'credentials' => array(
+                   'key'    => 'AKIAJPAYGXS5YZS6QKTQ',
+                   'secret' => 'YAn8tZM08kwjVtnS3wB0C1A1+Y/f4zIVLkfX6atEiu75V',
+                )    
             ));
 
             $result = $client->sendEmail(array(
