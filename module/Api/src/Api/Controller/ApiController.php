@@ -685,7 +685,7 @@ class ApiController extends AbstractActionController
             
             
             
-            $body = "<a href='http://192.168.1.169/Hawa/Violations/public/api/api/recover/$codigo_generado'>Recuperar Contraseña</a>";
+            $body = "<a href='http://ibarra.sip.ec/Violations/public/api/api/recover/$codigo_generado'>Recuperar Contraseña</a>";
          
             $htmlPart = new MimePart($body);
             $htmlPart->type = 'text/html';
@@ -707,10 +707,10 @@ class ApiController extends AbstractActionController
              
             $transport = new SmtpTransport();
             $options = new SmtpOptions(array(
-                    'name' => 'sip.ec',
+                    'name' => 'root',
                     'host' => 'email-smtp.us-west-2.amazonaws.com',
                     'port' => 25,
-                    'connection_class' => 'login',
+                    'connection_class' => 'LOGIN',
                     'connection_config' => array(
                             'username' => 'AKIAJPAYGXS5YZS6QKTQ',
                             'password' => 'An8tZM08kwjVtnS3wB0C1A1+Y/f4zIVLkfX6atEiu75V',
