@@ -152,6 +152,26 @@ class PuntoRecarga extends Form {
 				)
 		) );
 
+		/* ********************************************
+		 * CAMPO HABILITADO
+		 * ********************************************/
+
+		$this->add(array(
+         	'type' => 'Zend\Form\Element\Select',
+         	'name' => 'pun_rec_habilitado',
+         	'options' => array(
+                'label' => 'Recargas',
+                'value_options' => array(
+                    '0' => 'No',
+                    '1' => 'Si'
+				)
+			),	
+			'attributes' => array (
+				'id' => 'pun_rec_habilitado',
+				'class' => 'form-control'
+			)
+     	));
+
 		$this->add ( array (
 				'name' => 'ingresar',
 				'attributes' => array (
