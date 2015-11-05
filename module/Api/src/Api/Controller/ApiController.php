@@ -712,11 +712,11 @@ class ApiController extends AbstractActionController
                     'Body' => array(
                         'Text' => array(
                             // Data is required
-                            'Data' => 'Accede al siguiente link para iniciar el proceso de recuperación de contraseña',
+                            'Data' => '',
                         ),
                         'Html' => array(
                             // Data is required
-                            'Data' => "<a href='http://ibarra.sip.ec/Violations/public/api/api/recover/$codigo_generado'>Recuperar Contraseña</a>",
+                            'Data' => "Accede al siguiente link para iniciar el proceso de recuperación de contraseña: <a href='http://ibarra.sip.ec/Violations/public/api/api/recover/$codigo_generado'>Recuperar Contraseña</a>",
                         ),
                     ),
                 )
