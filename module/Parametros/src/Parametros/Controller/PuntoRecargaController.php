@@ -7,7 +7,12 @@
 	use Zend\View\Model\ViewModel;
 	use Parametros\Form\PuntoRecarga;
 	use Parametros\Form\PuntoRecargaValidator;
+
+	use Parametros\Form\Carga;
+	use Parametros\Form\CargaValidator;
+
 	use Application\Model\Entity\PuntoRecarga as PuntoRecargaEntity;
+
 
 	class PuntoRecargaController extends AbstractActionController
 	{
@@ -23,8 +28,14 @@
 	        );
 	    }
 
+	    /* Formularios */
 	    public function getForm() {
 			$form = new PuntoRecarga ();
+			return $form;
+		}
+
+		public function getCargaForm() {
+			$form = new Carga ();
 			return $form;
 		}
 	    
@@ -135,4 +146,28 @@
 			$view->setTemplate('parametros/punto-recarga/ingresar');
 			return $view;
 		}
+
+	    public function cargarAction(){
+    
+			$id = $this->params ()->fromRoute ( 'id', 0 );
+			$form = $this->getForm ();
+
+			//FORMULARIO DE ACTUALIZACION DE INFORMACION
+			$puntorecarga = $this->getPuntoRecargaDao()->traer ( $id );
+			
+			$form->bind ( $puntorecarga );
+			$form->get ( 'pun_rec_id' )->setAttribute ( 'value', $puntorecarga->getPun_rec_id() );
+				
+			$this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'carga');
+			return new ViewModel ( array (
+					'formulario' => $form ,
+					'puntorecarga' => $puntorecarga,
+			        'navegacion' => array('datos' =>  array ( 	'Inicio' => array('parametros','index','video'), 
+	    	        											'Listado de Puntos de Recarga' => array('parametros','puntorecarga','listado'), 
+	    	        											'Ingresar Punto de Recarga' => array('parametros','puntorecarga','cargar', $id)) ),
+			        'titulo' => 'Cargar Saldo'
+			) );
+
+		}
+
 	}
