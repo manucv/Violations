@@ -712,51 +712,16 @@ class ApiController extends AbstractActionController
                     'Body' => array(
                         'Text' => array(
                             // Data is required
-                            'Data' => 'Accede alsiguiente link para iniciar el proceso de recuperacion de contrasena',
+                            'Data' => 'Accede al siguiente link para iniciar el proceso de recuperación de contraseña',
                         ),
                         'Html' => array(
                             // Data is required
-                            'Data' => '',
+                            'Data' => "<a href='http://ibarra.sip.ec/Violations/public/api/api/recover/$codigo_generado'>Recuperar Contraseña</a>",
                         ),
                     ),
                 )
             ));
 
-            die();
-            
-            $body = "<a href='http://ibarra.sip.ec/Violations/public/api/api/recover/$codigo_generado'>Recuperar Contraseña</a>";
-         
-            $htmlPart = new MimePart($body);
-            $htmlPart->type = 'text/html';
-             
-            $textPart = new MimePart($body);
-            $textPart->type = 'text/plain';
-             
-            $body = new MimeMessage();
-            $body->setParts(array($textPart, $htmlPart));
-            $message = new Mail\Message();
-             
-            $message->addTo('lmponceb@gmail.com')
-            ->setFrom('informacion@sip.com')
-            ->setSubject('Recuperación de Contraseña')
-            ->setEncoding("UTF-8")
-            ->setBody($body);
-
-            $message->getHeaders()->get('content-type')->setType('multipart/alternative');
-             
-            $transport = new SmtpTransport();
-            $options = new SmtpOptions(array(
-                    'name' => 'root',
-                    'host' => 'email-smtp.us-west-2.amazonaws.com',
-                    'port' => 25,
-                    'connection_class' => 'LOGIN',
-                    'connection_config' => array(
-                            'username' => 'AKIAJPAYGXS5YZS6QKTQ',
-                            'password' => 'An8tZM08kwjVtnS3wB0C1A1+Y/f4zIVLkfX6atEiu75V',
-                    )
-            ));
-            $transport->setOptions($options);
-            $transport->send($message);
             //echo $this->passwordGenerator();
             die();
         } 
