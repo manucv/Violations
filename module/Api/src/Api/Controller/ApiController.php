@@ -685,10 +685,10 @@ class ApiController extends AbstractActionController
             $base = sprintf('%s://%s', $scheme, $host);
             $basePath = $base .$this->getRequest()->getBasePath();
             
-
             $client = SesClient::factory(array(
                 'profile' => 'default',
-                'region'  => 'US East (N. Virginia)'
+                'region'  => 'us-east-1',
+                'credentials' => CredentialProvider::ini('default', '/var/www/.aws/credentials')
             ));
 
             $result = $client->sendEmail(array(
