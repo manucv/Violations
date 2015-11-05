@@ -716,7 +716,7 @@ class ApiController extends AbstractActionController
                         ),
                         'Html' => array(
                             // Data is required
-                            'Data' => "Accede al siguiente link para iniciar el proceso de recuperación de contraseña: <a href='http://ibarra.sip.ec/Violations/public/api/api/recover/$codigo_generado'>Recuperar Contraseña</a>",
+                            'Data' => "Accede al siguiente link para iniciar el proceso de recuperación de contraseña: <a href='http://ibarra.sip.ec/recuperar?cod=$codigo_generado'>Recuperar Contraseña</a>",
                         ),
                     ),
                 )
@@ -724,7 +724,9 @@ class ApiController extends AbstractActionController
 
             //echo $this->passwordGenerator();
             die();
-        } 
+        }else{
+            echo 'test';
+        }
     }      
 
     private function passwordGenerator($length=10){
