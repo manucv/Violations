@@ -47,7 +47,8 @@ class PuntoRecargaDao implements InterfaceCrud {
 			'pun_rec_lat' => $punto_recarga->getPun_rec_lat(),
 			'pun_rec_lng' => $punto_recarga->getPun_rec_lng(),
 			'pun_rec_direccion' => $punto_recarga->getPun_rec_direccion(),
-			'pun_rec_observaciones' => $punto_recarga->getPun_rec_observaciones()
+			'pun_rec_saldo' => $punto_recarga->getPun_rec_saldo(),
+            'pun_rec_habilitado' => $punto_recarga->getPun_rec_habilitado()
     	);
     	
     	$data ['pun_rec_id'] = $id;
@@ -74,7 +75,9 @@ class PuntoRecargaDao implements InterfaceCrud {
             'pun_rec_lat' => $punto_recarga->getPun_rec_lat(),
             'pun_rec_lng' => $punto_recarga->getPun_rec_lng(),
             'pun_rec_direccion' => $punto_recarga->getPun_rec_direccion(),
-            'pun_rec_observaciones' => $punto_recarga->getPun_rec_observaciones()
+            'pun_rec_observaciones' => $punto_recarga->getPun_rec_observaciones(),
+            'pun_rec_saldo' => $punto_recarga->getPun_rec_saldo(),
+            'pun_rec_habilitado' => $punto_recarga->getPun_rec_habilitado()
         );
     
         if (!empty ( $pun_rec_id ) && !is_null ( $pun_rec_id )) {

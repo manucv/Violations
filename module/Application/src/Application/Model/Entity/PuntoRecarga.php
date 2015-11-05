@@ -12,6 +12,8 @@ class PuntoRecarga {
 	private $pun_rec_lng;
 	private $pun_rec_direccion;
 	private $pun_rec_observaciones;
+	private $pun_rec_saldo;
+	private $pun_rec_habilitado;
 	
 	/*
 	* @return the $pun_rec_id
@@ -61,6 +63,21 @@ class PuntoRecarga {
 	public function getPun_rec_observaciones(){
 		return $this->pun_rec_observaciones;
 	}
+
+	/*
+	* @return the $pun_rec_saldo
+	*/
+	public function getPun_rec_saldo(){
+		return $this->pun_rec_saldo;
+	}
+
+	/*
+	* @return the $pun_rec_habilitado
+	*/
+	public function getPun_rec_habilitado(){
+		return $this->pun_rec_habilitado;
+	}
+
 
 
 	/**
@@ -112,6 +129,21 @@ class PuntoRecarga {
 		$this->pun_rec_observaciones = $pun_rec_observaciones;
 	}
 
+	/**
+	* @param Ambigous <NULL, unknown> $pun_rec_saldo 
+	*/
+	public function setPun_rec_saldo($pun_rec_saldo){
+		$this->pun_rec_saldo = $pun_rec_saldo;
+	}
+
+	/**
+	* @param Ambigous <NULL, unknown> $pun_rec_habilitado 
+	*/
+	public function setPun_rec_habilitado($pun_rec_habilitado){
+		$this->pun_rec_habilitado = $pun_rec_habilitado;
+	}
+	
+
 	public function exchangeArray($data)
 	{
 		$this->pun_rec_id = (isset($data['pun_rec_id'])) ? $data['pun_rec_id'] : null;
@@ -121,6 +153,8 @@ class PuntoRecarga {
 		$this->pun_rec_lng = (isset($data['pun_rec_lng'])) ? $data['pun_rec_lng'] : null;
 		$this->pun_rec_direccion = (isset($data['pun_rec_direccion'])) ? $data['pun_rec_direccion'] : null;
 		$this->pun_rec_observaciones = (isset($data['pun_rec_observaciones'])) ? $data['pun_rec_observaciones'] : null;
+		$this->pun_rec_saldo	= (isset($data['pun_rec_saldo'])) ? $data['pun_rec_saldo'] : null;
+		$this->pun_rec_habilitado	= (isset($data['pun_rec_habilitado'])) ? $data['pun_rec_habilitado'] : null;
 
 	}
 		
