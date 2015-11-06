@@ -5,6 +5,7 @@
 
 	use Zend\Mvc\Controller\AbstractActionController;
 	use Zend\View\Model\ViewModel;
+
 	use Parametros\Form\PuntoRecarga;
 	use Parametros\Form\PuntoRecargaValidator;
 
@@ -58,9 +59,7 @@
 	    }
 
 	    public function ingresarAction(){
-    	
 	    	$form = $this->getForm ();	    	
-
 	    	return new ViewModel ( array (
 	    			'formulario' => $form ,
 	    	        'navegacion' => array('datos' =>  array ( 	'Inicio' => array('parametros','index','video'), 

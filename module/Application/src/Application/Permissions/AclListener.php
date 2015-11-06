@@ -123,6 +123,7 @@ class AclListener implements ListenerAggregateInterface{
             $acl->allow('6', 'api:vigilante', NULL);
             $acl->allow('6', 'application:login', NULL);
             $acl->allow('6', 'application:console', NULL);
+            $acl->allow('6', 'tiendas:index', NULL);
 
             //$acl->allow('6', 'api:api', array('paises'));
     		

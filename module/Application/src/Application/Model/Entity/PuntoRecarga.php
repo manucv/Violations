@@ -14,6 +14,7 @@ class PuntoRecarga {
 	private $pun_rec_observaciones;
 	private $pun_rec_saldo;
 	private $pun_rec_habilitado;
+	private $pun_rec_clave;
 	
 	/*
 	* @return the $pun_rec_id
@@ -78,6 +79,12 @@ class PuntoRecarga {
 		return $this->pun_rec_habilitado;
 	}
 
+	/*
+	* @return the $pun_rec_clave
+	*/
+	public function getPun_rec_clave(){
+		return $this->pun_rec_clave;
+	}
 
 
 	/**
@@ -143,6 +150,12 @@ class PuntoRecarga {
 		$this->pun_rec_habilitado = $pun_rec_habilitado;
 	}
 	
+	/**
+	* @param Ambigous <NULL, unknown> $pun_rec_clave 
+	*/
+	public function setPun_rec_clave($pun_rec_clave){
+		$this->pun_rec_clave = $pun_rec_clave;
+	}
 
 	public function exchangeArray($data)
 	{
@@ -155,6 +168,7 @@ class PuntoRecarga {
 		$this->pun_rec_observaciones = (isset($data['pun_rec_observaciones'])) ? $data['pun_rec_observaciones'] : null;
 		$this->pun_rec_saldo	= (isset($data['pun_rec_saldo'])) ? $data['pun_rec_saldo'] : null;
 		$this->pun_rec_habilitado	= (isset($data['pun_rec_habilitado'])) ? $data['pun_rec_habilitado'] : null;
+		$this->pun_rec_clave	= (isset($data['pun_rec_clave'])) ? $data['pun_rec_clave'] : null;
 
 	}
 		

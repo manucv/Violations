@@ -172,6 +172,23 @@ class PuntoRecarga extends Form {
 			)
      	));
 
+     	/* ********************************************
+		 * CAMPO CLAVE
+		* ********************************************/
+		
+		$this->add ( array (
+				'name' => 'pun_rec_clave',
+				'options' => array (
+						'label' => 'Clave*:'
+				),
+				'attributes' => array (
+						'type' => 'password',
+						'maxlength' => '25',
+						'id' => 'pun_rec_clave',
+						'class' => 'form-control'
+				)
+		) );
+
 		$this->add ( array (
 				'name' => 'ingresar',
 				'attributes' => array (
