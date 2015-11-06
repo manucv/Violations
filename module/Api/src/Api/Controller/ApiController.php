@@ -687,8 +687,8 @@ class ApiController extends AbstractActionController
                 'profile' => 'default',
                 'region'  => 'us-east-1',
                 'credentials' => array(
-                   'key'    => 'AKIAJINCCIX35LEXM2BA',
-                   'secret' => '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',
+                   'key'    => '',
+                   'secret' => '',
                 )    
             ));
 
