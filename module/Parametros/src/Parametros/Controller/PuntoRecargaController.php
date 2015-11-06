@@ -150,7 +150,7 @@
 	    public function cargarAction(){
     
 			$id = $this->params ()->fromRoute ( 'id', 0 );
-			$form = $this->getForm ();
+			$form = $this->getCargaForm ();
 
 			//FORMULARIO DE ACTUALIZACION DE INFORMACION
 			$puntorecarga = $this->getPuntoRecargaDao()->traer ( $id );
