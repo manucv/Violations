@@ -49,6 +49,7 @@ class ClienteDao implements InterfaceCrud {
 			'usu_id' => $cliente->getUsu_id(),
             'cli_saldo' => $cliente->getCli_saldo(),
 			'cli_foto' => $cliente->getCli_foto(),
+            'cli_movil' => $cliente->getCli_movil(),
     	);
     	
     	$data ['cli_id'] = $id;

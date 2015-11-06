@@ -19,6 +19,7 @@ $pun_rec_lng			=	$form->get('pun_rec_lng');
 $pun_rec_direccion		=	$form->get('pun_rec_direccion');
 $pun_rec_observaciones	=	$form->get('pun_rec_observaciones');
 $pun_rec_habilitado     =   $form->get('pun_rec_habilitado');
+$pun_rec_clave          =   $form->get('pun_rec_clave');
 
 echo $this->form ()->openTag ( $form );
 echo $this->formhidden ( $pun_rec_id );
@@ -147,6 +148,20 @@ echo $this->formhidden ( $pun_rec_id );
                         ?>
                     </div>
                 </div>        
+
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+                        <?php  
+                            echo $formLabel->openTag() . $pun_rec_clave->getLabel() . $formLabel->closeTag();
+                        ?>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <?php 
+                        echo html_entity_decode( $this->formpassword ( $pun_rec_clave ) );
+                        echo html_entity_decode( $this->formelementerrors ( $pun_rec_clave ) );
+                        ?>
+                    </div>
+                </div>    
 
                 <div class="row">
     				<div class="form-group col-md-12">

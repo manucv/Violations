@@ -147,6 +147,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 	}
 	
 	public function initAuth(MvcEvent $e){
+
 		$application = $e->getApplication();
         $matches = $e->getRouteMatch();
         $controller = $matches->getParam('controller');
@@ -175,13 +176,18 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 	        	case 'Application\Controller\Console':
         				return;
 	        			break;
+	
         	}
         }
         
 		$sm = $application->getServiceManager();
 		$auth = $sm->get('Application\Model\Login');
 		
-		if($controller != 'Api\Controller\Api' && $controller != 'Api\Controller\Vigilante'){
+		//Lista Blanca de Controladores
+		if(	$controller != 'Api\Controller\Api' && 
+			$controller != 'Api\Controller\Vigilante' && 
+			$controller != 'Tiendas\Controller\Index'){
+
 			if(!$auth->isLoggedIn()){
 				$matches->setParam('controller', 'Application\Controller\Login');
 				$matches->setParam('action', 'index');

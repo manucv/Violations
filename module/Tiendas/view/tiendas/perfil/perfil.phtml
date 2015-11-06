@@ -1,0 +1,200 @@
+<?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); ?>
+
+<div class="row">
+	<div class="col-xs-8">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-user"></i>
+					<span>Perfil del cliente</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content">
+				<div class="card">
+				
+					<div class="media">
+                      <a class="pull-left" href="#">
+                        <img src="<?php echo $this->basepath() . '/img/avatar.jpg'?>" alt="..." class="thumbnail img-circle" style="min-width: 260px; max-width: 270px">
+                      </a>
+                      <div class="  ">
+                            <h3 class="media-heading page-header"><b><?php echo $this->cliente->getUsu_nombre() . ' ' . $this->cliente->getUsu_apellido() ?></b></h3>
+                            <p><span style="font-weight: 700;">Usuario: </span> <span><?php echo $this->cliente->getUsu_usuario()  ?></span><br /></p>
+                            <p><span style="font-weight: 700;">Email: </span> <a href="#"><?php echo $this->cliente->getUsu_email()  ?></a><br /></p>
+					       <p><span style="font-weight: 700;">C&oacute;digo Interno: </span> <span><?php echo $this->cliente->getUsu_clave()  ?></span> <br></p>
+					       <p><span style="font-weight: 700;">M&oacute;vil: </span> <span><?php echo '( +' . $this->cliente->getCli_cod_pais() . ' )' . ' ( ' . $this->cliente->getCli_cod_ciudad() . ' ) ' . $this->cliente->getCli_movil()?></span> <br></p>
+					       <p><span style="font-weight: 700;">Direcci&oacute;n: </span> <span><?php $direccion = $this->cliente->getCli_direccion(); if(!empty($direccion) && !is_null($direccion)): echo $direccion; else: echo '<span style="color:#CCCCCC; font-style:italic; ">No tiene informaci&oacute;n.</span>'; endif;  ?></span> <br></p>
+					       <p><span style="font-weight: 700;">Saldo Pendiente:</span> <span style="color:#ee9f1f; font-weight: 700;">$<?php echo $this->cliente->getCli_saldo()?></span> <br></p>
+                      </div>
+                    </div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-dollar"></i>
+					<span>Compras</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content">
+				<table class="table table-striped table-hover" style="font-size: 12px;" >
+                 <thead>
+			         <tr>
+			             <th>Valor</th>
+			             <th>Fecha Compra</th>
+			         </tr>
+			     </thead>
+                 <tbody>
+				<?php 
+				if(count($this->compras) > 0):
+				$cont = 1;
+				foreach ($this->compras as $compras): ?>
+				     <tr>
+				        <td><?php echo $compras->getTra_valor()?></td>
+				        <td><?php echo $compras->getTra_fecha()?></td>
+				     </tr>
+				<?php 
+				$cont ++;
+				endforeach;
+				else: ?>
+				
+				    <tr>
+				        <td>No tiene compras realizadas.</td>
+				        <td>&nbsp;</td>
+				    </tr>
+				
+				<?php endif;?>
+				</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-4">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-exchange"></i>
+					<span>Usuarios permitidos para transferir</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content">
+			     <table class="table table-striped table-hover" style="font-size: 12px;" >
+                 <thead>
+			         <tr>
+			             <th>Nombre Completo</th>
+			             <th>Usuario</th>
+			         </tr>
+			     </thead>
+                 <tbody>
+				<?php 
+				if(count($this->usuarios) > 0):
+				$cont = 1;
+				foreach ($this->usuarios as $usuario): ?>
+				     <tr>
+				        <td><?php echo $usuario->getUsu_nombre() . ' ' . $usuario->getUsu_apellido()?></td>
+				        <td><?php echo $usuario->getUsu_usuario()?></td>
+				     </tr>
+				<?php 
+				$cont ++;
+				endforeach;
+				else: ?>
+				
+				    <tr>
+				        <td>No tiene usuarios registrados.</td>
+				        <td>&nbsp;</td>
+				    </tr>
+				
+				<?php endif;?>
+				</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-money"></i>
+					<span>Recargas</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content">
+				<table class="table table-striped table-hover" style="font-size: 12px;" >
+                 <thead>
+			         <tr>
+			             <th>Punto de Recarga</th>
+			             <th>Valor</th>
+			             <th>Hora</th>
+			         </tr>
+			     </thead>
+                 <tbody>
+				<?php 
+				if(count($this->recargas) > 0):
+				$cont = 1;
+				foreach ($this->recargas as $recargas): ?>
+				     <tr>
+				        <td><?php echo $recargas->getPun_rec_nombre() ?></td>
+				        <td><?php echo '$' .$recargas->getCom_sal_valor()?></td>
+				        <td><?php echo $recargas->getCom_sal_hora()?></td>
+				     </tr>
+				<?php 
+				$cont ++;
+				endforeach;
+				else: ?>
+				
+				    <tr>
+				        <td>No tiene recargas efectuadas.</td>
+				        <td>&nbsp;</td>
+				        <td>&nbsp;</td>
+				    </tr>
+				
+				<?php endif;?>
+				</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function () {
+	$('#DataTables_Table_0_info, #DataTables_Table_1_info, #DataTables_Table_2_info').attr('style','display:none');
+
+	WinMove();
+});
+
+</script>

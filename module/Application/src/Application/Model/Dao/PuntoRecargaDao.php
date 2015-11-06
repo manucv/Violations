@@ -36,6 +36,10 @@ class PuntoRecargaDao implements InterfaceCrud {
     	return $row;
     }
 
+    public function traerPorRucClave($pun_rec_ruc, $pun_rec_clave){
+        return $this->tableGateway->select(array('pun_rec_ruc' => $pun_rec_ruc, 'pun_rec_clave' => md5($pun_rec_clave)))->current();
+    }    
+
     public function guardar(PuntoRecarga $punto_recarga){
     
     	$id = (int) $punto_recarga->getPun_rec_id();
@@ -47,7 +51,9 @@ class PuntoRecargaDao implements InterfaceCrud {
 			'pun_rec_lat' => $punto_recarga->getPun_rec_lat(),
 			'pun_rec_lng' => $punto_recarga->getPun_rec_lng(),
 			'pun_rec_direccion' => $punto_recarga->getPun_rec_direccion(),
-            'pun_rec_habilitado' => $punto_recarga->getPun_rec_habilitado()
+            'pun_rec_habilitado' => $punto_recarga->getPun_rec_habilitado(),
+            'pun_rec_clave' => md5($punto_recarga->getPun_rec_clave())
+
     	);
     	
     	$data ['pun_rec_id'] = $id;
@@ -75,7 +81,8 @@ class PuntoRecargaDao implements InterfaceCrud {
             'pun_rec_lng' => $punto_recarga->getPun_rec_lng(),
             'pun_rec_direccion' => $punto_recarga->getPun_rec_direccion(),
             'pun_rec_observaciones' => $punto_recarga->getPun_rec_observaciones(),
-            'pun_rec_habilitado' => $punto_recarga->getPun_rec_habilitado()
+            'pun_rec_habilitado' => $punto_recarga->getPun_rec_habilitado(),
+            'pun_rec_clave' => md5($punto_recarga->getPun_rec_clave())
         );
     
         if (!empty ( $pun_rec_id ) && !is_null ( $pun_rec_id )) {

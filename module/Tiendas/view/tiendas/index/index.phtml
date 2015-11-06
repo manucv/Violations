@@ -1,0 +1,92 @@
+<?php 
+
+$form = $this->form;
+$form->prepare ()->setAttribute ( 'action', $this->url ( 'tiendas', array (
+		'controller' => 'index',
+		'action' => 'autenticar'
+) ) )->setAttribute ( 'method', 'post' );
+$formLabel = $this->plugin ( 'formLabel' );
+
+echo $this->form()->openTag($form);
+
+?>
+<div class="container">
+
+
+
+    <div class="row">
+        <div class="col-md-offset-3 col-md-5">
+            <div class="row">
+                <div class="col-md-11 text-right">
+                </div>
+            </div>
+            <div class="text-left" style="color: #FFFFFF; font-weight: 700; font-size: 16px;">Bienvenido, Escriba sus datos de acceso.</div>
+            <div><br /></div>
+            
+            <?php if(isset($this->message)): ?>
+            <div class="row">
+                <div class="col-lg-12"><?php echo $this->message; ?></div>
+            </div>
+            <br>
+            <?php endif; ?>
+
+            <div class="row">
+                <div class="col-md-4 text-right" style="color: #FFFFFF;">
+                    <?php //campo usuario
+            		$ruc = $form->get('pun_rec_ruc');
+            		echo $formLabel->openTag().$ruc->getOption('label');
+            		echo $formLabel->closeTag();
+            	   ?>
+                </div>
+                <div class="col-md-8">
+        			<?php //campo usuario
+        			echo $this->forminput($ruc);
+        			echo $this->formelementerrors($ruc);
+        			?>
+        		</div>
+            </div>
+            <div><br /></div>
+            <div class="row">
+                <div class="col-md-4 text-right" style="color: #FFFFFF;">
+                  <?php 
+                  $password = $form->get('pun_rec_clave');
+                  echo $formLabel->openTag().$password->getOption('label');
+                  echo $formLabel->closeTag();
+                  ?>
+                </div>
+                <div class="col-md-8">
+        			<?php //campo password
+        			echo $this->forminput($password);
+        			echo $this->formelementerrors($password);
+        			?>
+        		</div>
+            </div>
+            <div><br /></div>
+            <div class="row">
+                <div class="col-md-7 text-right" style="padding-top: 10px;">
+        		</div>
+                <div class="col-md-5 text-right">
+        		  <?php echo $this->formelement($form->get('ingresar')) ?>
+        		</div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo $this->form()->closeTag() ?>
+
+<script>
+$(document).ready(function(){
+	$("#login").validate({
+		errorLabelContainer: $("ul.error_container"),
+		wrapper: 'li',
+		rules: {
+			pun_rec_ruc: {required:true},
+			pun_rec_clave: {required:true}
+ 		},
+ 		messages:{
+			pun_rec_ruc: {required:'Nombre es un campo requerido'},
+			pun_rec_clave: {required:'Categoría es un campo requerido'},
+ 	 	}
+	});
+});
+</script>

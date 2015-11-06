@@ -10,6 +10,7 @@ return array(
         'Api',
         'Reportes',
     	'Clientes',
+        'Tiendas'
         
     ),
 

@@ -45,8 +45,6 @@
                      <td class="dataTableIcons">
                         <a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'puntorecarga', 'action' => 'editar', 'id' => $punto->getPun_rec_id()))?>"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;
                         
-                        <a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'puntorecarga', 'action' => 'eliminar', 'id' => $punto->getPun_rec_id()))?>" onclick="return eliminarRegistro('<?php echo $punto->getPun_rec_id() ?>');"><i class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;
-
                         <a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'puntorecarga', 'action' => 'cargar', 'id' => $punto->getPun_rec_id()))?>"><i class="fa fa-money"></i></a>
                      </td>
                      <td><?php echo $this->escapeHtml($punto->getPun_rec_ruc());?></td>
