@@ -31,13 +31,13 @@ class Carga extends Form {
 		 * ********************************************/
 		
 		$this->add ( array (
-				'name' => 'pun_rec_saldo',
+				'name' => 'car_valor',
 				'options' => array (
 						'label' => 'Valor de la Recarga:'
 				),
 				'attributes' => array (
 						'type' => 'text',
-						'id' => 'pun_rec_saldo',
+						'id' => 'car_valor',
 						'class' => 'form-control'
 				)
 		) );
