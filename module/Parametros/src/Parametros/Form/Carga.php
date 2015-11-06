@@ -33,7 +33,7 @@ class Carga extends Form {
 		$this->add ( array (
 				'name' => 'car_valor',
 				'options' => array (
-						'label' => 'Valor de la Recarga:'
+						'label' => 'Valor de la Recarga: *'
 				),
 				'attributes' => array (
 						'type' => 'text',

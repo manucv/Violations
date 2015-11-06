@@ -97,6 +97,10 @@ use Application\Model\Dao\ListaBlancaDao;
 use Application\Model\Entity\Calle;
 use Application\Model\Dao\CalleDao;
 
+use Application\Model\Entity\Carga;
+use Application\Model\Dao\CargaDao;
+
+
 //END NEW
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface{
@@ -463,7 +467,13 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$tableGateway = new TableGateway('calle', $dbAdapter, null, $resultSetPrototype);
 		                	return new CalleDao($tableGateway);
 		                },	  
-
+		                'Application\Model\Dao\CargaDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Carga());
+		                	$tableGateway = new TableGateway('carga', $dbAdapter, null, $resultSetPrototype);
+		                	return new CargaDao($tableGateway);
+		                },	  
 		                'Navigation' => 'Application\Clases\MyNavigationFactory'
 				),
 				'initializers' => array(
