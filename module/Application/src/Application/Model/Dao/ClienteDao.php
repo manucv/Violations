@@ -78,7 +78,9 @@ class ClienteDao implements InterfaceCrud {
             $select->where            
                     ->equalTo('usu_email',$usuario['usu_email'])
                     ->or
-                    ->equalTo('usu_usuario',$usuario['usu_usuario']);
+                    ->equalTo('usu_usuario',$usuario['usu_usuario'])
+                    ->or
+                    ->equalTo('cli_movil',$usuario['cli_movil']);
             
             $statement = $sql->prepareStatementForSqlObject($select);
             $results = $statement->execute();
