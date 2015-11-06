@@ -1,0 +1,74 @@
+<div class="container">
+	
+<div class="row">
+	<div class="col-lg-12"><h1 class="pull-right"><?php  echo $this->puntorecarga->getPun_rec_nombre(); ?></h1></div>
+</div>
+<div class="row">
+	<div class="col-lg-12"><h3 class="pull-right">Saldo $<?php  echo $this->puntorecarga->getPun_rec_saldo(); ?></h3></div>
+</div>
+
+
+<?php 
+
+$form = $this->form;
+$form->prepare ()->setAttribute ( 'action', $this->url ( 'tiendas', array (
+		'controller' => 'index',
+		'action' => 'recargar'
+) ) )->setAttribute ( 'method', 'post' );
+$formLabel = $this->plugin ( 'formLabel' );
+$pun_rec_id= $form->get ( 'punto_recarga_pun_rec_id' );
+
+echo $this->form()->openTag($form);
+echo $this->formhidden ( $pun_rec_id );
+
+?>
+
+    <?php if(isset($this->message)): ?>
+    <div class="row">
+        <div class="col-lg-12"><?php echo $this->message; ?></div>
+    </div>
+    <br>
+    <?php endif; ?>
+
+    <div class="row">
+        <div class="col-md-2 text-right" style="color: #FFFFFF;">
+            <?php //campo usuario
+    		$email = $form->get('usu_email');
+    		echo $formLabel->openTag().$email->getOption('label');
+    		echo $formLabel->closeTag();
+    	   ?>
+        </div>
+        <div class="col-md-4">
+			<?php //campo usuario
+			echo $this->forminput($email);
+			echo $this->formelementerrors($email);
+			?>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+        <div class="col-md-2 text-right" style="color: #FFFFFF;">
+            <?php //campo usuario
+    		$valor = $form->get('com_sal_valor');
+    		echo $formLabel->openTag().$valor->getOption('label');
+    		echo $formLabel->closeTag();
+    	   ?>
+        </div>
+        <div class="col-md-4">
+			<?php //campo usuario
+			echo $this->forminput($valor);
+			echo $this->formelementerrors($valor);
+			?>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+        <div class="col-md-2 text-right" style="color: #FFFFFF;"></div>
+
+    	<div class="col-md-1 text-right">
+		  <?php echo $this->formelement($form->get('buscar')) ?>
+		</div>
+    </div>
+
+</div>
+<?php echo $this->form()->closeTag() ?>

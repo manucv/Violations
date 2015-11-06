@@ -84,7 +84,7 @@ class CompraSaldoDao implements InterfaceCrud {
     
     	$data = array(
 			'cli_id' => $compraSaldo->getCli_id(),
-			'pun_rec_id' => $compraSaldo->getPun_rec_id(),
+			'punto_recarga_pun_rec_id' => $compraSaldo->getPunto_recarga_pun_rec_id(),
 			'com_sal_valor' => $compraSaldo->getCom_sal_valor(),
 			'com_sal_hora' => $compraSaldo->getCom_sal_hora()
     	);
