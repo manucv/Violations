@@ -9,11 +9,12 @@ $form->setAttribute ( 'action', $this->url ( 'parametros', array (
 ->setAttribute ('class', 'form-horizontal');
 $formLabel = $this->plugin ( 'formLabel' );
 
-$pun_rec_id 	=	$form->get ( 'pun_rec_id' );
-$pun_rec_saldo	=	$form->get('pun_rec_saldo');
+$pun_rec_id =	$form->get('pun_rec_id');
+$car_valor	=	$form->get('car_valor');
 
 echo $this->form ()->openTag ( $form );
 echo $this->formhidden ( $pun_rec_id );
+
 ?>
 
 
@@ -45,100 +46,16 @@ echo $this->formhidden ( $pun_rec_id );
     			<div class="form-group">
 	                <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
 	                    <?php  
-	                		echo $formLabel->openTag() . $pun_rec_nombre->getLabel() . $formLabel->closeTag();
+	                		echo $formLabel->openTag() . $car_valor->getLabel() . $formLabel->closeTag();
 	                	?>
                 	</div>
                 	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
             			<?php 
-            			echo html_entity_decode( $this->formtext ( $pun_rec_nombre ) );
-            			echo html_entity_decode( $this->formelementerrors ( $pun_rec_nombre ) );
+            			echo html_entity_decode( $this->formtext ( $car_valor ) );
+            			echo html_entity_decode( $this->formelementerrors ( $car_valor ) );
             			?>
             		</div>
                 </div>
-
-    			<div class="form-group">
-	                <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
-	                    <?php  
-	                		echo $formLabel->openTag() . $pun_rec_ruc->getLabel() . $formLabel->closeTag();
-	                	?>
-                	</div>
-                	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-            			<?php 
-            			echo html_entity_decode( $this->formtext ( $pun_rec_ruc ) );
-            			echo html_entity_decode( $this->formelementerrors ( $pun_rec_ruc ) );
-            			?>
-            		</div>
-                </div>
-
-                <div class="form-group">
-	                <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
-	                    <?php  
-	                		echo $formLabel->openTag() . $pun_rec_lat->getLabel() . $formLabel->closeTag();
-	                	?>
-                	</div>
-                	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-            			<?php 
-            			echo html_entity_decode( $this->formtext ( $pun_rec_lat ) );
-            			echo html_entity_decode( $this->formelementerrors ( $pun_rec_lat ) );
-            			?>
-            		</div>
-                </div>
-
-                <div class="form-group">
-	                <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
-	                    <?php  
-	                		echo $formLabel->openTag() . $pun_rec_lng->getLabel() . $formLabel->closeTag();
-	                	?>
-                	</div>
-                	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-            			<?php 
-            			echo html_entity_decode( $this->formtext ( $pun_rec_lng ) );
-            			echo html_entity_decode( $this->formelementerrors ( $pun_rec_lng ) );
-            			?>
-            		</div>
-                </div>
-
-                <div class="form-group">
-	                <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
-	                    <?php  
-	                		echo $formLabel->openTag() . $pun_rec_direccion->getLabel() . $formLabel->closeTag();
-	                	?>
-                	</div>
-                	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-            			<?php 
-            			echo html_entity_decode( $this->formtext ( $pun_rec_direccion ) );
-            			echo html_entity_decode( $this->formelementerrors ( $pun_rec_direccion ) );
-            			?>
-            		</div>
-                </div>
-
-                <div class="form-group">
-	                <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
-	                    <?php  
-	                		echo $formLabel->openTag() . $pun_rec_observaciones->getLabel() . $formLabel->closeTag();
-	                	?>
-                	</div>
-                	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-            			<?php 
-            			echo html_entity_decode( $this->formtext ( $pun_rec_observaciones ) );
-            			echo html_entity_decode( $this->formelementerrors ( $pun_rec_observaciones ) );
-            			?>
-            		</div>
-                </div>                
-
-                <div class="form-group">
-                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
-                        <?php  
-                            echo $formLabel->openTag() . $pun_rec_habilitado->getLabel() . $formLabel->closeTag();
-                        ?>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                        <?php 
-                        echo html_entity_decode( $this->formselect ( $pun_rec_habilitado ) );
-                        echo html_entity_decode( $this->formelementerrors ( $pun_rec_habilitado ) );
-                        ?>
-                    </div>
-                </div>        
 
                 <div class="row">
     				<div class="form-group col-md-12">
