@@ -12,11 +12,13 @@
 	use Parametros\Form\CargaValidator;
 
 	use Application\Model\Entity\PuntoRecarga as PuntoRecargaEntity;
+	use Application\Model\Entity\Carga as CargaEntity;
 
 
 	class PuntoRecargaController extends AbstractActionController
 	{
 		protected $puntoRecargaDao;
+		protected $cargaDao;
 
 		public function listadoAction()
 	    {
@@ -45,6 +47,14 @@
 	    		$this->puntoRecargaDao = $sm->get ( 'Application\Model\Dao\PuntoRecargaDao' );
 	    	}
 	    	return $this->puntoRecargaDao;
+	    }
+
+	    public function getCargaDao() {
+	    	if (!$this->cargaDao) {
+	    		$sm = $this->getServiceLocator ();
+	    		$this->cargaDao = $sm->get ( 'Application\Model\Dao\CargaDao' );
+	    	}
+	    	return $this->cargaDao;
 	    }
 
 	    public function ingresarAction(){
@@ -170,4 +180,67 @@
 
 		}
 
+        public function saldoAction(){
+
+	    	//VERIFICA QUE SE HAYA REALIZADO UN POST DE INFORMACION
+	    	if (! $this->request->isPost ()) {
+	    		return $this->redirect ()->toRoute ( 'parametros', array (
+	    				'controller' => 'puntorecarga',
+	    				'action' => 'listado'
+	    		) );
+	    	}
+	    	
+	    	//CAPTURA LA INFORMACION ENVIADA EN EL POST
+	    	$data = $this->request->getPost ();
+	    	
+	    	//VERIFICA EL IDIOMA INGRESADO PARA TRAER EL FORMULARIO SEGUN EL IDIOMA
+	    	$form = $this->getCargaForm();
+	    	
+	    	//SE VALIDA EL FORMULARIO
+	    	$form->setInputFilter ( new CargaValidator() );
+	    	
+	    	//SE LLENAN LOS DATOS DEL FORMULARIO
+	    	$form->setData ( $data );
+	    	
+	    	//SE VALIDA EL FORMULARIO ES CORRECTO
+	    	if (! $form->isValid ()) {
+	    	    
+	    	    $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'carga');
+	    	    $puntorecarga = $this->getPuntoRecargaDao()->traer ( $id );
+				
+	    		// SI EL FORMULARIO NO ES CORRECTO
+	    		$modelView = new ViewModel ( array (
+	    				'formulario' => $form,
+	    		        'navegacion' => array('datos' =>  array ( 	'Inicio' => array('parametros','index','video'), 
+	    	        											'Listado de Puntos de Recarga' => array('parametros','puntorecarga','listado'), 
+	    	        											'Ingresar Punto de Recarga' => array('parametros','puntorecarga','cargar')) ),
+	    		        'titulo' => 'Validar Cargar Saldo',
+	    		        'puntorecarga' => $puntorecarga
+	    		) );
+	    			
+	    		$modelView->setTemplate ( 'parametros/puntorecarga/cargar' );
+	    		return $modelView;
+	    	}
+
+	    	
+	    	//SE GENERA EL OBJETO DE CONTACTO
+	    	$carga = new CargaEntity();
+	    	//SE CARGA LA ENTIDAD CON LA INFORMACION DEL POST
+	    	$carga->exchangeArray ( $data );
+	    	
+	    	if(!empty($data['car_id']) && !is_null($data['car_id'])){
+	    	    //SE GRABA LA INFORMACION EN LA BDD
+	    	    $this->getCargaDao() ->actualizar ( $carga, $data['car_id'] );
+	    	} else{
+	    	    //SE GRABA LA INFORMACION EN LA BDD
+	    	    $this->getCargaDao() ->guardar ( $carga );
+	    	}
+	    	
+	    	//SI SE EJECUTO EXITOSAMENTE SE REGRESA AL LISTADO DE CONTACTOS
+	    	return $this->redirect ()->toRoute ( 'parametros', array (
+	    			'controller' => 'puntorecarga',
+	    			'action' => 'listado'
+	    	) );
+	    	
+	    }	
 	}
