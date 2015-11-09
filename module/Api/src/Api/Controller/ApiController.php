@@ -26,6 +26,8 @@ use Application\Model\Entity\Publicidad as PublicidadEntity;
 use Application\Model\Entity\PuntoRecarga as PuntoRecargaEntity;
 use Application\Model\Entity\CompraSaldo as CompraSaldoEntity;
 
+
+
 class ApiController extends AbstractActionController
 {
     
@@ -663,17 +665,6 @@ class ApiController extends AbstractActionController
                 $response->setStatusCode(200);
                 $response->setContent($content);
                 return $response;
-
-                // if(!is_null($this->params('option'))){     
-                //     $option=$this->params('option');   
-                //     switch($option){
-                //         case 'saldo':   
-
-                //         break;
-                //     }    
-                // }else{
-                //     die();   
-                // }
             }else{
                 return $this->redirect ()->toRoute ( 'parametros', array (
                     'controller' => 'index',

@@ -24,6 +24,7 @@ class Module implements AutoloaderProviderInterface
                     __NAMESPACE__ => __DIR__ . '/src/' . str_replace('\\', '/' , __NAMESPACE__),
                 ),
             ),
+
         );
     }
 }
