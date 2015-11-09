@@ -682,43 +682,67 @@ class ApiController extends AbstractActionController
             $host = $uri->getHost();
             $base = sprintf('%s://%s', $scheme, $host);
             $basePath = $base .$this->getRequest()->getBasePath();
-            
-            $client = SesClient::factory(array(
-                'profile' => 'default',
-                'region'  => 'us-east-1',
-                'credentials' => array(
-                   'key'    => '',
-                   'secret' => '',
-                )    
-            ));
 
-            $result = $client->sendEmail(array(
-                // Source is required
-                'Source' => 'informacion@sip.ec',
-                // Destination is required
-                'Destination' => array(
-                    'ToAddresses' => array('lmponceb@gmail.com')
-                ),
-                // Message is required
-                'Message' => array(
-                    // Subject is required
-                    'Subject' => array(
-                        // Data is required
-                        'Data' => 'Recupera tu contrasena',
-                    ),
-                    // Body is required
-                    'Body' => array(
-                        'Text' => array(
-                            // Data is required
-                            'Data' => '',
-                        ),
-                        'Html' => array(
-                            // Data is required
-                            'Data' => "Accede al siguiente link para iniciar el proceso de recuperación de contraseña: <a href='http://ibarra.sip.ec/recuperar?cod=$codigo_generado'>Recuperar Contraseña</a>",
-                        ),
-                    ),
-                )
-            ));
+            /******* Enviando mails a traves de Hawa *********/
+
+            $url = 'http://www.hawasolutions.com/sip/';
+            $params = array('type' => 'recover', 'email' => $email, 'cod' => $codigo_generado);
+            
+            $url .= '?' . http_build_query($params);
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HEADER, false);
+            $data = curl_exec($ch);
+            $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            // if ($status == 200) {
+            //     var_dump($data);
+            // } else {
+            //     var_dump($data);
+            //     var_dump($status);
+            // }
+
+
+
+            
+            // $client = SesClient::factory(array(
+            //     'profile' => 'default',
+            //     'region'  => 'us-east-1',
+            //     'credentials' => array(
+            //        'key'    => '',
+            //        'secret' => '',
+            //     )    
+            // ));
+
+            // $result = $client->sendEmail(array(
+            //     // Source is required
+            //     'Source' => 'informacion@sip.ec',
+            //     // Destination is required
+            //     'Destination' => array(
+            //         'ToAddresses' => array('lmponceb@gmail.com')
+            //     ),
+            //     // Message is required
+            //     'Message' => array(
+            //         // Subject is required
+            //         'Subject' => array(
+            //             // Data is required
+            //             'Data' => 'Recupera tu contrasena',
+            //         ),
+            //         // Body is required
+            //         'Body' => array(
+            //             'Text' => array(
+            //                 // Data is required
+            //                 'Data' => '',
+            //             ),
+            //             'Html' => array(
+            //                 // Data is required
+            //                 'Data' => "Accede al siguiente link para iniciar el proceso de recuperación de contraseña: <a href='http://ibarra.sip.ec/recuperar?cod=$codigo_generado'>Recuperar Contraseña</a>",
+            //             ),
+            //         ),
+            //     )
+            // ));
 
             //echo $this->passwordGenerator();
             die();
