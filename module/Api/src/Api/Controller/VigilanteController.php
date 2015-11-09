@@ -11,8 +11,10 @@
 	use Zend\Mime\Part as MimePart;
 	use Zend\Mail\Transport\Smtp as SmtpTransport;
 	use Zend\Mail\Transport\SmtpOptions;
-
 	use Zend\Json\Json;
+	use Zend\Http\PhpEnvironment\Request;
+	use Zend\Filter\File;
+	use Zend\Soap\Client as SoapClient;
 
 	use Application\Model\Entity\Cliente as ClienteEntity;
 	use Application\Model\Entity\RolUsuario as RolUsuarioEntity;
@@ -20,9 +22,6 @@
 	use Application\Model\Entity\MultaParqueadero as MultaParqueaderoEntity;
 	use Application\Model\Entity\Automovil as AutomovilEntity;
 	use Application\Model\Entity\LogParqueadero as LogParqueaderoEntity;
-
-	use Zend\Http\PhpEnvironment\Request;
-	use Zend\Filter\File;
 
 	class VigilanteController extends AbstractActionController
 	{
@@ -386,7 +385,28 @@
 				}	
 	        }else{
 	        	//Funcionalidad sí es q es GET, es decir consulta de infracciones
-	            return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	        	if(!is_null($this->params('id'))){
+	        		$placa=$this->params('id');
+
+					$client = new nusoap_client('http://sismertws.ibarra.gob.ec/wsgadi.php/notificaciones/getMultasByPlaca?wsdl', 'wsdl');
+					$err = $client->getError();
+					if ($err) {
+						echo '<h2>Constructor error</h2><pre>' . $err . '</pre>';
+					}
+
+					$result = $client->call("getMultasByPlaca", array("numero_placa" => $placa, 
+																				"usuario" => "ROMEROC",
+																				"password" => "CRISTHIAN87"));
+
+
+
+					print_r($result);
+
+					die();
+	        	}
+
+
+	            //return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
 	        }
             $response=$this->getResponse();
             $response->setStatusCode(200);
