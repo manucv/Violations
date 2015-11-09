@@ -621,10 +621,11 @@ class ApiController extends AbstractActionController
 
     public function clientesAction()
     {
+        $content='';
+        $response=$this->getResponse();
+
         if($this->getRequest()->isPOST()){
-            $data = $this->request->getPost ();
-            $content='';
-            $response=$this->getResponse();
+            $data = $this->request->getPost ();    
             if(!$this->getClienteDao()->verificar( $data )){ //envío los datos del usuario
                 $usuario = new UsuarioEntity();
                 
