@@ -655,10 +655,30 @@ class ApiController extends AbstractActionController
             return $response;
 
         }else{
-            return $this->redirect ()->toRoute ( 'parametros', array (
+            if(!is_null($this->params('id'))){
+                $cli_id=$this->params('id');
+                $clienteObj = $this->getClienteDao()->traer( $cli_id );
+                $content=json_encode($clienteObj->getArrayCopy());
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                return $response;
+
+                // if(!is_null($this->params('option'))){     
+                //     $option=$this->params('option');   
+                //     switch($option){
+                //         case 'saldo':   
+
+                //         break;
+                //     }    
+                // }else{
+                //     die();   
+                // }
+            }else{
+                return $this->redirect ()->toRoute ( 'parametros', array (
                     'controller' => 'index',
                     'action' => 'index'
-            ) );
+                ) );    
+            }
         }
     } 
 
