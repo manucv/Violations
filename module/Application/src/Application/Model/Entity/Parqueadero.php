@@ -8,7 +8,9 @@ class Parqueadero {
 	private $par_tipo;
 	private $sec_id;
 	private $sec_nombre;
-	
+	private $par_latitud;
+	private $par_longitud;
+
 	function __construct() {}
 
 	/**
@@ -44,6 +46,20 @@ class Parqueadero {
 	 */
 	public function getSec_nombre() {
 		return $this->sec_nombre;
+	}
+
+	/**
+	 * @return the $par_latitud
+	 */
+	public function getPar_latitud() {
+		return $this->par_latitud;
+	}
+
+	/**
+	 * @return the $par_longitud
+	 */
+	public function getPar_longitud() {
+		return $this->par_longitud;
 	}
 
 	/**
@@ -92,6 +108,10 @@ class Parqueadero {
 		$this->aut_placa = (isset($data['aut_placa'])) ? $data['aut_placa'] : null;
 		$this->par_fecha_ingreso = (isset($data['par_fecha_ingreso'])) ? $data['par_fecha_ingreso'] : null;
 		$this->par_horas_parqueo = (isset($data['par_horas_parqueo'])) ? $data['par_horas_parqueo'] : null;
+
+		$this->par_latitud = (isset($data['par_latitud'])) ? $data['par_latitud'] : null;
+		$this->par_longitud = (isset($data['par_longitud'])) ? $data['par_longitud'] : null;
+		
 		$this->inf_id = (isset($data['inf_id'])) ? $data['inf_id'] : null;
 	}
 	
