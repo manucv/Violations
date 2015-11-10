@@ -128,7 +128,7 @@ class ApiController extends AbstractActionController
                 $response=$this->getResponse();
                 $response->setStatusCode(200);
                 $response->setContent('');
-                return $response;                
+                return $response;
             }else{
                 $est_id=$this->params('id');
                 $establecimiento = $this->getEstablecimientoDao()->traer($est_id);
@@ -139,7 +139,7 @@ class ApiController extends AbstractActionController
                 $response=$this->getResponse();
                 $response->setStatusCode(200);
                 $response->setContent($content);
-                return $response;                                
+                return $response;
             }
 
         }else{
