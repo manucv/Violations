@@ -13,15 +13,31 @@ use Zend\Mvc\Controller\AbstractActionController;
 
 class IndexController extends AbstractActionController
 {
+
+    protected $parqueaderoDao;
+
     public function indexAction()
     {
         $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'dashboard');
-        return array('navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Dashboard' => array('parametros','index','index')) ));
+        $parqueaderos = $this->getParqueaderoDao()->traerTodos();
+        return array('navegacion' => array('datos' =>  array (  'Inicio' => array('parametros','index','video'), 
+                                                                'Dashboard' => array('parametros','index','index')) 
+                                                            ),
+                     'parqueaderos' => $parqueaderos
+                    );
     }
     
     public function videoAction()
     {
         $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'inicio');
         return array();
+    }
+
+    public function getParqueaderoDao() {
+        if (! $this->parqueaderoDao) {
+            $sm = $this->getServiceLocator ();
+            $this->parqueaderoDao = $sm->get ( 'Application\Model\Dao\ParqueaderoDao' );
+        }
+        return $this->parqueaderoDao;
     }
 }
