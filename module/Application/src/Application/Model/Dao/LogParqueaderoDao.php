@@ -13,6 +13,25 @@ class LogParqueaderoDao implements InterfaceCrud {
 		$this->tableGateway = $tableGateway;
 	}
 	
+    public function ticketUsado($nro_ticket){
+
+        if($nro_ticket != ''){ 
+            $nro_ticket = strtoupper($nro_ticket);
+            $sql = new Sql($this->tableGateway->getAdapter());
+            $select = $sql->select();
+            $select->from('log_parqueadero');
+            $select->where            
+                    ->equalTo('nro_ticket',$nro_ticket);
+            
+            $statement = $sql->prepareStatementForSqlObject($select);
+            $results = $statement->execute();
+            $count =  $results->count();
+
+            return $count;
+        }
+        return 0;
+    }
+
 	public function traerOcupadosPorSector($sec_id) {
 		$select = $this->tableGateway->getSql()->select();
 		$select->join ( 'parqueadero', 'log_parqueadero.par_id  = parqueadero.par_id' ); 

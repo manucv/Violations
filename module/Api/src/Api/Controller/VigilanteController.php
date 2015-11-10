@@ -262,8 +262,16 @@
 	        		if(isset($data['aut_placa']))
 	        			$aut_placa= $data['aut_placa'];
 
-	        		if(isset($data['nro_ticket']))
+	        		if(isset($data['nro_ticket'])){
 	        			$nro_ticket= $data['nro_ticket'];
+	        			if($this->getLogParqueaderoDao()->ticketUsado($nro_ticket)){
+	        				$response=$this->getResponse();
+				            $response->setStatusCode(403);
+				            $response->setContent($content);
+				            return $response;
+	        			}
+					}
+
 
 	        		if(isset($data['hora_ini']))
 	        			$hora_ini= $data['hora_ini'];
