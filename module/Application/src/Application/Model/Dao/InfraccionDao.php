@@ -22,6 +22,7 @@ class InfraccionDao implements InterfaceCrud {
     	$select->join('ciudad', 'ciudad.ciu_id = sector.ciu_id');
     	$select->join('estado', 'estado.est_id = ciudad.est_id');
     	$select->join('pais', 'pais.pai_id = estado.pai_id');
+        $select->order('inf_id DESC');
     	$resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;
     }

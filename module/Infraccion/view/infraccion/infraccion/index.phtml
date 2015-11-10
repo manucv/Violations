@@ -37,7 +37,7 @@
                      <?php 
                      foreach ($this->infraccion as $infraccion) : ?>
                      <tr>
-                         <td style="text-align: center;"><a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'detalle'))?>"><i class="fa fa-gavel fa-fw"></i></a></td>
+                         <td style="text-align: center;"><a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'detalle', 'id' => $infraccion->getInf_id()))?>"><i class="fa fa-gavel fa-fw"></i></a></td>
                          <td><?php echo $this->escapeHtml($infraccion->getTip_inf_descripcion());?></td>
                          <td><?php echo $this->escapeHtml($infraccion->getInf_detalles());?></td>
                          <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getInf_fecha());?></td>

@@ -21,6 +21,14 @@ class InfraccionController extends AbstractActionController
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
         );
     }
+
+    public function detalleAction()
+    {
+        $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'infracciones');
+        return array(
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
+        );
+    }
     
     public function getInfraccionDao()
     {
