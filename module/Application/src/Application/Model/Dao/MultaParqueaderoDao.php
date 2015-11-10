@@ -34,6 +34,17 @@ class MultaParqueaderoDao implements InterfaceCrud {
     	
     	return $row;
     }
+
+    public function traerPorInfraccion($inf_id=null){
+        $select = $this->tableGateway->getSql ()->select ();
+        $select->join ( 'infraccion', 'multa_parqueadero.inf_id  = infraccion.inf_id' );
+        if(!is_null($inf_id)){
+            $select->where ( array('multa_parqueadero.inf_id'=>$inf_id) );
+            
+        }       
+        $resultSet = $this->tableGateway->selectWith ( $select );
+        return $resultSet;
+    }
     
     public function guardar(MultaParqueadero $multaParqueadero){
 
