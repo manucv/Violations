@@ -364,7 +364,7 @@
 						}
 						if(isset($_FILES["image2"])){
 							$name_file2 = time().'_'. basename($_FILES["image2"]["name"]);
-							$target_file2 = $target_dir .$name_file;
+							$target_file2 = $target_dir .$name_file2;
 							move_uploaded_file($_FILES["image2"]["tmp_name"], $target_file2);
 						}
 						if(isset($_FILES["image3"])){
