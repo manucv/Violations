@@ -346,15 +346,18 @@
 				    	$target_dir = "/var/www/html/Violations/files/";
 						
 						if(isset($_FILES["image"])){
-							$target_file = $target_dir .time().'_'. basename($_FILES["image"]["name"]);
+							$name_file = time().'_'. basename($_FILES["image"]["name"]);
+							$target_file = $target_dir .$name_file;
 							move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 						}
 						if(isset($_FILES["image2"])){
-							$target_file2 = $target_dir .time().'_'. basename($_FILES["image2"]["name"]);
+							$name_file2 = time().'_'. basename($_FILES["image2"]["name"]);
+							$target_file2 = $target_dir .$name_file;
 							move_uploaded_file($_FILES["image2"]["tmp_name"], $target_file2);
 						}
 						if(isset($_FILES["image3"])){
-							$target_file3 = $target_dir .time().'_'. basename($_FILES["image3"]["name"]);
+							$name_file3 = time().'_'. basename($_FILES["image3"]["name"]);
+							$target_file3 = $target_dir .$name_file3;
 							move_uploaded_file($_FILES["image3"]["tmp_name"], $target_file3);
 						}	
 
@@ -400,9 +403,9 @@
 						$multaParqueaderoData['mul_par_estado']	= $infraction_status; //Reemplazar
 						$multaParqueaderoData['mul_par_valor']	= 0; //Reemplazar
 
-						$multaParqueaderoData['mul_par_prueba_1']	= $target_file;
-						$multaParqueaderoData['mul_par_prueba_2']	= $target_file2;
-						$multaParqueaderoData['mul_par_prueba_3']	= $target_file3;
+						$multaParqueaderoData['mul_par_prueba_1']	= $name_file;
+						$multaParqueaderoData['mul_par_prueba_2']	= $name_file2;
+						$multaParqueaderoData['mul_par_prueba_3']	= $name_file3;
 
 						$multaParqueadero->exchangeArray ( $multaParqueaderoData );
 						$mul_par_id=$this->getMultaParqueaderoDao()->guardar($multaParqueadero);
