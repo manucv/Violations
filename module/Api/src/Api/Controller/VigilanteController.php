@@ -22,6 +22,7 @@
 	use Application\Model\Entity\MultaParqueadero as MultaParqueaderoEntity;
 	use Application\Model\Entity\Automovil as AutomovilEntity;
 	use Application\Model\Entity\LogParqueadero as LogParqueaderoEntity;
+	use Application\Model\Entity\ListaBlanca as ListaBlancaEntity;
 
 	class VigilanteController extends AbstractActionController
 	{
@@ -36,6 +37,7 @@
 		protected $multaParqueaderoDao;
 		protected $automovilDao;
 		protected $logParqueaderoDao;
+		protected $listaBlancaDao;
 
 
 	    public function indexAction()
@@ -272,8 +274,6 @@
 	        		if(isset($data['log_par_horas_parqueo']))
 	        			$log_par_horas_parqueo= $data['log_par_horas_parqueo'];	        				        				        				        		
 
-
-
 					if(!$this->getAutomovilDao()->traer($aut_placa)){
 						$automovil = new AutomovilEntity();
 						$automovil->exchangeArray ( $data );
@@ -330,6 +330,7 @@
 	    			}
 
 	        	}else{
+
 					$par_id 		= $data['par_id'];
 					$aut_placa 		= $data['aut_placa'];
 					$inf_latitud 	= floatval($data['inf_latitud']);
@@ -337,51 +338,59 @@
 					$inf_fecha 		= $data['inf_fecha'];
 					$tip_inf_id 	= $data['tip_inf_id'];
 
-			    	$target_dir = "/var/www/html/violations/files/";
-					
-					if(isset($_FILES["image"])){
-						$target_file = $target_dir .time().'_'. basename($_FILES["image"]["name"]);
-						move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
-					}
-					if(isset($_FILES["image2"])){
-						$target_file2 = $target_dir .time().'_'. basename($_FILES["image2"]["name"]);
-						move_uploaded_file($_FILES["image2"]["tmp_name"], $target_file2);
-					}
-					if(isset($_FILES["image3"])){
-						$target_file3 = $target_dir .time().'_'. basename($_FILES["image3"]["name"]);
-						move_uploaded_file($_FILES["image3"]["tmp_name"], $target_file3);
+					$lista_blanca_obj=$this->getListaBlancaDao()->enLista($aut_placa);
+					if(!$lista_blanca_obj){
+				    	$target_dir = "/var/www/html/violations/files/";
+						
+						if(isset($_FILES["image"])){
+							$target_file = $target_dir .time().'_'. basename($_FILES["image"]["name"]);
+							move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+						}
+						if(isset($_FILES["image2"])){
+							$target_file2 = $target_dir .time().'_'. basename($_FILES["image2"]["name"]);
+							move_uploaded_file($_FILES["image2"]["tmp_name"], $target_file2);
+						}
+						if(isset($_FILES["image3"])){
+							$target_file3 = $target_dir .time().'_'. basename($_FILES["image3"]["name"]);
+							move_uploaded_file($_FILES["image3"]["tmp_name"], $target_file3);
+						}	
+
+						$infraccion = new InfraccionEntity();
+
+						$infraccionData=array();
+						$infraccionData['inf_fecha']	=$inf_fecha;
+						$infraccionData['inf_detalles']	="(Ningún)";
+						$infraccionData['usu_id']		=1;	//Reemplazar
+						$infraccionData['tip_inf_id']	=$tip_inf_id;
+						$infraccionData['sec_id']		=5;	//Reemplazar
+						$infraccionData['inf_latitud']	=$inf_latitud;
+						$infraccionData['inf_longitud']	=$inf_longitud;
+
+						$infraccion->exchangeArray ( $infraccionData );
+		                $inf_id=$this->getInfraccionDao()->guardar($infraccion);
+
+						$multaParqueadero = new MultaParqueaderoEntity();
+						$multaParqueaderoData=array();
+						$multaParqueaderoData['par_id']			= $par_id;
+						$multaParqueaderoData['aut_placa']		= $aut_placa;
+						$multaParqueaderoData['inf_id']			= $inf_id;
+						$multaParqueaderoData['mul_par_estado']	= 'R'; //Reemplazar
+						$multaParqueaderoData['mul_par_valor']	= 0; //Reemplazar
+
+						$multaParqueaderoData['mul_par_prueba_1']	= $target_file;
+						$multaParqueaderoData['mul_par_prueba_2']	= $target_file2;
+						$multaParqueaderoData['mul_par_prueba_3']	= $target_file3;
+
+						$multaParqueadero->exchangeArray ( $multaParqueaderoData );
+						$mul_par_id=$this->getMultaParqueaderoDao()->guardar($multaParqueadero);
+
+						$content=json_encode($multaParqueadero->getArrayCopy());
+					}else{
+			            $response=$this->getResponse();
+			            $response->setStatusCode(403);
+			            $response->setContent($content);
+			            return $response;
 					}	
-
-					$infraccion = new InfraccionEntity();
-
-					$infraccionData=array();
-					$infraccionData['inf_fecha']	=$inf_fecha;
-					$infraccionData['inf_detalles']	="(Ningún)";
-					$infraccionData['usu_id']		=1;	//Reemplazar
-					$infraccionData['tip_inf_id']	=$tip_inf_id;
-					$infraccionData['sec_id']		=5;	//Reemplazar
-					$infraccionData['inf_latitud']	=$inf_latitud;
-					$infraccionData['inf_longitud']	=$inf_longitud;
-
-					$infraccion->exchangeArray ( $infraccionData );
-	                $inf_id=$this->getInfraccionDao()->guardar($infraccion);
-
-					$multaParqueadero = new MultaParqueaderoEntity();
-					$multaParqueaderoData=array();
-					$multaParqueaderoData['par_id']			= $par_id;
-					$multaParqueaderoData['aut_placa']		= $aut_placa;
-					$multaParqueaderoData['inf_id']			= $inf_id;
-					$multaParqueaderoData['mul_par_estado']	= 'R'; //Reemplazar
-					$multaParqueaderoData['mul_par_valor']	= 0; //Reemplazar
-
-					$multaParqueaderoData['mul_par_prueba_1']	= $target_file;
-					$multaParqueaderoData['mul_par_prueba_2']	= $target_file2;
-					$multaParqueaderoData['mul_par_prueba_3']	= $target_file3;
-
-					$multaParqueadero->exchangeArray ( $multaParqueaderoData );
-					$mul_par_id=$this->getMultaParqueaderoDao()->guardar($multaParqueadero);
-
-					$content=json_encode($multaParqueadero->getArrayCopy());
 				}	
 	        }else{
 	        	//Funcionalidad sí es q es GET, es decir consulta de infracciones
@@ -479,6 +488,13 @@
 	            $this->logParqueaderoDao = $sm->get ( 'Application\Model\Dao\LogParqueaderoDao' );
 	        }
 	        return $this->logParqueaderoDao;
+	    }
+	   	public function getListaBlancaDao() {
+	        if (! $this->listaBlancaDao) {
+	            $sm = $this->getServiceLocator ();
+	            $this->listaBlancaDao = $sm->get ( 'Application\Model\Dao\ListaBlancaDao' );
+	        }
+	        return $this->listaBlancaDao;
 	    }
 
 	}
