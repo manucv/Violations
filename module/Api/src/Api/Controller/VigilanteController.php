@@ -343,7 +343,7 @@
 					$lista_blanca_obj=$this->getListaBlancaDao()->enLista($aut_placa);
 					if(!$lista_blanca_obj){
 
-				    	$target_dir = "/var/www/html/violations/files/";
+				    	$target_dir = "/var/www/html/Violations/files/";
 						
 						if(isset($_FILES["image"])){
 							$target_file = $target_dir .time().'_'. basename($_FILES["image"]["name"]);
@@ -365,7 +365,7 @@
 						$infraccionData['inf_detalles']	="(Ningún)";
 						$infraccionData['usu_id']		=$usu_id;
 						$infraccionData['tip_inf_id']	=$tip_inf_id;
-						$infraccionData['sec_id']		=5;	//Reemplazar
+						$infraccionData['sec_id']		=7;	//Reemplazar
 						$infraccionData['inf_latitud']	=$inf_latitud;
 						$infraccionData['inf_longitud']	=$inf_longitud;
 
