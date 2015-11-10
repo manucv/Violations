@@ -106,11 +106,25 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-            <img src="http://ibarra.sip.ec/Violations/files/<?php echo $multaobj->getMul_par_prueba_1(); ?>" alt="" width="300">
-            <img src="http://ibarra.sip.ec/Violations/files/<?php echo $multaobj->getMul_par_prueba_2(); ?>" alt="" width="300">
-            <img src="http://ibarra.sip.ec/Violations/files/<?php echo $multaobj->getMul_par_prueba_3(); ?>" alt="" width="300">
-
+            <?php if($multaobj->getMul_par_prueba_1()!=''): ?>
+                <img src="http://ibarra.sip.ec/Violations/files/<?php echo $multaobj->getMul_par_prueba_1(); ?>" alt="" width="300">
+            <?php endif; ?>
+            <?php if($multaobj->getMul_par_prueba_2()!=''): ?>
+                <img src="http://ibarra.sip.ec/Violations/files/<?php echo $multaobj->getMul_par_prueba_2(); ?>" alt="" width="300">
+            <?php endif; ?>
+            <?php if($multaobj->getMul_par_prueba_3()!=''): ?>
+                <img src="http://ibarra.sip.ec/Violations/files/<?php echo $multaobj->getMul_par_prueba_3(); ?>" alt="" width="300">
+            <?php endif; ?>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-12">
+         <div align="center">
+            <a href="#" class ="btn btn-primary">Aprobar</a>
+            <a href="#" class ="btn btn-primary">Rechazar</a>
+        </div>  
     </div>
 </div>
