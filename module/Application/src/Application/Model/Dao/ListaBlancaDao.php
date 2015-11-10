@@ -35,6 +35,25 @@ class ListaBlancaDao implements InterfaceCrud {
     	return $row;
     }
 
+    public function enLista($lis_bla_placa){
+
+        if($lis_bla_placa != ''){ 
+            $lis_bla_placa = strtoupper($lis_bla_placa);
+            $sql = new Sql($this->tableGateway->getAdapter());
+            $select = $sql->select();
+            $select->from('lista_blanca');
+            $select->where            
+                    ->equalTo('lis_bla_placa',$lis_bla_placa);
+            
+            $statement = $sql->prepareStatementForSqlObject($select);
+            $results = $statement->execute();
+            $count =  $results->count();
+
+            return $count;
+        }
+        return 0;
+    }
+
     public function guardar(ListaBlanca $lista_blanca){
     
     	$id = (int) $lista_blanca->getLis_bla_id();
