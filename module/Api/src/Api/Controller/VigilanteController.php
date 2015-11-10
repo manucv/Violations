@@ -77,7 +77,7 @@
 				return $this->redirect()->toRoute ( 'parametros', array (
 						'controller' => 'index',
 						'action' => 'index'
-				) );	
+				) );
 	        }
 	    }
 
@@ -338,6 +338,8 @@
 					$inf_fecha 		= $data['inf_fecha'];
 					$tip_inf_id 	= $data['tip_inf_id'];
 
+					$usu_id 		= $data['usu_id'];
+
 					$lista_blanca_obj=$this->getListaBlancaDao()->enLista($aut_placa);
 					if(!$lista_blanca_obj){
 
@@ -361,7 +363,7 @@
 						$infraccionData=array();
 						$infraccionData['inf_fecha']	=$inf_fecha;
 						$infraccionData['inf_detalles']	="(Ningún)";
-						$infraccionData['usu_id']		=1;	//Reemplazar
+						$infraccionData['usu_id']		=$usu_id;
 						$infraccionData['tip_inf_id']	=$tip_inf_id;
 						$infraccionData['sec_id']		=5;	//Reemplazar
 						$infraccionData['inf_latitud']	=$inf_latitud;
