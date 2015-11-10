@@ -340,6 +340,7 @@
 
 					$lista_blanca_obj=$this->getListaBlancaDao()->enLista($aut_placa);
 					if(!$lista_blanca_obj){
+
 				    	$target_dir = "/var/www/html/violations/files/";
 						
 						if(isset($_FILES["image"])){
@@ -384,7 +385,26 @@
 						$multaParqueadero->exchangeArray ( $multaParqueaderoData );
 						$mul_par_id=$this->getMultaParqueaderoDao()->guardar($multaParqueadero);
 
-						$content=json_encode($multaParqueadero->getArrayCopy());
+						/* Busca infracciones en Sistema de Sismert, es decir las que no estén pagadas */
+						
+						$url = 'http://54.69.247.99/Violations/sismert/infracciones.php';
+			            $params = array('placa' => $aut_placa );
+			            
+			            $url .= '?' . http_build_query($params);
+			            $ch = curl_init();
+			            curl_setopt($ch, CURLOPT_URL, $url);
+			            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			            curl_setopt($ch, CURLOPT_HEADER, false);
+			            $data = curl_exec($ch);
+			            $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			            curl_close($ch);
+
+			            $infracciones = json_decode($data);
+
+						$multaResult=$multaParqueadero->getArrayCopy();
+						$multaResult['total_multas']=sizeof($infracciones)
+
+						$content=json_encode($multaResult);
 					}else{
 			            $response=$this->getResponse();
 			            $response->setStatusCode(403);
