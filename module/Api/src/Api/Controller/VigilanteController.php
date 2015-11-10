@@ -370,23 +370,7 @@
 						$infraccion->exchangeArray ( $infraccionData );
 		                $inf_id=$this->getInfraccionDao()->guardar($infraccion);
 
-						$multaParqueadero = new MultaParqueaderoEntity();
-						$multaParqueaderoData=array();
-						$multaParqueaderoData['par_id']			= $par_id;
-						$multaParqueaderoData['aut_placa']		= $aut_placa;
-						$multaParqueaderoData['inf_id']			= $inf_id;
-						$multaParqueaderoData['mul_par_estado']	= 'R'; //Reemplazar
-						$multaParqueaderoData['mul_par_valor']	= 0; //Reemplazar
-
-						$multaParqueaderoData['mul_par_prueba_1']	= $target_file;
-						$multaParqueaderoData['mul_par_prueba_2']	= $target_file2;
-						$multaParqueaderoData['mul_par_prueba_3']	= $target_file3;
-
-						$multaParqueadero->exchangeArray ( $multaParqueaderoData );
-						$mul_par_id=$this->getMultaParqueaderoDao()->guardar($multaParqueadero);
-
 						/* Busca infracciones en Sistema de Sismert, es decir las que no estén pagadas */
-						
 						$url = 'http://54.69.247.99/Violations/sismert/infracciones.php';
 			            $params = array('placa' => $aut_placa );
 			            
@@ -400,6 +384,26 @@
 			            curl_close($ch);
 
 			            $infracciones = json_decode($data);
+
+			            $infraction_status="R";
+			            if(sizeof($infracciones)>=3){
+			            	$infraction_status="L"; //lock
+			            }
+
+						$multaParqueadero = new MultaParqueaderoEntity();
+						$multaParqueaderoData=array();
+						$multaParqueaderoData['par_id']			= $par_id;
+						$multaParqueaderoData['aut_placa']		= $aut_placa;
+						$multaParqueaderoData['inf_id']			= $inf_id;
+						$multaParqueaderoData['mul_par_estado']	= $infraction_status; //Reemplazar
+						$multaParqueaderoData['mul_par_valor']	= 0; //Reemplazar
+
+						$multaParqueaderoData['mul_par_prueba_1']	= $target_file;
+						$multaParqueaderoData['mul_par_prueba_2']	= $target_file2;
+						$multaParqueaderoData['mul_par_prueba_3']	= $target_file3;
+
+						$multaParqueadero->exchangeArray ( $multaParqueaderoData );
+						$mul_par_id=$this->getMultaParqueaderoDao()->guardar($multaParqueadero);
 
 						$multaResult=$multaParqueadero->getArrayCopy();
 						$multaResult['total_multas']=sizeof($infracciones);
