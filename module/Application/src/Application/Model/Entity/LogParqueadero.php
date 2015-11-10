@@ -65,6 +65,12 @@ public function getTra_id(){
 	return $this->tra_id;
 }
 
+/**
+* @return the $nro_ticket
+*/
+public function getNro_ticket(){
+	return $this->nro_ticket;
+}
 
 /**
 * @param Ambigous <NULL, unknown> $log_par_id
@@ -123,6 +129,12 @@ public function setTra_id($tra_id){
 	$this->tra_id=$tra_id;
 }
 
+/**
+* @param Ambigous <NULL, unknown> $nro_ticket
+*/
+public function setNro_ticket($nro_ticket){
+	$this->nro_ticket=$nro_ticket;
+}
 
 	public function exchangeArray($data)
 	{
