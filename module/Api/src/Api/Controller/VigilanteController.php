@@ -402,7 +402,7 @@
 			            $infracciones = json_decode($data);
 
 						$multaResult=$multaParqueadero->getArrayCopy();
-						$multaResult['total_multas']=sizeof($infracciones)
+						$multaResult['total_multas']=sizeof($infracciones);
 
 						$content=json_encode($multaResult);
 					}else{
