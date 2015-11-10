@@ -12,6 +12,7 @@ private $log_par_estado;
 private $par_id;
 private $aut_id;
 private $tra_id;
+private $nro_ticket;
 
 function __construct() {}
 
@@ -134,6 +135,7 @@ public function setTra_id($tra_id){
 		$this->par_id = (isset($data['par_id'])) ? $data['par_id'] : null;
 		$this->aut_placa = (isset($data['aut_placa'])) ? $data['aut_placa'] : null;
 		$this->tra_id = (isset($data['tra_id'])) ? $data['tra_id'] : null;
+		$this->nro_ticket = (isset($data['nro_ticket'])) ? $data['nro_ticket'] : null;
 
 	}
 	
