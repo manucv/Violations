@@ -271,8 +271,20 @@
 	        		if(isset($data['minutos_ini']))
 	        			$minutos_ini= $data['minutos_ini'];
 
-	        		if(isset($data['log_par_horas_parqueo']))
-	        			$log_par_horas_parqueo= $data['log_par_horas_parqueo'];	        				        				        				        		
+	        		if(isset($data['log_par_horas_parqueo'])){
+	        			$log_par_horas_parqueo = $data['log_par_horas_parqueo'];	      
+	        			$log_par_horas_parqueo = substr($log_par_horas_parqueo, 0, strpos($log_par_horas_parqueo, ' '));
+	        			if($log_par_horas_parqueo=='30'){
+	        				$log_par_horas_parqueo=0.5;
+	        			}
+	        		}	
+
+	        		if(isset($data['log_par_discount']))
+	        			$log_par_discount= $data['log_par_discount'];	    
+
+	        		if($log_par_discount==1){
+	        			$log_par_horas_parqueo=$log_par_horas_parqueo*2;
+	        		}
 
 					if(!$this->getAutomovilDao()->traer($aut_placa)){
 						$automovil = new AutomovilEntity();
