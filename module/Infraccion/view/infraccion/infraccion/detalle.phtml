@@ -103,11 +103,11 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                
-                
-
-                
-
+            <?php foreach($this->multa as $multa): ?>
+            <img src="http://ibarra.sip.ec/Violations/public/files/<?php echo $multa->getMul_par_prueba_1(); ?>" alt="" width="150">
+            <img src="http://ibarra.sip.ec/Violations/public/files/<?php echo $multa->getMul_par_prueba_2(); ?>" alt="" width="150">
+            <img src="http://ibarra.sip.ec/Violations/public/files/<?php echo $multa->getMul_par_prueba_3(); ?>" alt="" width="150">
+            <?php endforeach; ?>
             </div>
         </div>
     </div>
