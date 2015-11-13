@@ -69,7 +69,7 @@ class Parqueadero extends Form {
 		* ********************************************/
 		
 		$par_tipo = new Select('par_tipo');
-		$par_tipo->setLabel('Estado*: ');
+		$par_tipo->setLabel('Tipo*: ');
 		$par_tipo->setAttributes(array('class' => 'form-control'));
 		$par_tipo->setAttributes(array('id' => 'par_tipo'));
 		$par_tipo->setEmptyOption('-- Seleccione --');
