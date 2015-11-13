@@ -10,6 +10,8 @@ class Parqueadero {
 	private $sec_nombre;
 	private $par_latitud;
 	private $par_longitud;
+	private $par_cal_principal;
+	private $par_cal_secundaria;
 
 	function __construct() {}
 
@@ -63,6 +65,21 @@ class Parqueadero {
 	}
 
 	/**
+	 * @return the $par_cal_secundaria
+	 */
+	public function getPar_cal_secundaria(){
+		return $this->par_cal_secundaria;
+	} 
+
+	/**
+	 * @return the $par_cal_principal
+	 */
+	public function getPar_cal_principal(){
+		return $this->par_cal_principal;
+	} 
+
+
+	/**
 	 * @param Ambigous <NULL, unknown> $par_id
 	 */
 	public function setPar_id($par_id) {
@@ -97,6 +114,20 @@ class Parqueadero {
 		$this->sec_nombre = $sec_nombre;
 	}
 
+	/**
+	 * @param Ambiguos <NULL, unknown> $par_cal_secundaria
+	 */
+	public function setPar_cal_secundaria($par_cal_secundaria){
+		$this->par_cal_secundaria = $par_cal_secundaria;
+	}  
+	/**
+	 * @param Ambiguos <NULL, unknown> $par_cal_principal
+	 */
+	public function setPar_cal_principal($par_cal_principal){
+		$this->par_cal_principal = $par_cal_principal;
+	}  
+
+
 	public function exchangeArray($data)
 	{
 		$this->par_id = (isset($data['par_id'])) ? $data['par_id'] : null;
@@ -111,6 +142,8 @@ class Parqueadero {
 
 		$this->par_latitud = (isset($data['par_latitud'])) ? $data['par_latitud'] : null;
 		$this->par_longitud = (isset($data['par_longitud'])) ? $data['par_longitud'] : null;
+		$this->par_cal_secundaria = (isset($data['par_cal_secundaria'])) ? $data['par_cal_secundaria'] : null;
+		$this->par_cal_principal = (isset($data['par_cal_principal'])) ? $data['par_cal_principal'] : null;		
 		
 		$this->inf_id = (isset($data['inf_id'])) ? $data['inf_id'] : null;
 	}

@@ -98,6 +98,39 @@ class Parqueadero extends Form {
 		));
 		$this->add($sec_id);
 		
+		/* ********************************************
+		 * CAMPO PARQUEADERO LATITUD
+		* ********************************************/
+		
+		$this->add ( array (
+				'name' => 'par_latitud',
+				'options' => array (
+						'label' => 'Latitud*:'
+				),
+				'attributes' => array (
+						'type' => 'text',
+						'id' => 'par_latitud',
+						'class' => 'form-control'
+				)
+		) );
+		
+		
+		/* ********************************************
+		 * CAMPO PARQUEADERO LONGITUD
+		* ********************************************/
+		
+		$this->add ( array (
+				'name' => 'par_longitud',
+				'options' => array (
+						'label' => 'Longitud*:'
+				),
+				'attributes' => array (
+						'type' => 'text',
+						'id' => 'par_longitud',
+						'class' => 'form-control'
+				)
+		) );
+
 		
 		//BOTON DE SUBMIT
 		$this->add ( array (
