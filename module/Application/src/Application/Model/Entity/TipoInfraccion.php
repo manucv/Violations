@@ -6,6 +6,8 @@ class TipoInfraccion {
 	private $tip_inf_id;
 	private $cat_inf_id;
 	private $tip_inf_descripcion;
+	private $tip_inf_legal;
+	private $tip_inf_codigo;
 
 	
 	function __construct() {}
@@ -22,6 +24,12 @@ class TipoInfraccion {
 	 */
 	public function getCat_inf_id() {
 		return $this->cat_inf_id;
+	}
+
+	/**
+	 * @return the $tip_inf_codigo*/
+	public function getTip_inf_codigo() {
+		return $this->tip_inf_codigo;
 	}
 
 	/**
@@ -60,6 +68,13 @@ class TipoInfraccion {
 	}
 
 	/**
+	 * @param Ambigous <NULL, unknown> $tip_inf_codigo
+	 */
+	public function setTip_inf_codigo($tip_inf_codigo) {
+		$this->tip_inf_codigo = $tip_inf_codigo;
+	}
+
+	/**
 	 * @param Ambigous <NULL, unknown> $tip_inf_descripcion
 	 */
 	public function setTip_inf_descripcion($tip_inf_descripcion) {
@@ -84,6 +99,7 @@ class TipoInfraccion {
 	{
 		$this->tip_inf_id = (isset($data['tip_inf_id'])) ? $data['tip_inf_id'] : null;
 		$this->cat_inf_id = (isset($data['cat_inf_id'])) ? $data['cat_inf_id'] : null;
+		$this->tip_inf_codigo = (isset($data['tip_inf_codigo'])) ? $data['tip_inf_codigo'] : null;
 		$this->tip_inf_descripcion = (isset($data['tip_inf_descripcion'])) ? $data['tip_inf_descripcion'] : null;
 		$this->tip_inf_legal = (isset($data['tip_inf_legal'])) ? $data['tip_inf_legal'] : null;
 		$this->tip_inf_valor = (isset($data['tip_inf_valor'])) ? $data['tip_inf_valor'] : null;

@@ -49,7 +49,8 @@ class PuntoRecarga extends Form {
 						'type' => 'text',
 						'maxlength' => '45',
 						'id' => 'pun_rec_nombre',
-						'class' => 'form-control'
+						'class' => 'form-control',
+						'readonly' => 'true'
 				)
 		) );
 		
@@ -66,9 +67,46 @@ class PuntoRecarga extends Form {
 						'type' => 'text',
 						'maxlength' => '13',
 						'id' => 'pun_rec_ruc',
-						'class' => 'form-control'
+						'class' => 'form-control',
+						'readonly' => 'true'
 				)
 		) );
+
+		/* ********************************************
+		 * CAMPO NOMBRES PROPIETARIO
+		 * ********************************************/
+		
+		$this->add ( array (
+				'name' => 'pun_rec_nombres',
+				'options' => array (
+						'label' => 'Nombres Propietario:'
+				),
+				'attributes' => array (
+						'type' => 'text',
+						'maxlength' => '45',
+						'id' => 'pun_rec_nombres',
+						'class' => 'form-control',
+						'readonly' => 'true'
+				)
+		) );
+
+		/* ********************************************
+		 * CAMPO APELLIDOS PROPIETARIO
+		 * ********************************************/
+		
+		$this->add ( array (
+				'name' => 'pun_rec_apellidos',
+				'options' => array (
+						'label' => 'Apellidos Propietario:'
+				),
+				'attributes' => array (
+						'type' => 'text',
+						'maxlength' => '45',
+						'id' => 'pun_rec_apellidos',
+						'class' => 'form-control',
+						'readonly' => 'true'
+				)
+		) );				
 		
 		/* ********************************************
 		 * CAMPO CODIGO
@@ -131,7 +169,8 @@ class PuntoRecarga extends Form {
 				'attributes' => array (
 						'type' => 'text',
 						'id' => 'pun_rec_direccion',
-						'class' => 'form-control'
+						'class' => 'form-control',
+						'readonly' => 'true'
 				)
 		) );
 
@@ -179,7 +218,7 @@ class PuntoRecarga extends Form {
 		$this->add ( array (
 				'name' => 'pun_rec_clave',
 				'options' => array (
-						'label' => 'Clave*:'
+						'label' => 'Clave Sistema de Ventas:'
 				),
 				'attributes' => array (
 						'type' => 'password',

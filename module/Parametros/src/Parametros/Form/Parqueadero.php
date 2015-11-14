@@ -131,6 +131,39 @@ class Parqueadero extends Form {
 				)
 		) );
 
+
+		/* ********************************************
+		 * CAMPO CALLE PRINCIPAL
+		* ********************************************/
+		
+		$par_estado = new Select('par_cal_principal');
+		$par_estado->setLabel('Calle Principal: ');
+		$par_estado->setAttributes(array('class' => 'form-control'));
+		$par_estado->setAttributes(array('id' => 'par_cal_principal'));
+		$par_estado->setEmptyOption('-- Seleccione --');
+
+		$par_estado->setOptions(array(
+				'disable_inarray_validator' => false, // <-- disable
+		));
+		$this->add($par_estado);
+
+		/* ********************************************
+		 * CAMPO CALLE SECUNDARIA
+		* ********************************************/
+		
+		$par_estado = new Select('par_cal_secundaria');
+		$par_estado->setLabel('Calle Secundaria: ');
+		$par_estado->setAttributes(array('class' => 'form-control'));
+		$par_estado->setAttributes(array('id' => 'par_cal_secundaria'));
+		$par_estado->setEmptyOption('-- Seleccione --');
+
+		$par_estado->setOptions(array(
+				'disable_inarray_validator' => false, // <-- disable
+		));
+		$this->add($par_estado);		
+
+
+
 		
 		//BOTON DE SUBMIT
 		$this->add ( array (

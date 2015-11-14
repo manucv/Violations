@@ -16,6 +16,7 @@
 	use Application\Model\Entity\Carga as CargaEntity;
 
 
+
 	class PuntoRecargaController extends AbstractActionController
 	{
 		protected $puntoRecargaDao;
@@ -23,6 +24,8 @@
 
 		public function listadoAction()
 	    {
+
+	    	$this->getPuntoRecargaDao()->traerTodosMunicipio();
 	        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'Puntos de Recarga');
 	        
 	        return array(

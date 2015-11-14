@@ -292,7 +292,11 @@ class ParqueaderoDao implements InterfaceCrud {
 				'par_id' => $parqueadero->getPar_id(),
 				'par_estado' => $parqueadero->getPar_estado(),
 				'par_tipo' => $parqueadero->getPar_tipo(),
-				'sec_id' => $parqueadero->getSec_id()
+				'sec_id' => $parqueadero->getSec_id(),
+				'par_latitud' => $parqueadero->getPar_latitud(),
+				'par_longitud' => $parqueadero->getPar_longitud(),
+				'par_cal_principal' => $parqueadero->getPar_cal_principal(),
+				'par_cal_secundaria' => $parqueadero->getPar_cal_secundaria()
 		);
 		
 		$this->tableGateway->insert ( $data );
@@ -306,7 +310,11 @@ class ParqueaderoDao implements InterfaceCrud {
 	        'par_id' => $parqueadero->getPar_id(),
 	        'par_estado' => $parqueadero->getPar_estado(),
 	        'par_tipo' => $parqueadero->getPar_tipo(),
-	        'sec_id' => $parqueadero->getSec_id()
+	        'sec_id' => $parqueadero->getSec_id(),
+	        'par_latitud' => $parqueadero->getPar_latitud(),
+			'par_longitud' => $parqueadero->getPar_longitud(),
+			'par_cal_principal' => $parqueadero->getPar_cal_principal(),
+			'par_cal_secundaria' => $parqueadero->getPar_cal_secundaria()
 	    );
 	
 	    if (!empty ( $par_codigo ) && !is_null ( $par_codigo )) {

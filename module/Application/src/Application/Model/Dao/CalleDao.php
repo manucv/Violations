@@ -36,6 +36,31 @@ class CalleDao implements InterfaceCrud {
     	return $row;
     }
 
+    public function traerTodosArreglo(){
+    
+        $sql = new Sql($this->tableGateway->getAdapter());
+        $select = $sql->select();
+        $select->from($this->tableGateway->table);
+    
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $results = $statement->execute();
+    
+        $calles = new \ArrayObject();
+        $result = array();
+    
+        foreach ($results as $row){
+            $calle = new Calle();
+            $calle->exchangeArray($row);
+            $calles->append($calle);
+        }
+    
+        foreach ($calles as $cal){
+            $result[$cal->getCal_id()] = $cal->getCal_nombre();
+        }
+    
+        return $result;
+    }
+
     public function guardar(Calle $calle){
 
     	$id = (int) $calle->getCal_id();
