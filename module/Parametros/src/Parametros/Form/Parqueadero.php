@@ -34,7 +34,7 @@ class Parqueadero extends Form {
 		$this->add ( array (
 				'name' => 'par_id',
 				'options' => array (
-						'label' => 'N&uacute;mero/C&oacute;digo de Parqueadero*:'
+						'label' => 'N&uacute;mero de Parqueadero*:'
 				),
 				'attributes' => array (
 						'type' => 'text',
@@ -136,31 +136,31 @@ class Parqueadero extends Form {
 		 * CAMPO CALLE PRINCIPAL
 		* ********************************************/
 		
-		$par_estado = new Select('par_cal_principal');
-		$par_estado->setLabel('Calle Principal: ');
-		$par_estado->setAttributes(array('class' => 'form-control'));
-		$par_estado->setAttributes(array('id' => 'par_cal_principal'));
-		$par_estado->setEmptyOption('-- Seleccione --');
+		$par_cal_principal = new Select('par_cal_principal');
+		$par_cal_principal->setLabel('Calle Principal: ');
+		$par_cal_principal->setAttributes(array('class' => 'form-control'));
+		$par_cal_principal->setAttributes(array('id' => 'par_cal_principal'));
+		$par_cal_principal->setEmptyOption('-- Seleccione --');
 
-		$par_estado->setOptions(array(
+		$par_cal_principal->setOptions(array(
 				'disable_inarray_validator' => false, // <-- disable
 		));
-		$this->add($par_estado);
+		$this->add($par_cal_principal);
 
 		/* ********************************************
 		 * CAMPO CALLE SECUNDARIA
 		* ********************************************/
 		
-		$par_estado = new Select('par_cal_secundaria');
-		$par_estado->setLabel('Calle Secundaria: ');
-		$par_estado->setAttributes(array('class' => 'form-control'));
-		$par_estado->setAttributes(array('id' => 'par_cal_secundaria'));
-		$par_estado->setEmptyOption('-- Seleccione --');
+		$par_cal_secundaria = new Select('par_cal_secundaria');
+		$par_cal_secundaria->setLabel('Calle Secundaria: ');
+		$par_cal_secundaria->setAttributes(array('class' => 'form-control'));
+		$par_cal_secundaria->setAttributes(array('id' => 'par_cal_secundaria'));
+		$par_cal_secundaria->setEmptyOption('-- Seleccione --');
 
-		$par_estado->setOptions(array(
+		$par_cal_secundaria->setOptions(array(
 				'disable_inarray_validator' => false, // <-- disable
 		));
-		$this->add($par_estado);		
+		$this->add($par_cal_secundaria);		
 
 
 

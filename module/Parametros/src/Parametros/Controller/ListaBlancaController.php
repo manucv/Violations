@@ -71,7 +71,7 @@
 	    	
 	    	//SE LLENAN LOS DATOS DEL FORMULARIO
 	    	$form->setData ( $data );
-	    	
+
 	    	//SE VALIDA EL FORMULARIO ES CORRECTO
 	    	if (! $form->isValid ()) {
 	    	    
@@ -85,7 +85,7 @@
 	    		        'titulo' => 'Validar informaci&oacute;n de'
 	    		) );
 	    			
-	    		$modelView->setTemplate ( 'parametros/listablanca/ingresar' );
+	    		$modelView->setTemplate ( 'parametros/lista-blanca/ingresar' );
 	    		return $modelView;
 	    	}
 	    	

@@ -26,7 +26,9 @@
                  	 	<a href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action'=>'ingresar'));?>" class="btn btn-primary">
                      	<i class="fa fa-plus-circle"></i> Nuevo</a>
                  	 </th>
+                     <th>C&oacute;digo</th>
                      <th>Descripci&oacute;n</th>
+                     <th>Valor</th>
                  </tr>
                  </thead>
                  <tbody>
@@ -37,7 +39,9 @@
                  	 	<a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'editar', 'id' => $tipo_infraccion->getTip_inf_id()))?>"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;
                  	 	<a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'eliminar', 'id' => $tipo_infraccion->getTip_inf_id()))?>" onclick="return eliminarRegistro('<?php echo $tipo_infraccion->getTip_inf_descripcion() ?>');"><i class="fa fa-trash-o"></i></a>
                  	 </td>
+                     <td><?php echo $this->escapeHtml($tipo_infraccion->getTip_inf_codigo());?></td>
                  	 <td><?php echo $this->escapeHtml($tipo_infraccion->getTip_inf_descripcion());?></td>
+                     <td>$<?php echo number_format($tipo_infraccion->getTip_inf_valor(),2);?></td>
                  </tr>
                  <?php endforeach; ?>
                  </tbody>

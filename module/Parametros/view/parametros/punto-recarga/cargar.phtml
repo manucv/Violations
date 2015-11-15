@@ -46,7 +46,7 @@ echo $this->formhidden ( $pun_rec_id );
 				
 				<div class="form-group">
 	                <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
-	                    <label for="">RUC del Local:</label>
+	                    <label for="">Cedula/RUC:</label>
                 	</div>
                 	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 						<?php echo $this->puntorecarga->getPun_rec_ruc(); ?>
@@ -60,6 +60,24 @@ echo $this->formhidden ( $pun_rec_id );
                 	</div>
                 	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 						<?php echo $this->puntorecarga->getPun_rec_nombre(); ?>
+            		</div>
+                </div>
+
+                <div class="form-group">
+	                <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+	                    <label for="">Propietario:</label>
+                	</div>
+                	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+						<?php echo $this->puntorecarga->getPun_rec_nombres().' '.$this->puntorecarga->getPun_rec_apellidos(); ?>
+            		</div>
+                </div>
+
+                <div class="form-group">
+	                <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+	                    <label for="">Saldo Actual:</label>
+                	</div>
+                	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+						$<?php echo $this->puntorecarga->getPun_rec_saldo(); ?>
             		</div>
                 </div>
 

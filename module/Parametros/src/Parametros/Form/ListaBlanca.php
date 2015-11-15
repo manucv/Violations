@@ -37,11 +37,11 @@ class ListaBlanca extends Form {
 		$this->add ( array (
 				'name' => 'lis_bla_placa',
 				'options' => array (
-						'label' => 'Placa:'
+						'label' => 'Placa*:'
 				),
 				'attributes' => array (
 						'type' => 'text',
-						'maxlength' => '10',
+						'maxlength' => '7',
 						'id' => 'lis_bla_placa',
 						'class' => 'form-control'
 				)

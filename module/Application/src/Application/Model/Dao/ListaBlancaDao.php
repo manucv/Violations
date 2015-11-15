@@ -60,7 +60,7 @@ class ListaBlancaDao implements InterfaceCrud {
     
     	$data = array(
 			'lis_bla_id' => $lista_blanca->getLis_bla_id(),
-			'lis_bla_placa' => $lista_blanca->getLis_bla_placa()
+			'lis_bla_placa' => strtoupper($lista_blanca->getLis_bla_placa())
     	);
     	
     	$data ['lis_bla_id'] = $id;
@@ -82,7 +82,7 @@ class ListaBlancaDao implements InterfaceCrud {
     
         $data = array (
             'lis_bla_id' => $lista_blanca->getLis_bla_id(),
-            'lis_bla_placa' => $lista_blanca->getLis_bla_placa(),
+            'lis_bla_placa' => strtoupper($lista_blanca->getLis_bla_placa()),
         );
     
         if (!empty ( $lis_bla_id ) && !is_null ( $lis_bla_id )) {

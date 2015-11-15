@@ -199,12 +199,25 @@ echo $this->formelementerrors ( $par_codigo );
     var map;
     var markers = [];
     var geocoder;
+
+
+    var latitud  = $('#par_latitud').val();
+    var longitud = $('#par_longitud').val();
+
     function initialize() {
         geocoder = new google.maps.Geocoder();
-        var lugar = new google.maps.LatLng(-0.1865943, -78.4305382);
-        var mapOptions = { zoom: 4, center: lugar };
+        
+        if(latitud=='' && longitud=='' )
+            var lugar = new google.maps.LatLng(0.3668378562642896, -78.128708);
+        else{
+            var lugar = new google.maps.LatLng(latitud, longitud);
+        }
+        
+        var mapOptions = { zoom: 16, center: lugar };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     
+        addMarker(lugar, map);
+
         google.maps.event.addListener(map, 'click', function(e) {
                 var total = totalMarkers();
                 if(total == 0){

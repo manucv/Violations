@@ -184,6 +184,8 @@
 
         public function saldoAction(){
 
+        	
+
 	    	//VERIFICA QUE SE HAYA REALIZADO UN POST DE INFORMACION
 	    	if (! $this->request->isPost ()) {
 	    		return $this->redirect ()->toRoute ( 'parametros', array (
@@ -204,6 +206,7 @@
 	    	//SE LLENAN LOS DATOS DEL FORMULARIO
 	    	$form->setData ( $data );
 	    	
+	    	$id=$data['pun_rec_id'];
 	    	//SE VALIDA EL FORMULARIO ES CORRECTO
 	    	if (! $form->isValid ()) {
 	    	    
@@ -220,7 +223,7 @@
 	    		        'puntorecarga' => $puntorecarga
 	    		) );
 	    			
-	    		$modelView->setTemplate ( 'parametros/puntorecarga/cargar' );
+	    		$modelView->setTemplate ( 'parametros/punto-recarga/cargar' );
 	    		return $modelView;
 	    	}
 
@@ -245,4 +248,16 @@
 	    	) );
 	    	
 	    }	
+
+
+	    public function verificarAction(){
+    
+		
+	        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'Puntos de Recarga');
+	        
+	        return array(
+	            'cargas' =>	$this->getCargaDao()->traerPendientes(),
+	            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Pagos por Verificar' => array('parametros','puntorecarga','verificar')) ),
+	        );
+		}
 	}

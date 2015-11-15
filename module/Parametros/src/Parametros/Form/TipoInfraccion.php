@@ -78,18 +78,6 @@ class TipoInfraccion extends Form {
 				)
 		) );
 
-		$this->add ( array (
-				'name' => 'tip_inf_valor',
-				'options' => array (
-						'label' => 'Valor:'
-				),
-				'attributes' => array (
-						'type' => 'text',
-						'id' => 'tip_inf_valor',
-						'class' => 'form-control'
-				)
-		) );
-
 		//BOTON DE SUBMIT
 		$this->add ( array (
 				'name' => 'ingresar',

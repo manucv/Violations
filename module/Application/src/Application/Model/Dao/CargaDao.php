@@ -35,6 +35,20 @@ class CargaDao implements InterfaceCrud {
     	return $row;
     }
 
+
+    public function traerPendientes(){
+                 
+        $resultSet = $this->tableGateway->select(array('car_estado' => 'P'));
+        $row =  $resultSet->current();
+        
+        if(!$row){
+            throw new \Exception('No se encontro el ID de la recarga');
+        }
+        
+        return $row;
+    }
+    
+
     public function guardar(Carga $carga){
     	$id = (int) $carga->getCar_id();
     
