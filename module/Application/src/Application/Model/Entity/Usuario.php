@@ -12,7 +12,8 @@ class Usuario {
 	private $usu_clave;
 	private $usu_estado;
 	private $usu_fecha_registro;
-	
+	private $usu_documento;
+
     private $usu_codigo_recuperacion;
 
 	private $ciu_nombre_es;
@@ -34,6 +35,14 @@ class Usuario {
     public function getCiu_id()
     {
         return $this->ciu_id;
+    }
+
+    /**
+     * @return the $usu_documento
+     */
+    public function getUsu_documento()
+    {
+        return $this->usu_documento;
     }
 
 	/**
@@ -132,6 +141,14 @@ class Usuario {
         $this->ciu_id = $ciu_id;
     }
 
+    /**
+     * @param Ambigous <NULL, unknown> $usu_documento
+     */
+    public function setUsu_documento($usu_documento)
+    {
+        $this->usu_documento = $usu_documento;
+    }
+
 	/**
      * @param Ambigous <NULL, unknown> $usu_usuario
      */
@@ -215,6 +232,7 @@ class Usuario {
 	public function exchangeArray($data) {
 		$this->usu_id = (isset ( $data ['usu_id'] )) ? $data ['usu_id'] : null;
 		$this->ciu_id = (isset ( $data ['ciu_id'] )) ? $data ['ciu_id'] : null;
+        $this->usu_documento = (isset ( $data ['usu_documento'] )) ? $data ['usu_documento'] : null;
 		$this->usu_usuario = (isset ( $data ['usu_usuario'] )) ? $data ['usu_usuario'] : null;
 		$this->usu_email = (isset ( $data ['usu_email'] )) ? $data ['usu_email'] : null;
 		$this->usu_nombre = (isset ( $data ['usu_nombre'] )) ? $data ['usu_nombre'] : null;

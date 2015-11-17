@@ -74,6 +74,23 @@ use Zend\Form\Element\Select;
 				)
 		) );
 		
+		/* ********************************************
+		 * CAMPO DOCUMENTO
+		 * ********************************************/
+		
+		$this->add ( array (
+				'name' => 'usu_documento',
+				'options' => array (
+						'label' => 'Documento*:'
+				),
+				'attributes' => array (
+						'type' => 'text',
+						'maxlength' => '10',
+						'id' => 'usu_documento',
+						'class' => 'form-control'
+				)
+		) );
+
 		
 		/* ********************************************
 		 * CAMPO NOMBRE

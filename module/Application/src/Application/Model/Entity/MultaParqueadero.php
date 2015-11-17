@@ -13,6 +13,8 @@ class MultaParqueadero {
 	private $mul_par_prueba_1;
 	private $mul_par_prueba_2;
 	private $mul_par_prueba_3;
+	private $par_cal_principal;
+	private $par_cal_secundaria;
 	
 	function __construct() {}
 
@@ -86,7 +88,19 @@ class MultaParqueadero {
 		return $this->mul_par_prueba_3;
 	}
 
+	/**
+	 * @return the $par_cal_principal
+	 */
+	public function getPar_cal_principal() {
+		return $this->par_cal_principal;
+	}
 
+	/**
+	 * @return the $par_cal_secundaria
+	 */
+	public function getPar_cal_secundaria() {
+		return $this->par_cal_secundaria;
+	}
 
 	/**
 	 * @param Ambigous <NULL, unknown> $mul_par_id
@@ -158,6 +172,20 @@ class MultaParqueadero {
 		$this->mul_par_prueba_3 = $mul_par_prueba_3;
 	}
 
+	/**
+	 * @param Ambigous <NULL, unknown> $par_cal_principal
+	 */
+	public function setPar_cal_principal($par_cal_principal) {
+		$this->par_cal_principal = $par_cal_principal;
+	}
+	
+	/**
+	 * @param Ambigous <NULL, unknown> $par_cal_secundaria
+	 */
+	public function setPar_cal_secundaria($par_cal_secundaria) {
+		$this->par_cal_secundaria = $par_cal_secundaria;
+	}
+
 	public function exchangeArray($data)
 	{
 		$this->mul_par_id = (isset($data['mul_par_id'])) ? $data['mul_par_id'] : null;
@@ -170,6 +198,9 @@ class MultaParqueadero {
 		$this->mul_par_prueba_1 = (isset($data['mul_par_prueba_1'])) ? $data['mul_par_prueba_1'] : null;
 		$this->mul_par_prueba_2 = (isset($data['mul_par_prueba_2'])) ? $data['mul_par_prueba_2'] : null;
 		$this->mul_par_prueba_3 = (isset($data['mul_par_prueba_3'])) ? $data['mul_par_prueba_3'] : null;
+
+		$this->par_cal_principal = (isset($data['par_cal_principal'])) ? $data['par_cal_principal'] : null;
+		$this->par_cal_secundaria = (isset($data['par_cal_secundaria'])) ? $data['par_cal_secundaria'] : null;
 	}
 	
 	public function getArrayCopy(){

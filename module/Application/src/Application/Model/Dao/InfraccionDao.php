@@ -3,7 +3,10 @@ namespace Application\Model\Dao;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
+use Zend\Soap\Client as SoapClient;
+
 use Application\Model\Entity\Infraccion;
+use Application\Model\Entity\MultaParqueadero;
 use Application\Model\Dao\InterfaceCrud;
 
 class InfraccionDao implements InterfaceCrud {
@@ -22,7 +25,9 @@ class InfraccionDao implements InterfaceCrud {
     	$select->join('ciudad', 'ciudad.ciu_id = sector.ciu_id');
     	$select->join('estado', 'estado.est_id = ciudad.est_id');
     	$select->join('pais', 'pais.pai_id = estado.pai_id');
-        $select->order('inf_id DESC');
+        $select->join('multa_parqueadero', 'infraccion.inf_id = multa_parqueadero.inf_id');
+        $select->where (array('inf_estado' => 'R'));
+        $select->order('infraccion.inf_id DESC');
     	$resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;
     }
@@ -31,7 +36,11 @@ class InfraccionDao implements InterfaceCrud {
     	 
     	$inf_id = (int) $inf_id;
     	 
-    	$resultSet = $this->tableGateway->select(array('inf_id' => $inf_id));
+    	$select = $this->tableGateway->getSql ()->select ();
+        $select->join('tipo_infraccion', 'tipo_infraccion.tip_inf_id = infraccion.tip_inf_id');
+        $select->where (array('inf_id' => $inf_id));
+        $resultSet = $this->tableGateway->selectWith ( $select );
+
     	$row =  $resultSet->current();
     	
     	if(!$row){
@@ -52,7 +61,8 @@ class InfraccionDao implements InterfaceCrud {
     			'tip_inf_id' => $infraccion->getTip_inf_id(),
     			'sec_id' => $infraccion->getSec_id(),
                 'inf_latitud' => $infraccion->getInf_latitud(),
-                'inf_longitud' => $infraccion->getInf_longitud()
+                'inf_longitud' => $infraccion->getInf_longitud(),
+                'inf_estado' => $infraccion->getInf_estado()
     	);
     	
     	$data ['inf_id'] = $id;
@@ -80,4 +90,114 @@ class InfraccionDao implements InterfaceCrud {
 			throw new \Exception ( 'No se encontro el id para eliminar' );
 		}
 	}
+
+    public function asentarInfraccionMunicipio( $data){
+        
+        $client = new SoapClient("http://sismertws.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl", 
+                        array(  "soap_version" => SOAP_1_1, 'encoding' => 'iso-8859-1')
+                    );
+
+        $result = $client->insertNotificacion($data);
+        $debug=$client->getLastRequest();
+
+        $url = 'http://localhost/Violations/sismert/confirmar.php';
+        
+        $url .= '?' . http_build_query($data);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        $response = curl_exec($ch);
+        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        return $response;
+
+    }
+
+    public function traerPorTipo($fecha_ini, $fecha_fin){
+        $adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT tip_inf_codigo, tip_inf_descripcion, count(inf_id) as total 
+                FROM `infraccion` AS i right 
+                JOIN tipo_infraccion AS t 
+                    ON t.tip_inf_id=i.tip_inf_id ";
+
+        if($fecha_ini!='' || $fecha_fin!='')                    
+            $query .= " WHERE ";
+        if($fecha_ini!='')            
+            $query .= " i.inf_fecha >= '$fecha_ini 00:00:00' ";
+        if($fecha_ini!='' && $fecha_fin!='')
+            $query .= " AND ";    
+        if($fecha_fin!='')            
+            $query .= " i.inf_fecha <= '$fecha_fin 23:59:59' ";
+
+        $query .= " GROUP BY t.tip_inf_id
+                ORDER BY tip_inf_codigo ASC
+        ";
+        
+
+
+        $statement = $adapter->query($query);
+        $results = $statement->execute();
+
+        return $results;
+    }
+
+    public function traerPorVigilante($fecha_ini, $fecha_fin){
+        $adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT usu_nombre, usu_apellido, count(inf_id) as total 
+                FROM `infraccion` AS i 
+                JOIN usuario AS u 
+                    ON u.usu_id=i.usu_id ";
+
+        if($fecha_ini!='' || $fecha_fin!='')                    
+            $query .= " WHERE ";
+        if($fecha_ini!='')            
+            $query .= " i.inf_fecha >= '$fecha_ini 00:00:00' ";
+        if($fecha_ini!='' && $fecha_fin!='')
+            $query .= " AND ";    
+        if($fecha_fin!='')            
+            $query .= " i.inf_fecha <= '$fecha_fin 23:59:59' ";
+
+        $query .= " GROUP BY u.usu_id
+                ORDER BY usu_nombre ASC
+        ";
+        
+        $statement = $adapter->query($query);
+        $results = $statement->execute();
+
+        return $results;
+    }
+
+    public function traerPorCalle($fecha_ini, $fecha_fin){
+        $adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT cal_nombre, count(i.inf_id) as total 
+                FROM `infraccion` AS i 
+                JOIN multa_parqueadero AS m 
+                    ON m.inf_id=i.inf_id 
+                JOIN parqueadero AS p 
+                    ON m.par_id=p.par_id     
+                JOIN calle AS c 
+                    ON p.par_cal_principal=c.cal_id ";                      
+        
+        if($fecha_ini!='' || $fecha_fin!='')                    
+            $query .= " WHERE ";
+        if($fecha_ini!='')            
+            $query .= " i.inf_fecha >= '$fecha_ini 00:00:00' ";
+        if($fecha_ini!='' && $fecha_fin!='')
+            $query .= " AND ";    
+        if($fecha_fin!='')            
+            $query .= " i.inf_fecha <= '$fecha_fin 23:59:59' ";
+
+        $query .= " GROUP BY p.par_cal_principal
+                ORDER BY cal_nombre ASC
+        ";
+        
+        $statement = $adapter->query($query);
+        $results = $statement->execute();
+
+        return $results;
+    }
 }

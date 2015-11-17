@@ -4,7 +4,10 @@ namespace Application\Model\Dao;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
+use Zend\Soap\Client as SoapClient;
+
 use Application\Model\Entity\Carga;
+use Application\Model\Entity\PuntoRecarga;
 use Application\Model\Dao\InterfaceCrud;
 
 class CargaDao implements InterfaceCrud {
@@ -38,14 +41,18 @@ class CargaDao implements InterfaceCrud {
 
     public function traerPendientes(){
                  
-        $resultSet = $this->tableGateway->select(array('car_estado' => 'P'));
-        $row =  $resultSet->current();
+        $adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT * 
+            FROM carga AS c
+            JOIN punto_recarga AS p ON c.pun_rec_id=p.pun_rec_id
+            WHERE car_estado='P'
+        ";
         
-        if(!$row){
-            throw new \Exception('No se encontro el ID de la recarga');
-        }
-        
-        return $row;
+        $statement = $adapter->query($query);
+        $results = $statement->execute();
+
+        return $results;
     }
     
 
@@ -56,7 +63,10 @@ class CargaDao implements InterfaceCrud {
 			'pun_rec_id' => $carga->getPun_rec_id(),
 			'car_valor' => $carga->getCar_valor()
     	);
-    	
+
+        if($carga->getCar_estado())
+    	   $data['car_estado'] = $carga->getCar_estado();
+
     	$data ['car_id'] = $id;
 
     	if (!empty ( $id ) && !is_null ( $id )) {
@@ -79,6 +89,28 @@ class CargaDao implements InterfaceCrud {
 			throw new \Exception ( 'No se encontro el id para eliminar' );
 		}
 	}
+
+    public function asentarCargaMunicipio(Carga $carga, PuntoRecarga $punto_recarga){
+        
+        $client = new SoapClient("http://ws.ibarra.gob.ec:8080/ServicioTest/ServicioWS?wsdl", 
+                        array(  "soap_version" => SOAP_1_1, 'encoding' => 'iso-8859-1')
+                    );
+
+
+        $data=array(
+            'usuario'=>'SISMERTWSE',
+            'password'=>'Eb2Yhye3', 
+            'cedulaCiudadano' => $punto_recarga->getPun_rec_ruc(),
+            'nombreCiudadano' => $punto_recarga->getPun_rec_nombres().' '.$punto_recarga->getPun_rec_apellidos(),
+            'direccion' => $punto_recarga->getPun_rec_direccion(),
+            'valorTitulo' => $carga->getCar_valor(),
+            'usuarioIngreso' => 'jjarrin'
+            );
+
+        $result = $client->ingresoPago($data);
+
+        return $result->return;
+    }   
 
     
 }	

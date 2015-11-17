@@ -251,13 +251,33 @@
 
 
 	    public function verificarAction(){
-    
-		
+
 	        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'Puntos de Recarga');
 	        
 	        return array(
 	            'cargas' =>	$this->getCargaDao()->traerPendientes(),
 	            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Pagos por Verificar' => array('parametros','puntorecarga','verificar')) ),
 	        );
+		}
+
+		public function aceptarCargaAction(){
+			$id = $this->params ()->fromRoute ( 'id', 0 );
+			$carga = $this->getCargaDao()->traer($id);
+			if(is_object($carga)){
+				$carga->setCar_estado('A');
+				$pun_rec_id=$carga->getPun_rec_id();
+				$punto_recarga = $this->getPuntoRecargaDao()->traer($pun_rec_id);
+
+				/* ejecución del servicio del municipio */
+				if($this->getCargaDao()->asentarCargaMunicipio($carga,$punto_recarga)){
+					$this->getCargaDao()->guardar($carga);	
+				}
+			}
+			
+			return $this->redirect ()->toRoute ( 'parametros', array (
+	    		'controller' => 'puntorecarga',
+	    		'action' => 'verificar'
+	    	) );
+			
 		}
 	}

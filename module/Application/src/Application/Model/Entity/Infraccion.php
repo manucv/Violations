@@ -8,6 +8,7 @@ class Infraccion {
 	private $inf_detalles;
 	private $usu_id;
 	private $tip_inf_id;
+    private $tip_inf_codigo;
 	private $sec_id;
     private $inf_latitud;
     private $inf_longitud;    
@@ -19,6 +20,11 @@ class Infraccion {
 	private $ciu_nombre_es;
 	private $est_nombre_es;
 	private $pai_nombre_es;
+
+    private $par_id;
+    private $aut_placa;
+    private $inf_estado;
+
 	
 	function __construct() {}
 
@@ -60,6 +66,14 @@ class Infraccion {
     public function getTip_inf_id()
     {
         return $this->tip_inf_id;
+    }
+
+    /**
+     * @return the $tip_inf_codigo
+     */
+    public function getTip_inf_codigo()
+    {
+        return $this->tip_inf_codigo;
     }
 
 	/**
@@ -142,6 +156,32 @@ class Infraccion {
         return $this->pai_nombre_es;
     }
 
+    /**
+     * @return the $par_id
+     */
+    public function getPar_id()
+    {
+        return $this->par_id;
+    }
+
+    /**
+     * @return the $aut_placa
+     */
+    public function getAut_placa()
+    {
+        return $this->aut_placa;
+    }
+
+    /**
+     * @return the $inf_estado
+     */
+    public function getInf_estado()
+    {
+        return $this->inf_estado;
+    }
+
+
+
 	/**
      * @param Ambigous <NULL, unknown> $inf_id
      */
@@ -180,6 +220,14 @@ class Infraccion {
     public function setTip_inf_id($tip_inf_id)
     {
         $this->tip_inf_id = $tip_inf_id;
+    }
+
+    /**
+     * @param Ambigous <NULL, unknown> $tip_inf_id
+     */
+    public function setTip_inf_codigo($tip_inf_codigo)
+    {
+        $this->tip_inf_codigo = $tip_inf_codigo;
     }
 
 	/**
@@ -262,18 +310,44 @@ class Infraccion {
         $this->pai_nombre_es = $pai_nombre_es;
     }
 
+    /**
+     * @param Ambigous <NULL, unknown> $par_id
+     */
+    public function setPar_id($par_id)
+    {
+        $this->par_id = $par_id;
+    }
+
+    /**
+     * @param Ambigous <NULL, unknown> $aut_placa
+     */
+    public function setAut_placa($aut_placa)
+    {
+        $this->aut_placa = $aut_placa;
+    }
+
+    /**
+     * @param Ambigous <NULL, unknown> $inf_estado
+     */
+    public function setInf_estado($inf_estado)
+    {
+        $this->inf_estado = $inf_estado;
+    }
+
 	public function exchangeArray($data)
 	{
 		$this->inf_id = (isset($data['inf_id'])) ? $data['inf_id'] : null;
 		$this->inf_fecha = (isset($data['inf_fecha'])) ? $data['inf_fecha'] : null;
 		$this->inf_detalles = (isset($data['inf_detalles'])) ? $data['inf_detalles'] : null;
 		$this->usu_id = (isset($data['usu_id'])) ? $data['usu_id'] : null;
+
 		$this->tip_inf_id = (isset($data['tip_inf_id'])) ? $data['tip_inf_id'] : null;
-		$this->sec_id = (isset($data['sec_id'])) ? $data['sec_id'] : null;
+		$this->tip_inf_codigo = (isset($data['tip_inf_codigo'])) ? $data['tip_inf_codigo'] : null;
+
+        $this->sec_id = (isset($data['sec_id'])) ? $data['sec_id'] : null;
         $this->inf_latitud = (isset($data['inf_latitud'])) ? $data['inf_latitud'] : null;
         $this->inf_longitud = (isset($data['inf_longitud'])) ? $data['inf_longitud'] : null;
 
-		
 		$this->usu_nombre = (isset($data['usu_nombre'])) ? $data['usu_nombre'] : null;
 		$this->usu_apellido = (isset($data['usu_apellido'])) ? $data['usu_apellido'] : null;
 		$this->tip_inf_descripcion = (isset($data['tip_inf_descripcion'])) ? $data['tip_inf_descripcion'] : null;
@@ -281,6 +355,10 @@ class Infraccion {
 		$this->ciu_nombre_es = (isset($data['ciu_nombre_es'])) ? $data['ciu_nombre_es'] : null;
 		$this->est_nombre_es = (isset($data['est_nombre_es'])) ? $data['est_nombre_es'] : null;
 		$this->pai_nombre_es = (isset($data['pai_nombre_es'])) ? $data['pai_nombre_es'] : null;
+
+        $this->par_id = (isset($data['par_id'])) ? $data['par_id'] : null;
+        $this->aut_placa = (isset($data['aut_placa'])) ? $data['aut_placa'] : null;
+        $this->inf_estado = (isset($data['inf_estado'])) ? $data['inf_estado'] : null;
 	}
 	
 	public function getArrayCopy(){

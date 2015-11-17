@@ -26,12 +26,11 @@
                  <table class="table table-striped table-hover" style="font-size: 12px;" >
                  <thead>
                  <tr>
-                 	 <th width="7%">Acciones</th>
-                     <th>RUC</th>
-                     <th>Nombre</th>
-                     <th>Dirección</th>
-                     <th>Saldo</th>
-                     
+                    <th>Fecha</th>
+                    <th>Punto de Recarga</th>
+                    
+                    <th>Valor</th>
+                    <th width="7%">Acciones</th>
                  </tr>
                  </thead>
                  <tbody>
@@ -39,16 +38,14 @@
                  <?php 
                  foreach ($this->cargas as $carga) : ?>
                  <tr>
-                     <td class="dataTableIcons">
-                        <a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'puntorecarga', 'action' => 'editar', 'id' => $punto->getPun_rec_id()))?>"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;
-                        
-                        <a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'puntorecarga', 'action' => 'cargar', 'id' => $punto->getPun_rec_id()))?>"><i class="fa fa-money"></i></a>
-                     </td>
-                     <td><?php echo $this->escapeHtml($punto->getPun_rec_ruc());?></td>
-                     <td><?php echo $this->escapeHtml($punto->getPun_rec_nombre());?></td>
-                     <td><?php echo $this->escapeHtml($punto->getPun_rec_direccion());?></td>
-                     <td>$<?php echo $this->escapeHtml($punto->getPun_rec_saldo());?></td>
-                     
+                    <td><?php  echo $this->escapeHtml($carga['car_fecha']);?></td>
+                    <td><?php  echo $this->escapeHtml($carga['pun_rec_nombre']);?></td>
+                    <td>$<?php  echo $this->escapeHtml($carga['car_valor']);?></td>
+                    <td class="dataTableIcons">
+                        <a class="fa-lg" onclick="return confirm('Está seguro de que desea aprobar esta recarga? Si acepta, se registrará en el sistema del municipio')" href="<?php echo $this->url('parametros', array('controller' => 'puntorecarga', 'action' => 'aceptar_carga', 'id' => $carga['car_id']))?>"><i class="fa fa-check "></i></a>
+    <!--                         &nbsp;&nbsp;&nbsp;
+                            <a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'puntorecarga', 'action' => 'rechazar_carga', 'id' => $carga['car_id']))?>"><i class="fa fa-times"></i></a> -->
+                    </td>
                  </tr>
                  <?php endforeach; ?>
 

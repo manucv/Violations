@@ -1,12 +1,12 @@
 <?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); ?>
-
+<?php echo $this->message; ?>
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-12" >
         <div class="box">
             <div class="box-header">
 				<div class="box-name">
 					<i class="fa fa-gears fa-fw"></i>
-					<span>Listado de Infracciones</span>
+					<span>Listado de Infracciones Pendientes de Verificaci&oacute;n</span>
 				</div>
 				<div class="box-icons hidden-xs">
 					<a class="collapse-link">
@@ -19,32 +19,28 @@
 				<div class="no-move"></div>
 			</div>
 			<div class="box-content" style="min-height: 80px;">
+
+                       <?php echo $this->mensaje; ?> 
+
                      <table class="table table-striped table-hover" style="font-size: 12px;" >
                      <thead>
                      <tr>
-                         <th>&nbsp;</th>
-                     	 <th><span class="hidden-xs">Tipo de </span>Infracci&oacute;n</th>
-                         <th>Placa</th>
+                         
                          <th class="hidden-xs">Fecha</th>
-                         <th class="hidden-xs">Pa&iacute;s</th>
-                         <th class="hidden-xs">Estado</th>
-                         <th class="hidden-xs">Ciudad</th>
+                     	 <th><span class="hidden-xs">Tipo de </span>Infracci&oacute;n</th>
                          <th class="hidden-xs">Sector</th>
-                         <th class="hidden-xs">Vigilante</th>
+                         <th>Placa</th>
+                         <th>&nbsp;</th>
                      </tr>
                      </thead>
                      <tbody>
-                     <?php  foreach ($this->infraccion as $infraccion) : ?>
+                     <?php  foreach ($this->infraccion as $infraccion): ?>
                      <tr>
-                         <td style="text-align: center;"><a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'detalle', 'id' => $infraccion->getInf_id()))?>"><i class="fa fa-gavel fa-fw"></i></a></td>
-                         <td><?php echo $this->escapeHtml($infraccion->getTip_inf_descripcion());?></td>
-                         <td><?php echo $this->escapeHtml($infraccion->getInf_detalles());?></td>
                          <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getInf_fecha());?></td>
-                         <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getPai_nombre_es());?></td>
-                         <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getEst_nombre_es());?></td>
-                         <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getCiu_nombre_es());?></td>
+                         <td><?php echo $this->escapeHtml($infraccion->getTip_inf_descripcion());?></td>
                          <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getSec_nombre());?></td>
-                         <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getUsu_nombre() . ' ' . $infraccion->getUsu_apellido());?></td>
+                         <td><?php echo $this->escapeHtml($infraccion->getAut_placa());?></td>
+                        <td style="text-align: center;"><a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'detalle', 'id' => $infraccion->getInf_id()))?>"><i class="fa fa-gavel fa-fw"></i></a></td>
                      </tr>
                      <?php  endforeach; ?>
                      </tbody>
