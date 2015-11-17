@@ -47,6 +47,7 @@ class TipoInfraccionDao implements InterfaceCrud {
     	$id = ( int ) $tipo_infraccion->getTip_inf_id ();
     
     	$data = array (
+                'tip_inf_codigo' => $tipo_infraccion->getTip_inf_codigo (),
     			'tip_inf_descripcion' => $tipo_infraccion->getTip_inf_descripcion (),
                 'tip_inf_legal' => $tipo_infraccion->getTip_inf_legal (),
                 'tip_inf_valor' => $tipo_infraccion->getTip_inf_valor (),

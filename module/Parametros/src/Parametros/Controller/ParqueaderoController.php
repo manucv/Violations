@@ -19,6 +19,7 @@ class ParqueaderoController extends AbstractActionController
 {
 	protected $parqueaderoDao;
 	protected $sectorDao;
+    protected $calleDao;
 	
     public function listadoAction()
     {
@@ -149,6 +150,8 @@ class ParqueaderoController extends AbstractActionController
 	public function getForm() {
 		$form = new Parqueadero ();
 		$form->get ( 'sec_id' )->setValueOptions ( $this->getSectorDao ()->traerTodosArreglo () );
+        $form->get ( 'par_cal_principal' )->setValueOptions ( $this->getCalleDao ()->traerTodosArreglo () );
+        $form->get ( 'par_cal_secundaria' )->setValueOptions ( $this->getCalleDao ()->traerTodosArreglo () );
 		return $form;
 	}
     
@@ -166,5 +169,13 @@ class ParqueaderoController extends AbstractActionController
     		$this->sectorDao = $sm->get ( 'Application\Model\Dao\SectorDao' );
     	}
     	return $this->sectorDao;
+    }
+
+    public function getCalleDao() {
+        if (! $this->calleDao) {
+            $sm = $this->getServiceLocator ();
+            $this->calleDao = $sm->get ( 'Application\Model\Dao\CalleDao' );
+        }
+        return $this->calleDao;
     }
 }

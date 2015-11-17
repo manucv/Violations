@@ -24,7 +24,19 @@ class TipoInfraccion extends Form {
 				)
 		) );
 		
-		
+		$this->add ( array (
+				'name' => 'tip_inf_codigo',
+				'options' => array (
+						'label' => 'Código:'
+				),
+				'attributes' => array (
+						'type' => 'text',
+						'id' => 'tip_inf_codigo',
+						'class' => 'form-control'
+				)
+		) );
+
+
 		/* ********************************************
 		 * CAMPO NOMBRE
 		 * ********************************************/
@@ -65,7 +77,6 @@ class TipoInfraccion extends Form {
 						'class' => 'form-control'
 				)
 		) );
-
 
 		//BOTON DE SUBMIT
 		$this->add ( array (

@@ -37,6 +37,10 @@
                  <tbody>
                  <?php 
                  $suma = 0;
+                 $sumaHoras = 0;
+                 $sumaValorHora = 0;
+                 $sumaTotal = 0;
+                 
                  foreach ($this->transaccion as $transaccion) : ?>
                  <tr>
                      <td style="height: 28px;"><?php echo $this->escapeHtml($transaccion->getCiu_nombre_es());?></td>

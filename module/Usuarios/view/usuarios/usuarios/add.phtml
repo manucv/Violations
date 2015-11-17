@@ -19,6 +19,7 @@ $usu_apellido = $form->get ( 'usu_apellido' );
 $usu_clave = $form->get ( 'usu_clave' );
 $usu_clave_check = $form->get ( 'usu_clave_check' );
 $usu_estado = $form->get ( 'usu_estado' );
+$usu_documento = $form->get ( 'usu_documento' );
 
 //EMPIEZA A ESCRIBIRSE EL FORMULARIO
 echo $this->form ()->openTag ( $form );
@@ -91,6 +92,21 @@ echo $this->formelementerrors ( $usu_id );
                 		?>
                 	</div>
                 </div>
+
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+                        <?php 
+                        echo $formLabel->openTag() . $usu_documento->getLabel() . $formLabel->closeTag();
+                       ?>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                       <?php 
+                        echo html_entity_decode( $this->formtext ( $usu_documento ) );
+                        echo html_entity_decode( $this->formelementerrors ( $usu_documento ) );
+                        ?>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <?php 

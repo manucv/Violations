@@ -39,6 +39,7 @@ class UsuarioDao implements InterfaceCrud {
     
     	$data = array (
     			'ciu_id' => $usuario->getCiu_id (),
+                'usu_documento' => $usuario->getUsu_documento (),
     			'usu_usuario' => $usuario->getUsu_usuario (),
     			'usu_email' => $usuario->getUsu_email (),
     			'usu_nombre' => $usuario->getUsu_nombre (),
@@ -56,6 +57,7 @@ class UsuarioDao implements InterfaceCrud {
     			
     			$data = array (
     					'ciu_id' => $usuario->getCiu_id (),
+                        'usu_documento' => $usuario->getUsu_documento (),
     					'usu_usuario' => $usuario->getUsu_usuario (),
     					'usu_email' => $usuario->getUsu_email (),
     					'usu_nombre' => $usuario->getUsu_nombre (),

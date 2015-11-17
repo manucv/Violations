@@ -15,7 +15,9 @@ class PuntoRecarga {
 	private $pun_rec_saldo;
 	private $pun_rec_habilitado;
 	private $pun_rec_clave;
-	
+	private $pun_rec_nombres;
+	private $pun_rec_apellidos;
+
 	/*
 	* @return the $pun_rec_id
 	*/
@@ -86,6 +88,19 @@ class PuntoRecarga {
 		return $this->pun_rec_clave;
 	}
 
+	/*
+	* @return the $pun_rec_nombres
+	*/
+	public function getPun_rec_nombres(){
+		return $this->pun_rec_nombres;
+	}
+
+	/*
+	* @return the $pun_rec_apellidos
+	*/
+	public function getPun_rec_apellidos(){
+		return $this->pun_rec_apellidos;
+	}	
 
 	/**
 	* @param Ambigous <NULL, unknown> $pun_rec_id 
@@ -157,6 +172,20 @@ class PuntoRecarga {
 		$this->pun_rec_clave = $pun_rec_clave;
 	}
 
+	/**
+	* @param Ambigous <NULL, unknown> $pun_rec_nombres
+	*/
+	public function setPun_rec_nombres($pun_rec_nombres){
+		$this->pun_rec_nombres = $pun_rec_nombres;
+	}
+
+	/**
+	* @param Ambigous <NULL, unknown> $pun_rec_apellidos
+	*/
+	public function setPun_rec_apellidos($pun_rec_apellidos){
+		$this->pun_rec_apellidos = $pun_rec_apellidos;
+	}	
+
 	public function exchangeArray($data)
 	{
 		$this->pun_rec_id = (isset($data['pun_rec_id'])) ? $data['pun_rec_id'] : null;
@@ -169,6 +198,8 @@ class PuntoRecarga {
 		$this->pun_rec_saldo	= (isset($data['pun_rec_saldo'])) ? $data['pun_rec_saldo'] : null;
 		$this->pun_rec_habilitado	= (isset($data['pun_rec_habilitado'])) ? $data['pun_rec_habilitado'] : null;
 		$this->pun_rec_clave	= (isset($data['pun_rec_clave'])) ? $data['pun_rec_clave'] : null;
+		$this->pun_rec_nombres = (isset($data['pun_rec_nombres'])) ? $data['pun_rec_nombres'] : null;
+		$this->pun_rec_apellidos = (isset($data['pun_rec_apellidos'])) ? $data['pun_rec_apellidos'] : null;
 
 	}
 		

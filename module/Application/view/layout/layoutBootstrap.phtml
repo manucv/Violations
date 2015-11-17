@@ -31,6 +31,7 @@
                     //->prependStylesheet ( $this->basePath () . '/css/bootstrap.css' )
         
         echo $this->headScript ()
+        			->prependFile ( $this->basePath () . '/js/highcharts.js')
                     ->prependFile ( $this->basePath () . '/js/respond.min.js', 'text/javascript', array ('conditional' => 'lt IE 9'	) )
                     ->prependFile ( $this->basePath () . '/js/html5shiv.js', 'text/javascript', array (	'conditional' => 'lt IE 9'	) )
                     ->prependFile ( $this->basePath () . '/js/dataTables.bootstrap.js')
@@ -41,7 +42,8 @@
                     //->prependFile ( $this->basePath () . '/plugins/justified-gallery/jquery.justifiedgallery.min.js' )
                     ->prependFile ( $this->basePath () . '/plugins/bootstrap/bootstrap.min.js' )
                     ->prependFile ( $this->basePath () . '/plugins/jquery-ui/jquery-ui.min.js' )
-                    ->prependFile ( $this->basePath () . '/plugins/jquery/jquery-2.1.0.min.js');
+                    ->prependFile ( $this->basePath () . '/plugins/jquery/jquery-2.1.0.min.js')
+                    ;
 		?>
 					<script>
 		 $(document).ready(function(){
@@ -189,8 +191,14 @@
 						<li id="parqueaderos"><a href="<?php echo $this->url('parametros', array('controller' => 'parqueadero', 'action' => 'listado')) ?>"><i class="fa fa-map-marker fa-fw"></i> Parqueaderos</a></li>
 						<li id="tipoInfraccion"><a href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'listado')) ?>"><i class="fa fa-list fa-fw"></i> Tipo Infracci&oacute;n</a></li>
 						<li id="puntoRecarga"><a href="<?php echo $this->url('parametros', array('controller' => 'puntorecarga', 'action' => 'listado')) ?>"><i class="fa fa-shopping-cart fa-fw"></i> Punto de Recarga</a></li>
+						<li id="recargasTiendas">
+							 <a href="<?php echo $this->url('parametros', array('controller' => 'puntorecarga', 'action' => 'verificar')) ?>">
+								 <i class="fa fa-check"></i>
+								 <span class="hidden-xs">Verificar Recargas</span>
+							</a>
+						</li>
 						<li id="puntoRecarga"><a href="<?php echo $this->url('parametros', array('controller' => 'listablanca', 'action' => 'listado')) ?>"><i class="fa fa-ban fa-fw"></i> Lista Blanca</a></li>		
-						<li id="puntoRecarga"><a href="<?php echo $this->url('parametros', array('controller' => 'calle', 'action' => 'listado')) ?>"><i class="glyphicon glyphicon-road fa-fw"></i> Calles</a></li>						
+						<li id="puntoRecarga"><a href="<?php echo $this->url('parametros', array('controller' => 'calle', 'action' => 'listado')) ?>"><i class="fa fa-road fa-fw"></i> Calles</a></li>						
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -230,18 +238,8 @@
 						 <span class="hidden-xs">Compras de Parqueo</span>
 					</a>
 				 </li>
-<!-- 				 <li class="dropdown">
-					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-bar-chart-o"></i>
-						<span class="hidden-xs" id="reportes">Reportes</span>
-					</a>
-					<ul class="dropdown-menu">
-    					<li><a href="<?php echo $this->url('reportes', array('controller' => 'index', 'action' => 'index')) ?>">Float Charts</a></li>
-						<li><a href="<?php echo $this->url('reportes', array('controller' => 'index', 'action' => 'xchart')) ?>">X Charts</a></li>
-						<li><a href="<?php echo $this->url('reportes', array('controller' => 'index', 'action' => 'chartsgoogle')) ?>">Google Charts</a></li>
-						<li><a href="<?php echo $this->url('reportes', array('controller' => 'index', 'action' => 'chartsmorris')) ?>">Morris Charts</a></li>
-					</ul>
-				</li> -->
+
+
 			</ul>
 		</div>
 		<!--Start Content-->

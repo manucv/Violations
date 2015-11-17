@@ -14,6 +14,7 @@ $tip_inf_id = $form->get ( 'tip_inf_id' );
 $tip_inf_descripcion = $form->get ( 'tip_inf_descripcion' );
 $tip_inf_legal = $form->get ( 'tip_inf_legal' );
 $tip_inf_valor = $form->get ( 'tip_inf_valor' );
+$tip_inf_codigo = $form->get ( 'tip_inf_codigo' );
 
 //EMPIEZA A ESCRIBIRSE EL FORMULARIO
 echo $this->form ()->openTag ( $form );
@@ -47,6 +48,21 @@ echo $this->formelementerrors ( $tip_inf_id );
             		  <label class="control-label" style="color: #ee9f1f;">Ingrese la informaci&oacute;n solicitada. Todos los campos con * son obligatorios.</label>
         			</div>
     			</div>
+
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+                        <?php  
+                        echo $formLabel->openTag() . $tip_inf_codigo->getLabel() . $formLabel->closeTag();
+                       ?>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <?php 
+                        echo html_entity_decode( $this->formtext( $tip_inf_codigo ) );
+                        echo html_entity_decode( $this->formelementerrors ( $tip_inf_codigo ) );
+                        ?>
+                    </div>
+                </div>
+
     			<div class="form-group">
                     <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <?php  

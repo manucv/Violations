@@ -319,6 +319,14 @@
 					// $content=json_encode($responseArray);
 	        	}
 	        }else{
+	        	$client = new SoapClient("http://sismertws.ibarra.gob.ec/wsgadi.php/notificaciones/getMultasByPlaca?wsdl", 
+	        		array(	"soap_version" => SOAP_1_1, 
+	        				'encoding'=>'utf-8', 
+	        				'features' => SOAP_SINGLE_ELEMENT_ARRAYS)
+	        		);
+				$result1 = $client->getMultasByPlaca(array('numero_placa'=>'POL0110','usuario'=>'','password'=>''));
+				print_r($result1);
+				die();	        	
 	        	return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
 	        }
 

@@ -46,6 +46,16 @@ class UsuarioValidator extends InputFilter {
 		
 		$this->add ( $usu_usuario );
 		
+		$usu_documento = new Input ( 'usu_documento' );
+		$usu_documento->setRequired ( true );
+		$usu_documento->getValidatorChain ()->attach ( new StringLength ( array (
+				'max' => 10,
+				'min' => 10,
+		) ) )->attach(new NotEmpty());
+		
+		$this->add ( $usu_documento );
+
+
 		$usu_email = new Input ( 'usu_email' );
 		$usu_email->setRequired ( true );
 		$usu_email->getValidatorChain ()->attach ( new StringLength ( array (

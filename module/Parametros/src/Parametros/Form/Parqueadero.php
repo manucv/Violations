@@ -34,7 +34,7 @@ class Parqueadero extends Form {
 		$this->add ( array (
 				'name' => 'par_id',
 				'options' => array (
-						'label' => 'N&uacute;mero/C&oacute;digo de Parqueadero*:'
+						'label' => 'N&uacute;mero de Parqueadero*:'
 				),
 				'attributes' => array (
 						'type' => 'text',
@@ -69,7 +69,7 @@ class Parqueadero extends Form {
 		* ********************************************/
 		
 		$par_tipo = new Select('par_tipo');
-		$par_tipo->setLabel('Estado*: ');
+		$par_tipo->setLabel('Tipo*: ');
 		$par_tipo->setAttributes(array('class' => 'form-control'));
 		$par_tipo->setAttributes(array('id' => 'par_tipo'));
 		$par_tipo->setEmptyOption('-- Seleccione --');
@@ -98,6 +98,72 @@ class Parqueadero extends Form {
 		));
 		$this->add($sec_id);
 		
+		/* ********************************************
+		 * CAMPO PARQUEADERO LATITUD
+		* ********************************************/
+		
+		$this->add ( array (
+				'name' => 'par_latitud',
+				'options' => array (
+						'label' => 'Latitud*:'
+				),
+				'attributes' => array (
+						'type' => 'text',
+						'id' => 'par_latitud',
+						'class' => 'form-control'
+				)
+		) );
+		
+		
+		/* ********************************************
+		 * CAMPO PARQUEADERO LONGITUD
+		* ********************************************/
+		
+		$this->add ( array (
+				'name' => 'par_longitud',
+				'options' => array (
+						'label' => 'Longitud*:'
+				),
+				'attributes' => array (
+						'type' => 'text',
+						'id' => 'par_longitud',
+						'class' => 'form-control'
+				)
+		) );
+
+
+		/* ********************************************
+		 * CAMPO CALLE PRINCIPAL
+		* ********************************************/
+		
+		$par_cal_principal = new Select('par_cal_principal');
+		$par_cal_principal->setLabel('Calle Principal: ');
+		$par_cal_principal->setAttributes(array('class' => 'form-control'));
+		$par_cal_principal->setAttributes(array('id' => 'par_cal_principal'));
+		$par_cal_principal->setEmptyOption('-- Seleccione --');
+
+		$par_cal_principal->setOptions(array(
+				'disable_inarray_validator' => false, // <-- disable
+		));
+		$this->add($par_cal_principal);
+
+		/* ********************************************
+		 * CAMPO CALLE SECUNDARIA
+		* ********************************************/
+		
+		$par_cal_secundaria = new Select('par_cal_secundaria');
+		$par_cal_secundaria->setLabel('Calle Secundaria: ');
+		$par_cal_secundaria->setAttributes(array('class' => 'form-control'));
+		$par_cal_secundaria->setAttributes(array('id' => 'par_cal_secundaria'));
+		$par_cal_secundaria->setEmptyOption('-- Seleccione --');
+
+		$par_cal_secundaria->setOptions(array(
+				'disable_inarray_validator' => false, // <-- disable
+		));
+		$this->add($par_cal_secundaria);		
+
+
+
 		
 		//BOTON DE SUBMIT
 		$this->add ( array (

@@ -8,6 +8,7 @@ class Carga {
 	private $pun_rec_id;
 	private $car_valor;
 	private $car_fecha;
+	private $car_estado;
 
 	/*
 	*@return the $car_id
@@ -35,6 +36,13 @@ class Carga {
 	*/
 	public function getCar_fecha(){
 		return $this->car_fecha;
+	}
+
+	/*
+	*@return the $car_estado
+	*/
+	public function getCar_estado(){
+		return $this->car_estado;
 	}
 
 	/**
@@ -65,12 +73,20 @@ class Carga {
 		$this->car_fecha= $car_fecha;
 	}
 	
+	/**
+	* @param Ambigous <NULL, unknown> $car_estado
+	*/
+	public function setCar_estado($car_estado){
+		$this->car_estado= $car_estado;
+	}
+
 	public function exchangeArray($data)
 	{
 		$this->car_id = (isset($data['car_id'])) ? $data['car_id'] : null;
 		$this->pun_rec_id = (isset($data['pun_rec_id'])) ? $data['pun_rec_id'] : null;
 		$this->car_valor = (isset($data['car_valor'])) ? $data['car_valor'] : null;
 		$this->car_fecha = (isset($data['car_fecha'])) ? $data['car_fecha'] : null;
+		$this->car_estado = (isset($data['car_estado'])) ? $data['car_estado'] : null;
 	}
 		
 	public function getArrayCopy(){

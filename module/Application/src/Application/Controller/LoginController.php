@@ -121,7 +121,6 @@ class LoginController extends AbstractActionController {
 	}	
 
 	public function secret($password){
-		/*Aqui va la llamada a la librer�a de validaci�n de contrase�as de Azul*/
 		return md5($password);
 // 		$eclave='';
 // 			for ($i = 0; $i < strlen($password); $i++) {

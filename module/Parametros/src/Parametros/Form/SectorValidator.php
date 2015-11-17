@@ -24,6 +24,7 @@ class SectorValidator extends InputFilter {
 		
 		$sec_nombre = new Input ( 'sec_nombre' );
 		$sec_nombre->setRequired ( true );
+		$sec_nombre->setErrorMessage ( "Ingrese un Nombre valido" );
 		$sec_nombre->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 45,
 		) ) )->attach ( new Alnum ( array (
@@ -35,6 +36,7 @@ class SectorValidator extends InputFilter {
 		
 		$sec_latitud = new Input ( 'sec_latitud' );
 		$sec_latitud->setRequired ( true );
+		$sec_latitud->setErrorMessage ( "Ingrese una latitud valida, o de click en el mapa" );
 		$sec_latitud->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 35,
 		) ) )
@@ -48,6 +50,7 @@ class SectorValidator extends InputFilter {
 		
 		$sec_longitud = new Input ( 'sec_longitud' );
 		$sec_longitud->setRequired ( true );
+		$sec_longitud->setErrorMessage ( "Ingrese una longitud valida, o de click en el mapa" );
 		$sec_longitud->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 35,
 		) ) )->attach(new NotEmpty())
@@ -61,6 +64,7 @@ class SectorValidator extends InputFilter {
 		
 		$ciu_id = new Input ( 'ciu_id' );
 		$ciu_id->setRequired ( true );
+		$ciu_id->setErrorMessage ( "Seleccione una ciudad" );
 		$ciu_id->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 11,
 				'min' => 1,
@@ -71,6 +75,7 @@ class SectorValidator extends InputFilter {
 		
 		$pai_id = new Input ( 'pai_id' );
 		$pai_id->setRequired ( true );
+		$pai_id->setErrorMessage ( "Seleccione un pais" );
 		$pai_id->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 11,
 				'min' => 1,
@@ -81,6 +86,7 @@ class SectorValidator extends InputFilter {
 		
 		$est_id = new Input ( 'est_id' );
 		$est_id->setRequired ( true );
+		$est_id->setErrorMessage ( "Seleccione un estado" );
 		$est_id->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 11,
 				'min' => 1,
@@ -93,6 +99,7 @@ class SectorValidator extends InputFilter {
 		
 		$sec_ubicacion = new Input ( 'sec_ubicacion' );
 		$sec_ubicacion->setRequired ( true );
+		$sec_ubicacion->setErrorMessage ( "Ingrese una ubicacion" );
 		$sec_ubicacion->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 150,
 				'min' => 1
