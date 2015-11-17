@@ -400,6 +400,7 @@
 						$infraccionData['sec_id']		=7;	//Reemplazar
 						$infraccionData['inf_latitud']	=$inf_latitud;
 						$infraccionData['inf_longitud']	=$inf_longitud;
+						$infraccionData['inf_estado']	='R';
 
 						$infraccion->exchangeArray ( $infraccionData );
 		                $inf_id=$this->getInfraccionDao()->guardar($infraccion);
