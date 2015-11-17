@@ -26,7 +26,6 @@
                  	 <th>Nombre</th>
                  	 <th>Apellido</th>
                      <th>Email</th>
-                     <th>Usuario</th>
                      <th>Saldo</th>
                      <th>Estado</th>
                      <th>Fecha Registro</th>
@@ -43,7 +42,6 @@
                      <td><?php echo $this->escapeHtml($transaccion->getUsu_nombre());?></td>
                      <td><?php echo $this->escapeHtml($transaccion->getUsu_apellido());?></td>
                      <td><?php echo $this->escapeHtml($transaccion->getUsu_email());?></td>
-                     <td><?php echo $this->escapeHtml($transaccion->getUsu_usuario());?></td>
                      <td><?php echo '$ ' . $this->escapeHtml($transaccion->getCli_saldo());?></td>
                      <td><?php echo $transaccion->getUsu_estado() == 'A' ? 'Activo' : 'Inactivo'; ?></td>
                      <td><?php echo $this->escapeHtml($transaccion->getUsu_fecha_registro());?></td>
