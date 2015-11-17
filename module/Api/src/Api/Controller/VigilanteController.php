@@ -403,8 +403,10 @@
 						$infraccion->exchangeArray ( $infraccionData );
 		                $inf_id=$this->getInfraccionDao()->guardar($infraccion);
 
+			            $infraction_status="R";
+
 						/* Busca infracciones en Sistema de Sismert, es decir las que no estén pagadas */
-						$url = 'http://54.69.247.99/Violations/sismert/infracciones.php';
+/*						$url = 'http://54.69.247.99/Violations/sismert/infracciones.php';
 			            $params = array('placa' => $aut_placa );
 			            
 			            $url .= '?' . http_build_query($params);
@@ -418,10 +420,9 @@
 
 			            $infracciones = json_decode($data);
 
-			            $infraction_status="R";
 			            if(sizeof($infracciones)>=3){
 			            	$infraction_status="L"; //lock
-			            }
+			            }*/
 
 						$multaParqueadero = new MultaParqueaderoEntity();
 						$multaParqueaderoData=array();
