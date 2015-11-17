@@ -62,7 +62,7 @@ class InfraccionController extends AbstractActionController
         $fecha_fin='';
 
         $form = $this->getReporteForm ();
-        
+
         if ($this->request->isPost ()) {
             $data = $this->request->getPost ();
             $fecha_ini = $data['fecha_ini'];
@@ -73,7 +73,7 @@ class InfraccionController extends AbstractActionController
         $registrosVigilante = $this->getInfraccionDao()->traerPorVigilante($fecha_ini, $fecha_fin);
         $registrosCalle = $this->getInfraccionDao()->traerPorCalle($fecha_ini, $fecha_fin);
 
-        $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'infracciones');
+        $this->layout()->setVariable('menupadre', 'reportes')->setVariable('menuhijo', 'infraccion');
 
         
 
