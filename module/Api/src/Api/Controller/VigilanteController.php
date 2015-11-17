@@ -368,7 +368,7 @@
 					$inf_fecha 		= $data['inf_fecha'];
 					$tip_inf_id 	= $data['tip_inf_id'];
 
-					$usu_id 		= $data['usu_id'];
+					$usu_id 		= 5;//$data['usu_id'];
 
 					$lista_blanca_obj=$this->getListaBlancaDao()->enLista($aut_placa);
 					if(!$lista_blanca_obj){
@@ -408,7 +408,7 @@
 			            $infraction_status="R";
 
 						/* Busca infracciones en Sistema de Sismert, es decir las que no estén pagadas */
-/*						$url = 'http://54.69.247.99/Violations/sismert/infracciones.php';
+						$url = 'http://54.69.247.99/Violations/sismert/infracciones.php';
 			            $params = array('placa' => $aut_placa );
 			            
 			            $url .= '?' . http_build_query($params);
@@ -424,7 +424,7 @@
 
 			            if(sizeof($infracciones)>=3){
 			            	$infraction_status="L"; //lock
-			            }*/
+			            }
 
 						$multaParqueadero = new MultaParqueaderoEntity();
 						$multaParqueaderoData=array();
