@@ -359,8 +359,7 @@
 
 	        	}else{
 
-	        		print_r($data);
-	        		die();
+
 					$par_id 		= $data['par_id'];
 					$aut_placa 		= $data['aut_placa'];
 					$inf_latitud 	= floatval($data['inf_latitud']);
