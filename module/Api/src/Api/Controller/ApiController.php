@@ -887,6 +887,47 @@ class ApiController extends AbstractActionController
         }    
     }    
 
+    public function testAction()
+    {
+            
+            $client = SesClient::factory(array(
+                'profile' => 'default',
+                'region'  => 'us-east-1'  
+            ));
+
+            $result = $client->sendEmail(array(
+                // Source is required
+                'Source' => 'informacion@sip.ec',
+                // Destination is required
+                'Destination' => array(
+                    'ToAddresses' => array('lmponceb@gmail.com')
+                ),
+                // Message is required
+                'Message' => array(
+                    // Subject is required
+                    'Subject' => array(
+                        // Data is required
+                        'Data' => 'Recupera tu contrasena',
+                    ),
+                    // Body is required
+                    'Body' => array(
+                        'Text' => array(
+                            // Data is required
+                            'Data' => '',
+                        ),
+                        'Html' => array(
+                            // Data is required
+                            'Data' => "Accede al siguiente link para iniciar el proceso de recuperación de contraseña: <a href='http://ibarra.sip.ec/recuperar?cod=$codigo_generado'>Recuperar Contraseña</a>",
+                        ),
+                    ),
+                )
+            ));
+
+            die();
+    }
+
+
+
     public function getUsuarioDao() {
         if (! $this->usuarioDao) {
             $sm = $this->getServiceLocator ();
