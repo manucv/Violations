@@ -889,6 +889,9 @@ class ApiController extends AbstractActionController
 
     public function testAction()
     {
+
+        echo 'KEYID: '.getenv('AWS_ACCESS_KEY_ID'); 
+        echo '<br>ACCKEY: '.getenv('AWS_SECRET_ACCESS_KEY'); 
             
             $client = SesClient::factory(array(
                 'profile' => 'default',
