@@ -656,12 +656,13 @@ class ApiController extends AbstractActionController
             $response->setContent($content);
 
             return $response;
-
         }else{
             if(!is_null($this->params('id'))){
                 $cli_id=$this->params('id');
                 $clienteObj = $this->getClienteDao()->traer( $cli_id );
-                $content=json_encode($clienteObj->getArrayCopy());
+                $clienteRsp = $clienteObj->getArrayCopy();
+                $clienteRsp['version'] = 5;
+                $content=json_encode($clienteRsp);
                 $response->setStatusCode(200);
                 $response->setContent($content);
                 return $response;
