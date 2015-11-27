@@ -661,7 +661,7 @@ class ApiController extends AbstractActionController
                 $cli_id=$this->params('id');
                 $clienteObj = $this->getClienteDao()->traer( $cli_id );
                 $clienteRsp = $clienteObj->getArrayCopy();
-                $clienteRsp['version'] = 4;
+                $clienteRsp['version'] = 5;
                 $content=json_encode($clienteRsp);
                 $response->setStatusCode(200);
                 $response->setContent($content);
@@ -673,7 +673,7 @@ class ApiController extends AbstractActionController
                 ) );    
             }
         }
-    } 
+    }   
 
     public function recoverAction()
     {
