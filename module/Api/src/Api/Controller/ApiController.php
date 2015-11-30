@@ -661,7 +661,6 @@ class ApiController extends AbstractActionController
                 $cli_id=$this->params('id');
                 $clienteObj = $this->getClienteDao()->traer( $cli_id );
                 $clienteRsp = $clienteObj->getArrayCopy();
-                $clienteRsp['version'] = 5;
                 $content=json_encode($clienteRsp);
                 $response->setStatusCode(200);
                 $response->setContent($content);
@@ -889,12 +888,15 @@ class ApiController extends AbstractActionController
     }    
 
     public function appAction(){
+        $config = $this->getServiceLocator()->get('Config');
+        $app_version = $config['config']['app_version'];
+
         if($this->getRequest()->isGET()){  
             if(!is_null($this->params('id'))){
 
             } else {
                 $app_array=array(
-                        'version'=>5,
+                        'version'=>$app_version,
                         'require_update'=>0
                     );
                 
