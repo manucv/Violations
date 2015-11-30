@@ -888,6 +888,29 @@ class ApiController extends AbstractActionController
         }    
     }    
 
+    public function appAction(){
+        if($this->getRequest()->isGET()){  
+            if(!is_null($this->params('id'))){
+
+            } else {
+                $app_array=array(
+                        'version'=>5,
+                        'require_update'=>0
+                    );
+                
+                $content=json_encode($app_array);
+
+                $response = $this->getResponse();
+                $response->setStatusCode(200);
+                $response->setContent($content);
+                    
+                return $response; 
+            }
+        }else{
+            return $this->redirect()->toRoute('parametros', array('sector' => 'ingresar'));
+        }    
+    }     
+
     public function testAction()
     {
 
