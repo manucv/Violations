@@ -46,6 +46,7 @@ class CargaDao implements InterfaceCrud {
             SELECT * 
             FROM carga AS c
             JOIN punto_recarga AS p ON c.pun_rec_id=p.pun_rec_id
+            JOIN usuario AS u ON u.usu_id = c.usu_id
             WHERE car_estado='P'
         ";
         
@@ -60,8 +61,9 @@ class CargaDao implements InterfaceCrud {
     	$id = (int) $carga->getCar_id();
     
     	$data = array(
-			'pun_rec_id' => $carga->getPun_rec_id(),
-			'car_valor' => $carga->getCar_valor()
+			'pun_rec_id'=> $carga->getPun_rec_id(),
+			'car_valor' => $carga->getCar_valor(),
+            'usu_id'    => $_SESSION['Zend_Auth']['storage']->usu_id
     	);
 
         if($carga->getCar_estado())

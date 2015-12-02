@@ -91,6 +91,8 @@
 	    	//SE VALIDA EL FORMULARIO
 	    	$form->setInputFilter ( new PuntoRecargaValidator() );
 	    	
+			if($data['pun_rec_clave']==''){ unset($data['pun_rec_clave']); }
+
 	    	//SE LLENAN LOS DATOS DEL FORMULARIO
 	    	$form->setData ( $data );
 	    	
@@ -140,7 +142,7 @@
 
 			//FORMULARIO DE ACTUALIZACION DE INFORMACION
 			$puntorecarga = $this->getPuntoRecargaDao()->traer ( $id );
-			
+			$puntorecarga->setPun_rec_clave('');
 			$form->bind ( $puntorecarga );
 				
 			$form->get ( 'ingresar' )->setAttribute ( 'value', 'Actualizar' );
