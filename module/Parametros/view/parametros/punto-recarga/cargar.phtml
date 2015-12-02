@@ -12,6 +12,7 @@ $formLabel = $this->plugin ( 'formLabel' );
 $pun_rec_id =	$form->get('pun_rec_id');
 $car_valor	=	$form->get('car_valor');
 
+
 echo $this->form ()->openTag ( $form );
 echo $this->formhidden ( $pun_rec_id );
 
@@ -72,6 +73,18 @@ echo $this->formhidden ( $pun_rec_id );
             		</div>
                 </div>
 
+
+
+                <div class="form-group">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+                        <label for="">Email:</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <?php echo $this->puntorecarga->getPun_rec_email(); ?>
+                    </div>
+                </div>
+                
+
                 <div class="form-group">
 	                <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
 	                    <label for="">Saldo Actual:</label>
@@ -89,7 +102,7 @@ echo $this->formhidden ( $pun_rec_id );
                 	</div>
                 	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
             			<?php 
-            			echo html_entity_decode( $this->formtext ( $car_valor ) );
+            			echo html_entity_decode( $this->formselect ( $car_valor ) );
             			echo html_entity_decode( $this->formelementerrors ( $car_valor ) );
             			?>
             		</div>

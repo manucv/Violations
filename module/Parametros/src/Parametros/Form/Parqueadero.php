@@ -137,7 +137,7 @@ class Parqueadero extends Form {
 		* ********************************************/
 		
 		$par_cal_principal = new Select('par_cal_principal');
-		$par_cal_principal->setLabel('Calle Principal: ');
+		$par_cal_principal->setLabel('Calle Principal*: ');
 		$par_cal_principal->setAttributes(array('class' => 'form-control'));
 		$par_cal_principal->setAttributes(array('id' => 'par_cal_principal'));
 		$par_cal_principal->setEmptyOption('-- Seleccione --');
@@ -152,7 +152,7 @@ class Parqueadero extends Form {
 		* ********************************************/
 		
 		$par_cal_secundaria = new Select('par_cal_secundaria');
-		$par_cal_secundaria->setLabel('Calle Secundaria: ');
+		$par_cal_secundaria->setLabel('Calle Secundaria*: ');
 		$par_cal_secundaria->setAttributes(array('class' => 'form-control'));
 		$par_cal_secundaria->setAttributes(array('id' => 'par_cal_secundaria'));
 		$par_cal_secundaria->setEmptyOption('-- Seleccione --');

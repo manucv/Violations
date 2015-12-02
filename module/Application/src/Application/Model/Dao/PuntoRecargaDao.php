@@ -41,6 +41,7 @@ class PuntoRecargaDao implements InterfaceCrud {
                 $punto_recarga->setPun_rec_nombres($punto->nombres);
                 $punto_recarga->setPun_rec_apellidos($punto->apellidos);
                 $punto_recarga->setPun_rec_nombre($punto->razonsocial);
+                $punto_recarga->setPun_rec_email($punto->email);
                 $punto_recarga->setPun_rec_direccion($punto->direccion.' y '.$punto->interseccion);   
                 $pun_rec_id = $this->guardar($punto_recarga);
                 $punto_recarga->setPun_rec_id($pun_rec_id);
@@ -85,6 +86,7 @@ class PuntoRecargaDao implements InterfaceCrud {
 			'pun_rec_lng' => $punto_recarga->getPun_rec_lng(),
 			'pun_rec_direccion' => $punto_recarga->getPun_rec_direccion(),
             'pun_rec_nombres' => $punto_recarga->getPun_rec_nombres(),
+            'pun_rec_email' => $punto_recarga->getPun_rec_email(),
             'pun_rec_apellidos' => $punto_recarga->getPun_rec_apellidos()
     	);
     	
@@ -116,6 +118,7 @@ class PuntoRecargaDao implements InterfaceCrud {
             'pun_rec_observaciones' => $punto_recarga->getPun_rec_observaciones(),
             'pun_rec_habilitado' => $punto_recarga->getPun_rec_habilitado(),
             'pun_rec_nombres' => $punto_recarga->getPun_rec_nombres(),
+            'pun_rec_email' => $punto_recarga->getPun_rec_email(),
             'pun_rec_apellidos' => $punto_recarga->getPun_rec_apellidos()
         );
 

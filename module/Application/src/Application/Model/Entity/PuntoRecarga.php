@@ -17,6 +17,7 @@ class PuntoRecarga {
 	private $pun_rec_clave;
 	private $pun_rec_nombres;
 	private $pun_rec_apellidos;
+	private $pun_rec_email;
 
 	/*
 	* @return the $pun_rec_id
@@ -102,6 +103,13 @@ class PuntoRecarga {
 		return $this->pun_rec_apellidos;
 	}	
 
+	/*
+	* @return the $pun_rec_email
+	*/
+	public function getPun_rec_email(){
+		return $this->pun_rec_email;
+	}
+
 	/**
 	* @param Ambigous <NULL, unknown> $pun_rec_id 
 	*/
@@ -186,6 +194,13 @@ class PuntoRecarga {
 		$this->pun_rec_apellidos = $pun_rec_apellidos;
 	}	
 
+	/**
+	* @param Ambigous <NULL, unknown> $pun_rec_email
+	*/
+	public function setPun_rec_email($pun_rec_email){
+		$this->pun_rec_email = $pun_rec_email;
+	}
+
 	public function exchangeArray($data)
 	{
 		$this->pun_rec_id = (isset($data['pun_rec_id'])) ? $data['pun_rec_id'] : null;
@@ -200,7 +215,7 @@ class PuntoRecarga {
 		$this->pun_rec_clave	= (isset($data['pun_rec_clave'])) ? $data['pun_rec_clave'] : null;
 		$this->pun_rec_nombres = (isset($data['pun_rec_nombres'])) ? $data['pun_rec_nombres'] : null;
 		$this->pun_rec_apellidos = (isset($data['pun_rec_apellidos'])) ? $data['pun_rec_apellidos'] : null;
-
+		$this->pun_rec_email = (isset($data['pun_rec_email'])) ? $data['pun_rec_email'] : null;
 	}
 		
 	public function getArrayCopy(){

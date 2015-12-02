@@ -42,6 +42,31 @@ class Carga extends Form {
 				)
 		) );
 
+
+		/* ********************************************
+		 * CAMPO VALOR
+		* ********************************************/
+		
+		$car_valor = new Select('car_valor');
+		$car_valor->setLabel('Valor de la Recarga: *: ');
+		$car_valor->setAttributes(array('class' => 'form-control'));
+		$car_valor->setAttributes(array('id' => 'car_valor'));
+		$car_valor->setEmptyOption('-- Seleccione --');
+		$car_valor->setValueOptions(array(
+				'10' => '$10.00',
+				'20' => '$20.00',
+				'30' => '$30.00',
+				'40' => '$40.00',
+				'50' => '$50.00',
+				'60' => '$60.00',
+		));
+		$car_valor->setOptions(array(
+				'disable_inarray_validator' => false, // <-- disable
+		));
+		$this->add($car_valor);
+
+
+
 		$this->add ( array (
 				'name' => 'ingresar',
 				'attributes' => array (

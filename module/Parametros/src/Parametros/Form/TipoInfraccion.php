@@ -27,7 +27,7 @@ class TipoInfraccion extends Form {
 		$this->add ( array (
 				'name' => 'tip_inf_codigo',
 				'options' => array (
-						'label' => 'Código:'
+						'label' => 'Código*:'
 				),
 				'attributes' => array (
 						'type' => 'text',
@@ -69,7 +69,7 @@ class TipoInfraccion extends Form {
 		$this->add ( array (
 				'name' => 'tip_inf_valor',
 				'options' => array (
-						'label' => 'Valor:'
+						'label' => 'Valor*:'
 				),
 				'attributes' => array (
 						'type' => 'text',
