@@ -81,7 +81,7 @@ use Zend\Form\Element\Select;
 		$this->add ( array (
 				'name' => 'usu_documento',
 				'options' => array (
-						'label' => 'Documento*:'
+						'label' => 'Cédula*:'
 				),
 				'attributes' => array (
 						'type' => 'text',

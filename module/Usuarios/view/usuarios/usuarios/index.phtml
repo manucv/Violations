@@ -42,7 +42,7 @@
                  	 <td class="dataTableIcons">
                  	 	<a class="fa-lg" href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'edit', 'id' => $usuario->getUsu_id()))?>"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;
                  	 	<a class="fa-lg" href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'asociar', 'id' => $usuario->getUsu_id()))?>"><i class="fa fa-list"></i></a>&nbsp;&nbsp;&nbsp;
-                 	 	<a class="fa-lg" href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'eliminar', 'id' => $usuario->getUsu_id()))?>" onclick="return eliminarRegistro('<?php echo $usuario->getUsu_nombre() . ' ' . $usuario->getUsu_apellido()?>');"><i class="fa fa-trash-o"></i></a>
+<!--                  	 	<a class="fa-lg" href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'eliminar', 'id' => $usuario->getUsu_id()))?>" onclick="return eliminarRegistro('<?php echo $usuario->getUsu_nombre() . ' ' . $usuario->getUsu_apellido()?>');"><i class="fa fa-trash-o"></i></a> -->
                  	 </td>
                      <td class="hidden-xs"><?php echo $this->escapeHtml($usuario->getCiu_nombre_es());?></td>
                      <td><?php echo $this->escapeHtml($usuario->getUsu_nombre());?></td>
