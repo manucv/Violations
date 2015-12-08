@@ -77,7 +77,6 @@ class IndexController extends AbstractActionController
 
     public function buscarAction()
     {   
-        
         $id = $this->params ()->fromRoute ( 'id', 0 );
         $puntorecarga = $this->getPuntoRecargaDao()->traer($id);
 
@@ -86,10 +85,9 @@ class IndexController extends AbstractActionController
         $form->bind ( $puntorecarga );
         $form->get ( 'punto_recarga_pun_rec_id' )->setAttribute ( 'value', $puntorecarga->getPun_rec_id() );
 
-        return new ViewModel ( array ( 'form' => $form, 'puntorecarga'=>$puntorecarga   ) );
+        return new ViewModel ( array ( 'form' => $form, 'puntorecarga'=>$puntorecarga, 'messages'=> $this->flashmessenger()->getMessages()   ) );
         // $modelView->setTemplate ( 'tiendas/index/index' );
         // return $modelView;
-        
     }
 
     public function recargarAction()
@@ -107,16 +105,26 @@ class IndexController extends AbstractActionController
         $data = $this->request->getPost ();
         $form->setData ( $data );
 
+        $puntorecarga = $this->getPuntoRecargaDao()->traer($data['punto_recarga_pun_rec_id']);
+
         $cliente=$this->getClienteDao()->buscarPorEmailOUsuario($data['usu_email']);
         if(is_object($cliente)){
             $data['cli_id']=$cliente->getCli_id();
             $comprasaldo = new CompraSaldoEntity();
             $comprasaldo->exchangeArray ( $data );
-            $this->getCompraSaldoDao()->guardar($comprasaldo);
-
-
+            if($puntorecarga->getPun_rec_saldo() > $data['com_sal_valor'] ){
+                if($data['com_sal_valor']>0){
+                    $this->getCompraSaldoDao()->guardar($comprasaldo);
+                }else{
+                    $this->flashmessenger()->addMessage("Ingrese un valor v&aacute;lido"); 
+                }
+            }else{
+               $this->flashmessenger()->addMessage("Su saldo es insuficiente para completar la transacci&oacute;n"); 
+            }
+        }else{
+            $this->flashmessenger()->addMessage("No se encontr&oacute; el cliente, verifique los datos");
         }
-        $puntorecarga = $this->getPuntoRecargaDao()->traer($data['punto_recarga_pun_rec_id']);
+        
         return $this->redirect ()->toRoute ( 'tiendas', array (
                     'controller' => 'index',
                     'action' => 'buscar',

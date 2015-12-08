@@ -28,6 +28,7 @@ class UsuarioValidator extends InputFilter {
 		
 		$ciu_id = new Input ( 'ciu_id' );
 		$ciu_id->setRequired ( true );
+		$ciu_id->setErrorMessage ( "Seleccione una ciudad" );
 		$ciu_id->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 11,
 				'min' => 1,
@@ -39,6 +40,7 @@ class UsuarioValidator extends InputFilter {
 		
 		$usu_usuario = new Input ( 'usu_usuario' );
 		$usu_usuario->setRequired ( true );
+		$usu_usuario->setErrorMessage ( "Ingrese un Nombre de Usuario" );
 		$usu_usuario->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 15,
 				'min' => 6,
@@ -48,16 +50,19 @@ class UsuarioValidator extends InputFilter {
 		
 		$usu_documento = new Input ( 'usu_documento' );
 		$usu_documento->setRequired ( true );
+		$usu_documento->setErrorMessage ( "Ingrese un número de cédula válido" );
 		$usu_documento->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 10,
 				'min' => 10,
-		) ) )->attach(new NotEmpty());
+		) ) )->attach(new NotEmpty())
+		->attach ( new Digits () );
 		
 		$this->add ( $usu_documento );
 
 
 		$usu_email = new Input ( 'usu_email' );
 		$usu_email->setRequired ( true );
+		$usu_email->setErrorMessage ( "Ingrese un correo electrónico" );
 		$usu_email->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 150,
 				'min' => 6,
@@ -71,6 +76,7 @@ class UsuarioValidator extends InputFilter {
 		
 		$usu_nombre = new Input ( 'usu_nombre' );
 		$usu_nombre->setRequired ( true );
+		$usu_nombre->setErrorMessage ( "Ingrese un Nombre" );
 		$usu_nombre->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 35,
 				'min' => 2,
@@ -81,6 +87,7 @@ class UsuarioValidator extends InputFilter {
 		
 		$usu_apellido = new Input ( 'usu_apellido' );
 		$usu_apellido->setRequired ( true );
+		$usu_apellido->setErrorMessage ( "Ingrese un Apellido" );
 		$usu_apellido->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 35,
 				'min' => 2,
@@ -91,6 +98,7 @@ class UsuarioValidator extends InputFilter {
 		
 		$usu_clave = new Input ( 'usu_clave' );
 		$usu_clave->setRequired ( true );
+		$usu_clave->setErrorMessage ( "Ingrese una Contraseña Valida (Mínimo 8 caracteres, mayusculas y minusculas y tener al menos un número)" );
 		$usu_clave->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 50,
 				'min' => 4,
@@ -102,6 +110,7 @@ class UsuarioValidator extends InputFilter {
 		
 		$usu_clave_check = new Input ( 'usu_clave_check' );
 		$usu_clave_check->setRequired ( true );
+		$usu_clave_check->setErrorMessage ( "Las contraseñas deben ser iguales" );
 		$usu_clave_check->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 50,
 				'min' => 4,
@@ -116,6 +125,7 @@ class UsuarioValidator extends InputFilter {
 		
 		$usu_estado = new Input ( 'usu_estado' );
 		$usu_estado->setRequired ( true );
+		$usu_estado->setErrorMessage ( "Seleccione un estado" );
 		$usu_estado->getValidatorChain ()->attach ( new StringLength ( array (
 				'max' => 1,
 				'min' => 1

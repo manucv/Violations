@@ -37,7 +37,7 @@ class Calle extends Form {
 		$this->add ( array (
 				'name' => 'cal_codigo',
 				'options' => array (
-						'label' => 'Código:'
+						'label' => 'Código*:'
 				),
 				'attributes' => array (
 						'type' => 'text',
@@ -54,7 +54,7 @@ class Calle extends Form {
 		$this->add ( array (
 				'name' => 'cal_nombre',
 				'options' => array (
-						'label' => 'Nombre:'
+						'label' => 'Nombre*:'
 				),
 				'attributes' => array (
 						'type' => 'text',

@@ -136,4 +136,17 @@
 			$view->setTemplate('parametros/lista-blanca/ingresar');
 			return $view;
 		}
+
+		public function eliminarAction(){
+    
+	    	$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
+	    	//SE ELIMINA LA INFORMACION EN LA BDD
+	    	if($this->getListaBlancaDao() ->eliminar ( $id )){
+	            //SI SE EJECUTO EXITOSAMENTE SE REGRESA AL LISTADO DE CONTACTOS
+	            return $this->redirect ()->toRoute ( 'parametros', array (
+	                    'controller' => 'listablanca',
+	                    'action' => 'listado'
+	            ) );            
+	        }
+	    }
 	}

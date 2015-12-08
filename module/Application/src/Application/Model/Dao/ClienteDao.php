@@ -115,6 +115,8 @@ class ClienteDao implements InterfaceCrud {
         $select->where->like('usu_email', $email);
         $select->where->or;
         $select->where->like('usu_usuario', $email);
+        $select->where->or;
+        $select->where->like('cli_movil', $email);
         if(!is_null($passw)){
             $select->where(array('usu_clave'=>$passw));
         }

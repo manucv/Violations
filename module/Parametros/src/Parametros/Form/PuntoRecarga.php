@@ -124,6 +124,23 @@ class PuntoRecarga extends Form {
 				)
 		) );
 		
+
+		/* ********************************************
+		 * CAMPO CODIGO
+		 * ********************************************/
+		
+		$this->add ( array (
+				'name' => 'pun_rec_email',
+				'options' => array (
+						'label' => 'Email:'
+				),
+				'attributes' => array (
+						'type' => 'text',
+						'id' => 'pun_rec_email',
+						'class' => 'form-control',
+						'readonly' => 'true'
+				)
+		) );
 		
 		/* ********************************************
 		 * CAMPO LATITUD

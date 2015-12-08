@@ -105,7 +105,7 @@ class Sector extends Form {
 		 * CAMPO ESTADO
 		* ********************************************/
 		$est_id = new Select('est_id');
-		$est_id->setLabel('Estado*: ');
+		$est_id->setLabel('Provincia*: ');
 		$est_id->setAttribute('id', 'est_id');
 		$est_id->setAttributes(array('class' => 'form-control'));
 		$est_id->setEmptyOption('-- Seleccione --');
@@ -158,7 +158,7 @@ class Sector extends Form {
 		$this->add ( array (
 				'name' => 'sec_ubicacion',
 				'options' => array (
-						'label' => 'Ubicaci&oacute;n*:'
+						'label' => 'Direcci&oacute;n*:'
 				),
 				'attributes' => array (
 						'type' => 'text',

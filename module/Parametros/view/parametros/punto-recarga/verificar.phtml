@@ -28,7 +28,7 @@
                  <tr>
                     <th>Fecha</th>
                     <th>Punto de Recarga</th>
-                    
+                    <th>Usuario</th>
                     <th>Valor</th>
                     <th width="7%">Acciones</th>
                  </tr>
@@ -40,6 +40,7 @@
                  <tr>
                     <td><?php  echo $this->escapeHtml($carga['car_fecha']);?></td>
                     <td><?php  echo $this->escapeHtml($carga['pun_rec_nombre']);?></td>
+                    <td><?php  echo $this->escapeHtml($carga['usu_nombre']).' '.$this->escapeHtml($carga['usu_apellido']);?></td>
                     <td>$<?php  echo $this->escapeHtml($carga['car_valor']);?></td>
                     <td class="dataTableIcons">
                         <a class="fa-lg" onclick="return confirm('Está seguro de que desea aprobar esta recarga? Si acepta, se registrará en el sistema del municipio')" href="<?php echo $this->url('parametros', array('controller' => 'puntorecarga', 'action' => 'aceptar_carga', 'id' => $carga['car_id']))?>"><i class="fa fa-check "></i></a>

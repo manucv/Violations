@@ -52,7 +52,6 @@ class ParqueaderoController extends AbstractActionController
     
     	//FORMULARIO DE ACTUALIZACION DE INFORMACION
     	$parqueadero = $this->getParqueaderoDao()->traer ( $id );
-    	
     	$form->bind ( $parqueadero );
     		
     	$form->get ( 'ingresar' )->setAttribute ( 'value', 'Actualizar' );

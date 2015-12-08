@@ -73,3 +73,20 @@ echo $this->formhidden ( $lis_bla_id );
 
 
 <?php echo $this->form()->closeTag(); ?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("form").submit(function() {
+		console.log($("#lis_bla_placa").val());
+		if ($("#lis_bla_placa").val().match(/^[A-Z]{3}[0-9]{4}$/)) {
+
+		}
+		else {
+			//alert("Esto no son números");
+			$("#lis_bla_placa").after('<ul><li>Placa No Valida</li></ul>');
+			return false;
+		}
+	});
+});
+
+</script>
