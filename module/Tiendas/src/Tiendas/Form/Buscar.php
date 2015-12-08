@@ -20,7 +20,7 @@ class Buscar extends Form {
 		$this->add ( array (
 				'name' => 'usu_email',
 				'options' => array (
-						'label' => 'Email: ' 
+						'label' => 'Nro. Celular &oacute; email registrado: ' 
 				),
 				'attributes' => array (
 						'type' => 'text',
