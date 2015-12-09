@@ -133,6 +133,14 @@ class IndexController extends AbstractActionController
 
     }
 
+    public function listadoAction()
+    {
+
+        $compras = $this->getCompraSaldoDao()->traerPorPuntoRecarga();
+        $viewParams = array (); 
+        return $viewParams;
+    }
+
     public function getPuntoRecargaDao()
     {
         if (! $this->puntoRecargaDao) {

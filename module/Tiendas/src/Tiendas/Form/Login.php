@@ -18,7 +18,8 @@ class Login extends Form {
 						'maxlenght' => '13',
 						'id' => 'pun_rec_ruc',
 						'class' => 'form-control',
-				        'style' => 'color: #000000; font-weight: 700;'
+				        'style' => 'color: #000000; font-weight: 700;',
+				        'autocomplete'=>'off'
 				) 
 		) );
 		
@@ -32,7 +33,8 @@ class Login extends Form {
 						'maxlenght' => '25',
 						'id' => 'pun_rec_clave',
 						'class' => 'form-control',
-				        'style' => 'color: #000000; font-weight: 700;'
+				        'style' => 'color: #000000; font-weight: 700;',
+				        'autocomplete'=>'off'
 				)
 		));
 		
