@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+				<item
+		        android:id="@+id/ItemComprar"
+		        android:orderInCategory="1"
+		        android:title="Parquear"
+		        />
+		        	           
+	           <item
+		        android:id="@+id/ItemCargar"
+		        android:orderInCategory="2"
+		        android:title="Recargas"
+		        />
+			   
+			   <item
+		        android:id="@+id/ItemContactos"
+		        android:orderInCategory="3"
+		        android:title="Transferir"
+		        />
+			   
+			   <item
+		        android:id="@+id/ItemMiCuenta"
+		        android:orderInCategory="5"
+		        android:title="Mi Cuenta"
+		        />
+			     			   
+			   <item
+		        android:id="@+id/ItemDisponibilidad"
+		        android:orderInCategory="4"
+		        android:title="Disponibles"
+		        />
+		
+			   <item
+		        android:id="@+id/ItemAcercaDe"
+		        android:orderInCategory="6"
+		        android:title="Acerca De"
+		        />
+			           
+			   <item
+		        android:id="@+id/ItemSalir"
+		        android:orderInCategory="7"
+		        android:title="Salir"
+		        />
+
+	</menu>
+<!-- From: file:/C:/Users/Camilo/StudioProjects/sipApp_project1/app/src/main/res/menu/navigation.xml -->
