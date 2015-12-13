@@ -1,7 +1,21 @@
-<?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); 
+<?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); ?>
+<?php 
+
+    $form = $this->formulario;
+    $form->prepare ();
+    $form->setAttribute ( 'action', $this->url ( 'infraccion', array (
+            'controller' => 'infraccion',
+            'action' => 'aprobar_infraccion',
+            'id' => $this->infraccion->getInf_id()
+    ) ) )->setAttribute ( 'method', 'post' )
+    ->setAttribute ('class', 'form-horizontal');
+    $formLabel = $this->plugin ( 'formLabel' );
+
+    $inmovilizado  =   $form->get('inmovilizado');
+    $tiempo_permanencia  =   $form->get('tiempo_permanencia');
 
 ?>
-
+<?php echo $this->form ()->openTag ( $form ); ?>
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-12" >
         <div class="box">
@@ -21,6 +35,7 @@
 				<div class="no-move"></div>
 			</div>
 			<div class="box-content">
+
 			    <div class="row" style="padding-bottom: 12px;">
         			<div class="col-md-11 col-md-offset-1">
             		  <label class="control-label" style="color: #ee9f1f;">Verifique la infracción cometida.</label>
@@ -77,6 +92,32 @@
                     </div>
                 </div>
 
+                <div class="form-group row">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+                        <?php  
+                            echo $formLabel->openTag() . $inmovilizado->getLabel() . $formLabel->closeTag();
+                        ?>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <?php 
+                        echo html_entity_decode( $this->formselect ( $inmovilizado ) );
+                        echo html_entity_decode( $this->formelementerrors ( $inmovilizado ) );
+                        ?>
+                    </div>
+                </div>    
+                <div class="form-group row">    
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+                        <?php  
+                            echo $formLabel->openTag() . $tiempo_permanencia->getLabel() . $formLabel->closeTag();
+                        ?>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <?php 
+                        echo html_entity_decode( $this->formselect ( $tiempo_permanencia ) );
+                        echo html_entity_decode( $this->formelementerrors ( $tiempo_permanencia ) );
+                        ?>
+                    </div>
+                </div>        
 			</div>
         </div>
     </div>
@@ -118,8 +159,14 @@
 <div class="row">
     <div class="form-group col-md-12">
          <div align="center">
-            <a class="btn btn-primary" onclick="return confirm('Está seguro de que desea aprobar esta infracción? Si acepta, se registrará en el sistema del municipio')" href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'aprobar_infraccion', 'id' => $this->infraccion->getInf_id()))?>"><i class="fa fa-check "></i> Aprobar Infracci&oacute;n</a>
+
+            <?php echo $this->formsubmit( $form->get ( 'buscar' ) ) ?>
+
+            <a class="btn btn-primary" onclick="return confirm('Está seguro de que desea rechazar esta infracción? No podr/aacute; aprobarla m&aacute;s adelante')" href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'rechazar_infraccion', 'id' => $this->infraccion->getInf_id()))?>">Rechazar Infracci&oacute;n</a>
+
             <a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion')); ?>" class ="btn btn-primary" >Cancelar</a>
         </div>  
     </div>
 </div>
+
+<?php echo $this->form()->closeTag(); ?>
