@@ -159,7 +159,7 @@ class ParqueaderoDao implements InterfaceCrud {
 	
     	$statement = $adapter->query($query);
     	$result = $statement->execute();
-    	$lugar = $results->current();
+    	$lugar = $result->current();
 
 		$query = "
 			UPDATE 	parqueadero SET par_estado = 'O',
