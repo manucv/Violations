@@ -415,6 +415,10 @@ class ApiController extends AbstractActionController
                     return $response;
                 }
             }else{
+
+                $data = $this->request->getPost ();    
+                $parqueaderos = $this->getParqueaderoDao()->moverParqueadero($par_id,$data['par_id_dest']);                
+
                 $content=json_encode(true);            
                 $response = $this->getResponse();
                 $response->setStatusCode(200);
