@@ -121,7 +121,7 @@ class ParqueaderoDao implements InterfaceCrud {
 						SELECT lp.par_id 
 						FROM log_parqueadero AS lp 
 						WHERE log_par_fecha_ingreso > NOW() - INTERVAL 2 DAY 
-						AND (log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo*60 MINUTE) > NOW()
+						AND (log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo MINUTE) > NOW()
 					) 
 					AND par_estado = 'O'
 			";
