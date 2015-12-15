@@ -399,19 +399,26 @@ class ApiController extends AbstractActionController
             }
         }else{
             $par_id=$this->params('id');
+            if($this->getRequest()->isGET()){
+                $parqueaderos = $this->getParqueaderoDao()->traerJerarquia($par_id);
 
-            $parqueaderos = $this->getParqueaderoDao()->traerJerarquia($par_id);
-
-            if($parqueaderos){
-                $content=json_encode($parqueaderos);            
+                if($parqueaderos){
+                    $content=json_encode($parqueaderos);            
+                    $response = $this->getResponse();
+                    $response->setStatusCode(200);
+                    $response->setContent($content);
+                    return $response;
+                }else{
+                    $response = $this->getResponse();
+                    $response->setStatusCode(404);
+                    $response->setContent("");
+                    return $response;
+                }
+            }else{
+                $content=json_encode(true);            
                 $response = $this->getResponse();
                 $response->setStatusCode(200);
                 $response->setContent($content);
-                return $response;
-            }else{
-                $response = $this->getResponse();
-                $response->setStatusCode(404);
-                $response->setContent("");
                 return $response;
             }
         }    
