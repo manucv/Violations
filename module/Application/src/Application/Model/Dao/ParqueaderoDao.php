@@ -116,6 +116,12 @@ class ParqueaderoDao implements InterfaceCrud {
 						par_fecha_ingreso = '0000-00-00 00:00:00',
 						par_fecha_salida = '0000-00-00 00:00:00', 
 						par_horas_parqueo = 0 
+				WHERE   par_fecha_ingreso > NOW() - INTERVAL 2 DAY 
+						AND (par_fecha_ingreso + INTERVAL par_horas_parqueo MINUTE) < NOW()
+						AND par_estado = 'O'
+			";
+
+			/*
 				WHERE par_id 
 					NOT IN (
 						SELECT lp.par_id 
@@ -123,8 +129,8 @@ class ParqueaderoDao implements InterfaceCrud {
 						WHERE log_par_fecha_ingreso > NOW() - INTERVAL 2 DAY 
 						AND (log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo MINUTE) > NOW()
 					) 
-					AND par_estado = 'O'
-			";
+
+			*/
 		}else{
 			$query = "
 				UPDATE 	parqueadero SET par_estado = 'D',
