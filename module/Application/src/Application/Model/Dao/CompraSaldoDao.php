@@ -105,6 +105,7 @@ class CompraSaldoDao implements InterfaceCrud {
     }
 
     public function traerPorPuntoRecarga($pun_rec_id){
+        
         $adapter = $this->tableGateway->getAdapter();
         $query = "
             SELECT * 
