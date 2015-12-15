@@ -115,7 +115,7 @@ class CompraSaldoDao implements InterfaceCrud {
         $statement = $adapter->query($query);
         $results = $statement->execute();
 
-        return $results
+        return $results;
     }
     
 	public function eliminar($id) {
