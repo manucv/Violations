@@ -163,9 +163,14 @@ class ApiController extends AbstractActionController
 
                 $info_par=$this->getParqueaderoDao()->traerJerarquia($par_id);
                 $sec_valor_hora=$info_par['sec_valor_hora'];
+                $sec_valor_media_hora=$info_par['sec_valor_media_hora'];
                 
                 $horas=$log_par_horas_parqueo;
-                $total=$sec_valor_hora*$horas;
+
+                $total_horas = floor ($horas/ 60);
+                $total_medias_horas = ceil ($horas % 60 /30);
+
+                $total=($sec_valor_hora*$total_horas)+($total_medias_horas*$sec_valor_media_hora);
 
                 $transaccionData['cli_id']=$cli_id;
                 $transaccionData['eta_id']=$eta_id;
