@@ -148,6 +148,31 @@ class ParqueaderoDao implements InterfaceCrud {
 		return true;		
 	}
 
+	public function liberarParqueaderosPorTicket($nro_ticket=null) {
+
+		if($nro_ticket != ''){ 
+            $nro_ticket = strtoupper($nro_ticket);
+
+            $adapter = $this->tableGateway->getAdapter();
+
+			$query = "
+				UPDATE 	parqueadero SET par_estado = 'D',
+						aut_placa = '', 
+						par_fecha_ingreso = '0000-00-00 00:00:00',
+						par_fecha_salida = '0000-00-00 00:00:00', 
+						par_horas_parqueo = 0 
+				WHERE par_id IN (SELECT par_id FROM log_parqueadero WHERE nro_ticket='$nro_ticket')
+			";
+    	
+	    	$statement = $adapter->query($query);
+	    	$result = $statement->execute();
+        }    
+
+
+
+		return true;		
+	}
+
 
 	public function traerVaciosPorSectorJSON($sec_id) {
 
