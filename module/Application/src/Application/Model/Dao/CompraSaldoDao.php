@@ -103,6 +103,20 @@ class CompraSaldoDao implements InterfaceCrud {
     		$this->tableGateway->insert ( $data );
     	}
     }
+
+    public function traerPorPuntoRecarga($pun_rec_id){
+        $adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT * 
+            FROM compra_saldo as cs JOIN cliente as c ON cs.cli_id = c.cli_id 
+            WHERE punto_recarga_pun_rec_id = '$pun_rec_id'
+        ";
+        
+        $statement = $adapter->query($query);
+        $results = $statement->execute();
+
+        return $results
+    }
     
 	public function eliminar($id) {
 		if ($this->traer ( $id )) {
