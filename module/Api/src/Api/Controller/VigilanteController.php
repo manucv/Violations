@@ -269,6 +269,8 @@
 				            $response->setStatusCode(403);
 				            $response->setContent($content);
 				            return $response;
+	        			}else{
+	        				$this->getLogParqueaderoDao()->liberarParqueaderosPorTicket($nro_ticket);
 	        			}
 					}
 
