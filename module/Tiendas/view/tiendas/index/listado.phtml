@@ -1,9 +1,5 @@
 <?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); ?>
 
-                        <pre>
-                            <?php print_r($this->compras); ?>
-                        </pre>
-
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-12" >
         <div class="box">
@@ -40,15 +36,13 @@
                  foreach ($this->compras as $transaccion) : ?>
                  <tr>
                      <td class="dataTableIcons">
-                 	 	<pre>
-                            <?php print_r($transaccion); ?>
-                        </pre>
+                 	 	<?php echo $transaccion['usu_nombre'] ?>
                  	 </td>
-                     <td></td>
-                     <td></td>
-                     <td></td>
-                     <td></td>
-                     <td></td>  
+                     <td><?php echo $transaccion['usu_apellido'] ?></td>
+                     <td><?php echo $transaccion['usu_usuario'] ?></td>
+                     <td><?php echo $transaccion['cli_movil'] ?></td>
+                     <td><?php echo $transaccion['com_sal_valor'] ?></td>
+                     <td><?php echo $transaccion['com_sal_hora'] ?></td>  
 
                  </tr>
                  
