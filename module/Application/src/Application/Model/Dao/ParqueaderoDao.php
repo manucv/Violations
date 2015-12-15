@@ -154,13 +154,12 @@ class ParqueaderoDao implements InterfaceCrud {
 
 		$query = "
 			SELECT * FROM parqueadero 
-			WHERE par_id = $par_id;
+			WHERE par_id = '$par_id';
 		";
 	
     	$statement = $adapter->query($query);
     	$result = $statement->execute();
     	$lugar = $results->current();
-
 
 		$query = "
 			UPDATE 	parqueadero SET par_estado = 'O',
@@ -168,7 +167,7 @@ class ParqueaderoDao implements InterfaceCrud {
 					par_fecha_ingreso = '".$lugar['par_fecha_ingreso']."',
 					par_fecha_salida = '0000-00-00 00:00:00', 
 					par_horas_parqueo = ".$lugar['par_horas_parqueo']." 
-			WHERE par_id = $par_id_dest;
+			WHERE par_id = '$par_id_dest';
 		";
 	
     	$statement = $adapter->query($query);
