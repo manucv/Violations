@@ -135,8 +135,8 @@ class IndexController extends AbstractActionController
 
     public function listadoAction()
     {
-
-        $compras = $this->getCompraSaldoDao()->traerPorPuntoRecarga();
+        $id = $this->params ()->fromRoute ( 'id', 0 );
+        $compras = $this->getCompraSaldoDao()->traerPorPuntoRecarga($id);
         $viewParams = array ('compras'=>$compras); 
         return $viewParams;
     }
