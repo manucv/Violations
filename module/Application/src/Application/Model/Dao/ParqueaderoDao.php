@@ -73,14 +73,14 @@ class ParqueaderoDao implements InterfaceCrud {
 		from 
 			(select lp.par_id, 
 					aut_placa,
-					(log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR) AS hora_salida, 
+					(log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo MINUTE) AS hora_salida, 
 					p.par_estado,
 					lp.log_par_horas_parqueo
 			FROM log_parqueadero AS lp 
 			JOIN parqueadero AS p 
 				ON lp.par_id=p.par_id and p.par_estado='O'
 			WHERE log_par_fecha_ingreso > NOW() - INTERVAL 2 DAY 
-				AND (log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR) > NOW()
+				AND (log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo MINUTE) > NOW()
 			ORDER BY 3 DESC ) AS up
 		GROUP BY up.par_id;
 		";
@@ -156,14 +156,14 @@ class ParqueaderoDao implements InterfaceCrud {
 				FROM (
 
 					SELECT lp.par_id, aut_placa, (
-					log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR
+					log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo MINUTE
 					) AS hora_salida, p.par_estado, lp.log_par_horas_parqueo
 					FROM log_parqueadero AS lp
 					JOIN parqueadero AS p ON lp.par_id = p.par_id
 						AND p.par_estado =  'O'
 					WHERE log_par_fecha_ingreso > NOW( ) - INTERVAL 2 DAY 
 					AND (
-						log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR
+						log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo MINUTE
 					) > NOW( ) 
 					ORDER BY 3 DESC
 				) AS up

@@ -53,12 +53,26 @@ class Carga extends Form {
 		$car_valor->setAttributes(array('id' => 'car_valor'));
 		$car_valor->setEmptyOption('-- Seleccione --');
 		$car_valor->setValueOptions(array(
+				'5' => '$5.00',
 				'10' => '$10.00',
+				'15' => '$15.00',
 				'20' => '$20.00',
+				'25' => '$25.00',
 				'30' => '$30.00',
+				'35' => '$35.00',
 				'40' => '$40.00',
+				'45' => '$45.00',
 				'50' => '$50.00',
+				'55' => '$55.00',
 				'60' => '$60.00',
+				'65' => '$65.00',
+				'70' => '$70.00',
+				'75' => '$75.00',
+				'80' => '$80.00',
+				'85' => '$85.00',
+				'90' => '$90.00',
+				'95' => '$95.00',
+				'100' => '$100.00'
 		));
 		$car_valor->setOptions(array(
 				'disable_inarray_validator' => false, // <-- disable

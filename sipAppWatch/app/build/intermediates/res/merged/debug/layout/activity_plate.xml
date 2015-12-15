@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:padding="5dp" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/lblPlate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Placa:"
+            android:textColor="@android:color/white" />
+
+        <EditText
+            android:id="@+id/txtPlate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/text_bkg"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="174dp"
+            android:layout_height="34dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/button_bkg"
+            android:onClick="onSearchClick"
+            android:padding="5dp"
+            android:text="Buscar Placa"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+       	<ProgressBar
+            android:id="@+id/loadingPlate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" 
+            android:visibility="gone" />
+
+	    <TextView
+	        android:id="@+id/EmptyPlate"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:gravity="center_horizontal"
+	        android:text="No existen Registros"
+	        android:visibility="gone" />
+	
+	    <ListView
+	        android:id="@+id/LstPlate"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:background="@drawable/list_bkg" >
+	    </ListView>
+        
+        
+    </LinearLayout>
+
+</LinearLayout>
+<!-- From: file:/C:/Users/Camilo/StudioProjects/sipAppWatch/app/src/main/res/layout/activity_plate.xml -->

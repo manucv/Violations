@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="3dp" >
+
+    <Button
+        android:id="@+id/BtnSpot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/empty"
+        android:onClick="onBtnSpotClick"
+        android:text="Button" />
+
+    <TextView
+        android:id="@+id/TxtInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/TxtTimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+<!-- From: file:/C:/Users/Camilo/StudioProjects/sipAppWatch/app/src/main/res/layout/button_spot.xml -->

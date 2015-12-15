@@ -15,6 +15,9 @@ use Zend\View\Model\ViewModel;
 use Infraccion\Form\Reporte;
 use Infraccion\Form\ReporteValidator;
 
+use Infraccion\Form\Detalle;
+use Infraccion\Form\DetalleValidator;
+
 class InfraccionController extends AbstractActionController
 {
 
@@ -47,11 +50,14 @@ class InfraccionController extends AbstractActionController
         $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
         $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
 
+        $form = $this->getDetalleForm ();
+
         return array(
             'infraccion' => $infraccion,
             'multa' => $multa,
             'tipo' => $tipo,
             'usuario' => $usuario,
+            'formulario' => $form ,
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
         );
     }
@@ -88,6 +94,11 @@ class InfraccionController extends AbstractActionController
 
     public function getReporteForm() {
         $form = new Reporte ();
+        return $form;
+    }
+
+    public function getDetalleForm() {
+        $form = new Detalle ();
         return $form;
     }
     
@@ -137,7 +148,17 @@ class InfraccionController extends AbstractActionController
     }
 
     public function aprobarInfraccionAction(){
+
         $id = $this->params ()->fromRoute ( 'id', 0 );
+
+        if (! $this->request->isPost ()) {
+            return $this->redirect ()->toRoute ( 'parametros', array (
+                    'controller' => 'infraccion'
+            ) );
+        }
+
+        $data = $this->request->getPost ();
+        
         $infraccion = $this->getInfraccionDao()->traer($id);
         if(is_object($infraccion)){
             $infraccion->setInf_estado('A');
@@ -169,11 +190,11 @@ class InfraccionController extends AbstractActionController
                 'h' => 'f',
                 'i' => 'f',
                 'j' => 'f',
-                'tiempo_permanencia' => 0,
+                'tiempo_permanencia' => $data['tiempo_permanencia'],
                 'supervisor' => $_SESSION['Zend_Auth']['storage']->usu_documento,
                 'estado' => 'N',
                 'observacion' => 'Aprobado desde el sistema',
-                'inmovilizado' => 'f',
+                'inmovilizado' => $data['inmovilizado'],
                 'usuario' => 'ROMEROC',
                 'password' =>  'CRISTHIAN87'  
             );
@@ -215,5 +236,28 @@ class InfraccionController extends AbstractActionController
                 return $view;
             }
         }
+    }
+
+    public function rechazarInfraccionAction(){
+        $id = $this->params ()->fromRoute ( 'id', 0 );
+        $infraccion = $this->getInfraccionDao()->traer($id);
+        if(is_object($infraccion)){
+            $infraccion->setInf_estado('E');
+            //A: Aporbada
+            //R: Registrada
+            //E: Rechazada
+
+            if($this->getInfraccionDao()->guardar($infraccion)){
+                $this->flashmessenger()->addSuccessMessage("Infracción rechazada exitosamente");
+            }else{
+                $this->flashmessenger()->addErrorMessage("Error al rechazar la infracción");
+            }
+        }else{
+            $this->flashmessenger()->addErrorMessage("No se encontr&oacute; la infracción, verifique los datos");
+        }    
+
+        return $this->redirect ()->toRoute ( 'infraccion', array (
+            'controller' => 'infraccion'
+        ));
     }
 }

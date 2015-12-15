@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_bkg"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/LblAut_placa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:layout_weight="1"
+            android:gravity="center" 
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/LblPar_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-" 
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/LblFalta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00:00" 
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:id="@+id/BtnSwitch"
+            android:src="@drawable/transfer"
+            android:scaleType="fitXY"
+            android:background="#00000000"/>
+    </LinearLayout>
+
+</LinearLayout>

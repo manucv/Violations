@@ -281,10 +281,6 @@
 
 	        		if(isset($data['log_par_horas_parqueo'])){
 	        			$log_par_horas_parqueo = $data['log_par_horas_parqueo'];	      
-	        			$log_par_horas_parqueo = substr($log_par_horas_parqueo, 0, strpos($log_par_horas_parqueo, ' '));
-	        			if($log_par_horas_parqueo=='30'){
-	        				$log_par_horas_parqueo=0.5;
-	        			}
 	        		}	
 
 	        		if(isset($data['log_par_discount']))
