@@ -60,12 +60,12 @@ class TransaccionDao implements InterfaceCrud {
             lp.tra_id,
             lp.par_id,
             aut_placa, 
-            ( log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR ) AS hora_salida,
-            TIMESTAMPDIFF(SECOND,NOW(), ( log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR )) AS falta,
+            ( log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo MINUTE ) AS hora_salida,
+            TIMESTAMPDIFF(SECOND,NOW(), ( log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo MINUTE )) AS falta,
             lp.log_par_horas_parqueo
             FROM log_parqueadero AS lp
             JOIN transaccion AS tr ON lp.tra_id = tr.tra_id
-            WHERE ( log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo HOUR ) > NOW() AND cli_id = $cli_id
+            WHERE ( log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo MINUTE ) > NOW() AND cli_id = $cli_id
         ";
         
         $statement = $adapter->query($query);
