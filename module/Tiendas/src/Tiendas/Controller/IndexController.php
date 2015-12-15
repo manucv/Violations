@@ -137,7 +137,7 @@ class IndexController extends AbstractActionController
     {
 
         $compras = $this->getCompraSaldoDao()->traerPorPuntoRecarga();
-        $viewParams = array (); 
+        $viewParams = array ('compras'=>$compras); 
         return $viewParams;
     }
 
