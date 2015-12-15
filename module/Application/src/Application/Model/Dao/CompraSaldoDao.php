@@ -105,11 +105,14 @@ class CompraSaldoDao implements InterfaceCrud {
     }
 
     public function traerPorPuntoRecarga($pun_rec_id){
-        
+
         $adapter = $this->tableGateway->getAdapter();
         $query = "
             SELECT * 
-            FROM compra_saldo as cs JOIN cliente as c ON cs.cli_id = c.cli_id 
+            FROM compra_saldo as cs 
+                JOIN cliente as c ON cs.cli_id = c.cli_id
+                JOIN usuario as u ON u.usu_id = c.cli_id 
+
             WHERE punto_recarga_pun_rec_id = '$pun_rec_id'
         ";
         
