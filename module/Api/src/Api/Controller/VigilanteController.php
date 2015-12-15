@@ -270,7 +270,7 @@
 				            $response->setContent($content);
 				            return $response;
 	        			}else{
-	        				$this->getLogParqueaderoDao()->liberarParqueaderosPorTicket($nro_ticket);
+	        				$this->getParqueaderoDao()->liberarParqueaderosPorTicket($nro_ticket);
 	        			}
 					}
 
