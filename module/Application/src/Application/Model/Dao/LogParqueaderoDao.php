@@ -17,7 +17,25 @@ class LogParqueaderoDao implements InterfaceCrud {
 
         if($nro_ticket != ''){ 
             $nro_ticket = strtoupper($nro_ticket);
-            $sql = new Sql($this->tableGateway->getAdapter());
+
+			$adapter = $this->tableGateway->getAdapter();
+			$query = "
+				SELECT count(*) as total 
+				FROM log_parqueadero 
+				WHERE nro_ticket='$nro_ticket'
+				AND (log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo MINUTE) < NOW()
+			";
+	    	
+	    	$statement = $adapter->query($query);
+	    	$results = $statement->execute();
+
+	    	$total = $results->current();
+
+	    	return $total['total'];
+
+
+			/* 
+		    $sql = new Sql($this->tableGateway->getAdapter());
             $select = $sql->select();
             $select->from('log_parqueadero');
             $select->where            
@@ -28,6 +46,7 @@ class LogParqueaderoDao implements InterfaceCrud {
             $count =  $results->count();
 
             return $count;
+            */
         }
         return 0;
     }
