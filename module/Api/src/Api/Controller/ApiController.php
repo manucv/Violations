@@ -663,6 +663,11 @@ class ApiController extends AbstractActionController
 
                 $cliente->exchangeArray ( $data_cliente );
                 $cli_id=$this->getClienteDao() ->guardar ( $cliente );
+
+                if($cli_id <= 100){
+                    $this->getClienteDao()->acreditar ( $cli_id, 3 );                                        
+                }
+
                 $clienteObj = $this->getClienteDao()->traer ( $cli_id );
                 $content=json_encode($clienteObj->getArrayCopy());
                 $response->setStatusCode(200);
