@@ -1,0 +1,55 @@
+INSERT INTO parqueadero_sector ( SELECT 7, par_id from parqueadero WHERE par_id BETWEEN 'I0260' AND 'I0284' );
+INSERT INTO parqueadero_sector ( SELECT 7, par_id from parqueadero WHERE par_id BETWEEN 'I1234' AND 'I1303' );
+
+INSERT INTO parqueadero_sector ( SELECT 11, par_id from parqueadero WHERE par_id BETWEEN 'I1404' AND 'I1450' );
+INSERT INTO parqueadero_sector ( SELECT 11, par_id from parqueadero WHERE par_id BETWEEN 'I0816' AND 'I0841' );
+INSERT INTO parqueadero_sector ( SELECT 11, par_id from parqueadero WHERE par_id BETWEEN 'I0024' AND 'I0059' );
+
+INSERT INTO parqueadero_sector ( SELECT 12, par_id from parqueadero WHERE par_id BETWEEN 'I0951' AND 'I1045' );
+INSERT INTO parqueadero_sector ( SELECT 12, par_id from parqueadero WHERE par_id BETWEEN 'I0060' AND 'I0070' );
+INSERT INTO parqueadero_sector ( SELECT 12, par_id from parqueadero WHERE par_id BETWEEN 'I0453' AND 'I0465' );
+
+INSERT INTO parqueadero_sector ( SELECT 13, par_id from parqueadero WHERE par_id BETWEEN 'I0001' AND 'I0023' );
+INSERT INTO parqueadero_sector ( SELECT 13, par_id from parqueadero WHERE par_id BETWEEN 'I0126' AND 'I0171' );
+INSERT INTO parqueadero_sector ( SELECT 13, par_id from parqueadero WHERE par_id BETWEEN 'I0625' AND 'I0725' );
+
+INSERT INTO parqueadero_sector ( SELECT 14, par_id from parqueadero WHERE par_id BETWEEN 'I0726' AND 'I0736' );
+INSERT INTO parqueadero_sector ( SELECT 14, par_id from parqueadero WHERE par_id BETWEEN 'I0172' AND 'I0199' );
+INSERT INTO parqueadero_sector ( SELECT 14, par_id from parqueadero WHERE par_id BETWEEN 'I0111' AND 'I0125' );
+INSERT INTO parqueadero_sector ( SELECT 14, par_id from parqueadero WHERE par_id BETWEEN 'I0798' AND 'I0815' );
+INSERT INTO parqueadero_sector ( SELECT 14, par_id from parqueadero WHERE par_id BETWEEN 'I0883' AND 'I0895' );
+INSERT INTO parqueadero_sector ( SELECT 14, par_id from parqueadero WHERE par_id BETWEEN 'I0296' AND 'I0379' );
+
+INSERT INTO parqueadero_sector ( SELECT 15, par_id from parqueadero WHERE par_id BETWEEN 'I0071' AND 'I0110' );
+INSERT INTO parqueadero_sector ( SELECT 15, par_id from parqueadero WHERE par_id BETWEEN 'I0200' AND 'I0243' );
+INSERT INTO parqueadero_sector ( SELECT 15, par_id from parqueadero WHERE par_id BETWEEN 'I1095' AND 'I1112' );
+INSERT INTO parqueadero_sector ( SELECT 15, par_id from parqueadero WHERE par_id BETWEEN 'I0842' AND 'I0882' );
+
+INSERT INTO parqueadero_sector ( SELECT 16, par_id from parqueadero WHERE par_id BETWEEN 'I0285' AND 'I0295' );
+INSERT INTO parqueadero_sector ( SELECT 16, par_id from parqueadero WHERE par_id BETWEEN 'I0466' AND 'I0502' );
+INSERT INTO parqueadero_sector ( SELECT 16, par_id from parqueadero WHERE par_id BETWEEN 'I1113' AND 'I1185' );
+INSERT INTO parqueadero_sector ( SELECT 16, par_id from parqueadero WHERE par_id BETWEEN 'I1060' AND 'I1094' );
+INSERT INTO parqueadero_sector ( SELECT 16, par_id from parqueadero WHERE par_id BETWEEN 'I0244' AND 'I0259' );
+
+INSERT INTO parqueadero_sector ( SELECT 17, par_id from parqueadero WHERE par_id BETWEEN 'I0503' AND 'I0587' );
+INSERT INTO parqueadero_sector ( SELECT 17, par_id from parqueadero WHERE par_id BETWEEN 'I0748' AND 'I0781' );
+INSERT INTO parqueadero_sector ( SELECT 17, par_id from parqueadero WHERE par_id BETWEEN 'I0896' AND 'I0939' );
+INSERT INTO parqueadero_sector ( SELECT 17, par_id from parqueadero WHERE par_id BETWEEN 'I1046' AND 'I1059' );
+
+
+INSERT INTO parqueadero_sector ( SELECT 18, par_id from parqueadero WHERE par_id BETWEEN 'I0380' AND 'I0452' );
+INSERT INTO parqueadero_sector ( SELECT 18, par_id from parqueadero WHERE par_id BETWEEN 'I0737' AND 'I0747' );
+INSERT INTO parqueadero_sector ( SELECT 18, par_id from parqueadero WHERE par_id BETWEEN 'I0782' AND 'I0797' );
+INSERT INTO parqueadero_sector ( SELECT 18, par_id from parqueadero WHERE par_id BETWEEN 'I0940' AND 'I0950' );
+
+INSERT INTO parqueadero_sector ( SELECT 18, par_id from parqueadero WHERE par_id BETWEEN 'I0588' AND 'I0598' );
+
+
+
+INSERT INTO parqueadero_sector ( SELECT 7, par_id from parqueadero WHERE par_id BETWEEN 'I1186' AND 'I1233' );
+INSERT INTO parqueadero_sector ( SELECT 7, par_id from parqueadero WHERE par_id BETWEEN 'I1303' AND 'I1308' );
+
+INSERT INTO parqueadero_sector ( SELECT 7, par_id from parqueadero WHERE par_id BETWEEN 'I1309' AND 'I1319' );
+1309 al 1319 11
+
+INSERT INTO parqueadero_sector ( SELECT 18, par_id from parqueadero WHERE par_id BETWEEN 'I0601' AND 'I0624' );
