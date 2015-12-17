@@ -367,8 +367,7 @@
 					$inf_longitud 	= floatval($data['inf_longitud']);
 					$inf_fecha 		= $data['inf_fecha'];
 					$tip_inf_id 	= $data['tip_inf_id'];
-
-					$usu_id 		= 5;//$data['usu_id'];
+					$usu_id 		= $data['usu_id'];
 
 					$lista_blanca_obj=$this->getListaBlancaDao()->enLista($aut_placa);
 					if(!$lista_blanca_obj){
