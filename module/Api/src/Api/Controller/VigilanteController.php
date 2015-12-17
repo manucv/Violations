@@ -136,14 +136,17 @@
 	    							$parqueaderos=$this->getParqueaderoDao()->traerTodosPorSector($sec_id,$par_estado);	
 	    						}else{
 	    							//Functionalidad sí es que buscamos los sectores de un vigilante X
-	    							$parqueaderos=$this->getParqueaderoDao()->traerTodosPorSector($sec_id);	
+	    							$parqueaderos=$this->getParqueaderoDao()->traerTodosPorSectorJSON($sec_id);	
 	    						}
-
+	    						/*	
 				                $parqueaderosArray=array();
 					            foreach($parqueaderos as $parqueadero){
 					                $parqueaderosArray[]=$parqueadero->getArrayCopy();
 					            }
+
 	    						$content=json_encode($parqueaderosArray);
+	    						*/
+	    						$content = $parqueaderos; 
 	    					break;
 	    					deafult:
 	    						return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
