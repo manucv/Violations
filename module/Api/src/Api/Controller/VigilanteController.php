@@ -133,7 +133,7 @@
 	    					case 'parqueaderos':
 	    						if($this->getRequest()->getQuery('par_estado')){
 	    							$par_estado=$this->getRequest()->getQuery('par_estado');
-	    							$parqueaderos=$this->getParqueaderoDao()->traerTodosPorSector($sec_id,$par_estado);	
+	    							$parqueaderos=$this->getParqueaderoDao()->traerTodosPorSectorJSON($sec_id,$par_estado);	
 	    						}else{
 	    							//Functionalidad sí es que buscamos los sectores de un vigilante X
 	    							$parqueaderos=$this->getParqueaderoDao()->traerTodosPorSectorJSON($sec_id);	
