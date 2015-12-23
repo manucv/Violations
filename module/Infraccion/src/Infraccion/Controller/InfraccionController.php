@@ -173,7 +173,7 @@ class InfraccionController extends AbstractActionController
             $hora = $fecha_hora['1'];
 
             $data=array(
-                'numero' => $multa_parqueadero->getMul_par_id()+99999900,
+                'numero' => $multa_parqueadero->getInf_id(),
                 'numero_tarjeta' => 0,
                 'numero_placa' => $multa_parqueadero->getAut_placa(),
                 'calle_prin' => $calle_principal->getCal_codigo(),
@@ -190,11 +190,15 @@ class InfraccionController extends AbstractActionController
                 'h' => 'f',
                 'i' => 'f',
                 'j' => 'f',
+
                 'tiempo_permanencia' => $data['tiempo_permanencia'],
                 'supervisor' => $_SESSION['Zend_Auth']['storage']->usu_documento,
                 'estado' => 'N',
                 'observacion' => 'Aprobado desde el sistema',
                 'inmovilizado' => $data['inmovilizado'],
+                'imagen1' => 'http://ibarra.sip.ec/Violations/files/'.$multa_parqueadero->getMul_par_prueba_1(),
+                'imagen2' => 'http://ibarra.sip.ec/Violations/files/'.$multa_parqueadero->getMul_par_prueba_2(),
+                'imagen3' => 'http://ibarra.sip.ec/Violations/files/'.$multa_parqueadero->getMul_par_prueba_3(),
                 'usuario' => 'ROMEROC',
                 'password' =>  'CRISTHIAN87'  
             );

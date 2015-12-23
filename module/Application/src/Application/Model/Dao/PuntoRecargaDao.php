@@ -48,7 +48,6 @@ class PuntoRecargaDao implements InterfaceCrud {
             }
             $resultSet[]=$punto_recarga;
         }
-
         return $resultSet;
     }    
     
