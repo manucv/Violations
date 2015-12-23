@@ -190,6 +190,7 @@ class InfraccionController extends AbstractActionController
                 'h' => 'f',
                 'i' => 'f',
                 'j' => 'f',
+
                 'tiempo_permanencia' => $data['tiempo_permanencia'],
                 'supervisor' => $_SESSION['Zend_Auth']['storage']->usu_documento,
                 'estado' => 'N',
@@ -205,8 +206,9 @@ class InfraccionController extends AbstractActionController
             $data[$infraccion->getTip_inf_codigo()]='t';
 
             /* ejecución del servicio del municipio */
+            echo 'insertando infraccion';
             $service=$this->getInfraccionDao()->asentarInfraccionMunicipio($data);   
-            
+            echo 'infraccion insertada';
             
             $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
             $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
