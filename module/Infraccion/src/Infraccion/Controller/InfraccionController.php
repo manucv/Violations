@@ -190,7 +190,6 @@ class InfraccionController extends AbstractActionController
                 'h' => 'f',
                 'i' => 'f',
                 'j' => 'f',
-
                 'tiempo_permanencia' => $data['tiempo_permanencia'],
                 'supervisor' => $_SESSION['Zend_Auth']['storage']->usu_documento,
                 'estado' => 'N',

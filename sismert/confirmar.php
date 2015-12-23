@@ -41,7 +41,6 @@
 	    'imagen3' => $_GET['imagen3'],
 	    'usuario' => $_GET['usuario'], 
 	    'password' => $_GET['password']
-
 	));
 	
 	if($result == $_GET['numero'])
