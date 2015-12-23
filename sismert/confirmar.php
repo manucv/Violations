@@ -35,7 +35,10 @@
 	    'supervisor' => $_GET['supervisor'], 
 	    'estado' => $_GET['estado'], 
 	    'observacion' => $_GET['observacion'], 
-	    'inmovilizado' => $_GET['inmovilizado'], 
+	    'inmovilizado' => $_GET['inmovilizado'],
+	    'imagen1' => $_GET['imagen1'],
+	    'imagen2' => $_GET['imagen2'],
+	    'imagen3' => $_GET['imagen3'],
 	    'usuario' => $_GET['usuario'], 
 	    'password' => $_GET['password']
 
