@@ -165,8 +165,6 @@ class InfraccionController extends AbstractActionController
             $infraccion->setInf_estado('A');
             $multa_parqueadero = $this->getMultaParqueaderoDao()->traerPorInfraccion($id);
 
-            print_r($multa_parqueadero);
-            die();
 
             $calle_principal = $this->getCalleDao()->traer($multa_parqueadero->getPar_cal_principal());
             $calle_secundaria = $this->getCalleDao()->traer($multa_parqueadero->getPar_cal_secundaria());
@@ -177,7 +175,7 @@ class InfraccionController extends AbstractActionController
             $hora = $fecha_hora['1'];
 
             $data=array(
-                'numero' => $multa_parqueadero->getInf_id(),
+                'numero' => $id,
                 'numero_tarjeta' => 0,
                 'numero_placa' => $multa_parqueadero->getAut_placa(),
                 'calle_prin' => $calle_principal->getCal_codigo(),
