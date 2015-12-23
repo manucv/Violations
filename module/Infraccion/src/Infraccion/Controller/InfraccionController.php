@@ -151,7 +151,6 @@ class InfraccionController extends AbstractActionController
 
         $id = $this->params ()->fromRoute ( 'id', 0 );
 
-        echo $id; die();
 
         if (! $this->request->isPost ()) {
             return $this->redirect ()->toRoute ( 'parametros', array (
@@ -165,6 +164,9 @@ class InfraccionController extends AbstractActionController
         if(is_object($infraccion)){
             $infraccion->setInf_estado('A');
             $multa_parqueadero = $this->getMultaParqueaderoDao()->traerPorInfraccion($id);
+
+            print_r($multa_parqueadero);
+            die();
 
             $calle_principal = $this->getCalleDao()->traer($multa_parqueadero->getPar_cal_principal());
             $calle_secundaria = $this->getCalleDao()->traer($multa_parqueadero->getPar_cal_secundaria());
