@@ -6,8 +6,9 @@
 	ini_set('max_execution_time', 0); 	//Desabilitamos el limite en el tiempo de ejecución
 	ini_set('memory_limit', '-1');		//Desabilitamos de igual manera el límite en el uso de la memoria
 
-
-	$client = new nusoap_client('http://sismertws.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl', 'wsdl');
+	
+	//http://sismertws.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl
+	$client = new nusoap_client('http://sismertwsprod.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl', 'wsdl');
 	$err = $client->getError();
 	if ($err) {
 		die($err);

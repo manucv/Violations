@@ -8,8 +8,8 @@
 	ini_set('max_execution_time', 0); 	//Desabilitamos el limite en el tiempo de ejecución
 	ini_set('memory_limit', '-1');		//Desabilitamos de igual manera el límite en el uso de la memoria
 
-
-	$client = new nusoap_client('http://sismertws.ibarra.gob.ec/wsgadi.php/notificaciones/getMultasByPlaca?wsdl', 'wsdl');
+	//http://sismertws.ibarra.gob.ec/wsgadi.php/notificaciones/getMultasByPlaca?wsdl
+	$client = new nusoap_client('http://sismertwsprod.ibarra.gob.ec/wsgadi.php/notificaciones/getMultasByPlaca?wsdl', 'wsdl');
 	$err = $client->getError();
 	if ($err) {
 		die($err);
@@ -18,8 +18,8 @@
 	$placa=$_GET['placa'];
 
 	$result = $client->call("getMultasByPlaca", array(	"numero_placa" => $placa, 
-														"usuario" => "ROMEROC",
-														"password" => "CRISTHIAN87"));
+														"usuario" => "SISMERTWSE",
+														"password" => "Eb2Yhye3"));
 
 	$data=array();
 	foreach($result as &$infraccion){
