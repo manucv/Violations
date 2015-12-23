@@ -28,7 +28,6 @@
                          
                          <th class="hidden-xs">Fecha</th>
                      	 <th><span class="hidden-xs">Tipo de </span>Infracci&oacute;n</th>
-                         <th class="hidden-xs">Sector</th>
                          <th>Placa</th>
                          <th>&nbsp;</th>
                      </tr>
@@ -38,7 +37,6 @@
                      <tr>
                          <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getInf_fecha());?></td>
                          <td><?php echo $this->escapeHtml($infraccion->getTip_inf_descripcion());?></td>
-                         <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getSec_nombre());?></td>
                          <td><?php echo $this->escapeHtml($infraccion->getAut_placa());?></td>
                         <td style="text-align: center;"><a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'detalle', 'id' => $infraccion->getInf_id()))?>"><i class="fa fa-gavel fa-fw"></i></a></td>
                      </tr>
