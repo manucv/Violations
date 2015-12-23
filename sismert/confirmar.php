@@ -13,8 +13,6 @@
 		die($err);
 	}
 
-	print_r($_GET);
-
 	$result = $client->call("insertNotificacion", array(	
 		'numero' => $_GET['numero'], 
 	    'numero_tarjeta' => $_GET['numero_tarjeta'], 
@@ -50,6 +48,3 @@
 		echo 1;
 	else
 		echo 0;
-
-	print_r($result);
-	die();
