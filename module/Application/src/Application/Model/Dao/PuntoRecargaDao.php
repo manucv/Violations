@@ -25,8 +25,7 @@ class PuntoRecargaDao implements InterfaceCrud {
     }
 
     public function traerTodosMunicipio(){
-        
-        $client = new SoapClient("http://ws.ibarra.gob.ec:8080/ServicioTest/ServicioWS?wsdl", 
+        $client = new SoapClient("http://ws.ibarra.gob.ec:8080/Servicio/ServicioWS?wsdl", 
                         array(  "soap_version" => SOAP_1_1, 'encoding' => 'iso-8859-1')
                     );
         $result = $client->consultarPuntoVenta(array('usuario'=>'SISMERTWSE','password'=>'Eb2Yhye3'));
