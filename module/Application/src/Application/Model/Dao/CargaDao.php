@@ -94,7 +94,7 @@ class CargaDao implements InterfaceCrud {
 
     public function asentarCargaMunicipio(Carga $carga, PuntoRecarga $punto_recarga){
         
-        $client = new SoapClient("http://ws.ibarra.gob.ec:8080/ServicioTest/ServicioWS?wsdl", 
+        $client = new SoapClient("http://ws.ibarra.gob.ec:8080/Servicio/ServicioWS?wsdl", 
                         array(  "soap_version" => SOAP_1_1, 'encoding' => 'iso-8859-1')
                     );
 
@@ -106,7 +106,7 @@ class CargaDao implements InterfaceCrud {
             'nombreCiudadano' => $punto_recarga->getPun_rec_nombres().' '.$punto_recarga->getPun_rec_apellidos(),
             'direccion' => $punto_recarga->getPun_rec_direccion(),
             'valorTitulo' => $carga->getCar_valor(),
-            'usuarioIngreso' => 'jjarrin'
+            'usuarioIngreso' => 'JJARRIN'
             );
 
         $result = $client->ingresoPago($data);
