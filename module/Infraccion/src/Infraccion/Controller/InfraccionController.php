@@ -151,6 +151,8 @@ class InfraccionController extends AbstractActionController
 
         $id = $this->params ()->fromRoute ( 'id', 0 );
 
+        echo $id; die();
+
         if (! $this->request->isPost ()) {
             return $this->redirect ()->toRoute ( 'parametros', array (
                     'controller' => 'infraccion'
