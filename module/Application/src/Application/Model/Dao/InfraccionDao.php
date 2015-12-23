@@ -93,12 +93,14 @@ class InfraccionDao implements InterfaceCrud {
 
     public function asentarInfraccionMunicipio( $data){
         
+        /*
         $client = new SoapClient("http://sismertws.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl", 
                         array(  "soap_version" => SOAP_1_1, 'encoding' => 'iso-8859-1')
                     );
 
         $result = $client->insertNotificacion($data);
         $debug=$client->getLastRequest();
+        */
 
         $url = 'http://localhost/Violations/sismert/confirmar.php';
         
@@ -111,7 +113,9 @@ class InfraccionDao implements InterfaceCrud {
         $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
+        print_r($response);
         die();
+
 
         return $response;
 
