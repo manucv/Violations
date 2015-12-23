@@ -208,12 +208,7 @@ class InfraccionController extends AbstractActionController
             /* ejecución del servicio del municipio */
             $service=$this->getInfraccionDao()->asentarInfraccionMunicipio($data);   
             
-            //echo '<pre>';
-            //    print_r($data);
-            //echo '</pre>';
             
-            //die();
-
             $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
             $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
 
