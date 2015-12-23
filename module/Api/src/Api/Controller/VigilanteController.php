@@ -263,7 +263,7 @@
 	        			$par_id= $data['par_id'];
 
 	        		if(isset($data['aut_placa']))
-	        			$aut_placa= $data['aut_placa'];
+	        			$aut_placa= strtoupper($data['aut_placa']);
 
 	        		if(isset($data['nro_ticket'])){
 	        			$nro_ticket= $data['nro_ticket'];
@@ -362,7 +362,7 @@
 
 
 					$par_id 		= $data['par_id'];
-					$aut_placa 		= $data['aut_placa'];
+					$aut_placa 		= strtoupper($data['aut_placa']);
 					$inf_latitud 	= floatval($data['inf_latitud']);
 					$inf_longitud 	= floatval($data['inf_longitud']);
 					$inf_fecha 		= $data['inf_fecha'];
