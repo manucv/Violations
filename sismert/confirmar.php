@@ -43,6 +43,9 @@
 	    'password' => $_GET['password']
 	));
 	
+	print_r($result);
+	die();
+
 	if($result == $_GET['numero'])
 		echo 1;
 	else
