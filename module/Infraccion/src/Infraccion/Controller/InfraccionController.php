@@ -173,7 +173,7 @@ class InfraccionController extends AbstractActionController
             $hora = $fecha_hora['1'];
 
             $data=array(
-                'numero' => $multa_parqueadero->getInf_id(),
+                'numero' => $multa_parqueadero->getInf_id()+99000000,
                 'numero_tarjeta' => 0,
                 'numero_placa' => $multa_parqueadero->getAut_placa(),
                 'calle_prin' => $calle_principal->getCal_codigo(),
@@ -206,10 +206,8 @@ class InfraccionController extends AbstractActionController
             $data[$infraccion->getTip_inf_codigo()]='t';
 
             /* ejecución del servicio del municipio */
-            echo 'insertando infraccion';
             $service=$this->getInfraccionDao()->asentarInfraccionMunicipio($data);   
-            echo 'infraccion insertada';
-            
+                        
             $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
             $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
 
