@@ -173,7 +173,7 @@ class InfraccionController extends AbstractActionController
             $hora = $fecha_hora['1'];
 
             $data=array(
-                'numero' => $multa_parqueadero->getInf_id()+99000000,
+                'numero' => $multa_parqueadero->getInf_id(),
                 'numero_tarjeta' => 0,
                 'numero_placa' => $multa_parqueadero->getAut_placa(),
                 'calle_prin' => $calle_principal->getCal_codigo(),
