@@ -49,4 +49,3 @@
 	else
 		echo 0;
 
-	print_r($result);
