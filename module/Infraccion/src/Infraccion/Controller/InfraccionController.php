@@ -199,8 +199,8 @@ class InfraccionController extends AbstractActionController
                 'imagen1' => $multa_parqueadero->getMul_par_prueba_1()!=''?'http://ibarra.sip.ec/Violations/files/'.$multa_parqueadero->getMul_par_prueba_1():'',
                 'imagen2' => $multa_parqueadero->getMul_par_prueba_2()!=''?'http://ibarra.sip.ec/Violations/files/'.$multa_parqueadero->getMul_par_prueba_2():'',
                 'imagen3' => $multa_parqueadero->getMul_par_prueba_3()!=''?'http://ibarra.sip.ec/Violations/files/'.$multa_parqueadero->getMul_par_prueba_3():'',
-                'usuario' => 'ROMEROC',
-                'password' =>  'CRISTHIAN87'  
+                'usuario' => 'SISMERTWSE',
+                'password' =>  'Eb2Yhye3'  
             );
             
             $data[$infraccion->getTip_inf_codigo()]='t';
