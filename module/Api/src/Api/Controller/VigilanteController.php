@@ -121,6 +121,7 @@
             $response->setContent($content);
             return $response;
 	    }
+	    
 	    public function sectoresAction()
 	    {	 	    
 	    	if($this->getRequest()->isGET()){

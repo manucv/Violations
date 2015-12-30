@@ -108,6 +108,23 @@ class InfraccionDao implements InterfaceCrud {
 
     }
 
+    public function consultarInfraccionMunicipio($data){
+        
+        $url = 'http://localhost/Violations/sismert/infracciones.php';
+        
+        $url .= '?' . http_build_query($data);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        $response = curl_exec($ch);
+        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        return $response;
+
+    }
+
     public function traerPorTipo($fecha_ini, $fecha_fin){
         $adapter = $this->tableGateway->getAdapter();
         $query = "

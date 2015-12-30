@@ -18,6 +18,10 @@ use Infraccion\Form\ReporteValidator;
 use Infraccion\Form\Detalle;
 use Infraccion\Form\DetalleValidator;
 
+use Infraccion\Form\Consulta;
+use Infraccion\Form\ConsultaValidator;
+
+
 class InfraccionController extends AbstractActionController
 {
 
@@ -81,8 +85,6 @@ class InfraccionController extends AbstractActionController
 
         $this->layout()->setVariable('menupadre', 'reportes')->setVariable('menuhijo', 'infraccion');
 
-        
-
         return array(
             'formulario' => $form ,
             'registros' => $registros,
@@ -92,8 +94,35 @@ class InfraccionController extends AbstractActionController
         );
     }
 
+    public function consultaAction()
+    {
+        $form = $this->getConsultaForm ();
+        $infracciones = array();
+        if ($this->request->isPost ()) {
+            $data = $this->request->getPost ();
+            $aut_placa = $data['aut_placa'];
+            $form->setData ( $data );
+
+            $service=$this->getInfraccionDao()->consultarInfraccionMunicipio($data);   
+            $infracciones = json_decode($service);
+
+        }  
+
+        return array(
+            'infracciones'  => $infracciones,
+            'formulario'    => $form ,
+            'navegacion'    => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Consulta de Infracciones' => array('infraccion','infraccion','consulta')) ),
+        );
+
+    }
+
     public function getReporteForm() {
         $form = new Reporte ();
+        return $form;
+    }
+
+    public function getConsultaForm() {
+        $form = new Consulta ();
         return $form;
     }
 

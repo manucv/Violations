@@ -173,9 +173,6 @@
 						<span class="hidden-xs" id="parametros">Par&aacute;metros</span>
 					</a>
 					<ul class="dropdown-menu">
-<!-- 						<li id="paises"><a href="<?php echo $this->url('parametros', array('controller' => 'pais', 'action' => 'listado')) ?>"><i class="fa fa-globe fa-fw"></i> Paises</a></li>
-						<li id="estados"><a href="<?php echo $this->url('parametros', array('controller' => 'estado', 'action' => 'listado')) ?>"><i class="fa fa-building-o fa-fw"></i> Estados</a></li>
-						<li id="ciudades"><a href="<?php echo $this->url('parametros', array('controller' => 'ciudad', 'action' => 'listado')) ?>"><i class="fa fa-flag-checkered fa-fw"></i> Ciudades</a></li> -->
 						<li id="sectores"><a href="<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'listado')) ?>"><i class="fa fa-location-arrow fa-fw"></i> Sectores</a></li>
 						<li id="parqueaderos"><a href="<?php echo $this->url('parametros', array('controller' => 'parqueadero', 'action' => 'listado')) ?>"><i class="fa fa-map-marker fa-fw"></i> Parqueaderos</a></li>
 						<li id="tipoInfraccion"><a href="<?php echo $this->url('parametros', array('controller' => 'tipoinfraccion', 'action' => 'listado')) ?>"><i class="fa fa-list fa-fw"></i> Tipo Infracci&oacute;n</a></li>
@@ -208,6 +205,12 @@
 					 <a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'index')) ?>">
 						 <i class="fa fa-gavel"></i>
 						 <span class="hidden-xs">Infracciones</span>
+					</a>
+				</li>
+				<li id="consultaInfracciones">
+					 <a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'consulta')) ?>">
+						 <i class="fa fa-search"></i>
+						 <span class="hidden-xs">Consulta de Infracciones</span>
 					</a>
 				</li>
 				 <li id="parqueaderodis">
