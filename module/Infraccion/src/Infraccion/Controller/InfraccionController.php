@@ -29,6 +29,7 @@ class InfraccionController extends AbstractActionController
     protected $multaParqueaderoDao;
     protected $tipoInfraccionDao;
     protected $usuarioDao;
+    protected $parqueaderoDao;
     protected $calleDao;
 
     public function indexAction()
@@ -51,7 +52,11 @@ class InfraccionController extends AbstractActionController
 
         $infraccion = $this->getInfraccionDao()->traer($id);
         $multa  = $this->getMultaParqueaderoDao()->traerPorInfraccion($id);
+        $parqueadero  = $this->getParqueaderoDao()->traer($multa->getPar_id());
+        $calle_principal = $this->getCalleDao()->traer($parqueadero->getPar_cal_principal());
+        $calle_secundaria = $this->getCalleDao()->traer($parqueadero->getPar_cal_secundaria());
         $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
+
         $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
 
         $form = $this->getDetalleForm ();
@@ -61,6 +66,8 @@ class InfraccionController extends AbstractActionController
             'multa' => $multa,
             'tipo' => $tipo,
             'usuario' => $usuario,
+            'calle_principal' => $calle_principal,
+            'calle_secundaria' => $calle_secundaria,
             'formulario' => $form ,
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
         );
@@ -166,7 +173,14 @@ class InfraccionController extends AbstractActionController
         }
         return $this->usuarioDao;
     }
-
+    public function getParqueaderoDao()
+    {
+        if (! $this->parqueaderoDao) {
+            $sm = $this->getServiceLocator();
+            $this->parqueaderoDao = $sm->get('Application\Model\Dao\ParqueaderoDao');
+        }
+        return $this->parqueaderoDao;
+    }
     public function getCalleDao()
     {
         if (! $this->calleDao) {

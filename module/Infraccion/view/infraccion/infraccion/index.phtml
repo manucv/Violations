@@ -38,7 +38,7 @@
                          <td class="hidden-xs"><?php echo $this->escapeHtml($infraccion->getInf_fecha());?></td>
                          <td><?php echo $this->escapeHtml($infraccion->getTip_inf_descripcion());?></td>
                          <td><?php echo $this->escapeHtml($infraccion->getAut_placa());?></td>
-                        <td style="text-align: center;"><a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'detalle', 'id' => $infraccion->getInf_id()))?>"><i class="fa fa-gavel fa-fw"></i></a></td>
+                        <td style="text-align: center;"><a href="<?php echo $this->url('infraccion', array('controller' => 'infraccion', 'action' => 'detalle', 'id' => $infraccion->getInf_id()))?>"><i class="fa fa-gavel fa-fw"></i> <b>Juzgar Infracci&oacute;n</b></a></td>
                      </tr>
                      <?php  endforeach; ?>
                      </tbody>
