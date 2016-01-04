@@ -75,7 +75,7 @@ class InfraccionController extends AbstractActionController
                 'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
             );
         } else {
-            $this->flashmessenger()->addErrorMessage("No existen más infracciones para procesar");  
+            $this->flashmessenger()->addErrorMessage("No existen la infracción");  
             return $this->redirect ()->toRoute ( 'infraccion', array (
                 'controller' => 'infraccion'
             ));
@@ -285,9 +285,15 @@ class InfraccionController extends AbstractActionController
         }else{
 
             $previous = $this->getInfraccionDao()->getPrevious($id);
-            return $this->redirect ()->toRoute ( 'infraccion', array (
-                'controller' => 'infraccion', 'action' => 'detalle' , 'id' =>  $previous
-            ));
+            if($previous){
+                return $this->redirect ()->toRoute ( 'infraccion', array (
+                    'controller' => 'infraccion', 'action' => 'detalle' , 'id' =>  $previous
+                ));
+            }else{
+                return $this->redirect ()->toRoute ( 'infraccion', array (
+                    'controller' => 'infraccion'
+                ));  
+            }
         }    
     }
 
@@ -320,9 +326,15 @@ class InfraccionController extends AbstractActionController
         }else{
 
             $previous = $this->getInfraccionDao()->getPrevious($id);
-            return $this->redirect ()->toRoute ( 'infraccion', array (
-                'controller' => 'infraccion', 'action' => 'detalle' , 'id' =>  $previous
-            ));
+            if($previous){
+                return $this->redirect ()->toRoute ( 'infraccion', array (
+                    'controller' => 'infraccion', 'action' => 'detalle' , 'id' =>  $previous
+                ));
+            }else{
+                return $this->redirect ()->toRoute ( 'infraccion', array (
+                    'controller' => 'infraccion'
+                ));  
+            }
         }    
     }
 }
