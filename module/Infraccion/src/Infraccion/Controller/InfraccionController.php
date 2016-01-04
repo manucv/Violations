@@ -245,7 +245,6 @@ class InfraccionController extends AbstractActionController
                 'h' => 'f',
                 'i' => 'f',
                 'j' => 'f',
-
                 'tiempo_permanencia' => $data['tiempo_permanencia'],
                 'supervisor' => $_SESSION['Zend_Auth']['storage']->usu_documento,
                 'estado' => 'N',
@@ -257,6 +256,8 @@ class InfraccionController extends AbstractActionController
                 'usuario' => 'SISMERTWSE',
                 'password' =>  'Eb2Yhye3'  
             );
+
+            
             
             $data[$infraccion->getTip_inf_codigo()]='t';
 
@@ -264,7 +265,11 @@ class InfraccionController extends AbstractActionController
             $service=$this->getInfraccionDao()->asentarInfraccionMunicipio($data);   
             $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
             $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
-
+            
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
+            
             if($service){
                 $this->getInfraccionDao()->guardar($infraccion);  
                 $this->flashmessenger()->addSuccessMessage("Infracción aprobada exitosamente");
@@ -277,7 +282,7 @@ class InfraccionController extends AbstractActionController
         } else {
             $this->flashmessenger()->addErrorMessage("No se encontr&oacute; la infracción, verifique los datos");  
         }
-
+        die();
         if($is_error){
             return $this->redirect ()->toRoute ( 'infraccion', array (
                 'controller' => 'infraccion'
@@ -331,6 +336,7 @@ class InfraccionController extends AbstractActionController
                     'controller' => 'infraccion', 'action' => 'detalle' , 'id' =>  $previous
                 ));
             }else{
+                $this->flashmessenger()->addErrorMessage("No existen más infracciones");
                 return $this->redirect ()->toRoute ( 'infraccion', array (
                     'controller' => 'infraccion'
                 ));  
