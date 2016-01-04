@@ -1,5 +1,11 @@
 <?php echo $this->partial('partial/navegacion.phtml', $this->navegacion); ?>
-<?php echo $this->message; ?>
+
+<ul class="messages">
+    <?php foreach($this->messages as $message):  ?>
+        <li><?php echo  $message; ?></li>
+    <?php endforeach; ?>
+</ul>
+
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-12" >
         <div class="box">

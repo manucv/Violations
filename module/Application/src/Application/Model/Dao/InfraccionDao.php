@@ -211,4 +211,29 @@ class InfraccionDao implements InterfaceCrud {
 
         return $results;
     }
+
+    public function getNext( $id ){
+        if (!empty ( $id ) && !is_null ( $id )) {
+            $adapter = $this->tableGateway->getAdapter();
+            $query = "SELECT * FROM `infraccion` WHERE inf_id = (SELECT min(inf_id) FROM `infraccion` WHERE inf_id > $id)";
+            $statement = $adapter->query($query);
+            $results = $statement->execute();
+            $row = $results->current();
+            return $row['inf_id'];
+        }
+        return false;
+    }
+
+    public function getPrevious( $id ){
+        if (!empty ( $id ) && !is_null ( $id )) {
+            $adapter = $this->tableGateway->getAdapter();
+            $query = "SELECT * FROM `infraccion` WHERE inf_id = (SELECT max(inf_id) FROM `infraccion` WHERE inf_id < $id)";
+            $statement = $adapter->query($query);
+            $results = $statement->execute();
+            $row = $results->current();
+            return $row['inf_id'];
+        }
+        return false;
+    }
+
 }
