@@ -16,6 +16,12 @@
 
 ?>
 <?php echo $this->form ()->openTag ( $form ); ?>
+<ul class="messages">
+    <?php foreach($this->messages as $message):  ?>
+        <li><?php echo  $message; ?></li>
+    <?php endforeach; ?>
+</ul>
+
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-12" >
         <div class="box">

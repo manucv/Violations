@@ -39,6 +39,7 @@ class InfraccionController extends AbstractActionController
 
         return array(
             'infraccion' => $this->getInfraccionDao()->traerTodos(),
+            'messages'=> $this->flashmessenger()->getErrorMessages(),
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
         );
 
@@ -62,6 +63,7 @@ class InfraccionController extends AbstractActionController
         $form = $this->getDetalleForm ();
 
         return array(
+            'messages'=> $this->flashmessenger()->getSuccessMessages(),
             'infraccion' => $infraccion,
             'multa' => $multa,
             'tipo' => $tipo,
@@ -201,6 +203,8 @@ class InfraccionController extends AbstractActionController
             ) );
         }
 
+        $is_error = true;
+
         $data = $this->request->getPost ();
         
         $infraccion = $this->getInfraccionDao()->traer($id);
@@ -252,44 +256,41 @@ class InfraccionController extends AbstractActionController
 
             /* ejecución del servicio del municipio */
             $service=$this->getInfraccionDao()->asentarInfraccionMunicipio($data);   
-                        
             $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
             $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
 
             if($service){
                 $this->getInfraccionDao()->guardar($infraccion);  
-
-                $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'infracciones');
-
-                $view = new ViewModel ( array(
-                    'infraccion' => $this->getInfraccionDao()->traerTodos(),
-                    'mensaje' => 'Actualizacion exitosa',
-                    'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
-                ) );    
-
-                $view->setTemplate('infraccion/infraccion/index');
-
-                return $view;
+                $this->flashmessenger()->addSuccessMessage("Infracción aprobada exitosamente");
+                $is_error = false;
 
             }else{
-                $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'infracciones');
-
-                $view = new ViewModel ( array(
-                    'infraccion' => $this->getInfraccionDao()->traerTodos(),
-                    'mensaje' => 'Error al actualizar',
-                    'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
-                ) );    
-
-                $view->setTemplate('infraccion/infraccion/index');
-
-                return $view;
+                $this->flashmessenger()->addErrorMessage("Error al aprobar la infracción");  
+     
             }
+        } else {
+            $this->flashmessenger()->addErrorMessage("No se encontr&oacute; la infracción, verifique los datos");  
         }
+
+        if($is_error){
+            return $this->redirect ()->toRoute ( 'infraccion', array (
+                'controller' => 'infraccion'
+            ));
+        }else{
+
+            $previous = $this->getInfraccionDao()->getPrevious($id);
+            return $this->redirect ()->toRoute ( 'infraccion', array (
+                'controller' => 'infraccion', 'action' => 'detalle' , 'id' =>  $previous
+            ));
+        }    
     }
 
     public function rechazarInfraccionAction(){
+
         $id = $this->params ()->fromRoute ( 'id', 0 );
+
         $infraccion = $this->getInfraccionDao()->traer($id);
+        $is_error = true;
         if(is_object($infraccion)){
             $infraccion->setInf_estado('E');
             //A: Aporbada
@@ -298,15 +299,24 @@ class InfraccionController extends AbstractActionController
 
             if($this->getInfraccionDao()->guardar($infraccion)){
                 $this->flashmessenger()->addSuccessMessage("Infracción rechazada exitosamente");
+                $is_error = false;
             }else{
                 $this->flashmessenger()->addErrorMessage("Error al rechazar la infracción");
             }
         }else{
             $this->flashmessenger()->addErrorMessage("No se encontr&oacute; la infracción, verifique los datos");
-        }    
+        }   
 
-        return $this->redirect ()->toRoute ( 'infraccion', array (
-            'controller' => 'infraccion'
-        ));
+        if($is_error){
+            return $this->redirect ()->toRoute ( 'infraccion', array (
+                'controller' => 'infraccion'
+            ));
+        }else{
+
+            $previous = $this->getInfraccionDao()->getPrevious($id);
+            return $this->redirect ()->toRoute ( 'infraccion', array (
+                'controller' => 'infraccion', 'action' => 'detalle' , 'id' =>  $previous
+            ));
+        }    
     }
 }
