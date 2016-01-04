@@ -215,7 +215,7 @@ class InfraccionDao implements InterfaceCrud {
     public function getNext( $id ){
         if (!empty ( $id ) && !is_null ( $id )) {
             $adapter = $this->tableGateway->getAdapter();
-            $query = "SELECT * FROM `infraccion` WHERE inf_id = (SELECT min(inf_id) FROM `infraccion` WHERE inf_id > $id)";
+            $query = "SELECT * FROM `infraccion` WHERE inf_id = (SELECT min(inf_id) FROM `infraccion` WHERE inf_id > $id AND inf_estado = 'R')";
             $statement = $adapter->query($query);
             $results = $statement->execute();
             $row = $results->current();
@@ -227,7 +227,7 @@ class InfraccionDao implements InterfaceCrud {
     public function getPrevious( $id ){
         if (!empty ( $id ) && !is_null ( $id )) {
             $adapter = $this->tableGateway->getAdapter();
-            $query = "SELECT * FROM `infraccion` WHERE inf_id = (SELECT max(inf_id) FROM `infraccion` WHERE inf_id < $id)";
+            $query = "SELECT * FROM `infraccion` WHERE inf_id = (SELECT max(inf_id) FROM `infraccion` WHERE inf_id < $id AND inf_estado = 'R')";
             $statement = $adapter->query($query);
             $results = $statement->execute();
             $row = $results->current();
