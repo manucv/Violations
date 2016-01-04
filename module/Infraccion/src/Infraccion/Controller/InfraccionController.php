@@ -52,27 +52,34 @@ class InfraccionController extends AbstractActionController
         $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'infracciones');
 
         $infraccion = $this->getInfraccionDao()->traer($id);
-        $multa  = $this->getMultaParqueaderoDao()->traerPorInfraccion($id);
-        $parqueadero  = $this->getParqueaderoDao()->traer($multa->getPar_id());
-        $calle_principal = $this->getCalleDao()->traer($parqueadero->getPar_cal_principal());
-        $calle_secundaria = $this->getCalleDao()->traer($parqueadero->getPar_cal_secundaria());
-        $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
+        if(is_object($infraccion)){
+            $multa  = $this->getMultaParqueaderoDao()->traerPorInfraccion($id);
+            $parqueadero  = $this->getParqueaderoDao()->traer($multa->getPar_id());
+            $calle_principal = $this->getCalleDao()->traer($parqueadero->getPar_cal_principal());
+            $calle_secundaria = $this->getCalleDao()->traer($parqueadero->getPar_cal_secundaria());
+            $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
 
-        $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
+            $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
 
-        $form = $this->getDetalleForm ();
+            $form = $this->getDetalleForm ();
 
-        return array(
-            'messages'=> $this->flashmessenger()->getSuccessMessages(),
-            'infraccion' => $infraccion,
-            'multa' => $multa,
-            'tipo' => $tipo,
-            'usuario' => $usuario,
-            'calle_principal' => $calle_principal,
-            'calle_secundaria' => $calle_secundaria,
-            'formulario' => $form ,
-            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
-        );
+            return array(
+                'messages'=> $this->flashmessenger()->getSuccessMessages(),
+                'infraccion' => $infraccion,
+                'multa' => $multa,
+                'tipo' => $tipo,
+                'usuario' => $usuario,
+                'calle_principal' => $calle_principal,
+                'calle_secundaria' => $calle_secundaria,
+                'formulario' => $form ,
+                'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
+            );
+        } else {
+            $this->flashmessenger()->addErrorMessage("No existen más infracciones para procesar");  
+            return $this->redirect ()->toRoute ( 'infraccion', array (
+                'controller' => 'infraccion'
+            ));
+        }    
     }
 
     public function reporteAction()
