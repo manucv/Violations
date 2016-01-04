@@ -211,10 +211,9 @@ class InfraccionController extends AbstractActionController
         if(is_object($infraccion)){
             $infraccion->setInf_estado('A');
             $multa_parqueadero = $this->getMultaParqueaderoDao()->traerPorInfraccion($id);
-
-
-            $calle_principal = $this->getCalleDao()->traer($multa_parqueadero->getPar_cal_principal());
-            $calle_secundaria = $this->getCalleDao()->traer($multa_parqueadero->getPar_cal_secundaria());
+            $parqueadero  = $this->getParqueaderoDao()->traer($multa_parqueadero->getPar_id());
+            $calle_principal = $this->getCalleDao()->traer($parqueadero->getPar_cal_principal());
+            $calle_secundaria = $this->getCalleDao()->traer($parqueadero->getPar_cal_secundaria());
 
             $fecha_hora = $infraccion->getInf_fecha();
             $fecha_hora = explode(' ', $fecha_hora);

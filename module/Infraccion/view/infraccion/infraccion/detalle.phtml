@@ -47,7 +47,16 @@
             		  <label class="control-label" style="color: #ee9f1f;">Verifique la infracción cometida.</label>
         			</div>
     			</div>
-
+                <div class="form-group row">
+                    <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+                        <b>Placa:</b>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <div class="input-group">
+                        <?php  echo $this->multa->getAut_placa(); ?>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <div class="control-label col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
                         <b>Tipo:</b>
