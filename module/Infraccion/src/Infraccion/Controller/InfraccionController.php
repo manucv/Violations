@@ -266,10 +266,10 @@ class InfraccionController extends AbstractActionController
             $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
             $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
             
-            echo '<pre>';
-            print_r($data);
-            echo '</pre>';
-            
+            //echo '<pre>';
+            //print_r($data);
+            //echo '</pre>';
+
             if($service){
                 $this->getInfraccionDao()->guardar($infraccion);  
                 $this->flashmessenger()->addSuccessMessage("Infracción aprobada exitosamente");
@@ -282,7 +282,7 @@ class InfraccionController extends AbstractActionController
         } else {
             $this->flashmessenger()->addErrorMessage("No se encontr&oacute; la infracción, verifique los datos");  
         }
-        die();
+        //die();
         if($is_error){
             return $this->redirect ()->toRoute ( 'infraccion', array (
                 'controller' => 'infraccion'
