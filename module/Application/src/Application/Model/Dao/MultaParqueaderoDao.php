@@ -56,7 +56,7 @@ class MultaParqueaderoDao implements InterfaceCrud {
 
     	$data = array(
     			'par_id' => $multaParqueadero->getPar_id(),
-    			'aut_placa' => $placa
+    			'aut_placa' => $placa,
     			'inf_id' => $multaParqueadero->getInf_id(),
     			'mul_par_estado' => $multaParqueadero->getMul_par_estado(),
     			'mul_par_valor' => $multaParqueadero->getMul_par_valor(),
