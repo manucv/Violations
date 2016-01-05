@@ -88,12 +88,13 @@
 	    'usuario' => $_GET['usuario'], 
 	    'password' => $_GET['password']
 	);
-	echo '<pre>';
-	print_r($data);
-	echo '</pre>';
+
 	$result = $client->call("insertNotificacion", $data);
-	print_r($result);
-	die();
+
+	$log = fopen("/var/www/html/Violations/public/log.txt", "a");
+	fwrite($log, "\n". $result);
+	fclose($log); 
+
 	if($result == $_GET['numero'])
 		echo 1;
 	else
