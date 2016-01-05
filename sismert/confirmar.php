@@ -9,7 +9,7 @@
 	
 	//http://sismertws.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl
 	//$client = new nusoap_client('http://sismertwsprod.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl', 'wsdl');
-	$client = new nusoap_client('http://sismertws.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl');
+	$client = new nusoap_client('http://sismertwsprod.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl');
 	$err = $client->getError();
 	if ($err) {
 		die($err);
