@@ -363,7 +363,18 @@
 
 
 					$par_id 		= $data['par_id'];
+
 					$aut_placa 		= strtoupper($data['aut_placa']);
+					
+					if(strlen($aut_placa)==6){
+						if(is_numeric(substr($aut_placa,-1))){
+							$alfa=substr($aut_placa,0,3);
+							$num=substr($aut_placa,3,3);
+							$aut_placa=$alfa.'0'.$num;
+						}
+					}
+
+
 					$inf_latitud 	= floatval($data['inf_latitud']);
 					$inf_longitud 	= floatval($data['inf_longitud']);
 					$inf_fecha 		= $data['inf_fecha'];

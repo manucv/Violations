@@ -93,6 +93,8 @@ class InfraccionDao implements InterfaceCrud {
 
     public function asentarInfraccionMunicipio( $data){
         
+        
+        
         $url = 'http://localhost/Violations/sismert/confirmar.php';
         
         $url .= '?' . http_build_query($data);
