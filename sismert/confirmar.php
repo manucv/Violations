@@ -91,7 +91,7 @@
 
 	$result = $client->call("insertNotificacion", $data);
 
-	$log = fopen("/var/www/html/Violations/public/log.txt", "a");
+	$log = fopen("/var/www/html/Violations/public/logs/log.txt", "a");
 	fwrite($log, "\n". $result);
 	fclose($log); 
 
