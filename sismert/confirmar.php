@@ -8,12 +8,58 @@
 
 	
 	//http://sismertws.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl
-	$client = new nusoap_client('http://sismertwsprod.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl', 'wsdl');
+	//$client = new nusoap_client('http://sismertwsprod.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl', 'wsdl');
+	$client = new nusoap_client('http://sismertws.ibarra.gob.ec/wsgadi.php/notificaciones/insertNotificacion?wsdl');
 	$err = $client->getError();
 	if ($err) {
 		die($err);
 	}
-	$result = $client->call("insertNotificacion", array(	
+
+	$inmovilizado=false;
+	if($_GET['inmovilizado']=='t')
+		$inmovilizado=true;
+
+	$a=false;
+	if($_GET['a']=='t')
+		$a=true;
+
+	$b=false;
+	if($_GET['b']=='t')
+		$b=true;
+
+	$c=false;
+	if($_GET['c']=='t')
+		$c=true;
+
+	$d=false;
+	if($_GET['d']=='t')
+		$d=true;
+
+	$e=false;
+	if($_GET['e']=='t')
+		$e=true;
+
+	$f=false;
+	if($_GET['f']=='t')
+		$f=true;
+
+	$g=false;
+	if($_GET['g']=='t')
+		$g=true;
+
+	$h=false;
+	if($_GET['h']=='t')
+		$h=true;
+
+	$i=false;
+	if($_GET['i']=='t')
+		$i=true;
+
+	$j=false;
+	if($_GET['j']=='t')
+		$j=true;
+
+	$data = array(	
 		'numero' => $_GET['numero'], 
 	    'numero_tarjeta' => $_GET['numero_tarjeta'], 
 	    'numero_placa' => $_GET['numero_placa'], 
@@ -41,8 +87,13 @@
 	    'imagen3' => $_GET['imagen3'],
 	    'usuario' => $_GET['usuario'], 
 	    'password' => $_GET['password']
-	));
-	
+	);
+	echo '<pre>';
+	print_r($data);
+	echo '</pre>';
+	$result = $client->call("insertNotificacion", $data);
+	print_r($result);
+	die();
 	if($result == $_GET['numero'])
 		echo 1;
 	else
