@@ -37,14 +37,14 @@ class Detalle extends Form {
                 'label' => 'Tiempo Permanencia:',
                 'value_options' => array(
                     '0' => 'No hubo permanencia',
-                    '1' => '1 hora',
-                    '2' => '2 horas',
-                    '3' => '3 horas',
-                    '4' => '4 horas',
-                    '5' => '5 horas',
-                    '6' => '6 horas',
-                    '7' => '7 horas',
-                    '8' => '8 horas'
+                    '60' => '1 hora',
+                    '120' => '2 horas',
+                    '180' => '3 horas',
+                    '240' => '4 horas',
+                    '300' => '5 horas',
+                    '360' => '6 horas',
+                    '420' => '7 horas',
+                    '480' => '8 horas'
 				)
 			),	
 			'attributes' => array (
