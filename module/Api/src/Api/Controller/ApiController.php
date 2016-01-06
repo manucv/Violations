@@ -156,7 +156,18 @@ class ApiController extends AbstractActionController
             if(!is_null($this->params('id'))){
                 $cli_id=$this->params('id');
                 $par_id =  $this->getRequest()->getQuery('par_id');
-                $aut_placa =  $this->getRequest()->getQuery('aut_placa');
+
+
+                $aut_placa =  strtoupper($this->getRequest()->getQuery('aut_placa'));
+
+                if(strlen($aut_placa)==6){
+                    if(is_numeric(substr($aut_placa,-1))){
+                        $alfa=substr($aut_placa,0,3);
+                        $num=substr($aut_placa,3,3);
+                        $aut_placa=$alfa.'0'.$num;
+                    }
+                }
+
                 $log_par_horas_parqueo =  $this->getRequest()->getQuery('log_par_horas_parqueo');
 
                 $eta_id=1;
@@ -220,7 +231,16 @@ class ApiController extends AbstractActionController
             }else{
 
                 $par_id =  $this->getRequest()->getQuery('par_id');
-                $aut_placa =  $this->getRequest()->getQuery('aut_placa');
+                $aut_placa =  strtoupper($this->getRequest()->getQuery('aut_placa'));
+
+                if(strlen($aut_placa)==6){
+                    if(is_numeric(substr($aut_placa,-1))){
+                        $alfa=substr($aut_placa,0,3);
+                        $num=substr($aut_placa,3,3);
+                        $aut_placa=$alfa.'0'.$num;
+                    }
+                }
+
                 $log_par_horas_parqueo =  $this->getRequest()->getQuery('log_par_horas_parqueo');
 
                 $est_id=1;
@@ -399,6 +419,14 @@ class ApiController extends AbstractActionController
             }
         }else{
             $par_id=$this->params('id');
+
+            if(strlen($par_id)<5){
+                $alfa=substr($par_id,0,1);
+                $num=substr($par_id,1,strlen($par_id));
+                $num=str_pad($num,4,0,STR_PAD_LEFT);
+                $par_id=$alfa.$num;
+            }
+
             if($this->getRequest()->isGET()){
                 $parqueaderos = $this->getParqueaderoDao()->traerJerarquia($par_id);
 
