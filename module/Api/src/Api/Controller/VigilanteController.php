@@ -260,8 +260,24 @@
 	        	}else{
 	        		
 	        		//curl -X POST --data "par_id=Q004&aut_placa=PO0110&nro_ticket=2345656&hora_ini=07&minutos_ini=15&log_par_horas_parqueo=1" https://localhost/hawa/violations/public/api/vigilante/tickets
-	        		if(isset($data['par_id']))
+	        		if(isset($data['par_id'])){
+
 	        			$par_id= $data['par_id'];
+
+	        			if(strlen($par_id)<5){
+			                $alfa=substr($par_id,0,1);
+			                $num=substr($par_id,1,strlen($par_id));
+			                $num=str_pad($num,4,0,STR_PAD_LEFT);
+			                $par_id=$alfa.$num;
+			            }else{
+			                if(!is_numeric(substr($par_id,-1))){
+			                    $alfa=substr($par_id,0,1);
+			                    $num=substr($par_id,1,strlen($par_id));
+			                    $num=str_pad($num,5,0,STR_PAD_LEFT);
+			                    $par_id=$alfa.$num;
+			                }
+			            }
+	        		}
 
 	        		if(isset($data['aut_placa']))
 	        			$aut_placa= strtoupper($data['aut_placa']);
@@ -363,6 +379,20 @@
 
 
 					$par_id 		= $data['par_id'];
+
+		            if(strlen($par_id)<5){
+		                $alfa=substr($par_id,0,1);
+		                $num=substr($par_id,1,strlen($par_id));
+		                $num=str_pad($num,4,0,STR_PAD_LEFT);
+		                $par_id=$alfa.$num;
+		            }else{
+		                if(!is_numeric(substr($par_id,-1))){
+		                    $alfa=substr($par_id,0,1);
+		                    $num=substr($par_id,1,strlen($par_id));
+		                    $num=str_pad($num,5,0,STR_PAD_LEFT);
+		                    $par_id=$alfa.$num;
+		                }
+		            }
 
 					$aut_placa 		= strtoupper($data['aut_placa']);
 					
