@@ -38,7 +38,13 @@ class Detalle extends Form {
                 'value_options' => array(
                     '0' => 'No hubo permanencia',
                     '1' => '1 hora',
-                    '2' => '2 horas'
+                    '2' => '2 horas',
+                    '3' => '3 horas',
+                    '4' => '4 horas',
+                    '5' => '5 horas',
+                    '6' => '6 horas',
+                    '7' => '7 horas',
+                    '8' => '8 horas'
 				)
 			),	
 			'attributes' => array (
