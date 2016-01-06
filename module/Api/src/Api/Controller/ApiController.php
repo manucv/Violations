@@ -739,6 +739,8 @@ class ApiController extends AbstractActionController
             $usu_id=$cliente->getUsu_id();
             $usuario=$this->getUsuarioDao()->traer($usu_id);
 
+            $email = $cliente->getUsu_email();
+
             $codigo_generado=$this->passwordGenerator(32);
 
             $usuario->setUsu_codigo_recuperacion($codigo_generado);
