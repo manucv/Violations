@@ -155,6 +155,9 @@ class ApiController extends AbstractActionController
         if($this->getRequest()->isGET()){
             if(!is_null($this->params('id'))){
                 $cli_id=$this->params('id');
+
+                $cliente = $this->getClienteDao()->traer($cli_id);
+
                 $par_id =  $this->getRequest()->getQuery('par_id');
 
                 if(strlen($par_id)<5){
@@ -202,45 +205,57 @@ class ApiController extends AbstractActionController
                 $transaccionData['tra_fecha'] = date('Y-m-d H:i:s');
                 $transaccionData['tra_saldo'] = 0;
 
-                $transaccion = new TransaccionEntity();
-                $transaccion->exchangeArray ( $transaccionData );
-                $tra_id=$this->getTransaccionDao()->guardar($transaccion);
-
-                $cliente = $this->getClienteDao()->debitar($cli_id,$total);
                 $content='';
 
-                if(is_object($cliente)){
+                if($cliente->getCli_saldo()>0 && $cliente->getCli_saldo()>=$total){
 
-                    $data=array();
-                    $data['aut_placa'] = $aut_placa;
+                    $transaccion = new TransaccionEntity();
+                    $transaccion->exchangeArray ( $transaccionData );
+                    $tra_id=$this->getTransaccionDao()->guardar($transaccion);
 
-                    if(!$this->getAutomovilDao()->traer($aut_placa)){
-                        $automovil = new AutomovilEntity();
-                        $automovil->exchangeArray ( $data );
-                        $aut_placa = $this->getAutomovilDao()->guardar ( $automovil );
+                    $cliente = $this->getClienteDao()->debitar($cli_id,$total);
+                    
+
+                    if(is_object($cliente)){
+
+                        $data=array();
+                        $data['aut_placa'] = $aut_placa;
+
+                        if(!$this->getAutomovilDao()->traer($aut_placa)){
+                            $automovil = new AutomovilEntity();
+                            $automovil->exchangeArray ( $data );
+                            $aut_placa = $this->getAutomovilDao()->guardar ( $automovil );
+                        }
+
+                        $data['log_par_fecha_ingreso'] = date('Y-m-d H:i:s');
+                        $data['log_par_estado'] = 'O';
+                        $data['log_par_horas_parqueo'] = $log_par_horas_parqueo;
+                        $data['par_id'] = strtoupper($par_id);
+                        $data['tra_id'] = $tra_id;
+
+                        $log_parqueadero = new LogParqueaderoEntity();
+                        $log_parqueadero->exchangeArray ( $data );
+                        $log_par_id = $this->getLogParqueaderoDao()->guardar ( $log_parqueadero );
+
+                        $responseArray=$cliente->getArrayCopy();
+                        $responseArray['tra_id'] = $tra_id;
+
+                        $content=json_encode($responseArray);
+
                     }
 
-                    $data['log_par_fecha_ingreso'] = date('Y-m-d H:i:s');
-                    $data['log_par_estado'] = 'O';
-                    $data['log_par_horas_parqueo'] = $log_par_horas_parqueo;
-                    $data['par_id'] = strtoupper($par_id);
-                    $data['tra_id'] = $tra_id;
+                    $response=$this->getResponse();
+                    $response->setStatusCode(200);
+                    $response->setContent($content);
+                    return $response;
+                }else{
 
-                    $log_parqueadero = new LogParqueaderoEntity();
-                    $log_parqueadero->exchangeArray ( $data );
-                    $log_par_id = $this->getLogParqueaderoDao()->guardar ( $log_parqueadero );
-
-                    $responseArray=$cliente->getArrayCopy();
-                    $responseArray['tra_id'] = $tra_id;
-
-                    $content=json_encode($responseArray);
-
+                    $response=$this->getResponse();
+                    $response->setStatusCode(403);
+                    $response->setContent($content);
+                    return $response;
                 }
 
-                $response=$this->getResponse();
-                $response->setStatusCode(200);
-                $response->setContent($content);
-                return $response;
             }else{
 
                 $par_id =  $this->getRequest()->getQuery('par_id');
