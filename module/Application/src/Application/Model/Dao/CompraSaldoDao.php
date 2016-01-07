@@ -111,7 +111,7 @@ class CompraSaldoDao implements InterfaceCrud {
             SELECT * 
             FROM compra_saldo as cs 
                 JOIN cliente as c ON cs.cli_id = c.cli_id
-                JOIN usuario as u ON u.usu_id = c.cli_id 
+                JOIN usuario as u ON u.usu_id = c.usu_id 
 
             WHERE punto_recarga_pun_rec_id = '$pun_rec_id'
         ";
