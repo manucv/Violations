@@ -19,6 +19,7 @@
 	use Application\Model\Entity\Cliente as ClienteEntity;
 	use Application\Model\Entity\RolUsuario as RolUsuarioEntity;
 	use Application\Model\Entity\Infraccion as InfraccionEntity;
+	use Application\Model\Entity\TipoInfraccion as TipoInfraccionEntity;
 	use Application\Model\Entity\MultaParqueadero as MultaParqueaderoEntity;
 	use Application\Model\Entity\Automovil as AutomovilEntity;
 	use Application\Model\Entity\LogParqueadero as LogParqueaderoEntity;
@@ -524,6 +525,45 @@
             $response->setContent($content);
             return $response;
 	    }
+
+	    public function infraccionAction()
+	    {
+
+	    	$content="";
+	    	if($this->getRequest()->isPOST()){
+
+	    	}else{
+	    		if(!is_null($this->params('id'))){
+	        		$inf_id=$this->params('id');
+	        		
+	        		$infraccion = $this->getInfraccionDao()->traer($inf_id);
+			        
+			        if(is_object($infraccion)){
+			            $multa  = $this->getMultaParqueaderoDao()->traerPorInfraccion($inf_id);
+			            $parqueadero  = $this->getParqueaderoDao()->traer($multa->getPar_id());
+			            $tipo   = $this->getTipoInfraccionDao()->traer($infraccion->getTip_inf_id());
+			            $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
+
+			            $data = array(	
+			            	'inf_id'=>$inf_id,
+			            	'inf_fecha'=>$infraccion->getInf_fecha(),
+			            	'aut_placa'=>$multa->getAut_placa(),
+			            	'parqueadero'=>$parqueadero->getPar_id(),
+							'agente'=>$usuario->getUsu_nombre()." ".$usuario->getUsu_apellido(),
+							'tip_inf_descripcion'=> $tipo->getTip_inf_descripcion(),
+							'tip_inf_legal'=> $tipo->getTip_inf_legal(),
+			            );
+
+			            $content = json_encode($data);
+	        		}
+	    		}
+	    	}
+
+	    	$response=$this->getResponse();
+            $response->setStatusCode(404);
+            $response->setContent($content);
+            return $response;
+	    }	
 
 		public function getUsuarioDao() {
 		    if (! $this->usuarioDao) {
