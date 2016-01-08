@@ -530,6 +530,7 @@
 	    {
 
 	    	$content="";
+	    	$status=404;
 	    	if($this->getRequest()->isPOST()){
 
 	    	}else{
@@ -555,12 +556,13 @@
 			            );
 
 			            $content = json_encode($data);
+			            $status=200;
 	        		}
 	    		}
 	    	}
 
 	    	$response=$this->getResponse();
-            $response->setStatusCode(404);
+            $response->setStatusCode($status);
             $response->setContent($content);
             return $response;
 	    }	
