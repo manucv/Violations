@@ -46,6 +46,19 @@ class ListaBlanca extends Form {
 						'class' => 'form-control'
 				)
 		) );
+
+
+		$this->add ( array (
+				'name' => 'lis_bla_motivo',
+				'options' => array (
+						'label' => 'Motivo:'
+				),
+				'attributes' => array (
+						'type' => 'textarea',
+						'id' => 'lis_bla_motivo',
+						'class' => 'form-control'
+				)
+		) );
 		
 
 		$this->add ( array (

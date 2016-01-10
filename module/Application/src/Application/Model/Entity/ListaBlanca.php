@@ -8,6 +8,7 @@ class ListaBlanca {
 
 	private $lis_bla_id;
 	private $lis_bla_placa;
+	private $lis_bla_motivo;
 
 	/*
 	* @return the $lis_bla_id
@@ -23,6 +24,15 @@ class ListaBlanca {
 		return $this->lis_bla_placa;
 	}
 
+	/*
+	* @return the $lis_bla_motivo
+	*/
+	public function getLis_bla_motivo(){
+		return $this->lis_bla_motivo;
+	}	
+
+	
+
 	/**
 	* @param Ambigous <NULL, unknown> $lis_bla_id 
 	*/
@@ -37,10 +47,22 @@ class ListaBlanca {
 		$this->lis_bla_placa = $lis_bla_placa;
 	}
 
+	/**
+	* @param Ambigous <NULL, unknown> $lis_bla_motivo 
+	*/
+	public function setLis_bla_motivo($lis_bla_motivo){
+		$this->lis_bla_motivo = $lis_bla_motivo;
+	}
+
+
+
+	
+
 	public function exchangeArray($data)
 	{
 		$this->lis_bla_id = (isset($data['lis_bla_id'])) ? $data['lis_bla_id'] : null;
 		$this->lis_bla_placa = (isset($data['lis_bla_placa'])) ? $data['lis_bla_placa'] : null;
+		$this->lis_bla_motivo = (isset($data['lis_bla_motivo'])) ? $data['lis_bla_motivo'] : null;
 
 	}
 		
