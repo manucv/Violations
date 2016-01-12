@@ -56,11 +56,8 @@ class ParqueaderoSectorDao implements InterfaceCrud {
         
         $statement = $adapter->query($query);
         $results = $statement->execute();
-        foreach($results as $row){
-            echo '<pre>';
-            print_r($row);
-            echo '</pre>';    
-        }
+        
+        return $results;
         
     }
 
