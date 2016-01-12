@@ -37,34 +37,37 @@ class ParqueaderoSectorDao implements InterfaceCrud {
     }
 
     public function traerTodosArreglo(){
-    
-        $sql = new Sql($this->tableGateway->getAdapter());
-        $select = $sql->select();
-        $select->from($this->tableGateway->table);
-    
-        $statement = $sql->prepareStatementForSqlObject($select);
+
+        $adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT s.sec_id, s.sec_nombre,
+                    COUNT( * ) AS total, 
+                    SUM( CASE WHEN p.par_estado !=  'D' THEN 1 ELSE 0 END ) AS ocupados
+            FROM sector AS s
+                JOIN parqueadero_sector AS ps
+                    ON s.sec_id=ps.sec_id
+                JOIN parqueadero AS p 
+                    ON p.par_id = ps.par_id ";
+
+        $where="";          
+
+        $query.= $where;
+        $query.= " GROUP BY sec_id ";
+        
+        $statement = $adapter->query($query);
         $results = $statement->execute();
-    
-        $calles = new \ArrayObject();
-        $result = array();
-    
-        foreach ($results as $row){
-            $calle = new Calle();
-	a            $calle->exchangeArray($row);
-            $calles->append($calle);
+        foreach($results as $row){
+            echo '<pre>';
+            print_r($row);
+            echo '</pre>';    
         }
-    
-        foreach ($calles as $cal){
-            $result[$cal->getCal_id()] = $cal->getCal_nombre();
-        }
-    
-        return $result;
+        
     }
 
     public function guardar(ParqueaderoSector $parqueaderoSector){
 
     	$data = array(
-    		'sec_id' => $calle->getSec_id()
+    		'sec_id' => $calle->getSec_id(),
 			'par_id' => $calle->getPar_id()
     	);
     	

@@ -29,7 +29,6 @@ class CiudadController extends AbstractActionController
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Ciudades' => array('parametros','ciudad','listado')) ),
         );
     }
-    
     public function ingresarAction(){
     
     	$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
