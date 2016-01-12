@@ -21,11 +21,16 @@ class ParqueaderosController extends AbstractActionController
     protected $sectorDao;
     protected $parquederoDao;
     protected $logParqueaderoDao;
+    protected $parquederoSectorDao;
     protected $automovilDao;
 
     public function indexAction()
     {
         $form = $this->getFormBusqueda ();
+        echo '<pre>';
+        print_r($this->getParqueaderoSectorDao ()->traerTodosArreglo ());
+        echo '</pre>';
+
         $form->get('pai_id' )->setValueOptions ( $this->getPaisDao ()->traerTodosArreglo () );
         //$sectores=$this->getSectorDao ()->traerTodosJSON();
         $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'parqueaderodis');
@@ -75,6 +80,9 @@ class ParqueaderosController extends AbstractActionController
             $response->setContent($sectores);
             return $response;
         }else{
+
+
+
             return $this->redirect()->toRoute('parqueaderos',array('parqueaderos'=>'index'));
         }
     }    
@@ -165,6 +173,14 @@ class ParqueaderosController extends AbstractActionController
             $this->automovilDao = $sm->get ( 'Application\Model\Dao\AutomovilDao' );
         }
         return $this->automovilDao;
+    }
+
+    public function getParqueaderoSectorDao() {
+        if (! $this->parquederoSectorDao) {
+            $sm = $this->getServiceLocator ();
+            $this->parquederoSectorDao = $sm->get ( 'Application\Model\Dao\ParqueaderoSectorDao' );
+        }
+        return $this->parquederoSectorDao;
     }
 
     public function getFormBusqueda() {

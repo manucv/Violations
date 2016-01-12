@@ -217,10 +217,12 @@ class InfraccionController extends AbstractActionController
         $infraccion = $this->getInfraccionDao()->traer($id);
         if(is_object($infraccion)){
             $infraccion->setInf_estado('A');
+
             $multa_parqueadero = $this->getMultaParqueaderoDao()->traerPorInfraccion($id);
             $parqueadero  = $this->getParqueaderoDao()->traer($multa_parqueadero->getPar_id());
             $calle_principal = $this->getCalleDao()->traer($parqueadero->getPar_cal_principal());
             $calle_secundaria = $this->getCalleDao()->traer($parqueadero->getPar_cal_secundaria());
+            $usuario = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
 
             $fecha_hora = $infraccion->getInf_fecha();
             $fecha_hora = explode(' ', $fecha_hora);
@@ -246,7 +248,7 @@ class InfraccionController extends AbstractActionController
                 'i' => 'f',
                 'j' => 'f',
                 'tiempo_permanencia' => $data['tiempo_permanencia'],
-                'supervisor' => $_SESSION['Zend_Auth']['storage']->usu_documento,
+                'supervisor' => $usuario->getUsu_documento(), //Documento del usuario
                 'estado' => 'N',
                 'observacion' => 'Aprobado desde el sistema',
                 'inmovilizado' => $data['inmovilizado'],

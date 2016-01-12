@@ -101,6 +101,10 @@ use Application\Model\Entity\Carga;
 use Application\Model\Dao\CargaDao;
 
 
+use Application\Model\Entity\ParqueaderoSector;
+use Application\Model\Dao\ParqueaderoSectorDao;
+
+
 //END NEW
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface{
@@ -480,6 +484,16 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                	$tableGateway = new TableGateway('carga', $dbAdapter, null, $resultSetPrototype);
 		                	return new CargaDao($tableGateway);
 		                },	  
+		                'Application\Model\Dao\ParqueaderoSectorDao' => function($sm){
+		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		                	$resultSetPrototype = new ResultSet();
+		                	$resultSetPrototype->setArrayObjectPrototype(new Carga());
+		                	$tableGateway = new TableGateway('parqueadero_sector', $dbAdapter, null, $resultSetPrototype);
+		                	return new ParqueaderoSectorDao($tableGateway);
+		                },	  
+
+		                
+
 		                'Navigation' => 'Application\Clases\MyNavigationFactory'
 				),
 				'initializers' => array(
