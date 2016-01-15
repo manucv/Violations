@@ -186,6 +186,10 @@ class ApiController extends AbstractActionController
 
                 $log_par_horas_parqueo =  $this->getRequest()->getQuery('log_par_horas_parqueo');
 
+                if($log_par_horas_parqueo <= 3 ){
+                    $log_par_horas_parqueo=$log_par_horas_parqueo*60;
+                }    
+
                 $eta_id=1;
 
                 $info_par=$this->getParqueaderoDao()->traerJerarquia($par_id);
