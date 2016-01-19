@@ -460,24 +460,25 @@
 
 			            $infraction_status="R";
 
+			            $infracciones = array();
 						/* Busca infracciones en Sistema de Sismert, es decir las que no estén pagadas */
-						$url = 'http://54.69.247.99/Violations/sismert/infracciones.php';
-			            $params = array('placa' => $aut_placa );
-			            
-			            $url .= '?' . http_build_query($params);
-			            $ch = curl_init();
-			            curl_setopt($ch, CURLOPT_URL, $url);
-			            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			            curl_setopt($ch, CURLOPT_HEADER, false);
-			            $data = curl_exec($ch);
-			            $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			            curl_close($ch);
+						//$url = 'http://54.69.247.99/Violations/sismert/infracciones.php';
+			            //$params = array('placa' => $aut_placa );
+//			            
+			            //$url .= '?' . http_build_query($params);
+			            //$ch = curl_init();
+			            //curl_setopt($ch, CURLOPT_URL, $url);
+			            //curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			            //curl_setopt($ch, CURLOPT_HEADER, false);
+			            //$data = curl_exec($ch);
+			            //$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			            //curl_close($ch);
+//
+			            //$infracciones = json_decode($data);
 
-			            $infracciones = json_decode($data);
-
-			            if(sizeof($infracciones)>=3){
-			            	$infraction_status="L"; //lock
-			            }
+			            //if(sizeof($infracciones)>=3){
+			            	//$infraction_status="L"; //lock
+			            //}
 
 						$multaParqueadero = new MultaParqueaderoEntity();
 						$multaParqueaderoData=array();
