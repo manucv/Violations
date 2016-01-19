@@ -32,6 +32,7 @@
 	    protected $usuarioDao;
 	    protected $rolUsuarioDao;
 	    protected $sectorVigilanteDao;
+	    protected $sectorDao;
 	    protected $parqueaderoDao;
 	    protected $tipoInfraccionDao;
 		protected $infraccionDao;
@@ -599,6 +600,14 @@
 		    }
 		    return $this->sectorVigilanteDao;
 		}
+
+		public function getSectorDao() {
+		    if (! $this->sectorDao) {
+		        $sm = $this->getServiceLocator();
+		        $this->sectorDao = $sm->get ( 'Application\Model\Dao\SectorDao' );
+		    }
+		    return $this->sectorDao;
+		}		
 
 	    public function getParqueaderoDao() {
 	        if (! $this->parqueaderoDao) {
