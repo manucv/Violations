@@ -160,7 +160,16 @@
 	    			}
 	    		}else{
 	    			//Funcionalidad sí no hay id, es decir retorne todos los vigilantes
-	    			return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+
+					$sectores=$this->getSectorDao()->traerTodos();
+	                $sectoresArray=array();
+		            foreach($sectores as $sector){
+		                $sectoresArray[]=$sector->getArrayCopy();
+		            }
+					$content=json_encode($sectoresArray);
+
+
+	    			//return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
 	    		}
 	    	}else{
 	    		//Funcionalidad sí es q es post, es decir guarde un vigilante
