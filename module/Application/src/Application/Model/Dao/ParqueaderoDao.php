@@ -69,7 +69,8 @@ class ParqueaderoDao implements InterfaceCrud {
 				ON p.par_id = ps.par_id
 			JOIN sector as s
 				ON ps.sec_id = s.sec_id 
-			WHERE s.sec_id = $sec_id 	
+			WHERE s.sec_id = $sec_id
+			AND par_estado NOT IN ('D') 	
 		";
 		if(!is_null($par_estado)){
 			$query .= " par_estado = '$par_estado' ";
