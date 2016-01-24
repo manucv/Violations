@@ -183,6 +183,28 @@
             return $response;
 	    }
 
+	    public function parqueaderosAction()
+	    {	
+	    	$content = "";
+	    	if($this->getRequest()->isGET()){
+	    		$parqueaderosArray=array();
+	    		$parqueaderos=$this->getParqueaderoDao()->traerTodos();
+	    		
+	            foreach($parqueaderos as $parqueadero){
+	                $parqueaderosArray[]=$parqueadero->getArrayCopy();
+	            }
+
+				$content=json_encode($parqueaderosArray);
+	    	}else{
+	            return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	    	}
+	    	
+	    	$response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+            return $response;
+	    }
+
 	    public function categoriaInfraccionesAction() //categoria_infracciones
 	    {	 	    
 	    	if($this->getRequest()->isGET()){

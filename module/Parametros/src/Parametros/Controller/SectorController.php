@@ -25,11 +25,24 @@ class SectorController extends AbstractActionController
 
     protected $estadoDao;
 
+    protected $parqueaderoDao;
+
     public function listadoAction()
     {
         $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'sectores');
         return array(
             'sector' => $this->getSectorDao()->traerTodos(),
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Sectores' => array('parametros','sector','listado')) ),
+        );
+    }
+
+    public function parqueaderosAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $this->layout()->setVariable('menupadre', 'parametros')->setVariable('menuhijo', 'sectores');
+        return array(
+            'parqueaderos' => $this->getParqueaderoDao()->traerTodos(),
+            'parqueaderos_sector' => $this->getParqueaderoDao()->traerTodosPorSector($id),
             'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Sectores' => array('parametros','sector','listado')) ),
         );
     }
@@ -171,6 +184,15 @@ class SectorController extends AbstractActionController
             $this->sectorDao = $sm->get('Application\Model\Dao\SectorDao');
         }
         return $this->sectorDao;
+    }
+
+    public function getParqueaderoDao()
+    {
+        if (! $this->parqueaderoDao) {
+            $sm = $this->getServiceLocator();
+            $this->parqueaderoDao = $sm->get('Application\Model\Dao\ParqueaderoDao');
+        }
+        return $this->parqueaderoDao;
     }
 
     public function getCiudadDao()

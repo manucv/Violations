@@ -17,6 +17,7 @@ class ParqueaderoDao implements InterfaceCrud {
 		
 		$select = $this->tableGateway->getSql ()->select ();
 		$select->join ( 'sector', 'parqueadero.sec_id  = sector.sec_id' );
+		$select->order ( 'par_id' );
 		 
 		$resultSet = $this->tableGateway->selectWith ( $select );
 		return $resultSet;
@@ -149,16 +150,6 @@ class ParqueaderoDao implements InterfaceCrud {
 						AND par_estado = 'O'
 			";
 
-			/*
-				WHERE par_id 
-					NOT IN (
-						SELECT lp.par_id 
-						FROM log_parqueadero AS lp 
-						WHERE log_par_fecha_ingreso > NOW() - INTERVAL 2 DAY 
-						AND (log_par_fecha_ingreso + INTERVAL log_par_horas_parqueo MINUTE) > NOW()
-					) 
-
-			*/
 		}else{
 			$query = "
 				UPDATE 	parqueadero SET par_estado = 'D',
