@@ -39,7 +39,7 @@
                  <tr>
                  	 <td class="dataTableIcons">
                  	 	<a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'editar', 'id' => $sector->getSec_id()))?>"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;
-                 	 	<a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'eliminar', 'id' => $sector->getSec_id()))?>" onclick="return eliminarRegistro('<?php echo $sector->getSec_nombre() ?>');"><i class="fa fa-trash-o"></i></a>
+                 	 	<a class="fa-lg" href="<?php echo $this->url('parametros', array('controller' => 'sector', 'action' => 'parqueaderos', 'id' => $sector->getSec_id()))?>"><i class="fa fa-map-marker"></i></a>&nbsp;&nbsp;&nbsp;
                  	 </td>
                      <td><?php echo $this->escapeHtml($sector->getCiu_nombre_es());?></td>
                      <td><?php echo $this->escapeHtml($sector->getSec_nombre());?></td>
