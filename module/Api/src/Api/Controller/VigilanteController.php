@@ -135,6 +135,7 @@
 	    				$option=$this->params('option');	
 	    				switch($option){
 	    					case 'parqueaderos':
+
 	    						if($this->getRequest()->getQuery('par_estado')){
 	    							$par_estado=$this->getRequest()->getQuery('par_estado');
 	    							$parqueaderos=$this->getParqueaderoDao()->traerTodosPorSectorJSON($sec_id,$par_estado);	
@@ -142,14 +143,11 @@
 	    							//Functionalidad sí es que buscamos los sectores de un vigilante X
 	    							$parqueaderos=$this->getParqueaderoDao()->traerTodosPorSectorJSON($sec_id);	
 	    						}
-	    						/*	
-				                $parqueaderosArray=array();
-					            foreach($parqueaderos as $parqueadero){
-					                $parqueaderosArray[]=$parqueadero->getArrayCopy();
-					            }
 
-	    						$content=json_encode($parqueaderosArray);
-	    						*/
+	    						$content = $parqueaderos; 
+	    					break;
+	    					case 'ocupados':
+	    						$parqueaderos=$this->getParqueaderoDao()->traerOcupadosPorSectorJSON($sec_id);	
 	    						$content = $parqueaderos; 
 	    					break;
 	    					deafult:
