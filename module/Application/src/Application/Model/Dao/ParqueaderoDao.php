@@ -69,8 +69,7 @@ class ParqueaderoDao implements InterfaceCrud {
 				ON p.par_id = ps.par_id
 			JOIN sector as s
 				ON ps.sec_id = s.sec_id 
-			WHERE s.sec_id = $sec_id
-			AND par_estado NOT IN ('D') 	
+			WHERE s.sec_id = $sec_id 	
 		";
 		if(!is_null($par_estado)){
 			$query .= " par_estado = '$par_estado' ";
@@ -89,9 +88,30 @@ class ParqueaderoDao implements InterfaceCrud {
 	}	
 
 
-
 	public function traerOcupadosPorSectorJSON($sec_id) {
 
+		$adapter = $this->tableGateway->getAdapter();
+		$query = "
+		SELECT * FROM parqueadero as p 
+			JOIN parqueadero_sector as ps 
+				ON p.par_id = ps.par_id
+			JOIN sector as s
+				ON ps.sec_id = s.sec_id 
+			WHERE s.sec_id = $sec_id 	
+			AND par_estado NOT IN ('D')
+		";
+
+    	$statement = $adapter->query($query);
+    	$results = $statement->execute();
+
+		$jsonArray=array();
+		
+		foreach ($results as $row){
+			$jsonArray[]=$row;
+		}
+		return json_encode($jsonArray);
+
+		/*
 		$adapter = $this->tableGateway->getAdapter();
 		$query = "
 		select 	up.par_id, 
@@ -134,7 +154,7 @@ class ParqueaderoDao implements InterfaceCrud {
 
 			$count++;
 		}
-		return json_encode($jsonArray);
+		return json_encode($jsonArray);*/
 	}		
 
 	public function liberarParqueaderos($par_id=null) {
