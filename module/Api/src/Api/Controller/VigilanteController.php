@@ -40,6 +40,7 @@
 		protected $automovilDao;
 		protected $logParqueaderoDao;
 		protected $listaBlancaDao;
+		protected $parqueaderoSectorDao;
 
 
 	    public function indexAction()
@@ -195,10 +196,34 @@
 	            }
 
 				$content=json_encode($parqueaderosArray);
+
 	    	}else{
 	            return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
 	    	}
-	    	
+
+	    	$response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+            return $response;
+	    }
+
+	    public function parqueaderosSectoresAction()
+	    {
+	    	$content = "";
+	    	if($this->getRequest()->isGET()){
+	    		$parqueaderosSectoresArray=array();
+	    		$parqueaderosSectores=$this->getParqueaderoSectorDao()->traerTodos();
+	    		
+	            foreach($parqueaderosSectores as $parqueaderoSector){
+	                $parqueaderosSectoresArray[]=$parqueaderoSector->getArrayCopy();
+	            }
+
+				$content=json_encode($parqueaderosSectoresArray);
+				
+	    	}else{
+	            return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	    	}
+
 	    	$response=$this->getResponse();
             $response->setStatusCode(200);
             $response->setContent($content);
@@ -681,5 +706,12 @@
 	        }
 	        return $this->listaBlancaDao;
 	    }
+	    public function getParqueaderoSectorDao() {
+	        if (! $this->parqueaderoSectorDao) {
+	            $sm = $this->getServiceLocator ();
+	            $this->parqueaderoSectorDao = $sm->get ( 'Application\Model\Dao\ParqueaderoSectorDao' );
+	        }
+	        return $this->parqueaderoSectorDao;
+	    }	
 
 	}
