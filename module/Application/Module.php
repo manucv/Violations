@@ -487,7 +487,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Co
 		                'Application\Model\Dao\ParqueaderoSectorDao' => function($sm){
 		                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
 		                	$resultSetPrototype = new ResultSet();
-		                	$resultSetPrototype->setArrayObjectPrototype(new Carga());
+		                	$resultSetPrototype->setArrayObjectPrototype(new ParqueaderoSector());
 		                	$tableGateway = new TableGateway('parqueadero_sector', $dbAdapter, null, $resultSetPrototype);
 		                	return new ParqueaderoSectorDao($tableGateway);
 		                },	  
