@@ -64,7 +64,7 @@ class ParqueaderoDao implements InterfaceCrud {
 		
 		$adapter = $this->tableGateway->getAdapter();
 		$query = "
-		SELECT p.par_id,par_estado,aut_placa,par_fecha_ingreso,par_horas_parqueo,inf_id FROM parqueadero as p 
+		SELECT p.par_id,par_estado,par_tipo,aut_placa,par_fecha_ingreso,par_horas_parqueo,inf_id FROM parqueadero as p 
 			JOIN parqueadero_sector as ps 
 				ON p.par_id = ps.par_id
 			JOIN sector as s
