@@ -122,6 +122,7 @@
 	        	$(".parqueadero-inner").removeClass('ocupado');
 	        	$(".parqueadero-bottom").html("");
 	        	for(ocupado in ocupados){
+	        		console.log(ocupados[ocupado]);
 	        		$(".parqueadero-inner[data-par_id="+ocupados[ocupado].par_id+"]").addClass('ocupado');
 	        		$(".parqueadero-inner[data-par_id="+ocupados[ocupado].par_id+"]").removeClass('desocupado');
 	        		$(".parqueadero-inner[data-par_id="+ocupados[ocupado].par_id+"] > span").html(
@@ -164,7 +165,7 @@
 	        });
 		}
 		estadoActual();
-
+		/*
 		$(".parqueadero").on('click','.desocupado',function(e){
 			e.preventDefault();
 			var parqueadero= $(this);
@@ -177,7 +178,7 @@
 			var parqueadero= $(this);
 			$("#mul_par_id").val(parqueadero.attr('data-mul_par_id'));
 			$('.bs-solucion-modal-sm').modal('show');
-		});
+		});*/
 		/* Botón agregar automovil */
 		/*
 		$("#agregar").on('click',function(e){
