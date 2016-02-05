@@ -22,15 +22,17 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class RecoverActivity extends Activity {
 	private Button btnRecover;
-	
+	private ProgressBar loadRecover;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,6 +40,7 @@ public class RecoverActivity extends Activity {
 		
 		final EditText txtRecoverPassword = (EditText)findViewById(R.id.TxtRecoverPassword);
         btnRecover = (Button)findViewById(R.id.BtnRecoverPassword);
+		loadRecover = (ProgressBar)findViewById(R.id.loading);
 
         btnRecover.setOnClickListener(new OnClickListener(){
 
@@ -45,6 +48,8 @@ public class RecoverActivity extends Activity {
  			public void onClick(View v) {
  				if(	!txtRecoverPassword.getText().toString().equals("") ){
  					if (isNetworkAvailable()) {
+						loadRecover.setVisibility(View.VISIBLE);
+						btnRecover.setVisibility(View.GONE);
  						TareaWSRecover tarea = new TareaWSRecover();
  						tarea.execute(txtRecoverPassword.getText().toString());
  					}else{
@@ -110,10 +115,14 @@ public class RecoverActivity extends Activity {
 	    
 	    @Override
 		protected void onPostExecute(Boolean result) {
-	    	
+			loadRecover.setVisibility(View.GONE);
 	    	if (result){
-	    		Toast.makeText(RecoverActivity.this, "Un mensaje fue enviado a su correo electrónico registrado con instrucciones para recuperar su contraseña.", Toast.LENGTH_LONG).show();
-	    		Intent intent = new Intent(RecoverActivity.this, MainActivity.class);
+				Toast toast= Toast.makeText(getApplicationContext(),
+						"Un mensaje fue enviado a su correo electrónico registrado con instrucciones para recuperar su contraseña.", Toast.LENGTH_LONG);
+				toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
+				toast.show();
+
+				Intent intent = new Intent(RecoverActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);	
 	    	}else{

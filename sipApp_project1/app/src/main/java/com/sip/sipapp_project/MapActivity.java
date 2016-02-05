@@ -61,8 +61,14 @@ public class MapActivity extends ParqueaderoActivity implements LocationListener
         	
             map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
             map.setMyLocationEnabled(true);
-            map.setOnMarkerClickListener(this);         
-            
+            map.setOnMarkerClickListener(this);
+
+			double latitude = 0.350963; 		// Getting latitude of the current location
+			double longitude =  -78.117815; 	// Getting longitude of the current location
+			LatLng latLng = new LatLng(latitude, longitude); 		// Creating a LatLng object for the current location
+			map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+			map.animateCamera(CameraUpdateFactory.zoomTo(18));
+
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE); // Getting LocationManager object from System Service LOCATION_SERVICE
             
             Boolean gps_enabled = null;

@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 22
     buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.example.sipappwatch"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 17
     }
 
     buildTypes {
@@ -27,8 +27,8 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:support-v4:22.2.0'
     compile files('libs/bixolon_printer.jar')
     compile files('libs/bluetooth.jar')
     compile files('libs/httpcore-4.3.jar')
@@ -36,4 +36,5 @@ dependencies {
     compile files('libs/jpos114-controls.jar')
     compile files('libs/tscwifii.jar')
     compile files('libs/xerces.jar')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

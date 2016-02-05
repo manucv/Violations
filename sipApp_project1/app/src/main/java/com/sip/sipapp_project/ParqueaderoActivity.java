@@ -145,9 +145,9 @@ public class ParqueaderoActivity extends AppCompatActivity {
     		case R.id.ItemMiCuenta:
     			intent = new Intent(context,HistoryActivity.class);
     		break;
-    		case R.id.ItemAcercaDe:
-    			intent = new Intent(context,InfoActivity.class);
-    		break;
+//    		case R.id.ItemAcercaDe:
+//    			intent = new Intent(context,InfoActivity.class);
+//    		break;
     		case R.id.ItemSalir:
     			
 			    AlertDialog.Builder alert = new AlertDialog.Builder(ParqueaderoActivity.this);
@@ -170,9 +170,10 @@ public class ParqueaderoActivity extends AppCompatActivity {
 		                 /*Fin Bloque preferencias compartidas*/			        	
 			        	
 			        	Intent intent = new Intent(ParqueaderoActivity.this, MainActivity.class);
-		                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+						intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		                startActivity(intent);
-		                
+
 		                finish();
 		                System.exit(0);
 		    	        return;
@@ -183,7 +184,7 @@ public class ParqueaderoActivity extends AppCompatActivity {
 		            @Override
 					public void onClick(DialogInterface dialog, int whichButton) {
 		            	//Do Nothing
-		            }
+		         }
 	            });
 			    
 			    alert.show();    			
@@ -202,7 +203,7 @@ public class ParqueaderoActivity extends AppCompatActivity {
 	        b.putString("SALDO", saldo);
 	        intent.putExtras(b);                
 	        startActivity(intent);
-	        finish();
+
     	}
     	return super.onOptionsItemSelected(item);
     	
@@ -219,7 +220,7 @@ public class ParqueaderoActivity extends AppCompatActivity {
 	public void onBackPressed()
 	{
 		if(!isMenuScreen){
-			Intent intent = new Intent(ParqueaderoActivity.this, WelcomeActivity.class);
+			Intent intent = new Intent(context, WelcomeActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			//Creamos la información a pasar entre actividades
 			Bundle b = new Bundle();
@@ -231,6 +232,9 @@ public class ParqueaderoActivity extends AppCompatActivity {
 
 			//Iniciamos la nueva actividad
 			startActivity(intent);
+
+			finish();
+			System.exit(0);
 		}else{
 			if (doubleBackToExitPressedOnce) {
 				super.onBackPressed();

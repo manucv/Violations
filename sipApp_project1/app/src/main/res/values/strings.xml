@@ -5,10 +5,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="bienvenido">Bienvenido</string>
-    <string-array name="tiempo_parqueadero"> 
-       	<item>1</item>
-       	<item>2</item>
-       	<item>3</item>
+    <string-array name="tiempo_parqueadero">
+		<item>0</item>
+		<item>30</item>
+       	<item>60</item>
+       	<item>90</item>
+		<item>120</item>
+		<item>150</item>
+		<item>180</item>
 	</string-array>
 	
 	<string-array name="valor_recarga"> 
@@ -29,7 +33,6 @@
        	<item>Recargas</item>
        	<item>Transferir</item>
        	<item>Disponibles</item>
-       	<item>Acerca de</item>
 		<item>Salir</item>
 	</string-array>	
 	<string name="formatAlphaNumeric">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>

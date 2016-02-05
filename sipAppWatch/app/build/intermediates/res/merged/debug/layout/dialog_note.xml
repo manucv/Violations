@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/TxtInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Anote la placa del vehículo:" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_weight="0.25"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Parqueadero:"
+            android:id="@+id/textView8" />
+
+        <TextView
+            android:layout_weight="0.75"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/LblPar_id" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_weight="0.25"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Placa:"
+            android:id="@+id/textView" />
+
+        <EditText
+            android:layout_weight="0.3"
+            android:id="@+id/TxtPlateNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:lines="1"
+            android:maxLines="1"
+            android:hint="Placa"
+            android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:maxLength="7" />
+
+        <Button
+            android:layout_weight="0.45"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:background="@drawable/camera_bkg"
+            android:text="Leer Placa"
+            android:id="@+id/BtnBuscarPlaca"
+            android:onClick="onBtnSearchPlateClick"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
+</LinearLayout><!-- From: file:/C:/Users/lmpon_000/Desktop/Miguel/StudioProjects/sipAppWatch/app/src/main/res/layout/dialog_note.xml -->

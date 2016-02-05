@@ -49,7 +49,8 @@ class ParqueaderoDao implements InterfaceCrud {
 	public function traerTodosPorSector($sec_id,$par_estado=null) {
 		
 		$select = $this->tableGateway->getSql ()->select ();
-		$condiciones = array('sec_id'=>$sec_id);
+		$select->join ( 'parqueadero_sector', 'parqueadero.par_id  = parqueadero_sector.par_id' );
+		$condiciones = array('parqueadero_sector.sec_id'=>$sec_id);
 		if(!is_null($par_estado)){
 			$condiciones['par_estado']=$par_estado;	
 		}

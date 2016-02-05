@@ -51,6 +51,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -73,6 +74,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 	private TextView lblTotal;
 	private Spinner spnLog_par_horas_parqueo;
 	private Double price = 0.0;
+	private Double half_price = 0.0;
 	
 	private GoogleMap map;
 	private HashMap<Marker,Integer> markers=new HashMap<Marker,Integer>();
@@ -85,6 +87,8 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 	Marker currentMarker;
 	
 	private ProgressBar progressBar;
+
+	private boolean existeParqueadero = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -112,8 +116,9 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
 			@Override
-			public void afterTextChanged(Editable s) { 
-				if(par_id.getText().toString().length()>4){
+			public void afterTextChanged(Editable s) {
+				existeParqueadero=false;
+				if(par_id.getText().toString().length()>=2){
 					progressBar.setVisibility(View.VISIBLE);
 					TareaWSBuscarParqueadero tarea = new TareaWSBuscarParqueadero();
 					tarea.execute();
@@ -143,7 +148,12 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
             map.setMyLocationEnabled(true);
             map.setOnMarkerClickListener(this);
             map.getUiSettings().setScrollGesturesEnabled(false);
-            
+
+			double latitude = 0.350963; 		// Getting latitude of the current location
+			double longitude =  -78.117815; 	// Getting longitude of the current location
+			LatLng latLng = new LatLng(latitude, longitude); 		// Creating a LatLng object for the current location
+			map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+			map.animateCamera(CameraUpdateFactory.zoomTo(14));
             
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE); // Getting LocationManager object from System Service LOCATION_SERVICE
             
@@ -190,56 +200,82 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
             }
             locationManager.requestLocationUpdates(provider, 20000, 0, this);
         }
-        
-
-        //TareaWSListarParqueaderos tarea = new TareaWSListarParqueaderos();
-		//tarea.execute(sec_id);
 
 		ImageButton btnComprarParqueadero = (ImageButton)findViewById(R.id.BtnComprarParqueadero);
         
         btnComprarParqueadero.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+				if(existeParqueadero) {
+					if(Integer.parseInt(spnLog_par_horas_parqueo.getSelectedItem().toString())>0) {
+						if (!par_id.getText().toString().equals("") && !txtAut_placa.getText().toString().equals("")) {
 
-            	if(!par_id.getText().toString().equals("") && !txtAut_placa.getText().toString().equals("")){
-            		
-				    AlertDialog.Builder alert = new AlertDialog.Builder(ParkingActivity.this);
-				    alert.setTitle("Confirmación de Parqueo");
-		            DecimalFormat df = new DecimalFormat();
-					df.setMaximumFractionDigits(2);
-		            
-			    	alert.setMessage("Está seguro de que desea realizar esta compra, se debitarán "+
-			    			"$"+(df.format(Integer.parseInt(spnLog_par_horas_parqueo.getSelectedItem().toString())*price))
-			    			+" por "+spnLog_par_horas_parqueo.getSelectedItem().toString()+" Horas.");
-	
-				    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				        @Override
-						public void onClick(DialogInterface dialog, int whichButton) {
-				        	progressBar.setVisibility(View.VISIBLE);
-				        	
-				        	System.out.println("comprando");
-				        	
-			            	TareaWSComprar tarea = new TareaWSComprar();
-							tarea.execute(	par_id.getText().toString(),
-											txtAut_placa.getText().toString(), 
-											spnLog_par_horas_parqueo.getSelectedItemPosition()+1+"" );
-				        }
-				    });
-	
-				    alert.setNegativeButton("Cancel",
-				        new DialogInterface.OnClickListener() {
-				            @Override
-							public void onClick(DialogInterface dialog, int whichButton) {
-				            	//Do Nothing
-				            }
-				        });
-	
-				    alert.show();
-					
-					
-            	} else {
-            		Toast.makeText(ParkingActivity.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
-            	}
+							AlertDialog.Builder alert = new AlertDialog.Builder(ParkingActivity.this);
+							alert.setTitle("Confirmación de Parqueo");
+							DecimalFormat df = new DecimalFormat();
+							df.setMaximumFractionDigits(2);
+
+							final Double horas = Math.floor(Double.parseDouble(spnLog_par_horas_parqueo.getSelectedItem().toString()) / 60);
+                            final Double medias_horas = Math.ceil(Double.parseDouble(spnLog_par_horas_parqueo.getSelectedItem().toString()) % 60 / 30);
+
+							alert.setMessage("Está seguro de que desea realizar esta compra, se debitarán " +
+									"$" + df.format((horas * price) + (medias_horas * half_price))
+									+ " por " + spnLog_par_horas_parqueo.getSelectedItem().toString() + " Minutos.");
+
+							alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int whichButton) {
+                                    if(Double.parseDouble(saldo)>0){
+                                        if(((horas * price) + (medias_horas * half_price))<=Double.parseDouble(saldo)){
+                                            progressBar.setVisibility(View.VISIBLE);
+
+                                            TareaWSComprar tarea = new TareaWSComprar();
+                                            tarea.execute(par_id.getText().toString(),
+                                                    txtAut_placa.getText().toString(),
+                                                    spnLog_par_horas_parqueo.getSelectedItem().toString() + "");
+                                        }else{
+                                            Toast toast= Toast.makeText(getApplicationContext(), "Su saldo es insuficiente, por favor cargue saldo en los puntos autorizados", Toast.LENGTH_LONG);
+                                            toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                                            toast.show();
+                                        }
+                                    }else{
+                                        Toast toast= Toast.makeText(getApplicationContext(),
+                                                "Su saldo es insuficiente, por favor cargue saldo en los puntos autorizados", Toast.LENGTH_LONG);
+                                        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                                        toast.show();
+                                    }
+								}
+							});
+
+							alert.setNegativeButton("Cancel",
+									new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(DialogInterface dialog, int whichButton) {
+											//Do Nothing
+										}
+									});
+
+							alert.show();
+
+						} else {
+							Toast toast= Toast.makeText(getApplicationContext(),
+									"Debe llenar todos los campos", Toast.LENGTH_LONG);
+							toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
+							toast.show();
+						}
+					}else{
+						Toast toast= Toast.makeText(getApplicationContext(),
+								"Debe seleccionar un Tiempo valido", Toast.LENGTH_LONG);
+						toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+						toast.show();
+					}
+				}
+				else{
+					Toast toast= Toast.makeText(getApplicationContext(),
+						"Debe seleccionar un Parqueadero valido", Toast.LENGTH_LONG);
+						toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+						toast.show();
+				}
             }
         });
         
@@ -251,8 +287,11 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 				// TODO Auto-generated method stub
 				DecimalFormat df = new DecimalFormat();
 				df.setMaximumFractionDigits(2);
-				
-				lblTotal.setText("$"+(df.format(Integer.parseInt(parent.getItemAtPosition(position).toString())*price)));
+
+				Double horas = Math.floor(Double.parseDouble(parent.getItemAtPosition(position).toString()) / 60);
+				Double medias_horas = Math.ceil(Double.parseDouble(parent.getItemAtPosition(position).toString()) % 60 /30);
+
+				lblTotal.setText("$" + df.format((horas * price)+(medias_horas * half_price)));
 
 			}
 
@@ -297,62 +336,67 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 				System.out.println(uri);
 			
 	        	HttpResponse resp = httpClient.execute(del);
-	        	String respStr = EntityUtils.toString(resp.getEntity());	
-	        	System.out.println(respStr);
-	        	
-	        	JSONObject respJSON = new JSONObject(respStr);
-	        	
-	        	if(respStr.length() > 0){
-	        		
-		    		  /*Envío de Notificación al teléfono*/
-		    		  
-	    		  	NotificationCompat.Builder mBuilder =
-	    			        new NotificationCompat.Builder(ParkingActivity.this)
-	    			        .setSmallIcon(R.drawable.ic_launcher)
-	    			        .setContentTitle("Parqueo Exitoso")
-	    			        .setContentText("Tu parqueadero expira en "+spnLog_par_horas_parqueo.getSelectedItem().toString()+" horas");
+                int status = resp.getStatusLine().getStatusCode();
+                String respStr = EntityUtils.toString(resp.getEntity());
+                switch (status){
+                    case 200:
+                        JSONObject respJSON = new JSONObject(respStr);
 
-	    			Intent resultIntent = new Intent(ParkingActivity.this, MainActivity.class);
+                        if(respStr.length() > 0){
 
-	    			TaskStackBuilder stackBuilder = TaskStackBuilder.create(ParkingActivity.this);
-	    			stackBuilder.addParentStack(MainActivity.class);
-	    			stackBuilder.addNextIntent(resultIntent);
-	    			PendingIntent resultPendingIntent =
-	    			        stackBuilder.getPendingIntent(
-	    			            0,
-	    			            PendingIntent.FLAG_UPDATE_CURRENT
-	    			        );
-	    			mBuilder.setContentIntent(resultPendingIntent);
-	    			NotificationManager mNotificationManager =
-	    			    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-	    			mNotificationManager.notify(001, mBuilder.build());		    		  
-	    		  
-	    		  /*Fin de Env�o de notificaci�n*/		        		
-	        		
-	                 //Creamos el Intent
-	                 Intent intent = 
-	                         new Intent(ParkingActivity.this, WelcomeActivity.class);
+                              /*Envío de Notificación al teléfono*/
 
-	                 //Creamos la informaci�n a pasar entre actividades
-	                 Bundle b = new Bundle();
-	                 b.putString("NOMBRE", respJSON.getString("usu_nombre")+" "+respJSON.getString("usu_apellido"));
-	                 b.putString("SALDO", respJSON.getString("cli_saldo"));
-	                 b.putString("ID", respJSON.getString("cli_id"));
-	                 b.putString("TRA_ID", respJSON.getString("tra_id"));
-	                 
-	                 //A�adimos la informaci�n al intent
-	                 intent.putExtras(b);
+                            NotificationCompat.Builder mBuilder =
+                                    new NotificationCompat.Builder(ParkingActivity.this)
+                                    .setSmallIcon(R.drawable.ic_launcher)
+                                    .setContentTitle("Parqueo Exitoso")
+                                    .setContentText("Tu parqueadero expira en "+spnLog_par_horas_parqueo.getSelectedItem().toString()+" minutos");
 
-	                 //Iniciamos la nueva actividad
-	                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	                 startActivity(intent);		            	
-	                 
-	                 //finish();
-	                 //System.exit(0);	
-	                 
-	                 resul=true;
-	        	}
-	        	
+                            Intent resultIntent = new Intent(ParkingActivity.this, MainActivity.class);
+
+                            TaskStackBuilder stackBuilder = TaskStackBuilder.create(ParkingActivity.this);
+                            stackBuilder.addParentStack(MainActivity.class);
+                            stackBuilder.addNextIntent(resultIntent);
+                            PendingIntent resultPendingIntent =
+                                    stackBuilder.getPendingIntent(
+                                        0,
+                                        PendingIntent.FLAG_UPDATE_CURRENT
+                                    );
+                            mBuilder.setContentIntent(resultPendingIntent);
+                            NotificationManager mNotificationManager =
+                                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                            mNotificationManager.notify(001, mBuilder.build());
+
+                          /*Fin de Env�o de notificaci�n*/
+
+                             //Creamos el Intent
+                             Intent intent =
+                                     new Intent(ParkingActivity.this, WelcomeActivity.class);
+
+                             //Creamos la informaci�n a pasar entre actividades
+                             Bundle b = new Bundle();
+                             b.putString("NOMBRE", respJSON.getString("usu_nombre")+" "+respJSON.getString("usu_apellido"));
+                             b.putString("SALDO", respJSON.getString("cli_saldo"));
+                             b.putString("ID", respJSON.getString("cli_id"));
+                             b.putString("TRA_ID", respJSON.getString("tra_id"));
+
+                             //A�adimos la informaci�n al intent
+                             intent.putExtras(b);
+
+                             //Iniciamos la nueva actividad
+                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                             startActivity(intent);
+
+                             //finish();
+                             //System.exit(0);
+
+                             resul=true;
+                        }
+                    break;
+                    case 403:
+                        resul=false;
+                    break;
+                }
 			}
 	        catch(Exception ex)
 	        {
@@ -366,12 +410,19 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 	    
 	    @Override
 		protected void onPostExecute(Boolean result) {
-	    	
+            progressBar.setVisibility(View.GONE);
 	    	if (result)
 	    	{
-	    		progressBar.setVisibility(View.GONE);
-	    		//lblResultado.setText("" + idCli + "-" + nombCli + "-" + telefCli);
-	    	}
+                Toast toast= Toast.makeText(getApplicationContext(),
+                        "Compra Exitosa", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+	    	}else{
+                Toast toast= Toast.makeText(getApplicationContext(),
+                        "Error al comprar tiempo de parqueo, su saldo es insuficiente", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+            }
 	    }
 	}
 	
@@ -453,7 +504,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 		protected Boolean doInBackground(String... params) {
 			boolean result = false;
 			
-			if(par_id.getText().toString().length()>3){
+			if(par_id.getText().toString().length()>=2){
 				
 				String url="http://54.69.247.99/Violations/public/api/api/parqueaderos/"+par_id.getText().toString();
 				
@@ -474,6 +525,7 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 								sec_longitud = responseJSON.getString("par_longitud");
 								sec_nombre = responseJSON.getString("sec_nombre");
 								price = Double.parseDouble(responseJSON.getString("sec_valor_hora"));
+								half_price = Double.parseDouble(responseJSON.getString("sec_valor_media_hora"));
 								return true;
 							}
 						break;
@@ -499,9 +551,10 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 		}
 	    @Override
 		protected void onPostExecute(Boolean result) {
-	    	
+			map.clear();
 	    	if (result)
 	    	{
+				existeParqueadero=true;
 	    		currentMarker=map.addMarker(new MarkerOptions()
 	            .position(new LatLng(Double.parseDouble(sec_latitud), Double.parseDouble(sec_longitud)))
 	            .title(sec_nombre)
@@ -514,10 +567,17 @@ public class ParkingActivity extends ParqueaderoActivity implements LocationList
 				
 	            DecimalFormat df = new DecimalFormat();
 				df.setMaximumFractionDigits(2);
-				
-	            lblTotal.setText("$"+(df.format(Integer.parseInt(spnLog_par_horas_parqueo.getSelectedItem().toString())*price)));
+
+				Double horas = Math.floor(Double.parseDouble(spnLog_par_horas_parqueo.getSelectedItem().toString()) / 60);
+				Double medias_horas = Math.ceil(Double.parseDouble(spnLog_par_horas_parqueo.getSelectedItem().toString()) % 60 /30);
+
+				lblTotal.setText("$" + df.format((horas * price) + (medias_horas * half_price)));
+
 	    	}else{
-	    		Toast.makeText(ParkingActivity.this, message, Toast.LENGTH_SHORT).show();
+                Toast toast= Toast.makeText(getApplicationContext(),
+                        message, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
 	    	}
 	    	progressBar.setVisibility(View.GONE);
 	    }
