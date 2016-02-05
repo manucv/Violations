@@ -61,6 +61,7 @@ public class MainActivity extends Activity {
 	private SharedPreferences settings;
 	Context context = this;
 	public int version;
+	public String versionNumber;
 
 	private EditText txtEmail;
 	private EditText txtPassword;
@@ -68,6 +69,7 @@ public class MainActivity extends Activity {
 	private TextView btnSignIn;
 	private TextView lblRecoverPass;
 	private Button lblSMS;
+	private TextView lblVersion;
 	private Button btnUpdate;
 
 	@Override
@@ -77,6 +79,7 @@ public class MainActivity extends Activity {
 			PackageInfo packageInfo = context.getPackageManager()
 					.getPackageInfo(context.getPackageName(), 0);
 			version=packageInfo.versionCode;
+			versionNumber=packageInfo.versionName;
 		} catch (PackageManager.NameNotFoundException e) {
 			// should never happen
 			throw new RuntimeException("Could not get package name: " + e);
@@ -93,8 +96,8 @@ public class MainActivity extends Activity {
 		btnSignIn = (TextView)findViewById(R.id.LblSignIn);
         lblRecoverPass = (TextView)findViewById(R.id.LblRecoverPass);
         lblSMS = (Button)findViewById(R.id.BtnSMS);
+		lblVersion = (TextView)findViewById(R.id.LblVersion);
 		btnUpdate = (Button)findViewById(R.id.BtnUpdate);
-
 		btnUpdate.setVisibility(View.GONE);
         progressBar = (ProgressBar) findViewById(R.id.loadingLogin);
         progressBar.setVisibility(View.GONE);
@@ -105,8 +108,8 @@ public class MainActivity extends Activity {
         float saldo = settings.getFloat("SALDO", 0);
 		boolean outdated = settings.getBoolean("OUTDATED", false);
 
-        Log.v("MsgMain",""+cli_id);
-        
+		lblVersion.setText("Version "+versionNumber);
+
 
 		if (isNetworkAvailable()) {
 			new TareaWSApp().execute();
@@ -327,9 +330,12 @@ public class MainActivity extends Activity {
 	
 	@Override
 	public void onBackPressed() {
+
 	    if (doubleBackToExitPressedOnce) {
-	        super.onBackPressed();
-	        finish();
+			
+			System.exit(0);
+			finish();
+			//super.onBackPressed();
 	        return;
 	    }
 
@@ -362,7 +368,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void onUpdateClick (View v) {
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.sip.sipapp_project"));
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.sip.parqueo"));
 		startActivity(browserIntent);
 	}
 
@@ -413,7 +419,7 @@ public class MainActivity extends Activity {
 			if (result)
 			{
 				Log.v("version","Revisando Version");
-				if(version != server_version){
+				if(version < server_version){
 					Log.v("version","Actualize la aplicacion");
 					Helpers.getInstance().showMessage(context,"Version Desactualizada");
 					txtEmail.setVisibility(View.GONE);

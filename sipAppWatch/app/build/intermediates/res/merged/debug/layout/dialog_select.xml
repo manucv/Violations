@@ -16,10 +16,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight=".5"
+            android:layout_weight=".33"
             android:background="@drawable/button_bkg"
             android:onClick="onTicketClick"
-            android:text="Ingresar Ticket"
+            android:text="Ticket"
             android:textColor="#ffffff" />
 
         <Button
@@ -27,13 +27,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight=".5"
+            android:layout_weight=".33"
             android:background="@drawable/button_bkg"
             android:onClick="onViolationClick"
             android:text="Infracción"
             android:textColor="#ffffff" />
+        <Button
+            android:id="@+id/btnNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight=".33"
+            android:background="@drawable/button_bkg"
+            android:onClick="onNoteClick"
+            android:text="Anotar"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/btnFree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight=".33"
+            android:background="@drawable/button_bkg"
+            android:onClick="onReleaseNoteClick"
+            android:text="Liberar"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
 
     </LinearLayout>
 
 </LinearLayout>
-<!-- From: file:/C:/Users/Camilo/StudioProjects/sipAppWatch/app/src/main/res/layout/dialog_select.xml -->
+<!-- From: file:/C:/Users/lmpon_000/Desktop/Miguel/StudioProjects/sipAppWatch/app/src/main/res/layout/dialog_select.xml -->

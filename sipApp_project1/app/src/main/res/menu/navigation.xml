@@ -29,13 +29,7 @@
 		        android:orderInCategory="4"
 		        android:title="Disponibles"
 		        />
-		
-			   <item
-		        android:id="@+id/ItemAcercaDe"
-		        android:orderInCategory="6"
-		        android:title="Acerca De"
-		        />
-			           
+
 			   <item
 		        android:id="@+id/ItemSalir"
 		        android:orderInCategory="7"

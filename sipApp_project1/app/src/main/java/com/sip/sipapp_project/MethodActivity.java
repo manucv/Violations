@@ -59,8 +59,14 @@ public class MethodActivity extends ParqueaderoActivity implements LocationListe
         	
             map = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapStore)).getMap();
             map.setMyLocationEnabled(true);
-            map.setOnMarkerClickListener(this);         
-            
+            map.setOnMarkerClickListener(this);
+
+			double latitude = 0.350963; 		// Getting latitude of the current location
+			double longitude =  -78.117815; 	// Getting longitude of the current location
+			LatLng latLng = new LatLng(latitude, longitude); 		// Creating a LatLng object for the current location
+			map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+			map.animateCamera(CameraUpdateFactory.zoomTo(18));
+
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE); // Getting LocationManager object from System Service LOCATION_SERVICE
             
             Boolean gps_enabled = null;
@@ -204,21 +210,27 @@ public class MethodActivity extends ParqueaderoActivity implements LocationListe
 	    	
         	for(int i=0; i < arr_pun_rec_id.length; i++)
         	{
-        		if(arr_pun_rec_habilitado[i].equals("1")){
-            		Marker marker = map.addMarker(new MarkerOptions()
-    		        .position(new LatLng(Double.parseDouble(arr_pun_rec_lat[i]), Double.parseDouble(arr_pun_rec_lng[i])))
-    		        .title(arr_pun_rec_nombre[i])
-    		        .snippet("Recargas y Tarjetas")
-    		        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-            		markers.put(marker,Integer.parseInt(arr_pun_rec_id[i]));
-        		}else{
-            		Marker marker = map.addMarker(new MarkerOptions()
-    		        .position(new LatLng(Double.parseDouble(arr_pun_rec_lat[i]), Double.parseDouble(arr_pun_rec_lng[i])))
-    		        .title(arr_pun_rec_nombre[i])
-    		        .snippet("Solo Tarjetas")
-    		        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            		markers.put(marker,Integer.parseInt(arr_pun_rec_id[i]));
-        		}
+				try{
+					if(Double.parseDouble(arr_pun_rec_lat[i])!=0 && Double.parseDouble(arr_pun_rec_lng[i])!=0  ){
+						if(arr_pun_rec_habilitado[i].equals("1")){
+							Marker marker = map.addMarker(new MarkerOptions()
+							.position(new LatLng(Double.parseDouble(arr_pun_rec_lat[i]), Double.parseDouble(arr_pun_rec_lng[i])))
+							.title(arr_pun_rec_nombre[i])
+							.snippet("Recargas y Tarjetas")
+							.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+							markers.put(marker,Integer.parseInt(arr_pun_rec_id[i]));
+						}else{
+							Marker marker = map.addMarker(new MarkerOptions()
+							.position(new LatLng(Double.parseDouble(arr_pun_rec_lat[i]), Double.parseDouble(arr_pun_rec_lng[i])))
+							.title(arr_pun_rec_nombre[i])
+							.snippet("Solo Tarjetas")
+							.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+							markers.put(marker,Integer.parseInt(arr_pun_rec_id[i]));
+						}
+					}
+				}catch(Exception e){
+
+				}
         		
         		//TODO: la idea aquí es hacer un marker gris sí es q no hay espacios
 

@@ -42,6 +42,7 @@ public class AddContactActivity extends ParqueaderoActivity {
         setContentView(R.layout.activity_addcontact);
         
 		super.txtSaldo = (TextView)findViewById(R.id.TxtSaldo);
+		super.loadingInfo = (ProgressBar)findViewById(R.id.loadingInfo);
         txtSearchContact = (TextView)findViewById(R.id.TxtSearchContact);
         progressBar = (ProgressBar)findViewById(R.id.loadingAddContact);
         

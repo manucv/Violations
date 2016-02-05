@@ -76,7 +76,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
                     android:ems="10"
-                    android:hint="Placa" >
+                    android:hint="Placa"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:maxLength="7"
+                    >
                     <requestFocus />
                 </EditText>
                 
@@ -88,7 +93,7 @@
                     android:background="@drawable/camera_bkg"
                     android:fitsSystemWindows="true"
                     android:onClick="onBtnCamaraClick"
-                    android:text="Detectar Placa"
+                    android:text="Leer Placa"
                     android:textColor="#ffffff" />
             </LinearLayout>
 
@@ -159,4 +164,4 @@
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout><!-- From: file:/C:/Users/Camilo/StudioProjects/sipAppWatch/app/src/main/res/layout/dialog_violation.xml -->
+</LinearLayout><!-- From: file:/C:/Users/lmpon_000/Desktop/Miguel/StudioProjects/sipAppWatch/app/src/main/res/layout/dialog_violation.xml -->

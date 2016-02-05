@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sip.parqueo"
-    android:versionCode="5"
-    android:versionName="1.4" >
+    android:versionCode="6"
+    android:versionName="1.5" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -53,6 +53,8 @@
             android:name="com.sip.sipapp_project.WelcomeActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="SIP"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -60,6 +62,8 @@
             android:name="com.sip.sipapp_project.ParkingActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Pago de Parqueaderos"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -67,6 +71,8 @@
             android:name="com.sip.sipapp_project.HistoryActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Mis Compras"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -74,6 +80,8 @@
             android:name="com.sip.sipapp_project.RelatedActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Contactos"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -81,6 +89,8 @@
             android:name="com.sip.sipapp_project.TransferActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Transferencias"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -88,6 +98,8 @@
             android:name="com.sip.sipapp_project.WaitingActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Tiempo Disponible"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -95,6 +107,8 @@
             android:name="com.sip.sipapp_project.RegisterActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Registrate"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -102,6 +116,8 @@
             android:name="com.sip.sipapp_project.MapActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Mapa"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -109,6 +125,8 @@
             android:name="com.sip.sipapp_project.RecoverActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Recuperar Contraseña"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -116,6 +134,8 @@
             android:name="com.sip.sipapp_project.InfoActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Acerca De"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -123,6 +143,8 @@
             android:name="com.sip.sipapp_project.SMSActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Envio de SMS"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -130,6 +152,8 @@
             android:name="com.sip.sipapp_project.TermsActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Terminos y Condiciones"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -137,6 +161,8 @@
             android:name="com.sip.sipapp_project.MethodActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Puntos de Venta"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -144,6 +170,8 @@
             android:name="com.sip.sipapp_project.AddContactActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Agregar Contacto"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -151,6 +179,8 @@
             android:name="com.sip.sipapp_project.CardActivity"
             android:icon="@drawable/action_bar_icon"
             android:label="Recarga con Tarjeta"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>

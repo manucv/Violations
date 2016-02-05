@@ -1,33 +1,37 @@
 package com.example.sipappwatch;
 
-//import com.example.tscdll.TSCActivity;
-
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class ConfigActivity extends Activity {
+import com.example.tscdll.TSCActivity;
+
+public class ConfigActivity extends ActionBarActivity {
 	public static final String PREFS_NAME = "Configuration";
 	private Context context;
 	private EditText txtPrinterMAC;
 	private String printer_mac;
-	
+
+	DBHelper dbHelper;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_config);
 		ActionBar actionBar = getActionBar();    
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		//actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		context=ConfigActivity.this;
+		dbHelper = new DBHelper(context);
+
 		txtPrinterMAC = (EditText)findViewById(R.id.txtPrinterMAC);
 		
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -49,45 +53,93 @@ public class ConfigActivity extends Activity {
 	
 	public void onPrintClick (View pressed){
 			
-//		TSCActivity TscDll;
-//		try {
-//			TscDll = new TSCActivity();
-//			TscDll.openport(printer_mac);
-//			TscDll.setup(55, 70, 2, 10, 0, 0, 0);
-//			TscDll.clearbuffer();
-//			TscDll.sendcommand("DIRECTION 0\n");
-//			TscDll.sendcommand("TEXT 10,50,\"2\",0,1,1,\"SIP Parking Solution\"\n");
-//			TscDll.sendcommand("TEXT 10,100,\"2\",0,1,1,\"GAD Ibarra Ecuador\"\n");
-//			TscDll.sendcommand("TEXT 10,150,\"3\",0,1,1,\"Pagina de Prueba\"\n");
-//			TscDll.sendcommand("TEXT 10,200,\"3\",0,1,1,\"Impresora:\"\n");
-//			TscDll.sendcommand("TEXT 10,250,\"3\",0,1,1,\""+printer_mac+"\"\n");
-//			//String status = TscDll.status();
-//			TscDll.printlabel(1, 1);
-//			TscDll.closeport();
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		
+		TSCActivity TscDll;
+		try {
+			TscDll = new TSCActivity();
+			TscDll.openport(printer_mac);
+			TscDll.setup(55, 70, 2, 10, 0, 0, 0);
+			TscDll.clearbuffer();
+			TscDll.sendcommand("DIRECTION 0\n");
+			TscDll.sendcommand("TEXT 10,50,\"2\",0,1,1,\"SIP Parking Solution\"\n");
+			TscDll.sendcommand("TEXT 10,100,\"2\",0,1,1,\"GAD Ibarra Ecuador\"\n");
+			TscDll.sendcommand("TEXT 10,150,\"3\",0,1,1,\"Pagina de Prueba\"\n");
+			TscDll.sendcommand("TEXT 10,200,\"3\",0,1,1,\"Impresora:\"\n");
+			TscDll.sendcommand("TEXT 10,250,\"3\",0,1,1,\""+printer_mac+"\"\n");
+			//String status = TscDll.status();
+			TscDll.printlabel(1, 1);
+			TscDll.closeport();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		Toast.makeText(context, "Conectando a Impresora", Toast.LENGTH_SHORT).show();
 	}
-	
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-    	super.onOptionsItemSelected(item);
-    	Intent intent=null;
-    	switch(item.getItemId()){
-		    case android.R.id.home:
-		    	intent = new Intent(context,ZonesActivity.class);
-		    break;
-    	}
-    	if(intent != null){
-    		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);            
-	        startActivity(intent);
-	        finish();
-    	}
-    	return super.onOptionsItemSelected(item);    	
-    	
-    }	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		super.onOptionsItemSelected(item);
+		Intent intent=null;
+		switch(item.getItemId()){
+			case android.R.id.home:
+				intent = new Intent(context,ZonesActivity.class);
+				break;
+		}
+		if(intent != null){
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			finish();
+		}
+		return super.onOptionsItemSelected(item);
+
+	}
+
+	@Override
+	public void onBackPressed() {
+
+		Intent intent = null;
+		intent = new Intent(context, ZonesActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+		finish();
+	}
+
+	public void onUpdateClick (View pressed){
+		/* Actualizamos Sectores */
+
+		Toast.makeText(context, "Recuperando Información de la base de Datos", Toast.LENGTH_SHORT).show();
+		Toast.makeText(context, "Cargando Sectores", Toast.LENGTH_SHORT).show();
+		Zone zone=new Zone();
+		//zone.retrieveAll(dbHelper);
+		/*
+		// Actualizamos Parqueaderos
+		Toast.makeText(context, "Cargando Parqueaderos", Toast.LENGTH_SHORT).show();
+		Spot spot=new Spot();
+		spot.retrieveAll(dbHelper);
+
+		// Actualizamos Parqueaderos por Sector
+		Toast.makeText(context, "Cargando Parqueaderos Por Zona", Toast.LENGTH_SHORT).show();
+		ZoneSpot zoneSpot=new ZoneSpot();
+		zoneSpot.retrieveAll(dbHelper);
+
+		// Actualizamos Tipos de Infracciones
+		Toast.makeText(context, "Cargando Tipos de Infracción", Toast.LENGTH_SHORT).show();
+		InfractionType infraction_type=new InfractionType();
+		infraction_type.retrieveAll(dbHelper);
+
+		Toast.makeText(context, "Diccionarios Actualizados Exitosamente", Toast.LENGTH_SHORT).show();
+		*/
+	}
+
+	@Override
+	protected void onStart(){
+		super.onStart();
+		dbHelper.openDB();
+	}
+
+	@Override
+	protected void onStop(){
+		super.onStop();
+		dbHelper.closeDB();
+	}
 }

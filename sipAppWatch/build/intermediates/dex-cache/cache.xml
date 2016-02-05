@@ -2,81 +2,95 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Camilo\StudioProjects\sipAppWatch\app\libs\jpos114-controls.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="dce8decdde342d0d85962b3503c6f4fa801167b0">
-        <dex dex="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\jpos114-controls-6853c250af25b417327e800ced73336b9ab1d769.jar" />
-    </item>
-    <item
-        jar="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\classes-34fef94ee869c8d773b09cb6fbe89d24cb097bd7.jar" />
-    </item>
-    <item
-        jar="C:\Users\Camilo\StudioProjects\sipAppWatch\app\libs\xerces.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="214870287756f1890b43451d01c422a8a490bbb1">
-        <dex dex="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\xerces-16bd67bef23c829b9406e7dcd2eefaae4afc981a.jar" />
-    </item>
-    <item
-        jar="C:\Users\Camilo\StudioProjects\sipAppWatch\app\libs\httpcore-4.3.jar"
+        jar="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\libs\httpcore-4.3.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="11393498b38e9695d0850cac26fde5613ae268b9">
-        <dex dex="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\httpcore-4.3-51eab524b77285789a193238be46138a52d64b36.jar" />
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\httpcore-4.3-4469ca610183771c21b4f377d82abb48efca110c.jar" />
     </item>
     <item
-        jar="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\libs\internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-1d9d3019c356d7a1c5c42ce397afc65e2eb9a80c.jar" />
-    </item>
-    <item
-        jar="C:\Users\Camilo\StudioProjects\sipAppWatch\app\libs\bixolon_printer.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="86980f12570718218daae4a25e266e7cd1f73d06">
-        <dex dex="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\bixolon_printer-df8b7fc91f53dbe248ecb60375e26197e9a43102.jar" />
-    </item>
-    <item
-        jar="C:\Users\Camilo\StudioProjects\sipAppWatch\app\libs\tscwifii.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="190f121016b71fb02a345c395d59016c92cd575f">
-        <dex dex="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\tscwifii-9be94fad681dff897599e8e3bbb51ec1b694cdcd.jar" />
-    </item>
-    <item
-        jar="C:\Users\Camilo\StudioProjects\sipAppWatch\app\libs\bluetooth.jar"
+        jar="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\libs\bluetooth.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="ff8f9c55ff40367f1d677150d9fbe006417ca63e">
-        <dex dex="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\bluetooth-238f59218539b43aca37ecea1d65b15dba7954d3.jar" />
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\bluetooth-81d087a2a439fb89b5f620b47d750ce6fafed6c2.jar" />
     </item>
     <item
-        jar="C:\Users\Camilo\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-8c2d78266c8ceeec6e32fdae41ab8720b6a3234b.jar" />
-    </item>
-    <item
-        jar="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\classes-c4f15dce6f79726139ce5be3b3f64be1afdc5acb.jar" />
-    </item>
-    <item
-        jar="C:\Users\Camilo\StudioProjects\sipAppWatch\app\libs\httpmime-4.3.jar"
+        jar="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\libs\httpmime-4.3.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="5b0002c5fb66867ca919be0fbd86de1cfaf76da7">
-        <dex dex="C:\Users\Camilo\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\httpmime-4.3-6f14606e76459a8e919fbcd083bb7ba50858eab5.jar" />
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\httpmime-4.3-3499a0aee2493a8139dc5aa2dd4760a02904066d.jar" />
+    </item>
+    <item
+        jar="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="d0dda274b703dd9c5bb056867649d22b4171ae7d">
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\classes-08e732c611351d303e5c25720ae1b694f14249b5.jar" />
+    </item>
+    <item
+        jar="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\classes-1b31b1f86f1e4984d3ac26ffa8c48feee9c12915.jar" />
+    </item>
+    <item
+        jar="C:\Users\lmpon_000\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.0-a3f14d303d6eee633320dd549911494ee35fdf8f.jar" />
+    </item>
+    <item
+        jar="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\libs\jpos114-controls.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="dce8decdde342d0d85962b3503c6f4fa801167b0">
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\jpos114-controls-29cc4f5b0b264957bf7c732eee974917d91661e7.jar" />
+    </item>
+    <item
+        jar="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\classes-010dad7d278070523f7236766f8929dbc637f1ec.jar" />
+    </item>
+    <item
+        jar="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-dc1b000b4c3d43b2007d94e6ba23410d848fe286.jar" />
+    </item>
+    <item
+        jar="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\libs\bixolon_printer.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="86980f12570718218daae4a25e266e7cd1f73d06">
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\bixolon_printer-fa4f155503abc9762c254a61c6b02af21a719c85.jar" />
+    </item>
+    <item
+        jar="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="4477ea44f5ec5ad064022a22691732d7638ff197">
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\classes-9278d175c9000b4b5bfee9591f0e16f1955ceb8d.jar" />
+    </item>
+    <item
+        jar="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\libs\tscwifii.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="190f121016b71fb02a345c395d59016c92cd575f">
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\tscwifii-624e3cdb21e826f17ad745e3582f70426a098635.jar" />
+    </item>
+    <item
+        jar="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\libs\xerces.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="214870287756f1890b43451d01c422a8a490bbb1">
+        <dex dex="C:\Users\lmpon_000\Desktop\Miguel\StudioProjects\sipAppWatch\app\build\intermediates\pre-dexed\debug\xerces-29d12dd7a2ca1a1bfe0d2c5c7493e3b0a37428bc.jar" />
     </item>
 
 </items>

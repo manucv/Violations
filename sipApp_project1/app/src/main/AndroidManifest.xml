@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sip.sipapp_project"
-    android:versionCode="5"
-    android:versionName="1.4" >
+    android:versionCode="6"
+    android:versionName="1.5" >
 
     <uses-sdk
         android:minSdkVersion="12"
@@ -44,25 +44,33 @@
         <activity android:name="com.sip.sipapp_project.WelcomeActivity"
                   android:icon="@drawable/action_bar_icon"
             	  android:label="SIP"
-                  android:screenOrientation="portrait" 
+                  android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan">
         </activity>    
         <activity android:name="com.sip.sipapp_project.ParkingActivity"
                   android:label="Pago de Parqueaderos"
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity>   
 		<activity android:name="com.sip.sipapp_project.HistoryActivity"
                   android:label="Mis Compras" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity android:name="com.sip.sipapp_project.RelatedActivity"
                   android:label="Contactos" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan"
                    >
         </activity>
@@ -70,66 +78,88 @@
                   android:label="Transferencias" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity>     
 		<activity android:name="com.sip.sipapp_project.WaitingActivity"
                   android:label="Tiempo Disponible" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity> 
 		<activity android:name="com.sip.sipapp_project.RegisterActivity"
                   android:label="Registrate" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity>   
 		<activity android:name="com.sip.sipapp_project.MapActivity"
                   android:label="Mapa" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
 		<activity android:name="com.sip.sipapp_project.RecoverActivity"
                   android:label="Recuperar Contraseña" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity android:name="com.sip.sipapp_project.InfoActivity"
                   android:label="Acerca De" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity>  
         <activity android:name="com.sip.sipapp_project.SMSActivity"
                   android:label="Envio de SMS" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity android:name="com.sip.sipapp_project.TermsActivity"
                   android:label="Terminos y Condiciones" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity android:name="com.sip.sipapp_project.MethodActivity"
                   android:label="Puntos de Venta"
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity android:name="com.sip.sipapp_project.AddContactActivity"
                   android:label="Agregar Contacto" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity>  
         <activity android:name="com.sip.sipapp_project.CardActivity"
                   android:label="Recarga con Tarjeta" 
                   android:icon="@drawable/action_bar_icon"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan" >
         </activity>
         <service android:name="com.paypal.android.sdk.payments.PayPalService"

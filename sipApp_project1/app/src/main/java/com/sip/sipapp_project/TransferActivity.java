@@ -28,6 +28,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -77,29 +78,38 @@ public class TransferActivity extends ParqueaderoActivity {
 	                    Builder  dialog = new AlertDialog.Builder(TransferActivity.this);
 	                    dialog.setView(input);
 	                    dialog.setMessage("Ingrese su contraseña nuevamente para continuar con la transferencia" );
-	                    dialog.setPositiveButton("Ir", new DialogInterface.OnClickListener() {
+	                    dialog.setPositiveButton("Transferir", new DialogInterface.OnClickListener() {
 
 	                         @Override
 	                         public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 	                             // TODO Auto-generated method stub
-	                             //startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),100);//android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 100);
-								 TareaWSTransferirSaldo tarea = new TareaWSTransferirSaldo();
-								 tarea.execute(	cli_id_ref, txtTransferValue.getText().toString());
-							 }
-	                     });
-	                     dialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+								 if(!input.getText().toString().isEmpty()){
+								 	TareaWSTransferirSaldo tarea = new TareaWSTransferirSaldo();
+								 	tarea.execute(	cli_id_ref, txtTransferValue.getText().toString());
+								 }else{
+
+								 }
+                                 Toast toast= Toast.makeText(getApplicationContext(),
+                                         "Debes ingresar tu contraseña", Toast.LENGTH_LONG);
+                                 toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                 toast.show();}
+						});
+	                    dialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
 
 	                         @Override
 	                         public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 	                             // TODO Auto-generated method stub
 
-	                         }
+	                       }
 	                     });
-	                     dialog.show();	            		
+	                    dialog.show();
 
 	            	}else{
-	            		Toast.makeText(TransferActivity.this, "Tu saldo debe ser superior al valor a transferir", Toast.LENGTH_SHORT).show();
-	            	}
+                        Toast toast= Toast.makeText(getApplicationContext(),
+                                "Tu saldo debe ser superior al valor a transferir", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        toast.show();
+    	            	}
 	            }
 	       });
         

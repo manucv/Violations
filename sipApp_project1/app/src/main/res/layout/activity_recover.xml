@@ -51,7 +51,16 @@
                 android:layout_height="36dp"
                 android:background="@drawable/button_bkg"
                 android:text="Recuperar Contraseña"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:visibility="visible" />
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/loading"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone" />
 
         </LinearLayout>
     </LinearLayout>

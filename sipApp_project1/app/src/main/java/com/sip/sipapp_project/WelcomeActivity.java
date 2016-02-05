@@ -2,15 +2,21 @@ package com.sip.sipapp_project;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +50,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -206,9 +213,9 @@ public class WelcomeActivity extends ParqueaderoActivity {
                 Bundle b = new Bundle();
                 b.putString("ID", cli_id);
                 b.putString("SALDO", saldo);
-                intent.putExtras(b);                
-                
-                startActivity(intent);	            	        	
+                intent.putExtras(b);
+
+                startActivity(intent);
             }
        });
         
@@ -250,7 +257,8 @@ public class WelcomeActivity extends ParqueaderoActivity {
 		                 /*Fin Bloque preferencias compartidas*/			        	
 			        	
 			        	Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-		                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+						intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		                startActivity(intent);
 		                
 		                finish();
@@ -414,6 +422,25 @@ public class WelcomeActivity extends ParqueaderoActivity {
 							dialog.setTitle("Cambiar de Parqueadero");
 							View dialogSelect = View.inflate(context, R.layout.dialog_switch, null);
 							dialog.setView(dialogSelect);
+
+							final EditText par_id_dest;
+							par_id_dest = (EditText) dialogSelect.findViewById(R.id.editText);
+
+							dialog.setPositiveButton("Cambiar", new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+									// TODO Auto-generated method stub
+
+									TareaWSCambiarParqueadero tarea = new TareaWSCambiarParqueadero();
+									tarea.execute(
+											((ActiveSpot) pairs.getValue()).getPar_id(),
+											par_id_dest.getText().toString()
+									);
+
+									lblPar_id.setText(par_id_dest.getText().toString());
+								}
+							});
+
 							dialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface paramDialogInterface, int paramInt) {
@@ -447,7 +474,7 @@ public class WelcomeActivity extends ParqueaderoActivity {
 	    		    		  	NotificationCompat.Builder mBuilder =
 	    		    			        new NotificationCompat.Builder(context)
 	    		    			        .setSmallIcon(R.drawable.ic_launcher)
-	    		    			        .setContentTitle("Parqueo Exitoso")
+	    		    			        .setContentTitle("Tu Parqueo está por Expirar")
 	    		    			        .setContentText("Tu parqueadero expira en 15 minutos");
 
 	    		    			Intent resultIntent = new Intent(context, MainActivity.class);
@@ -489,6 +516,47 @@ public class WelcomeActivity extends ParqueaderoActivity {
 	    	}
 		}
 	}
-	/***** Fin LastParkingWS ******/	
+	/***** Fin LastParkingWS ******/
+
+	private class TareaWSCambiarParqueadero extends AsyncTask<String,Integer,Boolean> {
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+
+			String par_id = params[0];		//txtName
+			String par_id_dest = params[1];	//txtLastName
+
+			String url = "http://54.69.247.99/Violations/public/api/api/parqueaderos/"+par_id;
+
+			HttpClient httpClient = new DefaultHttpClient();
+			HttpPost post = new HttpPost(url);
+
+			List<NameValuePair> paramsArray = new ArrayList<NameValuePair>();
+			paramsArray.add( new BasicNameValuePair( "par_id_dest", par_id_dest ) );
+
+			try {
+				post.setEntity(new UrlEncodedFormEntity(paramsArray));
+				HttpResponse response = httpClient.execute(post);
+
+				int status = response.getStatusLine().getStatusCode();
+
+				switch (status) {
+					case 200:    //case success
+						Log.v("Cambiando parqueadero",response.toString());
+					break;
+				}
+
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+
+
+		}
+	}
 
 }
