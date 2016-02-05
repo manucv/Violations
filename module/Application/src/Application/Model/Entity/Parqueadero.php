@@ -12,6 +12,9 @@ class Parqueadero {
 	private $par_longitud;
 	private $par_cal_principal;
 	private $par_cal_secundaria;
+	private $aut_placa;
+	private $par_fecha_ingreso;
+	private $par_horas_parqueo;
 
 	function __construct() {}
 
