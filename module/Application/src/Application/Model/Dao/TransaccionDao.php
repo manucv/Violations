@@ -25,6 +25,7 @@ class TransaccionDao implements InterfaceCrud {
         $select->join ( 'ciudad', 'sector.ciu_id  = ciudad.ciu_id' );
         $select->join ( 'cliente', 'cliente.cli_id  = transaccion.cli_id' );
         $select->join ( 'usuario', 'usuario.usu_id  = cliente.usu_id' );
+        $select->order( 'transaccion.tra_id DESC' );
         $resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;
     }
