@@ -29,7 +29,8 @@ class ClienteDao implements InterfaceCrud {
     	$cli_id = (int) $cli_id;
     	
     	$select = $this->tableGateway->getSql ()->select ();
-    	$select->join ( 'usuario', 'usuario.usu_id  = cliente.usu_id' );
+        $select->columns(array('cli_id','usu_id','cli_saldo','cli_movil'));
+    	$select->join ( 'usuario', 'usuario.usu_id  = cliente.usu_id' , array('usu_usuario','usu_email','usu_nombre','usu_apellido','usu_estado'));
     	$select->where (array('cli_id' => $cli_id));
     	$resultSet = $this->tableGateway->selectWith ( $select );
     	$row =  $resultSet->current();

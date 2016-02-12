@@ -30,6 +30,7 @@
 
 	    protected $clienteDao;
 	    protected $usuarioDao;
+	    protected $calleDao;
 	    protected $rolUsuarioDao;
 	    protected $sectorVigilanteDao;
 	    protected $sectorDao;
@@ -204,6 +205,29 @@
             $response->setContent($content);
             return $response;
 	    }
+
+	    public function callesAction()
+	    {	
+	    	$content = "";
+	    	if($this->getRequest()->isGET()){
+	    		$callesArray=array();
+	    		$calles=$this->getCalleDao()->traerTodos();
+	    		
+	            foreach($calles as $calle){
+	                $callesArray[]=$calle->getArrayCopy();
+	            }
+
+				$content=json_encode($callesArray);
+
+	    	}else{
+	            return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	    	}
+
+	    	$response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+            return $response;
+	    }	    
 
 	    public function parqueaderosSectoresAction()
 	    {
@@ -710,6 +734,13 @@
 	            $this->parqueaderoSectorDao = $sm->get ( 'Application\Model\Dao\ParqueaderoSectorDao' );
 	        }
 	        return $this->parqueaderoSectorDao;
+	    }	
+	    public function getCalleDao() {
+	        if (! $this->calleDao) {
+	            $sm = $this->getServiceLocator ();
+	            $this->calleDao = $sm->get ( 'Application\Model\Dao\CalleDao' );
+	        }
+	        return $this->calleDao;
 	    }	
 
 	}
