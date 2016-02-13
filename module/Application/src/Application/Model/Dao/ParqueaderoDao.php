@@ -166,7 +166,8 @@ class ParqueaderoDao implements InterfaceCrud {
 						aut_placa = '', 
 						par_fecha_ingreso = '0000-00-00 00:00:00',
 						par_fecha_salida = '0000-00-00 00:00:00', 
-						par_horas_parqueo = 0 
+						par_horas_parqueo = 0,
+						par_tipo_compra = ''
 				WHERE   par_fecha_ingreso > NOW() - INTERVAL 2 DAY 
 						AND (par_fecha_ingreso + INTERVAL par_horas_parqueo MINUTE) < NOW()
 						AND par_estado = 'O'
