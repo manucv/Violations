@@ -13,6 +13,8 @@ private $par_id;
 private $aut_id;
 private $tra_id;
 private $nro_ticket;
+private $log_par_tipo_compra;
+private $usu_id;
 
 function __construct() {}
 
@@ -70,6 +72,19 @@ public function getTra_id(){
 */
 public function getNro_ticket(){
 	return $this->nro_ticket;
+}
+
+/**
+* @return the $log_par_tipo_compra
+*/
+public function getLog_par_tipo_compra(){
+	return $this->log_par_tipo_compra;
+}
+/**
+* @return the $usu_id
+*/
+public function getUsu_id(){
+	return $this->usu_id;
 }
 
 /**
@@ -136,6 +151,20 @@ public function setNro_ticket($nro_ticket){
 	$this->nro_ticket=$nro_ticket;
 }
 
+/**
+* @param Ambigous <NULL, unknown> $log_par_tipo_compra
+*/
+public function setLog_par_tipo_compra($log_par_tipo_compra){
+	$this->log_par_tipo_compra=$log_par_tipo_compra;  
+}
+/**
+* @param Ambigous <NULL, unknown> $usu_id
+*/
+public function setUsu_id($usu_id){
+	$this->usu_id=$usu_id;  
+}
+
+
 	public function exchangeArray($data)
 	{
 
@@ -148,6 +177,8 @@ public function setNro_ticket($nro_ticket){
 		$this->aut_placa = (isset($data['aut_placa'])) ? $data['aut_placa'] : null;
 		$this->tra_id = (isset($data['tra_id'])) ? $data['tra_id'] : null;
 		$this->nro_ticket = (isset($data['nro_ticket'])) ? $data['nro_ticket'] : null;
+		$this->log_par_tipo_compra = (isset($data['log_par_tipo_compra'])) ? $data['log_par_tipo_compra'] : null;
+		$this->usu_id = (isset($data['usu_id'])) ? $data['usu_id'] : null;
 
 	}
 	
