@@ -65,7 +65,7 @@ class ParqueaderoDao implements InterfaceCrud {
 		
 		$adapter = $this->tableGateway->getAdapter();
 		$query = "
-		SELECT p.par_id,par_estado,par_tipo,aut_placa,par_fecha_ingreso,par_horas_parqueo,inf_id FROM parqueadero as p 
+		SELECT p.par_id,par_estado,par_tipo,aut_placa,par_fecha_ingreso,par_horas_parqueo,inf_id,par_tipo_compra FROM parqueadero as p 
 			JOIN parqueadero_sector as ps 
 				ON p.par_id = ps.par_id
 			JOIN sector as s
@@ -93,7 +93,7 @@ class ParqueaderoDao implements InterfaceCrud {
 
 		$adapter = $this->tableGateway->getAdapter();
 		$query = "
-		SELECT p.par_id,par_estado,aut_placa,par_fecha_ingreso,par_horas_parqueo,inf_id FROM parqueadero as p 
+		SELECT p.par_id,par_estado,aut_placa,par_fecha_ingreso,par_horas_parqueo,inf_id, par_tipo_compra FROM parqueadero as p 
 			JOIN parqueadero_sector as ps 
 				ON p.par_id = ps.par_id
 			JOIN sector as s
@@ -166,7 +166,8 @@ class ParqueaderoDao implements InterfaceCrud {
 						aut_placa = '', 
 						par_fecha_ingreso = '0000-00-00 00:00:00',
 						par_fecha_salida = '0000-00-00 00:00:00', 
-						par_horas_parqueo = 0 
+						par_horas_parqueo = 0,
+						par_tipo_compra = ''
 				WHERE   par_fecha_ingreso > NOW() - INTERVAL 2 DAY 
 						AND (par_fecha_ingreso + INTERVAL par_horas_parqueo MINUTE) < NOW()
 						AND par_estado = 'O'
