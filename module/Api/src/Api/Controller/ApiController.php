@@ -236,6 +236,7 @@ class ApiController extends AbstractActionController
                         $data['log_par_horas_parqueo'] = $log_par_horas_parqueo;
                         $data['par_id'] = strtoupper($par_id);
                         $data['tra_id'] = $tra_id;
+                        $data['log_par_tipo_compra'] = 'I'; //Compra por Internet
 
                         $log_parqueadero = new LogParqueaderoEntity();
                         $log_parqueadero->exchangeArray ( $data );
