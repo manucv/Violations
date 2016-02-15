@@ -458,7 +458,7 @@
 	        	}else{
 
 
-					$par_id 		= $data['par_id'];
+					$par_id = $data['par_id'];
 
 		            if(strlen($par_id)<5){
 		                $alfa=substr($par_id,0,1);
@@ -531,23 +531,23 @@
 
 			            $infracciones = array();
 						/* Busca infracciones en Sistema de Sismert, es decir las que no estén pagadas */
-						//$url = 'http://54.69.247.99/Violations/sismert/infracciones.php';
-			            //$params = array('placa' => $aut_placa );
+						$url = 'http://54.69.247.99/Violations/sismert/infracciones.php';
+			            $params = array('placa' => $aut_placa );
 //			            
-			            //$url .= '?' . http_build_query($params);
-			            //$ch = curl_init();
-			            //curl_setopt($ch, CURLOPT_URL, $url);
-			            //curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			            //curl_setopt($ch, CURLOPT_HEADER, false);
-			            //$data = curl_exec($ch);
-			            //$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			            //curl_close($ch);
+			            $url .= '?' . http_build_query($params);
+			            $ch = curl_init();
+			            curl_setopt($ch, CURLOPT_URL, $url);
+			            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			            curl_setopt($ch, CURLOPT_HEADER, false);
+			            $data = curl_exec($ch);
+			            $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			            curl_close($ch);
 //
-			            //$infracciones = json_decode($data);
+			            $infracciones = json_decode($data);
 
-			            //if(sizeof($infracciones)>=3){
-			            	//$infraction_status="L"; //lock
-			            //}
+			            if(sizeof($infracciones)>=3){
+			            	$infraction_status="L"; //lock
+			            }
 
 						$multaParqueadero = new MultaParqueaderoEntity();
 						$multaParqueaderoData=array();
@@ -605,6 +605,54 @@
             $response->setContent($content);
             return $response;
 	    }
+
+
+		public function fotosAction()
+	    {
+
+	    	$content="";
+			
+	        if($this->getRequest()->isPOST()){ //hay que cambiar esto
+	        	$data = $this->request->getPost ();
+
+	        	if(!is_null($this->params('id'))){
+					$inf_id = $this->params('id');
+
+					$multaParqueadero = $this->getMultaParqueaderoDao()->traerPorInfraccion();
+
+			    	$target_dir = "/var/www/html/Violations/files/";
+					
+					if(isset($_FILES["image"])){
+						$name_file = time().'_'. basename($_FILES["image"]["name"]);
+						$target_file = $target_dir .$name_file;
+						move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+					}
+					if(isset($_FILES["image2"])){
+						$name_file2 = time().'_'. basename($_FILES["image2"]["name"]);
+						$target_file2 = $target_dir .$name_file2;
+						move_uploaded_file($_FILES["image2"]["tmp_name"], $target_file2);
+					}
+					if(isset($_FILES["image3"])){
+						$name_file3 = time().'_'. basename($_FILES["image3"]["name"]);
+						$target_file3 = $target_dir .$name_file3;
+						move_uploaded_file($_FILES["image3"]["tmp_name"], $target_file3);
+					}
+
+					$multaParqueadero->setMul_par_prueba_1($name_file);
+					$multaParqueadero->setMul_par_prueba_2($name_file2);
+					$multaParqueadero->setMul_par_prueba_3($name_file3);
+
+					$mul_par_id=$this->getMultaParqueaderoDao()->guardar($multaParqueadero);
+	        	}	
+	        }else{
+	        	return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
+	        }
+            $response=$this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($content);
+            return $response;
+	    }
+
 
 	    public function infraccionAction()
 	    {
