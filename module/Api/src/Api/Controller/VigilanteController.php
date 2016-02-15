@@ -618,7 +618,7 @@
 	        	if(!is_null($this->params('id'))){
 					$inf_id = $this->params('id');
 
-					$multaParqueadero = $this->getMultaParqueaderoDao()->traerPorInfraccion();
+					$multaParqueadero = $this->getMultaParqueaderoDao()->traerPorInfraccion($inf_id);
 
 			    	$target_dir = "/var/www/html/Violations/files/";
 					
