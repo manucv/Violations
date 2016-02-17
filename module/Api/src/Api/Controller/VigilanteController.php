@@ -343,7 +343,7 @@
 	        		if(isset($data['par_id'])){
 
 	        			$par_id= $data['par_id'];
-
+	        			/*
 	        			if(strlen($par_id)<5){
 			                $alfa=substr($par_id,0,1);
 			                $num=substr($par_id,1,strlen($par_id));
@@ -356,7 +356,7 @@
 			                    $num=str_pad($num,5,0,STR_PAD_LEFT);
 			                    $par_id=$alfa.$num;
 			                }
-			            }
+			            }*/
 	        		}
 
 	        		if(isset($data['aut_placa']))
