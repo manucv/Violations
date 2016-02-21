@@ -31,6 +31,22 @@ class InfraccionDao implements InterfaceCrud {
     	$resultSet = $this->tableGateway->selectWith ( $select );
         return $resultSet;
     }
+
+    public function traerProcesados(){
+        $select = $this->tableGateway->getSql ()->select ();
+        $select->join('usuario', 'usuario.usu_id = infraccion.usu_id');
+        $select->join('tipo_infraccion', 'tipo_infraccion.tip_inf_id = infraccion.tip_inf_id');
+        $select->join('sector', 'sector.sec_id = infraccion.sec_id');
+        $select->join('ciudad', 'ciudad.ciu_id = sector.ciu_id');
+        $select->join('estado', 'estado.est_id = ciudad.est_id');
+        $select->join('pais', 'pais.pai_id = estado.pai_id');
+        $select->join('multa_parqueadero', 'infraccion.inf_id = multa_parqueadero.inf_id');
+        $select->where->notEqualTo('inf_estado','R');
+        $select->order('infraccion.inf_id DESC');
+        $resultSet = $this->tableGateway->selectWith ( $select );
+        return $resultSet;
+    }
+
     
     public function traer($inf_id){
     	 
@@ -92,9 +108,7 @@ class InfraccionDao implements InterfaceCrud {
 	}
 
     public function asentarInfraccionMunicipio( $data){
-        
-        
-        
+
         $url = 'http://localhost/Violations/sismert/confirmar.php';
         
         $url .= '?' . http_build_query($data);

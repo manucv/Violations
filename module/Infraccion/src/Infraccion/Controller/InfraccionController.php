@@ -45,6 +45,19 @@ class InfraccionController extends AbstractActionController
 
     }
 
+    public function historialAction()
+    {
+
+        $this->layout()->setVariable('menupadre', null)->setVariable('menuhijo', 'infracciones');
+
+        return array(
+            'infraccion' => $this->getInfraccionDao()->traerProcesados(),
+            'messages'=> $this->flashmessenger()->getErrorMessages(),
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
+        );
+
+    }
+
     public function detalleAction()
     {
         $id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
@@ -54,26 +67,32 @@ class InfraccionController extends AbstractActionController
         $infraccion = $this->getInfraccionDao()->traer($id);
         if(is_object($infraccion)){
             $multa  = $this->getMultaParqueaderoDao()->traerPorInfraccion($id);
-            $parqueadero  = $this->getParqueaderoDao()->traer($multa->getPar_id());
-            $calle_principal = $this->getCalleDao()->traer($parqueadero->getPar_cal_principal());
-            $calle_secundaria = $this->getCalleDao()->traer($parqueadero->getPar_cal_secundaria());
-            $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
+            if($multa){
+                $parqueadero  = $this->getParqueaderoDao()->traer($multa->getPar_id());
+                $calle_principal = $this->getCalleDao()->traer($parqueadero->getPar_cal_principal());
+                $calle_secundaria = $this->getCalleDao()->traer($parqueadero->getPar_cal_secundaria());
+                $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
 
-            $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
+                $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
 
-            $form = $this->getDetalleForm ();
+                $form = $this->getDetalleForm ();
 
-            return array(
-                'messages'=> $this->flashmessenger()->getSuccessMessages(),
-                'infraccion' => $infraccion,
-                'multa' => $multa,
-                'tipo' => $tipo,
-                'usuario' => $usuario,
-                'calle_principal' => $calle_principal,
-                'calle_secundaria' => $calle_secundaria,
-                'formulario' => $form ,
-                'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
-            );
+                return array(
+                    'messages'=> $this->flashmessenger()->getSuccessMessages(),
+                    'infraccion' => $infraccion,
+                    'multa' => $multa,
+                    'tipo' => $tipo,
+                    'usuario' => $usuario,
+                    'calle_principal' => $calle_principal,
+                    'calle_secundaria' => $calle_secundaria,
+                    'formulario' => $form ,
+                    'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Listado de Infracciones' => array('infraccion','infraccion','index')) ),
+                );
+            } else {
+                return $this->redirect ()->toRoute ( 'infraccion', array (
+                    'controller' => 'infraccion'
+                ));    
+            }
         } else {
             $this->flashmessenger()->addErrorMessage("No existen la infracción");  
             return $this->redirect ()->toRoute ( 'infraccion', array (
@@ -258,8 +277,6 @@ class InfraccionController extends AbstractActionController
                 'usuario' => 'SISMERTWSE',
                 'password' =>  'Eb2Yhye3'  
             );
-
-            
             
             $data[$infraccion->getTip_inf_codigo()]='t';
 
@@ -268,18 +285,12 @@ class InfraccionController extends AbstractActionController
             $tipo   = $this->getTipoInfracionDao()->traer($infraccion->getTip_inf_id());
             $usuario   = $this->getUsuarioDao()->traer($infraccion->getUsu_id());
             
-            //echo '<pre>';
-            //print_r($data);
-            //echo '</pre>';
-
             if($service){
                 $this->getInfraccionDao()->guardar($infraccion);  
                 $this->flashmessenger()->addSuccessMessage("Infracción aprobada exitosamente");
                 $is_error = false;
-
             }else{
                 $this->flashmessenger()->addErrorMessage("Error al aprobar la infracción");  
-     
             }
         } else {
             $this->flashmessenger()->addErrorMessage("No se encontr&oacute; la infracción, verifique los datos");  
