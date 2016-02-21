@@ -21,7 +21,8 @@ class Reporte extends Form {
 						'type' => 'text',
 						'maxlength' => '10',
 						'id' => 'fecha_ini',
-						'class' => 'form-control'
+						'class' => 'form-control',
+						'placeholder' => 'aaaa-mm-dd'
 				)
 		) );
 		
@@ -34,7 +35,8 @@ class Reporte extends Form {
 						'type' => 'text',
 						'maxlength' => '10',
 						'id' => 'fecha_fin',
-						'class' => 'form-control'
+						'class' => 'form-control',
+						'placeholder' => 'aaaa-mm-dd'
 				)
 		) );
 

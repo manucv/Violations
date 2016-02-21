@@ -268,7 +268,6 @@
 					                $tiposInfraccionArray[]=$tipoInfraccion->getArrayCopy();
 					            }
 	    						$content=json_encode($tiposInfraccionArray);
-	    						
 	    					break;
 	    					deafult:
 	    						return $this->redirect()->toRoute('parametros',array('controller' => 'index','action' => 'index'));
