@@ -15,6 +15,9 @@ use Parqueaderos\Form\Sector;
 use Application\Model\Entity\LogParqueadero as LogParqueaderoEntity;
 use Application\Model\Entity\Automovil as AutomovilEntity;
 
+use Parqueaderos\Form\Tickets;
+use Parqueaderos\Form\TicketsValidator;
+
 class ParqueaderosController extends AbstractActionController
 {
     protected $paisDao;
@@ -135,6 +138,31 @@ class ParqueaderosController extends AbstractActionController
                 'id' => $data->sec_id
         )); 
 
+    }
+
+    public function ticketsAction()
+    {
+        $form = $this->getTicketsForm ();
+        $tickets = array();
+        if ($this->request->isPost ()) {
+            $data = $this->request->getPost ();
+            $nro_ticket = $data['nro_ticket'];
+            $form->setData ( $data );
+            $tickets = $this->getLogParqueaderoDao()->consultarTicket($nro_ticket);
+            //$tickets = json_decode($service);
+        }  
+
+        return array(
+            'tickets'  => $tickets,
+            'formulario'    => $form ,
+            'navegacion'    => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Consulta de Infracciones' => array('parqueaderos','parqueaderos','tickets')) ),
+        );
+
+    }
+
+    public function getTicketsForm() {
+        $form = new Tickets ();
+        return $form;
     }
 
     /* GET DAO's */

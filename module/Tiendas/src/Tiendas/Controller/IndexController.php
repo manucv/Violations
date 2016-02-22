@@ -61,7 +61,6 @@ class IndexController extends AbstractActionController
 
         $puntorecarga = $this->getPuntoRecargaDao()->traerPorRucClave($usuario,$clave );
         if(is_object($puntorecarga)){     
-
             return $this->redirect ()->toRoute ( 'tiendas', array (
                     'controller' => 'index',
                     'action' => 'buscar',
@@ -72,7 +71,6 @@ class IndexController extends AbstractActionController
             $modelView->setTemplate ( 'tiendas/index/index' );
             return $modelView;
         }
-
     }
 
     public function buscarAction()
@@ -112,7 +110,7 @@ class IndexController extends AbstractActionController
             $data['cli_id']=$cliente->getCli_id();
             $comprasaldo = new CompraSaldoEntity();
             $comprasaldo->exchangeArray ( $data );
-            if($puntorecarga->getPun_rec_saldo() > $data['com_sal_valor'] ){
+            if($puntorecarga->getPun_rec_saldo() >= $data['com_sal_valor'] ){
                 if($data['com_sal_valor']>0){
                     $this->getCompraSaldoDao()->guardar($comprasaldo);
                 }else{
