@@ -33,24 +33,22 @@ class LogParqueaderoDao implements InterfaceCrud {
 
 	    	return $total['total'];
 
-
-			/* 
-		    $sql = new Sql($this->tableGateway->getAdapter());
-            $select = $sql->select();
-            $select->from('log_parqueadero');
-            $select->where            
-                    ->equalTo('nro_ticket',$nro_ticket);
-            
-            $statement = $sql->prepareStatementForSqlObject($select);
-            $results = $statement->execute();
-            $count =  $results->count();
-
-            return $count;
-            */
         }
         return 0;
     }
 
+
+    public function consultarTicket($nro_ticket){
+
+        if($nro_ticket != ''){ 
+		    $select = $this->tableGateway->getSql()->select();
+			$select->where("nro_ticket=$nro_ticket"); 
+            $resultSet = $this->tableGateway->selectWith ( $select );
+            return $resultSet;
+        }
+        return false;
+    }
+    
 	public function traerOcupadosPorSector($sec_id) {
 		$select = $this->tableGateway->getSql()->select();
 		$select->join ( 'parqueadero', 'log_parqueadero.par_id  = parqueadero.par_id' ); 
