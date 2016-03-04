@@ -22,7 +22,14 @@
                 var marker = new google.maps.Marker({
                     position: myLatLng,
                     map: map,
-                    title: '<?php echo $parqueadero->getPar_id() ?>'
+                    title: '<?php echo $parqueadero->getPar_id() ?>',
+                    <?php if($parqueadero->getPar_estado()=='D'): ?>
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+                    <?php elseif($parqueadero->getPar_estado()=='R'): ?>
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                    <?php elseif($parqueadero->getPar_estado()=='O'): ?>
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                    <?php endif; ?>
                 });
             <?php endif; ?>
         <?php endforeach; ?>
@@ -30,28 +37,30 @@
     }
     
     function addMarker(location, map) {
-          var marker = new google.maps.Marker({
-            position: location,
-            draggable: true,
-            map: map
+      var marker = new google.maps.Marker({
+        position: location,
+        draggable: true,
+        map: map,
+
+
+      });
+     markers.push(marker);
+
+     google.maps.event.addListener(marker, 'click', function(e) {
+
+         var infowindow = new google.maps.InfoWindow({
+              content: '<div>'+$('#sec_nombre').val()+'</div>'+'<div>'+$('#sec_ubicacion').val()+'</div>'
           });
-         markers.push(marker);
-    
-         google.maps.event.addListener(marker, 'click', function(e) {
-    
-             var infowindow = new google.maps.InfoWindow({
-                  content: '<div>'+$('#sec_nombre').val()+'</div>'+'<div>'+$('#sec_ubicacion').val()+'</div>'
-              });
-             
-             infowindow.open(map,marker);
-         });
-    
-         google.maps.event.addListener(marker, 'dragend', function (event) {
-                $('#sec_latitud').val(this.getPosition().lat());
-                $('#sec_longitud').val(this.getPosition().lng());
-            });
          
-        }
+         infowindow.open(map,marker);
+     });
+
+     google.maps.event.addListener(marker, 'dragend', function (event) {
+            $('#sec_latitud').val(this.getPosition().lat());
+            $('#sec_longitud').val(this.getPosition().lng());
+        });
+     
+    }
     
     function totalMarkers(){
           return markers.length;
