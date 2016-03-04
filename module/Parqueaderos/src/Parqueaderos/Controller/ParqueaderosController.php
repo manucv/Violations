@@ -18,6 +18,9 @@ use Application\Model\Entity\Automovil as AutomovilEntity;
 use Parqueaderos\Form\Tickets;
 use Parqueaderos\Form\TicketsValidator;
 
+use Parqueaderos\Form\Reporte;
+use Parqueaderos\Form\ReporteValidator;
+
 class ParqueaderosController extends AbstractActionController
 {
     protected $paisDao;
@@ -162,6 +165,41 @@ class ParqueaderosController extends AbstractActionController
 
     public function getTicketsForm() {
         $form = new Tickets ();
+        return $form;
+    }
+
+    public function reporteAction()
+    {
+        $fecha_ini  = $data['fecha_ini'] = date("Y-m-d");
+        $fecha_fin  = $data['fecha_fin'] = date("Y-m-d");
+
+        $form = $this->getReporteForm ();
+
+        if ($this->request->isPost ()) {
+            $data = $this->request->getPost ();
+            $fecha_ini = $data['fecha_ini'];
+            $fecha_fin = $data['fecha_fin'];
+            
+        }    
+        $form->setData ( $data );
+        
+        $registros = $this->getLogParqueaderoDao()->traerTotales($fecha_ini, $fecha_fin);
+        $registrosVigilante = $this->getLogParqueaderoDao()->traerPorVigilante($fecha_ini, $fecha_fin);
+        $registrosCalle = $this->getLogParqueaderoDao()->traerPorCalle($fecha_ini, $fecha_fin);
+
+        $this->layout()->setVariable('menupadre', 'reportes')->setVariable('menuhijo', 'infraccion');
+
+        return array(
+            'formulario' => $form ,
+            'registros' => $registros,
+            'registros_vigilante' => $registrosVigilante,
+            'registros_calle' => $registrosCalle,
+            'navegacion' => array('datos' =>  array ( 'Inicio' => array('parametros','index','video'), 'Reporte de Tickets' => array('parqueaderos','parqueaderos','reporte')) ),
+        );
+    }    
+
+    public function getReporteForm() {
+        $form = new Reporte ();
         return $form;
     }
 

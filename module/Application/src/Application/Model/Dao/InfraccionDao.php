@@ -141,6 +141,29 @@ class InfraccionDao implements InterfaceCrud {
 
     }
 
+    public function traerTotales($fecha_ini, $fecha_fin){
+        $adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT count(*) as total 
+                FROM `infraccion` AS i right 
+                JOIN tipo_infraccion AS t 
+                    ON t.tip_inf_id=i.tip_inf_id ";
+
+        if($fecha_ini!='' || $fecha_fin!='')                    
+            $query .= " WHERE ";
+        if($fecha_ini!='')            
+            $query .= " i.inf_fecha >= '$fecha_ini 00:00:00' ";
+        if($fecha_ini!='' && $fecha_fin!='')
+            $query .= " AND ";    
+        if($fecha_fin!='')            
+            $query .= " i.inf_fecha <= '$fecha_fin 23:59:59' ";
+
+        $statement = $adapter->query($query);
+        $results = $statement->execute();
+
+        return $results;
+    }
+
     public function traerPorTipo($fecha_ini, $fecha_fin){
         $adapter = $this->tableGateway->getAdapter();
         $query = "

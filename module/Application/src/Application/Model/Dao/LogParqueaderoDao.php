@@ -125,6 +125,83 @@ class LogParqueaderoDao implements InterfaceCrud {
 		return $row;
 	}
 
+	public function traerTotales($fecha_ini, $fecha_fin){
+		$adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT count(*) as total 
+                FROM `log_parqueadero` AS i 
+                JOIN usuario AS u 
+                    ON u.usu_id=i.usu_id ";
 
-	
+        if($fecha_ini!='' || $fecha_fin!='')                    
+            $query .= " WHERE ";
+        if($fecha_ini!='')            
+            $query .= " i.log_par_fecha >= '$fecha_ini 00:00:00' ";
+        if($fecha_ini!='' && $fecha_fin!='')
+            $query .= " AND ";    
+        if($fecha_fin!='')            
+            $query .= " i.log_par_fecha <= '$fecha_fin 23:59:59' ";
+
+
+        $statement = $adapter->query($query);
+        $results = $statement->execute();
+
+        return $results;
+	}
+
+    public function traerPorVigilante($fecha_ini, $fecha_fin){
+        $adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT usu_nombre, usu_apellido, count(*) as total 
+                FROM `log_parqueadero` AS i 
+                JOIN usuario AS u 
+                    ON u.usu_id=i.usu_id ";
+
+        if($fecha_ini!='' || $fecha_fin!='')                    
+            $query .= " WHERE ";
+        if($fecha_ini!='')            
+            $query .= " i.log_par_fecha >= '$fecha_ini 00:00:00' ";
+        if($fecha_ini!='' && $fecha_fin!='')
+            $query .= " AND ";    
+        if($fecha_fin!='')            
+            $query .= " i.log_par_fecha <= '$fecha_fin 23:59:59' ";
+
+        $query .= " GROUP BY u.usu_id
+                ORDER BY usu_nombre ASC
+        ";
+        
+        $statement = $adapter->query($query);
+        $results = $statement->execute();
+
+        return $results;
+    }
+
+	public function traerPorCalle($fecha_ini, $fecha_fin){
+        $adapter = $this->tableGateway->getAdapter();
+        $query = "
+            SELECT cal_nombre, count(*) as total 
+                FROM `log_parqueadero` AS i 
+                JOIN parqueadero AS p 
+                    ON i.par_id=p.par_id     
+                JOIN calle AS c 
+                    ON p.par_cal_principal=c.cal_id ";                      
+        
+        if($fecha_ini!='' || $fecha_fin!='')                    
+            $query .= " WHERE ";
+        if($fecha_ini!='')            
+            $query .= " i.log_par_fecha >= '$fecha_ini 00:00:00' ";
+        if($fecha_ini!='' && $fecha_fin!='')
+            $query .= " AND ";    
+        if($fecha_fin!='')            
+            $query .= " i.log_par_fecha <= '$fecha_fin 23:59:59' ";
+
+        $query .= " GROUP BY p.par_cal_principal
+                ORDER BY cal_nombre ASC
+        ";
+        
+        $statement = $adapter->query($query);
+        $results = $statement->execute();
+
+        return $results;
+    }
 }
