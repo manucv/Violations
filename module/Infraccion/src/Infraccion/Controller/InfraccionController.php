@@ -103,8 +103,8 @@ class InfraccionController extends AbstractActionController
 
     public function reporteAction()
     {
-        $fecha_ini='';
-        $fecha_fin='';
+        $fecha_ini  = $data['fecha_ini'] = date("Y-m-d");
+        $fecha_fin  = $data['fecha_fin'] = date("Y-m-d");
 
         $form = $this->getReporteForm ();
 
@@ -112,8 +112,11 @@ class InfraccionController extends AbstractActionController
             $data = $this->request->getPost ();
             $fecha_ini = $data['fecha_ini'];
             $fecha_fin = $data['fecha_fin'];
-            $form->setData ( $data );
-        }    
+            
+        }  
+        $form->setData ( $data );
+        
+        $registros_totales = $this->getInfraccionDao()->traerTotales($fecha_ini, $fecha_fin);  
         $registros = $this->getInfraccionDao()->traerPorTipo($fecha_ini, $fecha_fin);
         $registrosVigilante = $this->getInfraccionDao()->traerPorVigilante($fecha_ini, $fecha_fin);
         $registrosCalle = $this->getInfraccionDao()->traerPorCalle($fecha_ini, $fecha_fin);
@@ -122,6 +125,7 @@ class InfraccionController extends AbstractActionController
 
         return array(
             'formulario' => $form ,
+            'registros_totales' => $registros_totales,
             'registros' => $registros,
             'registros_vigilante' => $registrosVigilante,
             'registros_calle' => $registrosCalle,
