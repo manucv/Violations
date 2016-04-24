@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_register"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/TxtSaldoAddContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Llena los campos a continuación, al dar click en enviar se enviará un mensaje al 20500 con tu información de parqueo." />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/LblFalta"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Parqueadero:"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:id="@+id/TxtSMSParqueadero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_bkg"
+                android:digits="@string/formatAlphaNumeric"
+                android:fitsSystemWindows="true"
+                android:hint="Ingrese numero de spot"
+                android:inputType="textCapCharacters"
+                android:lines="1"
+                android:maxLength="4"
+                android:maxLines="1"
+                android:singleLine="true" >
+
+                <requestFocus />
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/LblParking"
+				android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="No. Placa:"
+                android:textColor="@android:color/white"                 
+                
+                />
+
+            <EditText
+                android:id="@+id/TxtSMSPlaca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_bkg"
+                android:digits="@string/formatAlphaNumeric"
+                android:fitsSystemWindows="true"
+                android:hint="Ingrese la placa"
+                android:inputType="textCapCharacters"
+                android:lines="1"
+                android:maxLength="7"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white" 
+                android:text="Tiempo:" />
+
+            <Spinner
+                android:id="@+id/SpnSMSHoras"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_weight="0.00"
+                android:background="@drawable/spinner_bkg"
+                android:entries="@array/tiempo_parqueadero"
+                android:fitsSystemWindows="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <Button
+                android:id="@+id/BtnSMSEnviar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/button_bkg"
+                android:fitsSystemWindows="true"
+                android:text="Enviar"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/LblAut_placa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true"
+        android:onClick="onRateClick"
+        android:text="Ver Tarifario"
+        android:textColor="#ffffff" />
+
+</LinearLayout><!-- From: file:/Users/lmponceb/Desktop/StudioProjects/sipApp_project1/app/src/main/res/layout/activity_sms.xml -->

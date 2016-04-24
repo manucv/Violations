@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+	<TextView
+	    android:id="@+id/LblSignIn"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="top|center_horizontal"
+	    android:padding="10dp"
+	    android:text="Saldo Total"
+	    android:textColor="@android:color/white"
+	    android:textSize="20sp"
+	    android:textStyle="bold" />    
+    <TextView
+        android:id="@+id/TxtSaldoInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:padding="5dp"
+        android:text="$0.00"
+        android:textColor="@android:color/white"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <EditText
+            android:id="@+id/TxtSMSParqueadero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5.80"
+            android:background="@drawable/rounded_corner"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="Comentarios o Sugerencias"
+            android:inputType="textMultiLine"
+            android:lines="7"
+            android:padding="5dp" />
+
+        <Button
+            android:id="@+id/BtnSMSEnviar"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_bkg"
+            android:padding="5dp"
+            android:text="Enviar"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/TxtSaldoAddContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Contactate con nosotros a nuestro e-mail: info@sip.ec"
+            android:textAlignment="gravity" />
+
+    </LinearLayout>
+    
+</FrameLayout>
+<!-- From: file:/Users/lmponceb/Desktop/StudioProjects/sipApp_project1/app/src/main/res/layout/activity_info.xml -->
