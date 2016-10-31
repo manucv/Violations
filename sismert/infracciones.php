@@ -18,8 +18,8 @@
 	$placa=$_GET['placa'];
 
 	$result = $client->call("getMultasByPlaca", array(	"numero_placa" => $placa, 
-														"usuario" => "SISMERTWSE",
-														"password" => "Eb2Yhye3"));
+								"usuario" => "SISMERTWSE",
+								"password" => "Eb2Yhye3"));
 
 	$data=array();
 	foreach($result as &$infraccion){

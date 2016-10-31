@@ -119,7 +119,7 @@ class InfraccionDao implements InterfaceCrud {
         $response = curl_exec($ch);
         $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-
+//die($response);
         return $response;
 
     }

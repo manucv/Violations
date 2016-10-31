@@ -544,7 +544,7 @@
 //
 			            $infracciones = json_decode($data);
 
-			            if(sizeof($infracciones)>=3){
+			            if(sizeof($infracciones)>=2){
 			            	$infraction_status="L"; //lock
 			            }
 
