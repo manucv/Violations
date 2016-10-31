@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background" >
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top">
+
+        <TextView
+            android:id="@+id/LblSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:padding="10dp"
+            android:text="Saldo Total"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TxtSaldo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="$0.00"
+            android:textColor="@android:color/white"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:visibility="gone"
+            />
+
+        <ProgressBar
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:id="@+id/loadingInfo"
+            android:layout_margin="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <ProgressBar
+            android:id="@+id/loadingAddContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/LblAut_placa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingrese el usuario o email del contacto a agregar" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/TxtSaldoTransfer"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Buscar:"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:id="@+id/TxtSearchContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/text_bkg"
+                android:ems="10"
+                android:fitsSystemWindows="true"
+                android:hint="Email o usuario"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <Button
+                android:id="@+id/BtnAddContact"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/button_bkg"
+                android:text="Agregar"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/BtnCancelAddContact"
+                android:layout_width="0px"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_bkg"
+                android:onClick="onCancelAddContactClick"
+                android:text="Cancel"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    
+</FrameLayout>
+<!-- From: file:/Users/lmponceb/Desktop/StudioProjects/sipApp_project1/app/src/main/res/layout/activity_addcontact.xml -->
